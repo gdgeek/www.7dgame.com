@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  web:
+    image: dirui/mrpp-web:latest
+    restart: always
+    environment:
+      - NGINX_PORT=80
+    networks:
+      - proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.v1-web-secure.entrypoints=websecure"
+      - "traefik.http.routers.v1-web-secure.rule=Host(`v1.mrpp.com`)"
+      - "traefik.http.routers.v1-web-secure.middlewares=test-compress@file"
+networks:
+    proxy:
+      external: true
