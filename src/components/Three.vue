@@ -1,5 +1,7 @@
 <template>
-  <div id="three" style="height: 300px; width: 100%" />
+  <div>
+    <div id="three" style="height: 300px; width: 100%" />
+  </div>
 </template>
 
 <script>
@@ -18,7 +20,6 @@ import {
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 
 function toFixedVector3(vec, n) {

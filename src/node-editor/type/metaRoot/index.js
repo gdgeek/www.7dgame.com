@@ -15,17 +15,6 @@ var MetaRootType = {
       key: 'name',
       title: '名称',
       readonly: false
-    },
-    {
-      type: 'transform',
-      key: 'transform',
-      readonly: false
-    },
-    {
-      type: 'bool',
-      key: 'active',
-      title: '激活',
-      readonly: false
     }
   ],
   inputs: [

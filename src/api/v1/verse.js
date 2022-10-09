@@ -1,15 +1,25 @@
 import request from '@/utils/request'
+
+import environment from '@/environment.js'
+var qs = require('querystringify')
+var path = require('path')
+
 export function postVerse(data) {
+  data.version = environment.version
   return request({
-    url: 'v1/verses',
+    url: path.join('v1', 'verses'),
     method: 'post',
-    data: data
+    data
   })
 }
 
 export function getVerse(id, expand = 'metas,share') {
   return request({
-    url: 'v1/verses/' + id + '?expand=' + expand,
+    url: path.join(
+      'v1',
+      'verses',
+      id.toString() + qs.stringify({ expand: expand }, true)
+    ),
     method: 'get'
   })
 }
@@ -20,17 +30,23 @@ export function getVersesWithShare(
   page = 0,
   expand = 'image,author'
 ) {
-  let url = 'v1/verses/share?expand=' + expand + '&sort=' + sort
+  let query = []
+  query['expand'] = expand
+  query['sort'] = sort
+
+  //let url = 'v1/verses/share?expand=' + expand + '&sort=' + sort
 
   if (search !== '') {
-    url += '&VerseSearch[name]=' + search
+    query['VerseSearch[name]'] = search
+    //url += '&VerseSearch[name]=' + search
   }
   if (page > 1) {
-    url += '&page=' + page
+    query['page'] = page
+    //url += '&page=' + page
   }
 
   return request({
-    url,
+    url: path.join('v1', 'verses', 'share' + qs.stringify(query, true)),
     method: 'get'
   })
 }
@@ -41,17 +57,19 @@ export function getVersesWithOpen(
   page = 0,
   expand = 'image,author'
 ) {
-  let url = 'v1/verses/open?expand=' + expand + '&sort=' + sort
+  let query = []
+  query['expand'] = expand
+  query['sort'] = sort
 
   if (search !== '') {
-    url += '&VerseSearch[name]=' + search
+    query['VerseSearch[name]'] = search
   }
   if (page > 1) {
-    url += '&page=' + page
+    query['page'] = page
   }
 
   return request({
-    url,
+    url: path.join('v1', 'verses', 'open' + qs.stringify(query, true)),
     method: 'get'
   })
 }
@@ -62,31 +80,35 @@ export function getVerses(
   page = 0,
   expand = 'image,author'
 ) {
-  let url = 'v1/verses/publish?expand=' + expand + '&sort=' + sort
+  let query = []
+  query['expand'] = expand
+  query['sort'] = sort
 
   if (search !== '') {
-    url += '&VerseSearch[name]=' + search
+    query['VerseSearch[name]'] = search
   }
   if (page > 1) {
-    url += '&page=' + page
+    query['page'] = page
   }
 
   return request({
-    url,
+    url: path.join('v1', 'verses', 'publish' + qs.stringify(query, true)),
     method: 'get'
   })
 }
 
 export function putVerse(id, data) {
+  // data.info.version = environment.version
+  data.version = environment.version
   return request({
-    url: 'v1/verses/' + id,
+    url: path.join('v1', 'verses', id.toString()),
     method: 'put',
     data
   })
 }
 export function deleteVerse(id) {
   return request({
-    url: 'v1/verses/' + id,
+    url: path.join('v1', 'verses', id.toString()),
     method: 'delete'
   })
 }

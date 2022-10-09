@@ -1,13 +1,17 @@
 <template>
   <div>
-    <mr-p-p-upload :file-type="fileType" @saveResource="savePicture">
+    <mr-p-p-upload
+      dir="picture"
+      :file-type="fileType"
+      @saveResource="savePicture"
+    >
       <div>选择图片并上传</div>
     </mr-p-p-upload>
   </div>
 </template>
 
 <script>
-import MrPPUpload from '@/components/MrPP/MrPPUpload'
+import MrPPUpload from '@/components/MrPP/MrPPUpload/index.vue'
 
 import { postPicture } from '@/api/resources'
 export default {
@@ -21,20 +25,18 @@ export default {
     }
   },
   methods: {
-    savePicture(name, file_id, callback) {
+    async savePicture(name, file_id, callback) {
       const self = this
-
-      postPicture({ name, file_id })
-        .then(response => {
-          self.$router.push({
-            path: '/picture/view',
-            query: { id: response.data.id }
-          })
+      try {
+        const response = await postPicture({ name, file_id })
+        self.$router.push({
+          path: '/picture/view',
+          query: { id: response.data.id }
         })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(callback)
+      } catch (err) {
+        alert(err)
+      }
+      callback()
     }
   }
 }

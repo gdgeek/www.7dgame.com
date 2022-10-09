@@ -4,14 +4,13 @@
       <el-col :sm="16">
         <el-card class="box-card">
           <div slot="header">
-            <b id="title">模型名称：</b>
-            <span v-if="data">{{ data.name }}</span>
+            <b id="title" v-if="data">场景名称：{{ data.title }}</b>
           </div>
           <div v-loading="expire" class="box-item">
             <three
               v-if="data"
               ref="three"
-              :file="data.file"
+              :file="data.mesh"
               @loaded="loaded"
               @progress="progress"
             />
@@ -19,18 +18,6 @@
           <el-progress :percentage="percentage" />
         </el-card>
         <br />
-
-        <el-card v-loading="expire" class="box-card">
-          <el-button
-            style="width: 100%"
-            type="primary"
-            size="mini"
-            @click="createVerse()"
-          >
-            <font-awesome-icon icon="plus" />
-            &nbsp;用此模型创建{{ word.project }}
-          </el-button>
-        </el-card>
 
         <br />
       </el-col>
@@ -67,7 +54,7 @@
   </div>
 </template>
 <script>
-import { getPolygenOne, putPolygen, deletePolygen } from '@/api/resources'
+import { getSpace, putSpace, deleteSpace } from '@/api/v1/space'
 import { createVerseFromPolygen } from '@/api/v1/meta-verse'
 import { postFile } from '@/api/files'
 import { printVector3 } from '@/assets/js/helper'
@@ -75,7 +62,7 @@ import { mapState } from 'vuex'
 import Three from '@/components/Three.vue'
 
 export default {
-  name: 'PolygenView',
+  name: 'SpaceView',
   components: {
     Three
   },
@@ -94,12 +81,12 @@ export default {
       word: state => state.settings.word
     }),
     tableData() {
-      if (this.data !== null && this.prepare) {
+      if (this.data !== null) {
         console.log(JSON.parse(this.data.info))
         return [
           {
-            item: '模型名称',
-            text: this.data.name
+            item: '场景标题',
+            text: this.data.title
           },
           {
             item: '创建者',
@@ -108,18 +95,6 @@ export default {
           {
             item: '创建时间',
             text: this.data.created_at
-          },
-          {
-            item: '文件大小',
-            text: this.data.file.size + '字节'
-          },
-          {
-            item: '模型尺寸',
-            text: printVector3(JSON.parse(this.data.info).size)
-          },
-          {
-            item: '模型中心点',
-            text: printVector3(JSON.parse(this.data.info).center)
           }
         ]
       } else {
@@ -130,7 +105,7 @@ export default {
       return this.$route.query.id
     },
     prepare() {
-      return this.data != null && this.data.info !== null
+      return this.data.image !== null && typeof this.data.image !== 'undefined'
     },
     dataInfo() {
       if (this.prepare) {
@@ -151,15 +126,19 @@ export default {
       return '等待更新'
     }
   },
-  created: function () {
+  created: async function () {
     const self = this
     self.expire = true
-    getPolygenOne(self.id).then(response => {
+    try {
+      const response = await getSpace(self.id, {
+        expand: 'author,mesh,sample,image'
+      })
       self.data = response.data
-      // alert(JSON.stringify(response.data.file))
-      // self.file = response.data.file.url
-    })
+    } catch (err) {
+      console.log(err)
+    }
   },
+
   methods: {
     progress(percentage) {
       this.percentage = percentage
@@ -169,7 +148,7 @@ export default {
       this.$prompt('用此模型创建' + self.word.project, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        inputValue: self.data.name,
+        inputValue: self.data.title,
         // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: '请填写相应名称'
       })
@@ -196,7 +175,7 @@ export default {
               })
             })
         })
-        .catch(() => {
+        .catch(err => {
           this.$message({
             type: 'info',
             message: '取消输入'
@@ -225,18 +204,16 @@ export default {
           })
         })
     },
-    delete: function (id) {
+    delete: async function (id) {
       const self = this
-      console.log(self.api + '/resources/' + id + '?type=polygen')
 
-      deletePolygen(id)
-        .then(response => {
-          self.$router.push({ path: '/polygen/index' })
-        })
-        .catch(function (error) {
-          console.log(error)
-          self.failed(JSON.parse(error.message))
-        })
+      try {
+        const response = await deleteSpace(id)
+        self.$router.push({ path: '/polygen/index' })
+      } catch (error) {
+        console.log(error)
+        self.failed(JSON.parse(error.message))
+      }
     },
     namedWindow: function () {
       const self = this
@@ -244,7 +221,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,
-        inputValue: self.data.name
+        inputValue: self.data.title
       })
         .then(({ value }) => {
           self.named(self.data.id, value)
@@ -253,86 +230,108 @@ export default {
             message: '新的模型名称: ' + value
           })
         })
-        .catch(() => {
+        .catch(err => {
           this.$message({
             type: 'info',
             message: '取消输入'
           })
         })
     },
-    named: function (id, name) {
+    named: async function (id, title) {
       const self = this
-      const polygen = { name }
-      console.log(polygen)
-      putPolygen(id, polygen)
-        .then(response => {
-          self.data.name = response.data.name
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    updatePolygen(imageId, info) {
-      const self = this
-      const polygen = { image_id: imageId, info: JSON.stringify(info) }
-      putPolygen(this.data.id, polygen).then(response => {
-        console.log(response.data)
-        this.data.image_id = response.data.image_id
-        this.data.info = response.data.info
-        console.log(this.dataInfo)
-        console.log(self.meshCenter)
-        self.expire = false
-      })
-    },
-    saveFile(md5, extension, info, file, handler) {
-      const self = this
-      const data = {
-        md5,
-        key: md5 + extension,
-        filename: file.name,
-        url: self.store.fileUrl(md5, extension, handler, 'screenshot/polygen')
+      const space = { title }
+      try {
+        const response = await putSpace(id, space)
+        self.data.title = response.data.title
+      } catch (err) {
+        throw err
       }
+    },
+    async updateSpace(imageId) {
+      const self = this
+      return new Promise(async function (resolve, reject) {
+        try {
+          const response = await putSpace(self.data.id, { image_id: imageId })
 
-      postFile(data).then(response => {
-        // self.expire = false
-        self.updatePolygen(response.data.id, info)
+          self.data.image_id = response.data.image_id
+          self.data.info = response.data.info
+          self.expire = false
+          resolve(response.data)
+        } catch (err) {
+          reject(err)
+        }
       })
     },
+    async saveFile(md5, extension, info, file, handler) {
+      const self = this
+      return new Promise(async function (resolve, reject) {
+        try {
+          const data = {
+            md5,
+            key: md5 + extension,
+            filename: file.name,
+            url: self.store.fileUrl(md5, extension, handler, 'screenshot/space')
+          }
+          const response = await postFile(data)
+          const ret = await self.updateSpace(response.data.id)
+
+          resolve(ret.data)
+        } catch (err) {
+          reject(err)
+        }
+      })
+    },
+
     async loaded(info) {
       const self = this
-      const store = this.store
-      if (self.prepare) {
-        self.expire = false
-        return
-      }
-      let blob = await this.screenshot()
-      blob.name = self.data.name
-      blob.extension = '.jpg'
-      const file = blob
-      const md5 = await store.fileMD5(file)
+      return new Promise(async function (resolve, reject) {
+        try {
+          console.error('~blob')
+          const store = self.store
 
-      const handler = await store.fileHandler('store-1251022382', 'ap-nanjing')
+          console.error(self.prepare)
+          if (self.prepare) {
+            self.expire = false
+            resolve()
+          } else {
+            console.error('blob')
+            let blob = await self.screenshot()
+            console.error(blob)
+            blob.name = self.data.title
+            blob.extension = '.jpg'
+            const file = blob
+            const md5 = await store.fileMD5(file)
+            const handler = await store.fileHandler(
+              'store-1251022382',
+              'ap-nanjing'
+            )
+            const ret = await store.fileHas(
+              md5,
+              file.extension,
+              handler,
+              'screenshot/space'
+            )
+            if (ret !== null) {
+              await self.saveFile(ret.md5, ret.extension, info, file, handler)
+            } else {
+              const r = store.fileUpload(
+                md5,
+                file.extension,
+                file,
+                p => {},
+                handler,
+                'screenshot/space'
+              )
+              await self.saveFile(md5, file.extension, info, file, handler)
+            }
+          }
+        } catch (err) {
+          reject(err)
+        }
 
-      const ret = await store.fileHas(
-        md5,
-        file.extension,
-        handler,
-        'screenshot/polygen'
-      )
-      if (ret !== null) {
-        self.saveFile(ret.md5, ret.extension, info, file, handler)
-      } else {
-        const r = store.fileUpload(
-          md5,
-          file.extension,
-          file,
-          p => {},
-          handler,
-          'screenshot/polygen'
-        )
-        self.saveFile(md5, file.extension, info, file, handler)
-      }
-    },
+        resolve()
+      })
+    } /**/,
 
     screenshot() {
       return this.$refs.three.screenshot()

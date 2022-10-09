@@ -13,7 +13,11 @@
               label="名称排序"
               icon="el-icon-chat-dot-square"
               @click="sort('name')"
-            ><span class="hidden-sm-and-down">名称排序</span><i v-if="sorted_up" class="el-icon-arrow-up" /><i v-else class="el-icon-arrow-down" /></el-button>
+            >
+              <span class="hidden-sm-and-down">名称排序</span>
+              <i v-if="sorted_up" class="el-icon-arrow-up" />
+              <i v-else class="el-icon-arrow-down" />
+            </el-button>
             <el-button
               v-else
               size="mini"
@@ -21,7 +25,9 @@
               label="名称排序"
               icon="el-icon-chat-dot-square"
               @click="sort('name')"
-            ><span class="hidden-sm-and-down">名称排序</span></el-button>
+            >
+              <span class="hidden-sm-and-down">名称排序</span>
+            </el-button>
             <el-button
               v-if="sorted_created_at"
               size="mini"
@@ -29,7 +35,11 @@
               icon="el-icon-time"
               label="时间排序"
               @click="sort('created_at')"
-            ><span class="hidden-sm-and-down">时间排序</span><i v-if="sorted_up" class="el-icon-arrow-up" /><i v-else class="el-icon-arrow-down" /></el-button>
+            >
+              <span class="hidden-sm-and-down">时间排序</span>
+              <i v-if="sorted_up" class="el-icon-arrow-up" />
+              <i v-else class="el-icon-arrow-down" />
+            </el-button>
             <el-button
               v-else
               size="mini"
@@ -37,10 +47,12 @@
               label="时间排序"
               icon="el-icon-time"
               @click="sort('created_at')"
-            ><span class="hidden-sm-and-down">时间排序</span></el-button>
-          </el-button-group></el-col>
+            >
+              <span class="hidden-sm-and-down">时间排序</span>
+            </el-button>
+          </el-button-group>
+        </el-col>
         <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
-
           <el-input
             v-model="input"
             size="mini"
@@ -58,12 +70,10 @@
         </el-col>
       </el-row>
     </el-card>
-
   </div>
 </template>
 
 <script>
-
 import 'element-ui/lib/theme-chalk/display.css'
 export default {
   name: 'MrPPHeader',

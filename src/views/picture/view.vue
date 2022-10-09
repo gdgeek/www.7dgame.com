@@ -109,13 +109,16 @@ export default {
       return this.data != null && this.data.info !== null
     }
   },
-  created: function () {
+  created: async function () {
     const self = this
-    self.expire = true
-    getPictureOne(self.id).then(response => {
+    try {
+      self.expire = true
+      const response = await getPictureOne(self.id)
       self.data = response.data
       self.file = response.data.file.url
-    })
+    } catch (err) {
+      alert(err)
+    }
   },
   methods: {
     getImageSize: function (imageEl) {
@@ -146,12 +149,10 @@ export default {
     save(md5, extension, info, file, handler) {
       const self = this
       const data = {
-        size: file.size,
-        type: file.type,
         md5,
         key: md5 + extension,
         filename: file.name,
-        url: self.store.fileUrl(md5, extension, handler)
+        url: self.store.fileUrl(md5, extension, handler, 'screenshot/picture')
       }
 
       postFile(data)
@@ -193,8 +194,13 @@ export default {
       const file = blob
 
       const md5 = await store.fileMD5(file)
-      const handler = await store.fileHandler()
-      const ret = await store.fileHas(md5, file.extension, handler)
+      const handler = await store.fileHandler('store-1251022382', 'ap-nanjing')
+      const ret = await store.fileHas(
+        md5,
+        file.extension,
+        handler,
+        'screenshot/picture'
+      )
       if (ret !== null) {
         self.save(ret.md5, ret.extension, info, file, handler)
       } else {
@@ -203,7 +209,8 @@ export default {
           file.extension,
           file,
           p => {},
-          handler
+          handler,
+          'screenshot/picture'
         )
         self.save(md5, file.extension, info, file, handler)
       }

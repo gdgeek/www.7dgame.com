@@ -3,9 +3,9 @@
     <router-link
       v-if="course && course.title"
       target="_blank"
-      :to="'/home/document?id='+id"
+      :to="'/home/document?id=' + id"
     >
-      <el-link target="_blank" v-html="course.title.rendered">默认链接</el-link>
+      <el-link target="_blank" v-html="course.title.rendered"></el-link>
     </router-link>
   </span>
 </template>
@@ -26,12 +26,15 @@ export default {
   created() {
     const self = this
     if (self.id) {
-      Post(self.id).then((r) => {
-        self.course = r.data
-        self.$emit('show')
-      }).catch(e => { console.error(e) })
+      Post(self.id)
+        .then(r => {
+          self.course = r.data
+          self.$emit('show')
+        })
+        .catch(e => {
+          console.error(e)
+        })
     }
   }
 }
 </script>
-

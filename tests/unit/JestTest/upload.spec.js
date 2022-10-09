@@ -20,11 +20,11 @@ describe('Hamburger.vue', async () => {
 
   process.env.VUE_APP_BASE_API = 'http://localhost'
 
-  it('picture exists', done => {
+  it('picture exists', async done => {
     const exists = await fs.exists(filePath)
     if (!exists) throw new Error('file does not exist')
 
-    fs.readFile(filePath, function read(err, data) {
+    fs.readFile(filePath, async function read(err, data) {
       const blob = new Blob([data])
       const file = new window.File([blob], 'picture.jpeg', {
         type: 'image/png'
@@ -34,13 +34,13 @@ describe('Hamburger.vue', async () => {
       expect(file.type).toBe('image/png')
       expect(file.extension).toBe('.jpg')
       const md5 = await store.fileMD5(file)
-      const handler = await store.fileHandler()
+      const handler = await store.fileHandler('store-1251022382', 'ap-nanjing')
     })
     fs.exists(filePath)
       .then(exists => {
         if (!exists) throw new Error('file does not exist')
 
-        fs.readFile(filePath, function read(err, data) {
+        fs.readFile(filePath, async function read(err, data) {
           if (err) {
             done(err)
           }
@@ -55,7 +55,10 @@ describe('Hamburger.vue', async () => {
           expect(file.extension).toBe('.jpg')
           const md5 = await store.fileMD5(file)
           console.log(md5)
-          const handler = await store.fileHandler()
+          const handler = await store.fileHandler(
+            'store-1251022382',
+            'ap-nanjing'
+          )
           const ret = store.fileHas(key, handler)
           if (ret !== null) {
             done()

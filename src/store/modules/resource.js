@@ -1,10 +1,25 @@
 const state = {
   polygenList: null,
   videoList: null,
-  pictureList: null
+  pictureList: null,
+  onSpace: null
 }
 
 const mutations = {
+  setOnSpace(state, callback) {
+    //alert(callback)
+    state.onSpace = callback
+  },
+  receiveSpace(state, data) {
+    if (state.onSpace !== null) {
+      state.onSpace(data)
+    }
+  },
+  cancelSpace(state) {
+    if (state.onSpace !== null) {
+      state.onSpace = null
+    }
+  },
   setPolygenList(state, list) {
     state.polygenList = []
     list.forEach(item => {

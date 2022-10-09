@@ -1,11 +1,18 @@
 import request from '@/utils/request'
-
-export function getMenu() {
+import url from 'url'
+export function token(bucket, region = 'ap-nanjing') {
   return request({
-    url: '/servers/menu',
+    url: url.format({
+      pathname: '/v1/tencent-clouds/token',
+      query: {
+        bucket,
+        region
+      }
+    }),
     method: 'get'
   })
 }
+/*
 export function getData(token) {
   return request({
     url: '/servers/user',
@@ -20,7 +27,6 @@ export function logout() {
   })
 }
 export function sts() {
-  alert(2)
   return request({
     url: '/servers/sts',
     method: 'get'
@@ -48,3 +54,4 @@ export function resetPassword(oldPassword, password) {
     data: { oldPassword, password }
   })
 }
+*/

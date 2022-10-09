@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mr-p-p-upload :file-type="fileType" @saveResource="saveVideo">
+    <mr-p-p-upload dir="video" :file-type="fileType" @saveResource="saveVideo">
       <div>选择视频，并上传</div>
     </mr-p-p-upload>
   </div>

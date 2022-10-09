@@ -2,11 +2,34 @@
   <div>
     <el-form size="mini" :inline="true">
       <el-form-item class="tranform-item" :label="data.title">
-        <input v-model.number="x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x">
-        <input v-model.number="y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y">
-        <input v-model.number="z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z">
+        <input
+          v-model.number="x"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-left"
+          style="width: 45px; display: inline"
+          placeholder="x"
+        />
+        <input
+          v-model.number="y"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-min"
+          style="width: 45px; display: inline"
+          placeholder="y"
+        />
+        <input
+          v-model.number="z"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-right"
+          style="width: 45px; display: inline"
+          placeholder="z"
+        />
       </el-form-item>
-
     </el-form>
   </div>
 </template>
@@ -17,13 +40,11 @@ export default {
 
   data() {
     return {
-
       value_: {
         x: 0,
         y: 0,
         z: 0
       }
-
     }
   },
   computed: {
@@ -56,7 +77,8 @@ export default {
         console.log(this.value_)
         this.refresh()
       }
-    }, value: {
+    },
+    value: {
       get() {
         return this.value_
       },
@@ -77,7 +99,6 @@ export default {
   },
 
   methods: {
-
     refresh() {
       if (this.data) {
         this.putData(this.data.key, this.value)
@@ -89,48 +110,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .input-left{
-      border:solid 1px;
-      border-color:darkgray;
-      border-top-left-radius:3px;
-      border-top-right-radius:0px;
-      border-bottom-right-radius:0px;
-      border-bottom-left-radius:3px;
-      color: #666;
-      font-size: 12px;
-      padding:0px;
-      text-align:center;
-  }
-  .input-right{
-      border:solid 1px;
-      border-color:darkgray;
-      border-top-left-radius:0px;
-      border-top-right-radius:3px;
-      border-bottom-right-radius:3px;
-      border-bottom-left-radius:0px;
-      color: #666;
-      font-size: 12px;
-      padding:0px;
-      text-align:center;
-
-  }
-  .input-min{
-      border:solid 1px;
-      border-color:darkgray;
-      border-top-left-radius:0px;
-      border-top-right-radius:0px;
-      border-bottom-right-radius:0px;
-      border-bottom-left-radius:0px;
-      color: #666;
-      font-size: 12px;
-      padding:0px;
-      text-align:center;
-  }
-    .input-with-select .el-input-group__prepend {
-      background-color: #fff;
-    }
-.tranform-item{
-   max-height:0px;
-   max-height:20px;
+.input-left {
+  border: solid 1px;
+  border-color: darkgray;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 3px;
+  color: #666;
+  font-size: 12px;
+  padding: 0px;
+  text-align: center;
+}
+.input-right {
+  border: solid 1px;
+  border-color: darkgray;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 0px;
+  color: #666;
+  font-size: 12px;
+  padding: 0px;
+  text-align: center;
+}
+.input-min {
+  border: solid 1px;
+  border-color: darkgray;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  color: #666;
+  font-size: 12px;
+  padding: 0px;
+  text-align: center;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+.tranform-item {
+  max-height: 0px;
+  max-height: 20px;
 }
 </style>

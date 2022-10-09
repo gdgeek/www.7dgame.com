@@ -13,7 +13,7 @@
     <el-dialog :title="'修改内容'" :visible.sync="dialog" width="70%">
       <mr-p-p-message-from ref="editor" :data="message" @post="changeMessage" />
     </el-dialog>
-    <br>
+    <br />
     <el-card>
       <div slot="header" class="clearfix">
         <span v-if="message === null">载入...</span>
@@ -113,7 +113,7 @@ export default {
     }
   },
   watch: {
-    message: function() {
+    message: function () {
       this.$emit('setMessage', this.message)
     }
   },
@@ -168,7 +168,7 @@ export default {
               message: '已撤销'
             })
           })
-          .catch(function(e) {
+          .catch(function (e) {
             console.error(e)
           })
           .finally(() => {
@@ -182,7 +182,7 @@ export default {
               message: '已点赞'
             })
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.error(error)
           })
           .finally(() => {
@@ -191,7 +191,7 @@ export default {
       }
     },
 
-    deletedWindow: function(id, deleted) {
+    deletedWindow: function (id, deleted) {
       this.$confirm('是否确定删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -212,7 +212,7 @@ export default {
         })
     },
 
-    deletedMessage: function(id) {
+    deletedMessage: function (id) {
       const self = this
       deleteMessage(id)
         .then(response => {
@@ -223,12 +223,12 @@ export default {
           self.message = null
           self.$router.push({ path: '/community/index' })
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error)
         })
     },
 
-    changeMessage: function(data) {
+    changeMessage: function (data) {
       const self = this
       putMessage(self.message_id, data).then(response => {
         self.refresh()

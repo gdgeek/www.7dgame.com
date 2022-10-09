@@ -1,4 +1,4 @@
-import cloud from '@/assets/js/file/cloud.js'
+import cloud from '@/assets/js/file/tencent-cloud.js'
 import server from '@/assets/js/file/server.js'
 import serverAdvanced from '@/assets/js/file/server-advanced.js'
 

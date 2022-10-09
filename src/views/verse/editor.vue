@@ -1,5 +1,6 @@
 <template>
   <div class="verse-index">
+    <resource-dialog @selected="selected" @cancel="cancel" ref="spaceDialog" />
     <el-container>
       <el-main>
         <el-card v-loading="loading" class="box-card">
@@ -33,15 +34,18 @@ import { AbilityWorks, AbilityShare } from '@/ability/ability'
 import ReteVerse from '@/components/Rete/ReteVerse.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { getVerse } from '@/api/v1/verse'
+import ResourceDialog from '@/components/MrPP/MrPPResourceDialog.vue'
 export default {
   name: 'VerseEditor',
   components: {
-    ReteVerse
+    ReteVerse,
+    ResourceDialog
   },
   data() {
     return {
       verse: null,
-      loading: true
+      loading: true,
+      spaceDialog: false
     }
   },
 
@@ -65,6 +69,13 @@ export default {
         self.$can('update', new AbilityWorks(self.verse.author_id)) ||
         self.$can('share', new AbilityShare(self.verse.share))
       )
+    }
+  },
+  watch: {
+    '$store.state.resource.onSpace': function () {
+      if (this.$store.state.resource.onSpace !== null) {
+        this.$refs.spaceDialog.open()
+      }
     }
   },
   created() {
@@ -111,7 +122,13 @@ export default {
     ...mapActions('verse', {
       saveVerse: 'saveVerse'
     }),
-    ...mapMutations(['setPolygenList', 'setPictureList', 'setVideoList']),
+    ...mapMutations([
+      'setPolygenList',
+      'setPictureList',
+      'setVideoList',
+      'receiveSpace',
+      'cancelSpace'
+    ]),
     addMeta(meta) {
       return this.$refs.rete.addMeta(meta)
     },
@@ -121,7 +138,12 @@ export default {
     setup(data) {
       return this.$refs.rete.setup(data)
     },
-
+    selected(data) {
+      this.receiveSpace(data)
+    },
+    cancel() {
+      this.cancelSpace()
+    },
     save() {
       this.$refs.rete.save()
     },

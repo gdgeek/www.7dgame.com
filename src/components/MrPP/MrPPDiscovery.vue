@@ -1,9 +1,7 @@
 <template>
   <el-container class="home-container">
-
     <el-container>
       <el-aside id="discovery-el-aside" width="200px">
-
         <el-scrollbar wrap-class="scrollbar-wrapper">
           <el-menu
             v-if="menu !== null"
@@ -13,7 +11,7 @@
           >
             <el-menu-item index="-1" @click="navigation()">
               <i class="el-icon-menu" />
-              <span slot="title" style="font-weight: 700;">导航</span>
+              <span slot="title" style="font-weight: 700">导航</span>
             </el-menu-item>
             <div v-if="menu.items.length !== 0">
               <el-menu-item
@@ -58,11 +56,11 @@
                 @click="gotoCategories(item.id)"
               >
                 <template slot="title" class="mrpp-el-submenu-title">
-                  <i class="el-icon-menu" /> {{ item.name }}
+                  <i class="el-icon-menu" />
+                  {{ item.name }}
                 </template>
               </el-menu-item>
             </div>
-
           </el-menu>
         </el-scrollbar>
       </el-aside>
@@ -76,11 +74,11 @@
             <span v-html="article.content" />
           </el-card>
         </div>
-        <div v-else-if="menu !== null ">
+        <div v-else-if="menu !== null">
           <div v-if="active === '-1'">
             <div>
               <el-divider content-position="left">
-                <big style="font-weight: 700;color: #3ea1d7;">{{ title }}</big>
+                <big style="font-weight: 700; color: #3ea1d7">{{ title }}</big>
               </el-divider>
             </div>
             <el-row :gutter="10">
@@ -90,24 +88,34 @@
                   v-for="it in menu.items.slice(0, pagination.size)"
                   :key="it.id"
                 >
-                  <el-col style="width:280px">
+                  <el-col style="width: 280px">
                     <div style="cursor: pointer" @click="goto(it, -1)">
-                      <el-card class="box-card" :body-style="{ padding: '0px' }">
+                      <el-card
+                        class="box-card"
+                        :body-style="{ padding: '0px' }"
+                      >
                         <div slot="header" class="clearfix">
                           <span>{{ it.title.rendered }}</span>
-
                         </div>
-                        <img v-if="it.jetpack_featured_media_url!==''" style="width: 100%;" :src="it.jetpack_featured_media_url" class="image">
+                        <img
+                          v-if="it.jetpack_featured_media_url !== ''"
+                          style="width: 100%"
+                          :src="it.jetpack_featured_media_url"
+                          class="image"
+                        />
 
-                        <div style="overflow: hidden;padding: 14px" v-html="it.excerpt.rendered" />
+                        <div
+                          style="overflow: hidden; padding: 14px"
+                          v-html="it.excerpt.rendered"
+                        />
                       </el-card>
-                      <br>
+                      <br />
                     </div>
                   </el-col>
                 </waterfall-item>
               </waterfall>
             </el-row>
-            <br>
+            <br />
           </div>
           <div
             v-for="item in menu.children"
@@ -117,33 +125,40 @@
             <div v-if="active === '-1' || active == item.id.toString()">
               <div>
                 <el-divider content-position="left">
-                  <span style="color:#1d7296">{{ item.name }}</span>
+                  <span style="color: #1d7296">{{ item.name }}</span>
                 </el-divider>
               </div>
               <el-row :gutter="10">
-
                 <waterfall :options="{}">
-                  <waterfall-item
-                    v-for="it in item.items"
-                    :key="it.id"
-                  >
-                    <el-col style="width:280px">
+                  <waterfall-item v-for="it in item.items" :key="it.id">
+                    <el-col style="width: 280px">
                       <div style="cursor: pointer" @click="goto(it, item.id)">
-                        <el-card class="box-card" :body-style="{ padding: '0px' }">
+                        <el-card
+                          class="box-card"
+                          :body-style="{ padding: '0px' }"
+                        >
                           <div slot="header" class="clearfix">
                             <span>{{ it.title.rendered }}</span>
                           </div>
-                          <img v-if="it.jetpack_featured_media_url!==''" style="width: 100%;" :src="it.jetpack_featured_media_url" class="image">
+                          <img
+                            v-if="it.jetpack_featured_media_url !== ''"
+                            style="width: 100%"
+                            :src="it.jetpack_featured_media_url"
+                            class="image"
+                          />
 
-                          <div style="overflow: hidden;padding: 14px" v-html="it.excerpt.rendered" />
+                          <div
+                            style="overflow: hidden; padding: 14px"
+                            v-html="it.excerpt.rendered"
+                          />
                         </el-card>
-                        <br>
+                        <br />
                       </div>
                     </el-col>
                   </waterfall-item>
                 </waterfall>
               </el-row>
-              <br>
+              <br />
             </div>
           </div>
         </div>
@@ -207,7 +222,7 @@ export default {
     }
   },
   watch: {
-    $route: function(to, from) {
+    $route: function (to, from) {
       this.readRoute()
     }
   },
@@ -220,7 +235,7 @@ export default {
     })
   },
   methods: {
-    handleCurrentChange: function(page) {
+    handleCurrentChange: function (page) {
       this.pagination.current = page
       this.readMenu(this.category)
     },
@@ -291,7 +306,11 @@ export default {
           } else {
             let count = 0
             todo.forEach(item => {
-              Posts(item.id, self.pagination.size, self.pagination.current).then(r => {
+              Posts(
+                item.id,
+                self.pagination.size,
+                self.pagination.current
+              ).then(r => {
                 // item.items = r.data
                 console.log(r.headers)
                 self.pagination = {
@@ -300,7 +319,7 @@ export default {
                   size: self.pagination.size,
                   total: parseInt(r.headers['x-wp-total'])
                 }
-                item.items = r.data.sort(function(a, b) {
+                item.items = r.data.sort(function (a, b) {
                   if (!a.sort) {
                     a.sort = 0
                   }
@@ -334,7 +353,6 @@ export default {
   box-sizing: border-box;
   // background-color: #ddf0e9;
   background-color: #f4f5f7;
-
 }
 #discovery-el-main {
   min-height: calc(100vh - 50px);

@@ -18,6 +18,7 @@ import VerseNameControl from './verseNameControl.vue'
 import UUIDControl from './uuidControl.vue'
 import CodeControl from './codeControl.vue'
 import ButtonControl from './buttonControl.vue'
+import SpaceControl from './spaceControl.vue'
 import PolygenResetControl from './polygenResetControl.vue'
 
 export class Control extends Rete.Control {
@@ -56,6 +57,9 @@ export class Control extends Rete.Control {
         break
       case 'video':
         this.component = VideoControl
+        break
+      case 'space':
+        this.component = SpaceControl
         break
       case 'picture':
         this.component = PictureControl

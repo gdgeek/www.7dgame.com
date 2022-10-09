@@ -4,8 +4,12 @@
       <el-tab-pane label="逻辑编辑" name="blockly" />
       <el-tab-pane label="代码查看" name="script" />
     </el-tabs>
-    <div v-show="activeName === 'blockly'" id="blocklyDiv" style="height: 600px; width: 100%" />
-    <el-card v-if="activeName === 'script' && script !==''" class="box-card">
+    <div
+      v-show="activeName === 'blockly'"
+      id="blocklyDiv"
+      style="height: 600px; width: 100%"
+    />
+    <el-card v-if="activeName === 'script' && script !== ''" class="box-card">
       <div v-highlight>
         <pre>
           <code class="lua">{{ script }}</code>
@@ -66,7 +70,10 @@ export default {
         pinch: true
       }
     })
-    if (typeof self.cybers[0].data !== 'undefined' && self.cybers[0].data !== null) {
+    if (
+      typeof self.cybers[0].data !== 'undefined' &&
+      self.cybers[0].data !== null
+    ) {
       self.load(self.cybers[0].data)
     }
     console.log(this.workspace)
@@ -84,16 +91,17 @@ export default {
     save() {
       const json = Blockly.serialization.workspaces.save(this.workspace)
       const script = Blockly.Lua.workspaceToCode(this.workspace)
-      putVerseCyber(this.cybers[0].id, { data: JSON.stringify(json), script }).then(response => {
-        this.$message({
-          message: '代码保存成功',
-          type: 'success'
+      putVerseCyber(this.cybers[0].id, { data: JSON.stringify(json), script })
+        .then(response => {
+          this.$message({
+            message: '代码保存成功',
+            type: 'success'
+          })
         })
-      }).catch(e => {
-        console.log(e)
-      })
+        .catch(e => {
+          console.log(e)
+        })
     }
-
   }
 }
 </script>

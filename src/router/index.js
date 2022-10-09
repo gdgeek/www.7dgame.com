@@ -110,6 +110,34 @@ export const constantRoutes = [
         ]
       },
       {
+        path: 'space',
+        name: 'Space',
+        meta: { title: '空间场景' },
+        redirect: '/space/index',
+        component: Empty,
+        children: [
+          {
+            meta: { title: '列表' },
+            path: 'index',
+            name: 'SpaceIndex',
+            component: () => import('@/views/space/index')
+          },
+          {
+            path: 'upload',
+            name: 'SpaceUpload',
+            meta: { title: '场景上传' },
+            component: () => import('@/views/space/upload')
+          },
+
+          {
+            path: 'view',
+            name: 'SpaceView',
+            meta: { title: '场景处理' },
+            component: () => import('@/views/space/view')
+          }
+        ]
+      },
+      {
         path: 'polygen',
         name: 'Polygen',
         meta: { title: '模型资源' },

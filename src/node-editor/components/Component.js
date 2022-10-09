@@ -14,7 +14,9 @@ export class Component extends Rete.Component {
       this.type_.controls !== null
     ) {
       this.type_.controls.forEach(ctrl => {
-        node.addControl(new Control(this.editor, {data: ctrl, root:this.root_, node:self}))
+        node.addControl(
+          new Control(this.editor, { data: ctrl, root: this.root_, node: self })
+        )
       })
     }
 
@@ -30,7 +32,13 @@ export class Component extends Rete.Component {
           input.multiConns
         )
         if (typeof input.control !== 'undefined') {
-          ipt.addControl(new Control(this.editor, {data: input.control, root: this.root_, node:self}))
+          ipt.addControl(
+            new Control(this.editor, {
+              data: input.control,
+              root: this.root_,
+              node: self
+            })
+          )
         }
         node.addInput(ipt)
       })
@@ -99,12 +107,8 @@ export class Component extends Rete.Component {
       })
     }
     if (typeof this.type_.root !== 'undefined' && this.type_.root) {
-      // JSON.stringify(data))
       console.log(JSON.stringify(data))
       callback(JSON.stringify(data))
-      // const data = {}
-      // data.type = this.type_.title
-      // alert(jsondata)
     }
 
     // alert(5)

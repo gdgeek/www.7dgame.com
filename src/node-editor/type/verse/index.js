@@ -19,13 +19,17 @@ var VerseType = {
       title: '进入编辑',
       label: '逻辑',
       style: 'primary',
-      callback: function(root) {
+      callback: function (root) {
         root.$router.push({
           path: '/verse/code',
           query: { id: root.$store.state.verse.data.id }
         })
       },
       readonly: true
+    },
+    {
+      type: 'space',
+      key: 'space'
     }
   ],
 

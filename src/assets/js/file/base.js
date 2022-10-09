@@ -30,22 +30,27 @@ function fileMD5(file, progress = p => {}) {
     doLoad()
   })
 }
-function fileOpen(accept) {
+async function fileOpen(accept) {
   return new Promise((resolve, reject) => {
-    const input = document.createElement('input')
+    try {
+      const input = document.createElement('input')
 
-    input.type = 'file'
-    input.accept = accept
-    input.onchange = function (e) {
-      const file = this.files[0]
-      console.log(file)
-      const patternFileExtension = /\.([0-9a-z]+)(?:[\\?#]|$)/i
-      const extension = file.name.match(patternFileExtension)
-      file.extension = extension[0]
-      resolve(file)
+      input.type = 'file'
+      input.accept = accept
+      input.onchange = function (e) {
+        const file = this.files[0]
+        console.log(file)
+        const patternFileExtension = /\.([0-9a-z]+)(?:[\\?#]|$)/i
+        const extension = file.name.match(patternFileExtension)
+        file.extension = extension[0]
+        resolve(file)
+      }
+
+      input.click()
+    } catch (err) {
+      alert(err)
+      reject(err)
     }
-
-    input.click()
   })
 }
 

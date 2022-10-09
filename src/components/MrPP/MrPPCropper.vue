@@ -216,12 +216,10 @@ export default {
       const self = this
       self.url = self.store.fileUrl(md5, extension, handler)
       const data = {
-        size: file.size,
-        type: file.type,
         filename: file.name,
         md5,
         key: md5 + extension,
-        url: self.store.fileUrl(md5, extension, handler)
+        url: self.store.fileUrl(md5, extension, handler, 'backup')
       }
 
       postFile(data)
@@ -242,8 +240,11 @@ export default {
         blob.extension = '.jpg'
         const file = blob
         const md5 = await store.fileMD5(file)
-        const handler = await store.fileHandler()
-        const ret = await store.fileHas(md5, file.extension, handler)
+        const handler = await store.fileHandler(
+          'store-1251022382',
+          'ap-nanjing'
+        )
+        const ret = await store.fileHas(md5, file.extension, handler, 'backup')
         if (ret !== null) {
           self.saveFile(ret.md5, ret.extension, file, handler)
         } else {
@@ -252,7 +253,8 @@ export default {
             file.extension,
             file,
             p => {},
-            handler
+            handler,
+            'backup'
           )
           self.saveFile(md5, file.extension, file, handler)
         }

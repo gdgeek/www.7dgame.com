@@ -40,6 +40,23 @@ const state = {
       ]
     },
     {
+      label: '场景',
+      url: '/space/',
+      icon: 'home',
+      items: [
+        {
+          label: '场景列表',
+          url: '/space/index/',
+          icon: 'list'
+        },
+        {
+          label: '场景上传',
+          url: '/space/upload/',
+          icon: 'upload'
+        }
+      ]
+    },
+    {
       label: '资源管理',
       url: '/resource/',
       icon: 'cubes',
@@ -110,28 +127,11 @@ const state = {
       icon: 'compass',
       hidden: environment.local,
       items: [
-        /*
-        {
-          label: '新闻',
-          url: '/discovery/news',
-          icon: 'newspaper'
-        },
-        {
-          label: '下载',
-          url: '/discovery/download',
-          icon: 'download'
-        },*/
         {
           label: '文档',
           url: '/discovery/document',
           icon: 'book'
         }
-        /*,
-        {
-          label: '案例',
-          url: '/discovery/example',
-          icon: 'star-half-alt'
-        }*/
       ]
     },
     /*

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <mr-p-p-upload :file-type="fileType" @saveResource="savePolygen">
+    <mr-p-p-upload
+      dir="polygen"
+      :file-type="fileType"
+      @saveResource="savePolygen"
+    >
       <div>选择模型（.glb文件），并上传</div>
     </mr-p-p-upload>
   </div>

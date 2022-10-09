@@ -472,12 +472,10 @@ export default {
     saveAvatar(md5, extension, file, handler) {
       const self = this
       const data = {
-        size: file.size,
-        type: file.type,
         md5,
         key: md5 + extension,
         filename: file.name,
-        url: self.store.fileUrl(md5, extension, handler)
+        url: self.store.fileUrl(md5, extension, handler, 'backup')
       }
 
       postFile(data)
@@ -512,9 +510,12 @@ export default {
         const file = blob
 
         const md5 = await store.fileMD5(file)
-        const handler = await store.fileHandler()
+        const handler = await store.fileHandler(
+          'store-1251022382',
+          'ap-nanjing'
+        )
 
-        const ret = await store.fileHas(md5, file.extension, handler)
+        const ret = await store.fileHas(md5, file.extension, handler, 'backup')
 
         if (ret !== null) {
           self.saveAvatar(ret.md5, ret.extension, file, handler)
@@ -524,7 +525,8 @@ export default {
             file.extension,
             file,
             p => {},
-            handler
+            handler,
+            'backup'
           )
           self.saveAvatar(md5, file.extension, file, handler)
         }

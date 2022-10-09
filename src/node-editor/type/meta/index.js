@@ -12,6 +12,17 @@ var MetaType = {
       type: 'meta',
       key: 'meta',
       readonly: true
+    },
+    {
+      type: 'transform',
+      key: 'transform',
+      readonly: false
+    },
+    {
+      type: 'bool',
+      key: 'active',
+      title: '激活',
+      readonly: false
     }
   ],
   inputs: null,

@@ -7,24 +7,15 @@
           {{ declared }}
         </div>
         <div style="position: relative">
-          <div class="progress-item">
-            <span>解析文件</span>
-            <el-progress :percentage="md5.percentage" />
+          <div v-for="item in data" :key="item.name">
+            <div class="progress-item">
+              <span>{{ item.title }}</span>
+              <el-progress :percentage="item.percentage" />
+            </div>
           </div>
-          <div class="progress-item">
-            <span>上传文件</span>
-            <el-progress :percentage="upload.percentage" />
-          </div>
-          <div class="progress-item">
-            <span>保存信息</span>
-            <el-progress :percentage="save.percentage" />
-          </div>
+
           <el-divider />
-          <el-button
-            type="primary"
-            :disabled="isdisabled"
-            @click="selectFile()"
-          >
+          <el-button type="primary" :disabled="isdisabled" @click="select()">
             <slot>11</slot>
           </el-button>
         </div>
@@ -44,6 +35,10 @@ export default {
       type: String,
       default: '*'
     },
+    dir: {
+      type: String,
+      default: null
+    },
     advanced: {
       type: Boolean,
       default: false
@@ -54,106 +49,109 @@ export default {
       store: state => state.config.store
     })
   },
-  data: function() {
+  data: function () {
+    const data = [
+      {
+        name: 'md5',
+        title: '预先处理',
+        failed: 'md5计算失败',
+        declared: '通过计算得到文件的 md5 编码',
+        percentage: 0,
+        process: function ({ file }) {},
+        status: ''
+      },
+      {
+        name: 'upload',
+        title: '上传文件',
+        failed: '文件上传失败',
+        declared: '文件正在发送至服务器',
+        percentage: 0,
+        status: ''
+      },
+      {
+        name: 'save',
+        title: '保存信息',
+        failed: '数据库储存失败',
+        declared: '文件数据存储在数据库中',
+        percentage: 0,
+        status: ''
+      }
+    ]
     return {
+      data,
       title: '选择文件',
       declared: '请选择对应格式的文件进行上传操作',
-      md5: { percentage: 0, status: '' },
-      upload: { percentage: 0, status: '' },
-      save: { percentage: 0, status: '' },
       isdisabled: false
     }
   },
 
   methods: {
-    step(type) {
-      const self = this
-      switch (type) {
-        case 'ready':
-          self.title = '选择文件'
-          self.declared = '请选择对应格式的文件进行上传操作'
-          break
-        case 'md5':
-          self.title = '文件预处理'
-          self.declared = '通过计算得到文件的 md5 编码'
-          break
-        case 'upload':
-          self.title = '文件上传中'
-          self.declared = '文件正在发送至服务器'
-          break
-        case 'succeed':
-          self.title = '文件上传成功'
-          self.declared = '文件已经被发送到服务器'
-          break
-        case 'failed':
-          self.title = '文件上传失败'
-          self.declared = '上传文件过程中遇到错误'
-          break
-      }
+    step(idx) {
+      const item = this.data[idx]
+      this.title = item.title
+      this.declared = item.declared
     },
-    progress(p) {
-      const ret = {}
-      p = p > 1 ? 1 : p
-      ret.percentage = Math.round(p * 100)
-      if (p === 1) {
-        ret.status = 'success'
+    progress(p, idx) {
+      this.step(idx)
+      if (p >= 1) {
+        this.data[idx].status = 'success'
       } else {
-        ret.status = ''
+        this.data[idx].status = ''
       }
-      return ret
+
+      this.data[idx].percentage = Math.round(Math.min(p, 1) * 100)
     },
 
-    saveFile(md5, extension, file, handler) {
+    async saveFile(md5, extension, file, handler) {
+      // return
       const self = this
-      const data = {
-        size: file.size,
-        type: file.type,
-        filename: file.name,
-        md5,
-        key: md5 + extension,
-        url: self.store.fileUrl(md5, extension, handler)
-      }
-      self.step('succeed')
+      return new Promise(async function (resolve, reject) {
+        try {
+          const data = {
+            filename: file.name,
+            md5,
+            key: md5 + extension,
+            url: self.store.fileUrl(md5, extension, handler, self.dir)
+          }
 
-      self.upload = self.progress(1)
-      postFile(data)
-        .then(response => {
-          self.save = self.progress(0.5)
-          console.error(response)
+          self.progress(1, 1)
+
+          const response = await postFile(data)
+
           self.$emit('saveResource', data.filename, response.data.id, () => {
-            self.save = self.progress(1)
+            self.progress(2, 1)
           })
-        })
-        .catch(err => {
-          console.log(err)
-        })
+          resolve()
+        } catch (err) {
+          reject(err)
+        }
+      })
     },
-    async selectFile() {
+    async select() {
       const self = this
       const store = self.store
       const file = await store.fileOpen(self.fileType)
-      self.step('md5')
       self.isdisabled = !self.isdisabled
-      const md5 = await store.fileMD5(file, function(p) {
-        self.md5 = self.progress(p)
+      const md5 = await store.fileMD5(file, function (p) {
+        self.progress(p, 0)
       })
-      const handler = await store.fileHandler()
-
-      const ret = await store.fileHas(md5, file.extension, handler)
+      const handler = await store.fileHandler('store-1251022382', 'ap-nanjing')
+      const ret = await store.fileHas(md5, file.extension, handler, self.dir)
 
       if (ret !== null) {
-        self.saveFile(ret.md5, ret.extension, file, handler)
+        await self.saveFile(ret.md5, ret.extension, file, handler)
       } else {
-        const r = await store.fileUpload(
+        await store.fileUpload(
           md5,
           file.extension,
           file,
-          function(p) {
-            self.upload = self.progress(p)
+          function (p) {
+            self.progress(p, 1)
           },
-          handler
+          handler,
+          self.dir
         )
-        self.saveFile(md5, file.extension, file, handler)
+        await self.saveFile(md5, file.extension, file, handler)
       }
     }
   }

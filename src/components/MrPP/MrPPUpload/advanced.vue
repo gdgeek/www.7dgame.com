@@ -25,11 +25,7 @@
             <el-progress :percentage="save.percentage" />
           </div>
           <el-divider />
-          <el-button
-            type="primary"
-            :disabled="isdisabled"
-            @click="selectFile()"
-          >
+          <el-button type="primary" :disabled="isdisabled" @click="select()">
             <slot>11</slot>
           </el-button>
         </div>
@@ -109,47 +105,50 @@ export default {
       return ret
     },
 
-    saveFile(md5, extension, file, handler) {
+    save(md5, extension, file, handler) {
       const self = this
+
       return new Promise(async function (resolve, reject) {
-        const data = {
-          size: file.size,
-          type: file.type,
-          filename: file.name,
-          md5,
-          key: md5 + extension,
-          url: self.store.fileUrl(md5, extension, handler)
+        try {
+          const data = {
+            filename: file.name,
+            md5,
+            key: md5 + extension,
+            url: self.store.fileUrl(md5, extension, handler, 'advnced')
+          }
+          self.step('succeed')
+
+          self.upload = self.progress(1)
+          const response = await postFile(data)
+
+          self.save = self.progress(0.5)
+          console.error(response)
+          self.$emit('saveResource', data.filename, response.data.id, () => {
+            self.save = self.progress(1)
+            resolve(true)
+          })
+        } catch (err) {
+          reject(err)
         }
-        self.step('succeed')
-
-        self.upload = self.progress(1)
-        const response = await postFile(data)
-
-        self.save = self.progress(0.5)
-        console.error(response)
-        self.$emit('saveResource', data.filename, response.data.id, () => {
-          self.save = self.progress(1)
-          resolve(true)
-        })
       })
     },
-    async selectFile() {
+    async select() {
       const self = this
-
       const store = self.store
+
       const file = await store.fileOpen(self.fileType)
       self.step('md5')
       self.isdisabled = !self.isdisabled
       const md5 = await store.fileMD5(file, function (p) {
         self.md5 = self.progress(p)
       })
-      const handler = await store.fileHandler()
-      console.error(handler)
+      const handler = await store.fileHandler('store-1251022382', 'ap-nanjing')
+
       let ret = await store.fileHas(md5, file.extension, handler)
+
       if (ret !== null) {
         self.convert = self.progress(1)
-        alert(JSON.stringify(ret))
-        await self.saveFile(ret.md5, ret.extension, file, handler)
+        await self.save(ret.md5, ret.extension, file, handler)
       } else {
         const r = await store.fileUpload(
           md5,
@@ -164,7 +163,7 @@ export default {
           self.convert = self.progress(p)
         })
 
-        await self.saveFile(cvt.md5, cvt.extension, file, handler)
+        await self.save(cvt.md5, cvt.extension, file, handler)
       }
     }
   }

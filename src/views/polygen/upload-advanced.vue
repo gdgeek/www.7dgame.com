@@ -1,6 +1,7 @@
 <template>
   <div>
     <mr-p-p-upload
+      dir="advanced"
       :advanced="true"
       :file-type="fileType"
       @saveResource="savePolygen"

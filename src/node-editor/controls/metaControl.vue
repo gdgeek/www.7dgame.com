@@ -2,7 +2,9 @@
   <div>
     <el-form ref="value" :model="value" size="mini">
       <el-form-item :inline="true" class="el-form-item" label="名称">
-        <el-tag size="small" type="success" @click="changeMetaName(value.id)"> {{ value.name }}</el-tag>
+        <el-tag size="small" type="success" @click="changeMetaName(value.id)">
+          {{ value.name }}
+        </el-tag>
       </el-form-item>
 
       <el-form-item class="el-form-item" hidden label="id">
@@ -10,16 +12,20 @@
       </el-form-item>
 
       <el-form-item :inline="true" class="el-form-item" label="操作">
-        <el-button type="success" plain :disabled="value.id === -1" @click="editor(value.id)"> 进入编辑</el-button>
+        <el-button
+          type="success"
+          plain
+          :disabled="value.id === -1"
+          @click="editor(value.id)"
+        >
+          进入编辑
+        </el-button>
       </el-form-item>
-
     </el-form>
   </div>
-
 </template>
 
 <script>
-
 import { putMeta } from '@/api/v1/meta'
 export default {
   props: ['data', 'root', 'emitter', 'getData', 'putData'],
@@ -59,27 +65,31 @@ export default {
         inputValue: self.value.name
         // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         // inputErrorMessage: '邮箱格式不正确'
-      }).then(({ value }) => {
-        putMeta(id, { name: value }).then(() => {
-          self.value.name = value
-          this.$message({
-            type: 'success',
-            message: '新的名称是: ' + value
+      })
+        .then(({ value }) => {
+          putMeta(id, { name: value }).then(() => {
+            self.value.name = value
+            this.$message({
+              type: 'success',
+              message: '新的名称是: ' + value
+            })
           })
         })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          })
         })
-      })
     },
     editor(id) {
-      this.root.$router.push({ path: '/verse/meta/editor', query: { id }})
+      this.root.$router.push({ path: '/verse/meta/editor', query: { id } })
     },
 
     refresh() {
-      if (this.data) { this.putData(this.data.key, this.value) }
+      if (this.data) {
+        this.putData(this.data.key, this.value)
+      }
       this.emitter.trigger('process', { status: 'node' })
     }
   }
@@ -87,8 +97,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-form-item{
-    margin-top:-10px;
+.el-form-item {
+  margin-top: -10px;
 }
 </style>
-

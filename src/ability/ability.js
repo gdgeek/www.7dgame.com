@@ -66,6 +66,7 @@ export function UpdateAbility($ability, roles, userId) {
       '/site/logout',
       '/resource/',
       /^\/polygen[\/]/,
+      /^\/space[\/]/,
       /^\/picture[\/]/,
       /^\/video[\/]/,
       /^\/home[\/]/,
@@ -106,80 +107,5 @@ export function UpdateAbility($ability, roles, userId) {
     }
   })
 
-  /*
-  if (roles.find(role => role === 'root')) {
-    // 根用户
-    can(['root'])
-    const menu = [/^\/manager[\/]/]
-
-    menu.forEach(item => {
-      if (typeof item === 'string') {
-        can(['open', 'goto'], AbilityRouter.name, { path: item })
-      } else {
-        can(['open', 'goto'], AbilityRouter.name, { path: { $regex: item } })
-      }
-    })
-  }
-
-  if (roles.find(role => role === 'root' || role === 'manager')) {
-    // 管理员
-    can(['manager'])
-    const manager = ['/verse-share/open', /^\/trades[\/]/]
-    manager.forEach(item => {
-      if (typeof item === 'string') {
-        can(['open', 'goto'], AbilityRouter.name, { path: item })
-      } else {
-        can(['open', 'goto'], AbilityRouter.name, { path: { $regex: item } })
-      }
-    })
-
-    can(['share'], AbilityShare.name)
-    can(['update', 'delete'], AbilityWorks.name)
-
-    can(['delete'], AbilityMessage.name, { managed: 0 })
-    can(['update'], AbilityMessage.name)
-  }
-
-  if (
-    roles.find(role => role === 'root' || role === 'manager' || role === 'user')
-  ) {
-    can(['share'], AbilityShare.name, { share: true })
-    can(['update', 'delete'], AbilityWorks.name, { id: userId })
-    //share
-    can(['delete'], AbilityMessage.name, { id: userId, managed: 0 })
-    can(['update'], AbilityMessage.name, { id: userId })
-
-    const menu = [
-      '/site/logout',
-      '/resource/',
-      /^\/polygen[\/]/,
-      /^\/picture[\/]/,
-      /^\/video[\/]/,
-      /^\/home[\/]/,
-      /^\/verse[\/]/,
-      /^\/settings[\/]/,
-      /^\/discovery[\/]/,
-      /^\/community[\/]/
-    ]
-
-    menu.forEach(item => {
-      if (typeof item === 'string') {
-        can(['open', 'goto'], AbilityRouter.name, { path: item })
-      } else {
-        can(['open', 'goto'], AbilityRouter.name, { path: { $regex: item } })
-      }
-    })
-
-    const router = ['/verse/editor', '/verse/meta/editor', '/verse/code']
-
-    router.forEach(item => {
-      if (typeof item === 'string') {
-        can(['goto'], AbilityRouter.name, { path: item })
-      } else {
-        can(['goto'], AbilityRouter.name, { path: { $regex: item } })
-      }
-    })
-  }
-*/
   $ability.update(rules)
 }

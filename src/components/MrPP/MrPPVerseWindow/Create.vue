@@ -5,7 +5,7 @@
     :close-on-click-modal="false"
     width="70%"
   >
-    <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+    <el-form ref="info" :rules="rules" :model="info" label-width="80px">
       <el-form-item label="封面图片">
         <mr-p-p-cropper
           ref="image"
@@ -15,15 +15,15 @@
         />
       </el-form-item>
       <el-form-item prop="name" label="名称">
-        <el-input v-model="form.name" />
+        <el-input v-model="info.name" />
       </el-form-item>
 
       <el-form-item label="内容说明">
-        <el-input v-model="form.description" type="textarea" />
+        <el-input v-model="info.description" type="textarea" />
       </el-form-item>
 
       <el-form-item v-if="$can('manager')" label="绑定教程">
-        <el-input v-model="form.course" type="number" />
+        <el-input v-model="info.course" type="number" />
       </el-form-item>
 
       <!-- 载入截图组件 -->
@@ -52,6 +52,7 @@ export default {
       type: String,
       default: '选择文件'
     },
+
     dialogSubmit: {
       type: String,
       default: '确定'
@@ -61,7 +62,7 @@ export default {
     return {
       dialogVisible: false,
       imageUrl: null,
-      form: {
+      info: {
         name: '',
         description: '',
         course: -1
@@ -88,7 +89,7 @@ export default {
       const self = this
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$emit('submit', self.form, self.item, self.imageId)
+          this.$emit('submit', self.info, self.item, self.imageId)
         } else {
           console.log('error submit!!')
           return false
@@ -103,12 +104,12 @@ export default {
           self.$refs['image'].setImageUrl(this.item.image.url)
         }, 0)
         // alert(this.item.image.url)
-        this.form.name = this.item.name
+        this.info.name = this.item.name
         const info = JSON.parse(this.item.info)
 
         if (info !== null) {
-          this.form.description = info.description
-          this.form.course = info.course
+          this.info.description = info.description
+          this.info.course = info.course
         }
       }
       this.dialogVisible = true

@@ -1,6 +1,6 @@
 <template>
   <div class="verse-index">
-    <mr-p-p-verse-window-create
+    <create
       v-if="created"
       ref="createdDialog"
       :close-on-click-modal="false"
@@ -60,7 +60,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import { postVerse, putVerse } from '@/api/v1/verse'
 import MrPPVerseList from '@/components/MrPP/MrPPVerseList'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
-import MrPPVerseWindowCreate from '@/components/MrPP/MrPPVerseWindow/Create.vue'
+import Create from '@/components/MrPP/MrPPVerseWindow/Create.vue'
 
 import { mapState } from 'vuex'
 export default {
@@ -68,7 +68,7 @@ export default {
   components: {
     MrPPVerseList,
     MrPPHeader,
-    MrPPVerseWindowCreate
+    Create
   },
 
   props: {

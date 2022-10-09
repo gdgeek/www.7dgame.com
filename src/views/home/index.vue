@@ -23,6 +23,7 @@
   </div>
 </template>
 <script>
+import url from 'url'
 import { mapState } from 'vuex'
 import environment from '@/environment.js'
 import Document from '@/components/Document.vue'

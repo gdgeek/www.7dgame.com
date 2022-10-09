@@ -8,4 +8,3 @@ export function postFile(data) {
     data
   })
 }
-

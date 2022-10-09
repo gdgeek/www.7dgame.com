@@ -6,7 +6,6 @@
       </el-form-item>
     </el-form>
   </div>
-
 </template>
 
 <script>
@@ -39,10 +38,7 @@ export default {
         this.data.callback(this.root)
       }
     },
-    refresh() {
-
-    }
+    refresh() {}
   }
 }
 </script>
-
