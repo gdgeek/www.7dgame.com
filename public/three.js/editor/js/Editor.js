@@ -412,10 +412,12 @@ Editor.prototype = {
 	//
 
 	select: function (object) {
-		if (typeof object.locked !== 'undefined' && object.locked === true) {
+		if (
+			this.selected === object ||
+			(typeof object.locked !== 'undefined' && object.locked)
+		) {
 			return
 		}
-		if (this.selected === object) return
 
 		var uuid = null
 

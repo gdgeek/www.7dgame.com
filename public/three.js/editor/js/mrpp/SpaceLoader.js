@@ -4,17 +4,7 @@ import { SceneBuilder } from './SceneBuilder.js'
 function SpaceLoader(editor) {
 	const self = this
 	const builder = new SceneBuilder(editor)
-	this.loadSpace = async function (space) {
-		//alert(space.mesh.url)
-		const mesh = await builder.loadPolygen(space.mesh.url)
-
-		mesh.name = 'Space'
-		mesh.locked = true
-		mesh.children.forEach(item => {
-			item.locked = true
-		})
-		console.error(mesh)
-		builder.addPolygen(mesh)
+	this.addPointLight = async function () {
 		const light = {
 			metadata: {
 				version: 4.5,
@@ -51,9 +41,18 @@ function SpaceLoader(editor) {
 
 		let node = await builder.parseNode(light)
 		node.locked = true
-		builder.addPolygen(node)
-		//console.error(mesh)
-		//alert(mesh)
+		builder.addNode(node)
+	}
+	this.loadSpace = async function (space) {
+		const mesh = await builder.loadPolygen(space.mesh.url)
+		mesh.name = 'Space'
+		mesh.locked = true
+		mesh.children.forEach(item => {
+			item.locked = true
+		})
+
+		builder.addNode(mesh)
+		this.addPointLight()
 	}
 	this.load = async function (data) {
 		console.error(data.space)

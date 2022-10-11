@@ -40,6 +40,9 @@ function SidebarScene(editor) {
 			if (object.children.length > 0) {
 				opener.classList.add(state ? 'open' : 'closed')
 			}
+			if (typeof object.locked !== 'undefined' && object.locked) {
+				opener.classList.add('locked')
+			}
 
 			opener.addEventListener('click', function () {
 				nodeStates.set(object, nodeStates.get(object) === false) // toggle

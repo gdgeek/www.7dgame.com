@@ -155,6 +155,9 @@ textarea, input { outline: none; } /* osx */
 		content: '+';
 	}
 
+	#outliner .opener.locked:after {
+		content: '#';
+	}
 #outliner .option {
 
 	border: 1px solid transparent;

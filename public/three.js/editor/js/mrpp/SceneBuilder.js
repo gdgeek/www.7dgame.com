@@ -403,10 +403,10 @@ class SceneBuilder {
 			resolve(polygen)
 		})
 	}
-	addPolygen(node) {
-		const self = this
+	addNode(node) {
 		self.editor.addObject(node)
 	}
+	/*
 	addNode(data, parent, resources) {
 		const self = this
 
@@ -444,7 +444,7 @@ class SceneBuilder {
 					reject(error)
 				})
 		})
-	}
+	}*/
 	/*
 	draw(data, resources) {
 		const self = this
