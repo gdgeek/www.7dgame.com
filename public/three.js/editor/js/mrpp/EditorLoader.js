@@ -7,7 +7,7 @@ function EditorLoader(editor) {
 
 	this.load = function (input) {
 		console.error(input)
-		/*
+
 		const data = JSON.parse(input.data)
 
 		console.error(data)
@@ -22,7 +22,7 @@ function EditorLoader(editor) {
 			.catch(error => {
 				alert(error)
 			})
-			*/
+		/*	*/
 		// const output = creater.translation(data)
 		//editor.fromJSON(output)
 		//	console.error(JSON.stringify(editor.toJSON()))

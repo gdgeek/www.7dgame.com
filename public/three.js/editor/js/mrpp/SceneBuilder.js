@@ -11,35 +11,15 @@ import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
 						'../../examples/jsm/loaders/GLTFLoader.js'
 					)
 */
-class SceneCreater {
+class SceneBuilder {
 	constructor(editor) {
 		this.editor = editor
 	}
-	/*
-	loadNode(polygen) { 
-
-		thePolygen(data, resources) {
-			const self = this
-			return new Promise((resolve, reject) => {
-				const id = data.parameters['polygen']
-				let node = resources.get(id).clone()
-	
-				const matrix4 = self.getMatrix4(data)
-				node.applyMatrix4(matrix4)
-				node.name = JSON.stringify(data.parameters['name'])
-				node.uuid = data.parameters['uuid']
-				node.visible = data.parameters['active']
-				resolve(polygen)
-			})
-		}
-	}*/
-	loadPolygen(url) {
+	async loadPolygen(url) {
 		return new Promise((resolve, reject) => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
 			const dracoLoader = new DRACOLoader()
-
-			dracoLoader.setDecoderPath('/three.js/examples/js/libs/draco/')
-			//dracoLoader.setDecoderPath('../../../examples/js/libs/draco/')
+			dracoLoader.setDecoderPath('./draco/')
 			loader.setDRACOLoader(dracoLoader)
 			const self = this
 
@@ -52,16 +32,27 @@ class SceneCreater {
 				},
 				// called while loading is progressing
 				function (xhr) {
-					console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+					console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
 				},
 				// called when loading has errors
 				function (error) {
 					reject(error)
-					console.log('An error happened')
+					console.error('An error happened')
 				}
 			)
 		})
 	}
+	/*
+	async loadGltf(url) {
+		return new Promise((resolve, reject) => {
+			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
+			const dracoLoader = new DRACOLoader()
+			dracoLoader.setDecoderPath('../../../examples/js/libs/draco/')
+			//const gltf = new GLTFLoader()
+			loader.setDRACOLoader(dracoLoader)
+			const self = this
+		})
+	}*/
 	loadResources(resources) {
 		return new Promise((resolve, reject) => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
@@ -123,7 +114,7 @@ class SceneCreater {
 			object: {
 				uuid: '5e92b5bf-1c29-4983-a833-c2c8f7135fb7',
 				type: 'PerspectiveCamera',
-				name: 'Camera',
+				name: 'Camera111',
 				layers: 1,
 				matrix: [
 					1, 0, 0, 0, 0, 0.8944271909999156, -0.447213595499958, 0, 0,
@@ -149,25 +140,10 @@ class SceneCreater {
 	getScripts() {
 		return {}
 	}
-	getMatrix4(position, scale, rotate) {
-		const matrix = new THREE.Matrix4().makeRotationFromEuler(
-			new THREE.Euler(
-				THREE.Math.degToRad(rotate.x),
-				THREE.Math.degToRad(rotate.y),
-				THREE.Math.degToRad(rotate.z),
-				'XYZ'
-			)
-		)
-		const matrix2 = new THREE.Matrix4().makeScale(scale.x, scale.y, scale.z)
-		matrix.multiply(matrix2).setPosition(position.x, position.y, position.z)
-		return matrix
-	}
 	getMatrix4(data) {
 		const p = data.parameters['transform'].position
 		const s = data.parameters['transform'].scale
 		const r = data.parameters['transform'].rotate
-		return this.getMatrix4(p, s, r)
-		/*
 		const rotate = new THREE.Matrix4().makeRotationFromEuler(
 			new THREE.Euler(
 				THREE.Math.degToRad(r.x),
@@ -179,7 +155,19 @@ class SceneCreater {
 		const scale = new THREE.Matrix4().makeScale(s.x, s.y, s.z)
 
 		rotate.multiply(scale).setPosition(p.x, p.y, p.z)
-		return rotate*/
+		return rotate
+	}
+	async parseNode(json) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				var loader = new THREE.ObjectLoader()
+				const data = await loader.parseAsync(json)
+				resolve(data)
+			} catch (e) {
+				alert(e)
+				reject(e)
+			}
+		})
 	}
 	theNode(data) {
 		const self = this
@@ -212,6 +200,32 @@ class SceneCreater {
 				})
 		})
 	}
+	/*{
+				"uuid": "8af2edba-43bd-4bb3-be26-ad5695b9ef2f",
+				"type": "PointLight",
+				"name": "PointLight",
+				"layers": 1,
+				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+				"color": 16777215,
+				"intensity": 3,
+				"distance": 0,
+				"decay": 0,
+				"shadow": {
+					"camera": {
+						"uuid": "9d0910b6-4fb1-443e-9df8-24a7a7792c4d",
+						"type": "PerspectiveCamera",
+						"layers": 1,
+						"fov": 90,
+						"zoom": 1,
+						"near": 0.5,
+						"far": 500,
+						"focus": 10,
+						"aspect": 1,
+						"filmGauge": 35,
+						"filmOffset": 0
+					}
+				}
+			} */
 	getNode(data, resource) {
 		const self = this
 		//	alert(data.type)
@@ -389,7 +403,10 @@ class SceneCreater {
 			resolve(polygen)
 		})
 	}
-
+	addPolygen(node) {
+		const self = this
+		self.editor.addObject(node)
+	}
 	addNode(data, parent, resources) {
 		const self = this
 
@@ -428,6 +445,7 @@ class SceneCreater {
 				})
 		})
 	}
+	/*
 	draw(data, resources) {
 		const self = this
 		var loader = new THREE.ObjectLoader()
@@ -444,7 +462,7 @@ class SceneCreater {
 				})
 			})
 		})
-	}
+	}*/
 }
 
-export { SceneCreater }
+export { SceneBuilder }

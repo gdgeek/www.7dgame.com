@@ -85,7 +85,7 @@
 			import { Sidebar } from './js/Sidebar.js'
 			import { Menubar } from './js/Menubar.js'
 			import { Resizer } from './js/Resizer.js'
-			import { EditorLoader } from './js/mrpp/EditorLoader.js'
+			import { SpaceLoader } from './js/mrpp/SpaceLoader.js'
 			import { VRButton } from '../examples/jsm/webxr/VRButton.js'
 
 			window.URL = window.URL || window.webkitURL
@@ -239,7 +239,7 @@
 			///
 			const urlParams = new URLSearchParams(window.location.search)
 			const id = urlParams.get('id')
-			const eloader = new EditorLoader(editor)
+			const spaceLoader = new SpaceLoader(editor)
 			const loader = new THREE.FileLoader(THREE.DefaultLoadingManager)
 			//const url = 'http://api.mrpp.com/v1/editors/' + id + '?expand=resources'
 
@@ -248,11 +248,13 @@
 				id +
 				'?expand=links,resources,space'
 			//alert(url)
+
 			loader.load(
 				url,
-				text => {
-					const data = JSON.parse(text)
-					eloader.load(data)
+				json => {
+					const data = JSON.parse(json)
+					//alert(json)
+					spaceLoader.load(data)
 				},
 				press => {},
 				error => {
