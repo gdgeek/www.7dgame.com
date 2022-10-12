@@ -4,6 +4,63 @@ import { SceneBuilder } from './SceneBuilder.js'
 function SpaceLoader(editor) {
 	const self = this
 	const builder = new SceneBuilder(editor)
+	this.addCube = async function (name, matrix) {
+		const cube = {
+			metadata: {
+				version: 4.5,
+				type: 'Object',
+				generator: 'Object3D.toJSON'
+			},
+			geometries: [
+				{
+					uuid: '8eaf1f06-553d-45d5-bb9a-04ed816351f9',
+					type: 'BoxGeometry',
+					width: 0.2,
+					height: 0.2,
+					depth: 0.2,
+					widthSegments: 1,
+					heightSegments: 1,
+					depthSegments: 1
+				}
+			],
+			materials: [
+				{
+					uuid: '991c8558-5842-428d-943a-209f26e7fb81',
+					type: 'MeshStandardMaterial',
+					color: 16777215,
+					roughness: 1,
+					metalness: 0,
+					emissive: 0,
+					envMapIntensity: 1,
+					depthFunc: 3,
+					depthTest: true,
+					depthWrite: true,
+					colorWrite: true,
+					stencilWrite: false,
+					stencilWriteMask: 255,
+					stencilFunc: 519,
+					stencilRef: 0,
+					stencilFuncMask: 255,
+					stencilFail: 7680,
+					stencilZFail: 7680,
+					stencilZPass: 7680
+				}
+			],
+			object: {
+				uuid: 'a8093fca-44f0-4f69-b17d-7a7be3819fe0',
+				type: 'Mesh',
+				name: 'Box',
+				layers: 1,
+				matrix,
+				geometry: '8eaf1f06-553d-45d5-bb9a-04ed816351f9',
+				material: '991c8558-5842-428d-943a-209f26e7fb81'
+			}
+		}
+		let node = await builder.parseNode(cube)
+		node.name = name
+		//node.locked = true
+		builder.addNode(node)
+	}
 	this.addPointLight = async function () {
 		const light = {
 			metadata: {
@@ -43,6 +100,17 @@ function SpaceLoader(editor) {
 		node.locked = true
 		builder.addNode(node)
 	}
+	this.loadMetas = async function (verse) {
+		const self = this
+		verse.children.metas.forEach(async meta => {
+			console.error(meta)
+			const ret = builder.getMatrix4(meta.parameters.transform)
+
+			await self.addCube(meta.parameters.meta.name, ret.elements)
+			//console.error(ret.elements)
+		})
+		//	THREE.Matrix4 matrix4 =
+	}
 	this.loadSpace = async function (space) {
 		const mesh = await builder.loadPolygen(space.mesh.url)
 		mesh.name = 'Space'
@@ -53,10 +121,13 @@ function SpaceLoader(editor) {
 
 		builder.addNode(mesh)
 		this.addPointLight()
+
+		//this.addCube()
 	}
 	this.load = async function (data) {
-		console.error(data.space)
+		const verse = JSON.parse(data.data)
 
+		await self.loadMetas(verse)
 		await self.loadSpace(data.space)
 
 		/*console.error(input)

@@ -32,7 +32,7 @@ class SceneBuilder {
 				},
 				// called while loading is progressing
 				function (xhr) {
-					console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
+					//console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
 				},
 				// called when loading has errors
 				function (error) {
@@ -140,10 +140,12 @@ class SceneBuilder {
 	getScripts() {
 		return {}
 	}
-	getMatrix4(data) {
-		const p = data.parameters['transform'].position
-		const s = data.parameters['transform'].scale
-		const r = data.parameters['transform'].rotate
+	getMatrix4(transform) {
+		console.error(transform)
+
+		const p = transform.position
+		const s = transform.scale
+		const r = transform.rotate
 		const rotate = new THREE.Matrix4().makeRotationFromEuler(
 			new THREE.Euler(
 				THREE.Math.degToRad(r.x),
@@ -155,7 +157,7 @@ class SceneBuilder {
 		const scale = new THREE.Matrix4().makeScale(s.x, s.y, s.z)
 
 		rotate.multiply(scale).setPosition(p.x, p.y, p.z)
-		return rotate
+		return rotate /*	*/
 	}
 	async parseNode(json) {
 		return new Promise(async (resolve, reject) => {
