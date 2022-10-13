@@ -95,6 +95,13 @@
 			Number.prototype.format = function () {
 				return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 			}
+			window.addEventListener('message', e => {
+				//alert(JSON.stringify(e.data))
+			})
+			let info = {
+				msg: '我是子页面'
+			}
+			window.parent.postMessage(info, '*')
 
 			//
 

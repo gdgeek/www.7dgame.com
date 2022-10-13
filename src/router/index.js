@@ -42,7 +42,23 @@ export const constantRoutes = [
     name: 'Root',
     redirect: '/home/index',
     component: Layout,
+
     children: [
+      {
+        path: 'editor',
+        name: 'Editor',
+        meta: { title: '编辑器' },
+        redirect: '/editor/index',
+        component: Empty,
+        children: [
+          {
+            meta: { title: '编辑器' },
+            path: 'index',
+            name: 'EditorIndex',
+            component: () => import('@/views/editor/index')
+          }
+        ]
+      },
       {
         meta: { title: '个人中心' },
         path: 'home',
@@ -224,21 +240,7 @@ export const constantRoutes = [
           }
         ]
       },
-      {
-        path: 'editor',
-        name: 'Editor',
-        meta: { title: '编辑器' },
-        redirect: '/editor/index',
-        component: Empty,
-        children: [
-          {
-            meta: { title: '编辑器' },
-            path: 'index',
-            name: 'EditorIndex',
-            component: () => import('@/views/editor/index')
-          }
-        ]
-      },
+
       {
         path: 'verse',
         name: 'Verse',

@@ -121,6 +121,7 @@ export default {
       briefing: { title: 'sdfsdf', body: 'eee' }
     }
   },
+
   computed: {
     ...mapState({
       word: state => state.settings.word,

@@ -1,13 +1,12 @@
 <template>
   <div>
-    <el-card class="card" >
+    <el-card class="card">
       <document :post-id="id" />
     </el-card>
   </div>
 </template>
 
 <script>
-
 import Document from '@/components/Document.vue'
 // @ is an alias to /src
 export default {
@@ -24,7 +23,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .card {
   font-size: 14px;
   margin: 20px;
@@ -34,5 +32,4 @@ export default {
   //background-attachment: fixed;
   //background-size: cover;
 }
-
 </style>

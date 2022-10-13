@@ -73,7 +73,8 @@ export function UpdateAbility($ability, roles, userId) {
       /^\/verse[\/]/,
       /^\/settings[\/]/,
       /^\/discovery[\/]/,
-      /^\/community[\/]/
+      /^\/community[\/]/,
+      /^\/editor[\/]/
     ])
 
     if (roles.find(role => role === 'root' || role === 'manager')) {
