@@ -3,8 +3,10 @@ import * as THREE from 'three'
 import { SceneBuilder } from './SceneBuilder.js'
 function SpaceLoader(editor) {
 	const self = this
+	editor.spaceLoader = this
 	const builder = new SceneBuilder(editor)
-	this.addCube = async function (name, matrix) {
+	let verse = null
+	this.addCube = async function (name, uuid, matrix) {
 		const cube = {
 			metadata: {
 				version: 4.5,
@@ -47,7 +49,7 @@ function SpaceLoader(editor) {
 				}
 			],
 			object: {
-				uuid: 'a8093fca-44f0-4f69-b17d-7a7be3819fe0',
+				uuid: uuid,
 				type: 'Mesh',
 				name: 'Box',
 				layers: 1,
@@ -105,8 +107,12 @@ function SpaceLoader(editor) {
 		verse.children.metas.forEach(async meta => {
 			console.error(meta)
 			const ret = builder.getMatrix4(meta.parameters.transform)
-
-			await self.addCube(meta.parameters.meta.name, ret.elements)
+			//	alert(meta.parameters.uuid)
+			await self.addCube(
+				meta.parameters.meta.name,
+				meta.parameters.uuid,
+				ret.elements
+			)
 			//console.error(ret.elements)
 		})
 		//	THREE.Matrix4 matrix4 =
@@ -124,11 +130,50 @@ function SpaceLoader(editor) {
 
 		//this.addCube()
 	}
-	this.load = async function (data) {
-		const verse = JSON.parse(data.data)
+	this.save = async function () {
+		const metas = self.verse.children.metas
+		//let newMetas = []
+		metas.forEach(meta => {
+			const node = editor.objectByUuid(meta.parameters.uuid)
+			if (node) {
+				meta.parameters.meta.name = node.name
+				meta.parameters.transform.position = node.position
+				meta.parameters.transform.rotate = {
+					x: node.rotation.x,
+					y: node.rotation.y,
+					z: node.rotation.z
+				}
+				meta.parameters.transform.scale = {
+					x: node.scale.x,
+					y: node.scale.y,
+					z: node.scale.z
+				}
+				console.error('=======')
+				console.error(node.rotation.x)
+				//	meta.parameters.transform.rotate = node.rotation
+				//	meta.parameters.transform.scale = node.scale
+				meta.parameters.transform.active = node.visible
+				//	newMetas.push(meta)
+			}
+		})
+		//alert(window)
 
-		await self.loadMetas(verse)
-		await self.loadSpace(data.space)
+		window.URL = window.URL || window.webkitURL
+		window.BlobBuilder =
+			window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder
+		const data = {
+			from: 'space-loader',
+			action: 'save-verse',
+			verse: JSON.stringify(self.verse)
+		}
+
+		window.parent.postMessage(data, '*')
+		console.error(self.verse)
+	}
+	this.load = async function (data) {
+		self.loadSpace(data.space)
+		self.verse = JSON.parse(data.data)
+		self.loadMetas(self.verse)
 
 		/*console.error(input)
 

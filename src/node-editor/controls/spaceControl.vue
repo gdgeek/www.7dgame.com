@@ -19,6 +19,7 @@
                 :src="item.image.url"
                 fit="contain"
               ></el-image>
+              <el-checkbox v-model="occlusion" border>模型遮挡</el-checkbox>
               <el-button-group slot="reference">
                 <el-button type="primary" plain @click="select()" size="mini">
                   {{ item.id }}:{{ item.title }}
@@ -48,7 +49,8 @@ export default {
   data() {
     return {
       item: null,
-      value_: -1
+      value_: -1,
+      occlusion: false
     }
   },
   computed: {
@@ -77,12 +79,10 @@ export default {
   },
   methods: {
     click() {
-      const url = path.join(
-        '/three.js/editor',
-        'space-editor.html' +
-          qs.stringify({ id: this.root.$route.query.id }, true)
-      )
-      window.open(url, '_blank')
+      this.root.$router.push({
+        path: '/editor/index',
+        query: { id: this.root.$route.query.id }
+      })
     },
     select() {
       this.root.$store.commit('setOnSpace', this.onSpace)

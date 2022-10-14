@@ -16,8 +16,9 @@
 
 <script>
 var qs = require('querystringify')
-import { getMeta } from '@/api/v1/meta'
 var path = require('path')
+
+import { putVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseEditor',
   data() {
@@ -51,26 +52,22 @@ export default {
   mounted() {
     const self = this
     window.addEventListener('message', e => {
-      //   alert(JSON.stringify(e.data))
-      self.editor = document.getElementById('editor')
-      self.editor.contentWindow.postMessage('hi data~', '*')
+      if (e.data.from === 'space-loader') {
+        if (e.data.action == 'save-verse') {
+          self.saveVerse(e.data.verse)
+        }
+      }
+
       /*if (e.data && e.data.verify === 'mrpp.com') {
         self.postMessage(e.data)
       }*/
     })
   },
   methods: {
-    postMessage(data) {
-      const self = this
-      if (data.action === 'loaded') {
-        self.editor = document.getElementById('editor')
-
-        if (self.data !== null) {
-          const data = { verify: 'mrpp.com', action: 'load', data: self.data }
-          self.editor.contentWindow.postMessage(data, '*')
-          self.data = null
-        }
-      }
+    async saveVerse(verse) {
+      await putVerse(this.id, { data: verse })
+      const iframe = document.getElementById('editor')
+      iframe.contentWindow.location.reload(true)
     }
   }
 }
