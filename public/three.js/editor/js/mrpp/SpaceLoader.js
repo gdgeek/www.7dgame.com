@@ -6,6 +6,76 @@ function SpaceLoader(editor) {
 	editor.spaceLoader = this
 	const builder = new SceneBuilder(editor)
 	let verse = null
+	this.addMeta = async function (name, uuid, matrix, context) {
+		//alert(JSON.stringify(context.children.entities))
+		const data = {
+			metadata: {
+				version: 4.5,
+				type: 'Object',
+				generator: 'Object3D.toJSON'
+			},
+			object: {
+				uuid: uuid,
+				type: 'Group',
+				name: name,
+				layers: 1,
+				matrix: matrix.elements,
+				children: this.getNodes(context.children.entities)
+			}
+		}
+
+		let node = await builder.parseNode(data)
+		//node.name = name
+		//node.locked = true
+		builder.addNode(node)
+	}
+	this.getNodes = function (entities) {
+		if (typeof entities === 'undefined' || entities === null) {
+			return []
+		}
+		const list = []
+
+		entities.forEach(entity => {
+			const node = this.getNode(entity)
+			list.push(node)
+		})
+		return list
+	}
+	this.getNode = function (entity) {
+		switch (entity.type.toLowerCase()) {
+			case 'polygen':
+				return this.getPolygen(entity)
+			default:
+				return this.getPoint(entity)
+		}
+	}
+	this.getPolygen = function (entity) {
+		const matrix = builder.getMatrix4(entity.parameters.transform)
+
+		alert(entity.parameters.uuid)
+		return {
+			//locked: true,
+			uuid: entity.parameters.uuid,
+			type: 'Group',
+			name: entity.parameters.name,
+			layers: 1,
+			matrix: matrix.elements,
+			children: this.getNodes(entity.children.entities)
+		}
+	}
+	this.getPoint = function (entity) {
+		const matrix = builder.getMatrix4(entity.parameters.transform)
+
+		return {
+			//locked: true,
+			uuid: entity.parameters.uuid,
+			type: 'Group',
+			name: entity.parameters.name,
+			layers: 1,
+			matrix: matrix.elements,
+			children: this.getNodes(entity.children.entities)
+		}
+	}
 	this.addCube = async function (name, uuid, matrix) {
 		const cube = {
 			metadata: {
@@ -102,37 +172,60 @@ function SpaceLoader(editor) {
 		node.locked = true
 		builder.addNode(node)
 	}
-	this.loadMetas = async function (verse) {
+	this.loadMetas = async function (verse, links) {
 		const self = this
+
+		let map = new Map()
+		links.forEach(m => {
+			map.set(m.id, JSON.parse(m.data))
+		})
+
 		verse.children.metas.forEach(async meta => {
-			console.error(meta)
-			const ret = builder.getMatrix4(meta.parameters.transform)
+			const matrix = builder.getMatrix4(meta.parameters.transform)
+			//alert(JSON.stringify(meta.parameters.id))
+			if (map.has(meta.parameters.id)) {
+				const data = map.get(meta.parameters.id)
+
+				await self.addMeta(
+					meta.parameters.title,
+					meta.parameters.uuid,
+					matrix,
+					data
+				)
+			} else {
+				await self.addCube(
+					meta.parameters.title,
+					meta.parameters.uuid,
+					matrix.elements
+				)
+			}
+
+			//console.error(meta)
+			//	const ret = builder.getMatrix4(meta.parameters.transform)
 			//	alert(meta.parameters.uuid)
-			await self.addCube(
-				meta.parameters.meta.name,
-				meta.parameters.uuid,
-				ret.elements
-			)
+
+			//await self.addMeta()
 			//console.error(ret.elements)
 		})
 		//	THREE.Matrix4 matrix4 =
 	}
 	this.loadSpace = async function (space) {
 		const mesh = await builder.loadPolygen(space.mesh.url)
+		console.error('=========')
+		console.error(mesh)
 		mesh.name = 'Space'
+		mesh.uuid = space.mesh.md5
 		mesh.locked = true
 		mesh.children.forEach(item => {
 			item.locked = true
 		})
 
 		builder.addNode(mesh)
-		this.addPointLight()
 
 		//this.addCube()
 	}
 	this.save = async function () {
 		const metas = self.verse.children.metas
-		//let newMetas = []
 		metas.forEach(meta => {
 			const node = editor.objectByUuid(meta.parameters.uuid)
 			if (node) {
@@ -148,12 +241,8 @@ function SpaceLoader(editor) {
 					y: node.scale.y,
 					z: node.scale.z
 				}
-				console.error('=======')
-				console.error(node.rotation.x)
-				//	meta.parameters.transform.rotate = node.rotation
-				//	meta.parameters.transform.scale = node.scale
+
 				meta.parameters.transform.active = node.visible
-				//	newMetas.push(meta)
 			}
 		})
 		//alert(window)
@@ -172,9 +261,12 @@ function SpaceLoader(editor) {
 	}
 	this.load = async function (data) {
 		self.loadSpace(data.space)
-		self.verse = JSON.parse(data.data)
-		self.loadMetas(self.verse)
 
+		self.addPointLight()
+		self.verse = JSON.parse(data.data)
+		self.loadMetas(self.verse, data.links)
+
+		console.error(data)
 		/*console.error(input)
 
 		const data = JSON.parse(input.data)

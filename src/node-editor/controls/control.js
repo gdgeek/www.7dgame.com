@@ -5,6 +5,7 @@ import VueNumControl from './numControl.vue'
 import MetaControl from './metaControl.vue'
 import TransformControl from './transformControl.vue'
 import StringControl from './stringControl.vue'
+import TitleControl from './titleControl.vue'
 import SelectControl from './selectControl.vue'
 import MetaNameControl from './metaNameControl.vue'
 import BoolControl from './boolControl.vue'
@@ -24,6 +25,8 @@ import PolygenResetControl from './polygenResetControl.vue'
 export class Control extends Rete.Control {
   constructor(emitter, { data, root, node }) {
     super(data.key)
+
+    //data.type)
     switch (data.type) {
       case 'select':
         this.component = SelectControl
@@ -42,6 +45,9 @@ export class Control extends Rete.Control {
         break
       case 'string':
         this.component = StringControl
+        break
+      case 'title':
+        this.component = TitleControl
         break
       case 'meta-name':
         this.component = MetaNameControl
@@ -100,5 +106,10 @@ export class Control extends Rete.Control {
   setValue(val) {
     this.vueContext.value = val
     this.vueContext.refresh()
+  }
+  $emit(action, value) {
+    //console.error(this.vueContext.$emit)
+    this.vueContext.$emit(action, value)
+    // alert(action)
   }
 }

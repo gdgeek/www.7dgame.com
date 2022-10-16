@@ -9,12 +9,6 @@ var MetaRootType = {
     {
       type: 'uuid',
       key: 'uuid'
-    },
-    {
-      type: 'meta-name',
-      key: 'name',
-      title: '名称',
-      readonly: false
     }
   ],
   inputs: [

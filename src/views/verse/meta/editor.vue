@@ -9,7 +9,7 @@
                 {{ word.project }}{{ meta.verse.name }}
               </el-link>
             </router-link>
-            / {{ word.entity }}{{ metaName }}
+            / {{ word.entity }}{{ title }}
             <el-button-group style="float: right">
               <el-button type="primary" size="mini" @click="arrange()">
                 <font-awesome-icon icon="project-diagram" />
@@ -66,6 +66,9 @@ export default {
     }),
     id() {
       return parseInt(this.$route.query.id)
+    },
+    title() {
+      return this.$route.query.title
     },
     canSave() {
       const self = this

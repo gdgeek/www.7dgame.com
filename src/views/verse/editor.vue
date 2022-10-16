@@ -78,57 +78,41 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     const self = this
 
     // this.setData({ redirect: null, path: '/polygen/index', meta: { title: 'sdfsdf' }})
     self.setVerseId(this.id)
-    getVerse(this.id).then(response => {
-      console.error(response.data.share)
-      self.setVerseData(response.data)
-      self.verse = response.data
+    const response = await getVerse(this.id)
+    self.setVerseData(response.data)
+    self.verse = response.data
 
-      if (self.verse.data !== null) {
-        const json = JSON.parse(self.verse.data)
-        if (!json.children && json.chieldren) {
-          json.children = json.chieldren
-          json.chieldren = undefined
-          self.verse.data = JSON.stringify(json)
+    if (self.verse.data !== null) {
+      const data = await self.setup(self.verse.data)
+
+      response.data.metas.forEach(meta => {
+        if (!data.children.metas.find(item => item.parameters.id === meta.id)) {
+          self.addMeta(meta)
         }
-        self.setup(self.verse.data).then(data => {
-          response.data.metas.forEach(meta => {
-            if (
-              !json.children.metas.find(
-                item => item.parameters.meta.id === meta.id
-              )
-            ) {
-              self.addMeta(meta)
-            }
-          })
+      })
 
-          self.loading = false
-        })
-      } else {
-        self.create({ name: self.verse.name, id: self.verse.id }).then(data => {
-          self.saveVerse(JSON.stringify(data)).then(response => {
-            self.loading = false
-          })
-        })
-      }
-    })
+      self.loading = false
+    } else {
+      const data = await self.create({
+        name: self.verse.name,
+        id: self.verse.id
+      })
+      await self.saveVerse(JSON.stringify(data))
+      self.loading = false
+    }
   },
+
   methods: {
     ...mapMutations('verse', ['setVerseId', 'setVerseData']),
     ...mapActions('verse', {
       saveVerse: 'saveVerse'
     }),
-    ...mapMutations([
-      'setPolygenList',
-      'setPictureList',
-      'setVideoList',
-      'receiveSpace',
-      'cancelSpace'
-    ]),
+    ...mapMutations(['spaceSelect', 'spaceSetCallback']),
     addMeta(meta) {
       return this.$refs.rete.addMeta(meta)
     },
@@ -139,10 +123,10 @@ export default {
       return this.$refs.rete.setup(data)
     },
     selected(data) {
-      this.receiveSpace(data)
+      this.spaceSelect(data)
     },
     cancel() {
-      this.cancelSpace()
+      this.spaceSetCallback(null)
     },
     save() {
       this.$refs.rete.save()

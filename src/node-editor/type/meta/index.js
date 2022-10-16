@@ -9,9 +9,16 @@ var MetaType = {
       key: 'uuid'
     },
     {
-      type: 'meta',
-      key: 'meta',
+      type: 'num',
+      key: 'id',
+      hidden: true,
       readonly: true
+    },
+    {
+      type: 'title',
+      key: 'title',
+      title: '标题',
+      readonly: false
     },
     {
       type: 'transform',

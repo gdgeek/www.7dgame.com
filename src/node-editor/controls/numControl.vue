@@ -1,10 +1,14 @@
 <template>
-  <el-form :inline="true" size="mini">
+  <el-form :hidden="hidden" :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" :label="data.title">
-      <el-input v-model="value" step="0.01" type="number" :readonly="data.readonly" />
+      <el-input
+        v-model="value"
+        step="0.01"
+        type="number"
+        :readonly="data.readonly"
+      />
     </el-form-item>
   </el-form>
-
 </template>
 
 <script>
@@ -25,8 +29,13 @@ export default {
         this.value_ = value
         this.refresh()
       }
+    },
+    hidden() {
+      if (typeof this.data.hidden !== 'undefined' && this.data.hidden) {
+        return true
+      }
+      return false
     }
-
   },
   mounted() {
     const value = this.getData(this.data.key)
@@ -41,15 +50,14 @@ export default {
   },
 
   methods: {
-
     refresh() {
-      if (this.data) { this.putData(this.data.key, this.value) }
+      if (this.data) {
+        this.putData(this.data.key, this.value)
+      }
       this.emitter.trigger('process', { status: 'node' })
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
-
+<style lang="scss" scoped></style>

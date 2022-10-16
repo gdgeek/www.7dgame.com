@@ -63,16 +63,15 @@ export class Component extends Rete.Component {
   worker(node, inputs, outputs, callback) {
     const data = {}
     data.type = this.type_.title
-    console.log(node)
-    console.log(inputs)
     if (
       typeof this.type_.controls !== 'undefined' &&
       this.type_.controls !== null
     ) {
       data.parameters = {}
       this.type_.controls.forEach(ctrl => {
-        // alert(ctrl.key)
-        data.parameters[ctrl.key] = node.data[ctrl.key]
+        if (typeof ctrl.ignore === 'undefined' || !ctrl.ignore) {
+          data.parameters[ctrl.key] = node.data[ctrl.key]
+        }
       })
     }
 

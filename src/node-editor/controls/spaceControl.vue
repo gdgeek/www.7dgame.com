@@ -2,7 +2,7 @@
   <div>
     <el-form :inline="true" ref="value" size="mini">
       <el-form-item :inline="true" class="el-form-item" label="场景">
-        <div v-if="value_ === -1">
+        <div v-if="id === -1">
           <el-button @click="select()" size="mini">未指派</el-button>
         </div>
         <div v-else>
@@ -22,7 +22,7 @@
               <el-checkbox v-model="occlusion" border>模型遮挡</el-checkbox>
               <el-button-group slot="reference">
                 <el-button type="primary" plain @click="select()" size="mini">
-                  {{ item.id }}:{{ item.title }}
+                  {{ id }}:{{ item.title }}
                 </el-button>
 
                 <el-button
@@ -40,8 +40,6 @@
 </template>
 
 <script>
-var qs = require('querystringify')
-var path = require('path')
 import { getSpace } from '@/api/v1/space'
 export default {
   props: ['data', 'root', 'emitter', 'getData', 'putData'],
@@ -49,27 +47,50 @@ export default {
   data() {
     return {
       item: null,
-      value_: -1,
-      occlusion: false
+      id_: -2,
+      occlusion_: false
     }
   },
   computed: {
-    value: {
+    occlusion: {
       get() {
-        return this.value_
+        return this.occlusion_
       },
       set(value) {
-        if (this.value_ !== value) {
-          this.value_ = value
-          this.refresh()
+        this.occlusion_ = value
+        this.refresh()
+      }
+    },
+
+    id: {
+      get() {
+        return this.id_
+      },
+      set(value) {
+        this.id_ = value
+        this.reload()
+        this.refresh()
+      }
+    },
+    value: {
+      get() {
+        return { id: this.id_, occlusion: this.occlusion_ }
+      },
+      set(value) {
+        if (this.id_ != value.id) {
+          this.id_ = value.id
+          this.reload()
         }
+        this.occlusion_ = value.occlusion
+
+        this.refresh()
       }
     }
   },
   mounted() {
     const value = this.getData(this.data.key)
 
-    if (typeof value !== 'undefined') {
+    if (typeof value === 'object') {
       this.value = value
     } else if (typeof this.data.default !== 'undefined') {
       this.value = this.data.default
@@ -85,38 +106,37 @@ export default {
       })
     },
     select() {
-      this.root.$store.commit('setOnSpace', this.onSpace)
+      this.root.$store.commit('spaceSetCallback', this.onSpace)
     },
 
     onSpace(data) {
       if (data === null) {
-        this.value = -1
+        this.id = -1
         this.item = null
       } else {
-        this.value = data.id
+        this.id = data.id
         this.item = data
       }
+      this.refresh()
     },
-
-    async refresh() {
-      if (this.data) {
-        this.putData(this.data.key, this.value)
-      }
+    reload() {
       const self = this
       if (
-        self.value !== -1 &&
-        (this.item === null || this.value != this.item.id)
+        self.value.id !== -1 &&
+        (this.item === null || this.value.id != this.item.id)
       ) {
-        try {
-          const response = await getSpace(self.value, {
-            expand: 'author,image'
-          })
+        getSpace(self.value.id, {
+          expand: 'author,image'
+        }).then(response => {
           if (response.data !== null) {
-            this.item = response.data
+            self.item = response.data
           }
-        } catch (err) {
-          alert(err)
-        }
+        })
+      }
+    },
+    refresh() {
+      if (this.data) {
+        this.putData(this.data.key, this.value)
       }
       this.emitter.trigger('process', { status: 'node' })
     }

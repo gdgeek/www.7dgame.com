@@ -4,42 +4,69 @@
  * Released under the MIT license.
  */
 import { postMeta, deleteMeta } from '@/api/v1/meta'
-var randomWords = require('random-words')
+//var randomWords = require('random-words')
+let removeNope = -1
+// editor.connect(n1.outputs.get('num'), add.inputs.get('num'))
 function install(editor, options) {
-  editor.on('noderemove', component => {
-   
+  editor.on('noderemove', async component => {
     if (component.name !== 'Meta' || editor.silent) {
       return true
     }
-    const data = component.data['meta']
-    if (data !== null && data.id !== -1) {
-      deleteMeta(data.id).then(() => {
-        console.log('delete ok')
+    const id = component.data['id']
+
+    if (id !== -1) {
+      removeNope = component.id
+      setTimeout(() => {
+        removeNope = -1
       })
+      try {
+        await deleteMeta(id)
+        console.log('delete ok' + id)
+      } catch (e) {
+        console.error(e)
+      }
     } else {
       return false
     }
     return true
   })
+  editor.on('connectionremove', connection => {
+    if (connection.output.node.id === removeNope) {
+      return true
+    }
 
-  editor.on('nodecreate', component => {
+    return false
+  })
+  editor.on('nodecreate', async component => {
     if (component.name !== 'Meta' || editor.silent) {
       return true
     }
 
-    const meta = component.controls.get('meta')
-    if (typeof component.data['meta'] === 'undefined' || component.data['meta'] === null) {
-      component.data['meta'] = { name: '初始化...', id: -1 }
-      postMeta({
-        verse_id: options.verseId,
-        name: randomWords()
-      }).then(response => {
-        if (meta !== null) {
-          const data = response.data
-          meta.setValue({ name: data.name, id: data.id })
-        }
-      })
+    //component.controls.get('title').setId(123)
+
+    if (typeof component.data['meta'] !== 'undefined') {
+      component.data['id'] = component.data['meta'].id
+      component.data['title'] = component.data['meta'].name
     }
+
+    let id = component.data['id']
+
+    if (typeof id === 'undefined') {
+      const response = await postMeta({
+        verse_id: options.verseId
+      })
+      const data = response.data
+      id = data.id
+      component.controls.get('id').setValue(id)
+
+      const verse = editor.nodes.find(n => n.name === 'Verse')
+      if (verse !== null) {
+        editor.connect(component.outputs.get('out'), verse.inputs.get('metas'))
+      }
+    }
+    setTimeout(() => {
+      component.controls.get('title').$emit('setId', id)
+    })
 
     return true
   })

@@ -11,7 +11,8 @@ var VerseType = {
     {
       type: 'verse-name',
       key: 'verse',
-      readonly: true
+      readonly: true,
+      ignore: true
     },
     {
       type: 'button',

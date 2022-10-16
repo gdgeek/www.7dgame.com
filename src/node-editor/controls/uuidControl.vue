@@ -1,5 +1,5 @@
 <template>
-  <el-form hidden :inline="true" size="mini">
+  <el-form :hidden="true" :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" :label="'UUID'">
       <el-input v-model="value" :readonly="true" />
     </el-form-item>
@@ -26,10 +26,11 @@ export default {
   methods: {
     refresh() {
       // alert(this.value)
-      if (this.data) { this.putData(this.data.key, this.value) }
+      if (this.data) {
+        this.putData(this.data.key, this.value)
+      }
       this.emitter.trigger('process', { status: 'node' })
     }
   }
 }
 </script>
-

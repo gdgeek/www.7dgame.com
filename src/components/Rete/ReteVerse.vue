@@ -3,7 +3,14 @@
 </template>
 
 <script>
-import { initVerse, setup, create, arrange, save, addMeta } from '@/node-editor/verse'
+import {
+  initVerse,
+  setup,
+  create,
+  arrange,
+  save,
+  addMeta
+} from '@/node-editor/verse'
 
 export default {
   props: {
@@ -48,11 +55,13 @@ export default {
   height: 1000px;
 }
 
-.node .control input, .node .input-control input {
+.node .control input,
+.node .input-control input {
   width: 140px;
 }
 
-select, input {
+select,
+input {
   width: 100%;
   border-radius: 30px;
   background-color: white;

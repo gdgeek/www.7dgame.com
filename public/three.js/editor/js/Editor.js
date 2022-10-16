@@ -444,8 +444,6 @@ Editor.prototype = {
 		var scope = this
 
 		this.scene.traverse(function (child) {
-			console.error(child)
-			console.error(child.uuid)
 			if (child.uuid === uuid) {
 				scope.select(child)
 			}

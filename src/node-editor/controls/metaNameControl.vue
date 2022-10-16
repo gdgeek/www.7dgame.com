@@ -1,14 +1,14 @@
 <template>
   <el-form :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" :label="data.title">
-
-      <el-tag type="success" size="small" @click="changeMetaName()"> {{ value.name }}</el-tag>
+      <el-tag type="success" size="small" @click="changeMetaName()">
+        {{ value.name }}
+      </el-tag>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-
 import { putMeta } from '@/api/v1/meta'
 export default {
   props: ['data', 'root', 'emitter', 'getData', 'putData'],
@@ -25,7 +25,6 @@ export default {
       return this.root.$store.state.settings.word
     },
     metaName: {
-
       get() {
         return this.root.$store.state.meta.data.name
       },
@@ -50,23 +49,25 @@ export default {
         cancelButtonText: '取消',
         closeOnClickModal: false,
         inputValue: self.value.name
-      }).then(({ value }) => {
-        putMeta(id, { name: value }).then(() => {
-          this.root.$store.commit('meta/setMetaName', value)
-          self.value.name = value
-          //  this.root.$store.state.meta.data.name = value
-          this.$message({
-            type: 'success',
-            message: '新的名称是: ' + value
-          })
-          this.refresh()
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
       })
+        .then(({ value }) => {
+          putMeta(id, { name: value }).then(() => {
+            this.root.$store.commit('meta/setMetaName', value)
+            self.value.name = value
+            //  this.root.$store.state.meta.data.name = value
+            this.$message({
+              type: 'success',
+              message: '新的名称是: ' + value
+            })
+            this.refresh()
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          })
+        })
     },
     refresh() {
       if (this.data) {
@@ -77,4 +78,3 @@ export default {
   }
 }
 </script>
-
