@@ -6,7 +6,9 @@
           <el-button @click="select()" size="mini">未指派</el-button>
         </div>
         <div v-else>
-          <div v-if="item === null"><i>载入中</i></div>
+          <div v-if="item === null">
+            <i>载入中{{ id }}</i>
+          </div>
           <div v-else>
             <el-popover
               placement="top-start"
@@ -47,7 +49,7 @@ export default {
   data() {
     return {
       item: null,
-      id_: -2,
+      id_: -1,
       occlusion_: false
     }
   },

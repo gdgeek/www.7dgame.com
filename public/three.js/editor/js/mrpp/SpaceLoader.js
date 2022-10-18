@@ -78,7 +78,7 @@ function SpaceLoader(editor) {
 			const resource = resources.get(entity.parameters.polygen)
 			const node = await builder.loadPolygen(resource.fileData.url)
 			node.name = entity.parameters.name
-			node.uuid = entity.parameters.uuid
+			node.uuid = resource.fileData.md5
 			node.matrix = matrix
 			return node
 		}
@@ -200,6 +200,8 @@ function SpaceLoader(editor) {
 		const metas = self.verse.children.metas
 		metas.forEach(meta => {
 			const node = editor.objectByUuid(meta.parameters.uuid)
+
+			//alert(JSON.stringify(node))
 			if (node) {
 				meta.parameters.meta.name = node.name
 				meta.parameters.transform.position = node.position

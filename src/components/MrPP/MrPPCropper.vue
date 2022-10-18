@@ -214,12 +214,14 @@ export default {
     },
     saveFile(md5, extension, file, handler) {
       const self = this
-      self.url = self.store.fileUrl(md5, extension, handler)
+      const url = self.store.fileUrl(md5, extension, handler, 'backup')
+
+      self.url = url
       const data = {
         filename: file.name,
         md5,
         key: md5 + extension,
-        url: self.store.fileUrl(md5, extension, handler, 'backup')
+        url
       }
 
       postFile(data)

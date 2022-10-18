@@ -31,7 +31,7 @@
 
     <span slot="footer" class="dialog-footer">
       <el-button @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="submitForm('form')">
+      <el-button type="primary" @click="submitForm('info')">
         {{ dialogSubmit }}
       </el-button>
     </span>
