@@ -48,7 +48,12 @@ function SpaceLoader(editor) {
 	}
 	this.getPoint = async function (entity, resources) {
 		const matrix = builder.getMatrix4(entity.parameters.transform)
-
+		return await this.createNode(
+			entity.parameters.name,
+			entity.parameters.uuid,
+			matrix
+		)
+		/*
 		const data = {
 			metadata: {
 				version: 4.5,
@@ -64,7 +69,7 @@ function SpaceLoader(editor) {
 			}
 		}
 		let node = await builder.parseNode(data)
-		return node
+		return node*/
 	}
 	this.getPolygen = async function (entity, resources) {
 		const matrix = builder.getMatrix4(entity.parameters.transform)
@@ -104,7 +109,27 @@ function SpaceLoader(editor) {
 		})
 		return node
 	}
-	this.addPointLight = async function () {
+	this.createNode = async function (name, uuid, matrix) {
+		const data = {
+			metadata: {
+				version: 4.5,
+				type: 'Object',
+				generator: 'Object3D.toJSON'
+			},
+			object: {
+				uuid,
+				type: 'Group',
+				name,
+				layers: 1,
+				matrix: matrix.elements
+			}
+		}
+
+		let node = await builder.parseNode(data)
+		return node
+	}
+
+	this.loadLight = async function () {
 		const light = {
 			metadata: {
 				version: 4.5,
@@ -114,7 +139,7 @@ function SpaceLoader(editor) {
 			object: {
 				uuid: '10331223-0128-441b-b358-c3016a6ecc2f',
 				type: 'Group',
-				name: 'Space',
+				name: 'Room',
 				layers: 1,
 				matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
 				children: [
@@ -125,7 +150,7 @@ function SpaceLoader(editor) {
 						layers: 1,
 						matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
 						color: 16777215,
-						intensity: 1,
+						intensity: 3,
 						distance: 0,
 						decay: 1,
 						shadow: {
@@ -151,33 +176,26 @@ function SpaceLoader(editor) {
 						layers: 1,
 						matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
 						color: 2236962,
-						intensity: 1
+						intensity: 2
 					}
 				]
 			}
 		}
 
 		let node = await builder.parseNode(light)
-		this.lockNode(node)
-		builder.addNode(node)
-	}
-	this.loadMetas = async function (verse, metas, resources) {
-		const self = this
 
-		verse.children.metas.forEach(async meta => {
-			if (metas.has(meta.parameters.id)) {
-				const data = metas.get(meta.parameters.id)
-				await self.addMeta(meta, data, resources)
-			}
-		})
+		return node
+		//this.lockNode(node)
+		//builder.addNode(node)
 	}
+
 	this.loadRoom = async function (room) {
 		const node = await builder.loadPolygen(room.mesh.url)
-		node.name = 'Room'
+		node.name = 'Space'
 		node.uuid = room.mesh.md5
-		this.lockNode(node)
-		builder.addNode(node)
+		return node
 	}
+
 	this.save = async function () {
 		const metas = self.verse.children.metas
 		metas.forEach(meta => {
@@ -213,10 +231,15 @@ function SpaceLoader(editor) {
 		window.parent.postMessage(data, '*')
 		console.error(self.verse)
 	}
-	this.load = async function (data) {
-		self.verse = JSON.parse(data.data)
-		self.loadRoom(data.space)
-		self.addPointLight()
+	this.loadSpace = async function (data) {
+		const light = await self.loadLight()
+		builder.addNode(light)
+		const room = await self.loadRoom(data.space)
+		light.add(room)
+		this.lockNode(light)
+	}
+	this.loadMetas = async function (data) {
+		const self = this
 
 		let metas = new Map()
 		data.links.forEach(m => {
@@ -226,7 +249,19 @@ function SpaceLoader(editor) {
 		data.resources.forEach(r => {
 			resources.set(r.id, r)
 		})
-		self.loadMetas(self.verse, metas, resources)
+		//const verse = JSON.parse(data.data)
+		this.verse.children.metas.forEach(async meta => {
+			if (metas.has(meta.parameters.id)) {
+				const data = metas.get(meta.parameters.id)
+				await self.addMeta(meta, data, resources)
+			}
+		})
+	}
+	this.load = async function (data) {
+		self.verse = JSON.parse(data.data)
+
+		self.loadMetas(data)
+		self.loadSpace(data)
 	}
 }
 export { SpaceLoader }
