@@ -6,7 +6,8 @@ function SpaceLoader(editor) {
 	editor.spaceLoader = this
 	const builder = new SceneBuilder(editor)
 	let verse = null
-	this.addMeta = async function (name, uuid, matrix, context) {
+	this.addMeta = async function (meta, context, resources) {
+		const matrix = builder.getMatrix4(meta.parameters.transform)
 		//alert(JSON.stringify(context.children.entities))
 		const data = {
 			metadata: {
@@ -15,123 +16,93 @@ function SpaceLoader(editor) {
 				generator: 'Object3D.toJSON'
 			},
 			object: {
-				uuid: uuid,
+				uuid: meta.parameters.uuid,
 				type: 'Group',
-				name: name,
+				name: meta.parameters.title,
 				layers: 1,
-				matrix: matrix.elements,
-				children: this.getNodes(context.children.entities)
+				matrix: matrix.elements
 			}
 		}
 
 		let node = await builder.parseNode(data)
-		//node.name = name
-		//node.locked = true
+		const children = await this.getNodes(context.children.entities, resources)
+
+		children.forEach(child => {
+			this.lockNode(child)
+			node.add(child)
+		})
+
 		builder.addNode(node)
 	}
-	this.getNodes = function (entities) {
+	this.getNodes = async function (entities, resources) {
 		if (typeof entities === 'undefined' || entities === null) {
 			return []
 		}
 		const list = []
 
-		entities.forEach(entity => {
-			const node = this.getNode(entity)
+		for (let i = 0; i < entities.length; ++i) {
+			const node = await this.getNode(entities[i], resources)
 			list.push(node)
-		})
+		}
 		return list
 	}
-	this.getNode = function (entity) {
-		switch (entity.type.toLowerCase()) {
-			case 'polygen':
-				return this.getPolygen(entity)
-			default:
-				return this.getPoint(entity)
-		}
-	}
-	this.getPolygen = function (entity) {
+	this.getPoint = async function (entity, resources) {
 		const matrix = builder.getMatrix4(entity.parameters.transform)
 
-		alert(entity.parameters.uuid)
-		return {
-			//locked: true,
-			uuid: entity.parameters.uuid,
-			type: 'Group',
-			name: entity.parameters.name,
-			layers: 1,
-			matrix: matrix.elements,
-			children: this.getNodes(entity.children.entities)
-		}
-	}
-	this.getPoint = function (entity) {
-		const matrix = builder.getMatrix4(entity.parameters.transform)
-
-		return {
-			//locked: true,
-			uuid: entity.parameters.uuid,
-			type: 'Group',
-			name: entity.parameters.name,
-			layers: 1,
-			matrix: matrix.elements,
-			children: this.getNodes(entity.children.entities)
-		}
-	}
-	this.addCube = async function (name, uuid, matrix) {
-		const cube = {
+		const data = {
 			metadata: {
 				version: 4.5,
 				type: 'Object',
 				generator: 'Object3D.toJSON'
 			},
-			geometries: [
-				{
-					uuid: '8eaf1f06-553d-45d5-bb9a-04ed816351f9',
-					type: 'BoxGeometry',
-					width: 0.2,
-					height: 0.2,
-					depth: 0.2,
-					widthSegments: 1,
-					heightSegments: 1,
-					depthSegments: 1
-				}
-			],
-			materials: [
-				{
-					uuid: '991c8558-5842-428d-943a-209f26e7fb81',
-					type: 'MeshStandardMaterial',
-					color: 16777215,
-					roughness: 1,
-					metalness: 0,
-					emissive: 0,
-					envMapIntensity: 1,
-					depthFunc: 3,
-					depthTest: true,
-					depthWrite: true,
-					colorWrite: true,
-					stencilWrite: false,
-					stencilWriteMask: 255,
-					stencilFunc: 519,
-					stencilRef: 0,
-					stencilFuncMask: 255,
-					stencilFail: 7680,
-					stencilZFail: 7680,
-					stencilZPass: 7680
-				}
-			],
 			object: {
-				uuid: uuid,
-				type: 'Mesh',
-				name: 'Box',
+				uuid: entity.parameters.uuid,
+				type: 'Group',
+				name: entity.parameters.name,
 				layers: 1,
-				matrix,
-				geometry: '8eaf1f06-553d-45d5-bb9a-04ed816351f9',
-				material: '991c8558-5842-428d-943a-209f26e7fb81'
+				matrix: matrix.elements
 			}
 		}
-		let node = await builder.parseNode(cube)
-		node.name = name
-		//node.locked = true
-		builder.addNode(node)
+		let node = await builder.parseNode(data)
+		return node
+	}
+	this.getPolygen = async function (entity, resources) {
+		const matrix = builder.getMatrix4(entity.parameters.transform)
+
+		if (resources.has(entity.parameters.polygen)) {
+			const resource = resources.get(entity.parameters.polygen)
+			const node = await builder.loadPolygen(resource.fileData.url)
+			node.name = entity.parameters.name
+			node.uuid = entity.parameters.uuid
+			node.matrix = matrix
+			return node
+		}
+
+		return await this.getPoint(entity, resources)
+	}
+	this.lockNode = function (node) {
+		node.locked = true
+
+		node.children.forEach(item => {
+			this.lockNode(item)
+		})
+	}
+	this.getNode = async function (entity, resources) {
+		let node = null
+		switch (entity.type.toLowerCase()) {
+			case 'polygen':
+				node = await this.getPolygen(entity, resources)
+				break
+		}
+		if (node === null) {
+			node = await this.getPoint(entity, resources)
+		}
+
+		const children = await this.getNodes(entity.children.entities, resources)
+		children.forEach(child => {
+			node.add(child)
+		})
+		return node
 	}
 	this.addPointLight = async function () {
 		const light = {
@@ -141,88 +112,71 @@ function SpaceLoader(editor) {
 				generator: 'Object3D.toJSON'
 			},
 			object: {
-				uuid: '8af2edba-43bd-4bb3-be26-ad5695b9ef2f',
-				type: 'PointLight',
-				name: 'PointLight',
+				uuid: '10331223-0128-441b-b358-c3016a6ecc2f',
+				type: 'Group',
+				name: 'Space',
 				layers: 1,
 				matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-				color: 16777215,
-				intensity: 3,
-				distance: 0,
-				decay: 0,
-				shadow: {
-					camera: {
-						uuid: '9d0910b6-4fb1-443e-9df8-24a7a7792c4d',
-						type: 'PerspectiveCamera',
+				children: [
+					{
+						uuid: 'f4c131be-dac2-4a72-8e72-fbabc4e430bb',
+						type: 'PointLight',
+						name: 'PointLight',
 						layers: 1,
-						fov: 90,
-						zoom: 1,
-						near: 0.5,
-						far: 500,
-						focus: 10,
-						aspect: 1,
-						filmGauge: 35,
-						filmOffset: 0
+						matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+						color: 16777215,
+						intensity: 1,
+						distance: 0,
+						decay: 1,
+						shadow: {
+							camera: {
+								uuid: '7abda5ad-ed09-41e1-b92e-725193795879',
+								type: 'PerspectiveCamera',
+								layers: 1,
+								fov: 90,
+								zoom: 1,
+								near: 0.5,
+								far: 500,
+								focus: 10,
+								aspect: 1,
+								filmGauge: 35,
+								filmOffset: 0
+							}
+						}
+					},
+					{
+						uuid: '8b6b5b36-c5ed-4c21-9453-a8dd04ca53fe',
+						type: 'AmbientLight',
+						name: 'AmbientLight',
+						layers: 1,
+						matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+						color: 2236962,
+						intensity: 1
 					}
-				}
+				]
 			}
 		}
 
 		let node = await builder.parseNode(light)
-		node.locked = true
+		this.lockNode(node)
 		builder.addNode(node)
 	}
-	this.loadMetas = async function (verse, links) {
+	this.loadMetas = async function (verse, metas, resources) {
 		const self = this
 
-		let map = new Map()
-		links.forEach(m => {
-			map.set(m.id, JSON.parse(m.data))
-		})
-
 		verse.children.metas.forEach(async meta => {
-			const matrix = builder.getMatrix4(meta.parameters.transform)
-			//alert(JSON.stringify(meta.parameters.id))
-			if (map.has(meta.parameters.id)) {
-				const data = map.get(meta.parameters.id)
-
-				await self.addMeta(
-					meta.parameters.title,
-					meta.parameters.uuid,
-					matrix,
-					data
-				)
-			} else {
-				await self.addCube(
-					meta.parameters.title,
-					meta.parameters.uuid,
-					matrix.elements
-				)
+			if (metas.has(meta.parameters.id)) {
+				const data = metas.get(meta.parameters.id)
+				await self.addMeta(meta, data, resources)
 			}
-
-			//console.error(meta)
-			//	const ret = builder.getMatrix4(meta.parameters.transform)
-			//	alert(meta.parameters.uuid)
-
-			//await self.addMeta()
-			//console.error(ret.elements)
 		})
-		//	THREE.Matrix4 matrix4 =
 	}
-	this.loadSpace = async function (space) {
-		const mesh = await builder.loadPolygen(space.mesh.url)
-		console.error('=========')
-		console.error(mesh)
-		mesh.name = 'Space'
-		mesh.uuid = space.mesh.md5
-		mesh.locked = true
-		mesh.children.forEach(item => {
-			item.locked = true
-		})
-
-		builder.addNode(mesh)
-
-		//this.addCube()
+	this.loadRoom = async function (room) {
+		const node = await builder.loadPolygen(room.mesh.url)
+		node.name = 'Room'
+		node.uuid = room.mesh.md5
+		this.lockNode(node)
+		builder.addNode(node)
 	}
 	this.save = async function () {
 		const metas = self.verse.children.metas
@@ -260,55 +214,19 @@ function SpaceLoader(editor) {
 		console.error(self.verse)
 	}
 	this.load = async function (data) {
-		self.loadSpace(data.space)
-
-		self.addPointLight()
 		self.verse = JSON.parse(data.data)
-		self.loadMetas(self.verse, data.links)
+		self.loadRoom(data.space)
+		self.addPointLight()
 
-		console.error(data)
-		/*console.error(input)
-
-		const data = JSON.parse(input.data)
-
-		console.error(data)
-		console.error(input.resources)
-
-		editor.clear()*/
-		/*
-		creater
-			.loadResources(input.resources)
-			.then(resources => {
-				creater.draw(data, resources)
-			})
-			.catch(error => {
-				alert(error)
-			})*/
-		/*	*/
-		// const output = creater.translation(data)
-		//editor.fromJSON(output)
-		//	console.error(JSON.stringify(editor.toJSON()))
-		/*
- $base->scripts = [];
-        $script = new \stdClass();
-        $script->name = "test";
-        $script->source = "function update( event ) {}";
-        $base->history = new \stdClass();
-        $base->history->undos = [];
-        $base->history->redos = [];
-        $base->scripts["d0bb29f8-83ca-4321-acbc-72af4ca24fa8"] = [$script];
-        $base->metadate = new \stdClass();
-
-        $base->project = Meta2Editor::HandleProject();
-        $base->camera = Meta2Editor::HandleCamera();
-        $base->scene = Meta2Editor::CreateScene($meta);
-        $ret = new \stdClass();
-        $ret->base = $base;
-        $ret->objects = [];
-        return $ret;
-
-        */
-		//	editor.fromJSON(input.editor.base)
+		let metas = new Map()
+		data.links.forEach(m => {
+			metas.set(m.id, JSON.parse(m.data))
+		})
+		let resources = new Map()
+		data.resources.forEach(r => {
+			resources.set(r.id, r)
+		})
+		self.loadMetas(self.verse, metas, resources)
 	}
 }
 export { SpaceLoader }
