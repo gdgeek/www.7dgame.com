@@ -12,7 +12,10 @@ function MenubarStatus(editor) {
 	const button = new UIButton('Save')
 	button.onClick(function () {
 		console.log(editor)
-		editor.spaceLoader.save()
+
+		editor.signals.sceneGraphChanged.dispatch()
+		editor.signals.upload.dispatch()
+		//	editor.spaceLoader.save()
 		const scene = editor.scene
 
 		console.log(scene)

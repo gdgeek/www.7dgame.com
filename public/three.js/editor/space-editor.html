@@ -95,13 +95,6 @@
 			Number.prototype.format = function () {
 				return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 			}
-			window.addEventListener('message', e => {
-				//alert(JSON.stringify(e.data))
-			})
-			let info = {
-				msg: '我是子页面'
-			}
-			window.parent.postMessage(info, '*')
 
 			//
 
@@ -243,31 +236,38 @@
 				} catch (error) {}
 			}
 
-			///
-			const urlParams = new URLSearchParams(window.location.search)
-			const id = urlParams.get('id')
 			const spaceLoader = new SpaceLoader(editor)
-			const loader = new THREE.FileLoader(THREE.DefaultLoadingManager)
-			//const url = 'http://api.mrpp.com/v1/editors/' + id + '?expand=resources'
-
-			const url =
-				'http://api.d.mrpp.com/v1/verses/' +
-				id +
-				'?expand=links,resources,space'
-			//alert(url)
-
-			loader.load(
-				url,
-				json => {
-					const data = JSON.parse(json)
-					//alert(json)
-					spaceLoader.load(data)
-				},
-				press => {},
-				error => {
-					alert(error)
+			window.addEventListener('message', e => {
+				const urlParams = new URLSearchParams(window.location.search)
+				const id = urlParams.get('id')
+				const loader = new THREE.FileLoader(THREE.DefaultLoadingManager)
+				if (e.data.verify === 'mrpp.com') {
+					switch (e.data.action) {
+						case 'load':
+						case 'reload':
+							loader.load(
+								e.data.url,
+								json => {
+									spaceLoader.load(JSON.parse(json))
+								},
+								press => {},
+								error => {
+									alert(error)
+								}
+							)
+							break
+					}
 				}
-			)
+			})
+
+			const data = {
+				from: 'mrpp-editor',
+				action: 'ready',
+				verse: JSON.stringify(self.verse)
+			}
+
+			window.parent.postMessage(data, '*')
+			///
 		</script>
 	</body>
 </html>

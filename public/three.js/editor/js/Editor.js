@@ -15,6 +15,7 @@ function Editor() {
 	var Signal = signals.Signal
 
 	this.signals = {
+		upload: new Signal(),
 		// script
 
 		editScript: new Signal(),

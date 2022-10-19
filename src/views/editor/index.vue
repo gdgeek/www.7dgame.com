@@ -17,7 +17,7 @@
 <script>
 var qs = require('querystringify')
 var path = require('path')
-
+import environment from '@/environment.js'
 import { putVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseEditor',
@@ -36,6 +36,15 @@ export default {
   computed: {
     id() {
       return parseInt(this.$route.query.id)
+    },
+    url() {
+      return (
+        environment.api +
+        path.join(
+          '/v1/verses/',
+          this.id + qs.stringify({ expand: 'links,resources,space' }, true)
+        )
+      )
     }
   },
   created() {
@@ -52,22 +61,35 @@ export default {
   mounted() {
     const self = this
     window.addEventListener('message', e => {
-      if (e.data.from === 'space-loader') {
-        if (e.data.action == 'save-verse') {
-          self.saveVerse(e.data.verse)
+      if (e.data.from === 'mrpp-editor') {
+        switch (e.data.action) {
+          case 'save-verse':
+            self.saveVerse(e.data.verse)
+            break
+          case 'ready':
+            const iframe = document.getElementById('editor')
+            const data = {
+              verify: 'mrpp.com',
+              action: 'load',
+              id: this.id,
+              url: this.url
+            }
+            iframe.contentWindow.postMessage(data, '*')
+            break
         }
       }
-
-      /*if (e.data && e.data.verify === 'mrpp.com') {
-        self.postMessage(e.data)
-      }*/
     })
   },
   methods: {
     async saveVerse(verse) {
       await putVerse(this.id, { data: verse })
       const iframe = document.getElementById('editor')
-      iframe.contentWindow.location.reload(true)
+      const data = {
+        verify: 'mrpp.com',
+        action: 'reload',
+        url: this.url
+      }
+      iframe.contentWindow.postMessage(data, '*')
     }
   }
 }

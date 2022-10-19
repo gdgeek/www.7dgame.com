@@ -1,14 +1,16 @@
 import * as THREE from 'three'
+//import { ThrowStatement } from '../libs/esprima.js'
 
 import { SceneBuilder } from './SceneBuilder.js'
 function SpaceLoader(editor) {
+	//editor.spaceLoader = this
 	const self = this
-	editor.spaceLoader = this
+
+	editor.signals.upload.add(function () {
+		self.save()
+	})
 	const builder = new SceneBuilder(editor)
-	let verse = null
-	this.addMeta = async function (meta, context, resources) {
-		const matrix = builder.getMatrix4(meta.parameters.transform)
-		//alert(JSON.stringify(context.children.entities))
+	this.createMeta = async function (meta, context, resources) {
 		const data = {
 			metadata: {
 				version: 4.5,
@@ -20,19 +22,27 @@ function SpaceLoader(editor) {
 				type: 'Group',
 				name: meta.parameters.title,
 				layers: 1,
-				matrix: matrix.elements
+				matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 			}
 		}
 
 		let node = await builder.parseNode(data)
+
+		builder.addNode(node)
 		const children = await this.getNodes(context.children.entities, resources)
 
 		children.forEach(child => {
 			this.lockNode(child)
 			node.add(child)
 		})
-
-		builder.addNode(node)
+		return node
+	}
+	this.addMeta = async function (meta, context, resources) {
+		let node = editor.objectByUuid(meta.parameters.uuid)
+		if (typeof node === 'undefined') {
+			node = await this.createMeta(meta, context, resources)
+		}
+		node.matrix = builder.getMatrix4(meta.parameters.transform)
 	}
 	this.getNodes = async function (entities, resources) {
 		if (typeof entities === 'undefined' || entities === null) {
@@ -129,7 +139,7 @@ function SpaceLoader(editor) {
 		return node
 	}
 
-	this.loadLight = async function () {
+	this.loadRoom = async function () {
 		const light = {
 			metadata: {
 				version: 4.5,
@@ -150,24 +160,18 @@ function SpaceLoader(editor) {
 						layers: 1,
 						matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
 						color: 16777215,
-						intensity: 3,
+						intensity: 1,
 						distance: 0,
-						decay: 1,
-						shadow: {
-							camera: {
-								uuid: '7abda5ad-ed09-41e1-b92e-725193795879',
-								type: 'PerspectiveCamera',
-								layers: 1,
-								fov: 90,
-								zoom: 1,
-								near: 0.5,
-								far: 500,
-								focus: 10,
-								aspect: 1,
-								filmGauge: 35,
-								filmOffset: 0
-							}
-						}
+						decay: 1
+					},
+					{
+						uuid: '9d42f72e-d9f3-4f4b-beff-069ab0922a89',
+						type: 'DirectionalLight',
+						name: 'DirectionalLight',
+						layers: 1,
+						matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 10, 7.5, 1],
+						color: 16777215,
+						intensity: 1
 					},
 					{
 						uuid: '8b6b5b36-c5ed-4c21-9453-a8dd04ca53fe',
@@ -189,21 +193,20 @@ function SpaceLoader(editor) {
 		//builder.addNode(node)
 	}
 
-	this.loadRoom = async function (room) {
-		const node = await builder.loadPolygen(room.mesh.url)
+	this.loadSpace = async function (data) {
+		const node = await builder.loadPolygen(data.mesh.url)
 		node.name = 'Space'
-		node.uuid = room.mesh.md5
+		node.uuid = data.mesh.md5
 		return node
 	}
 
 	this.save = async function () {
-		const metas = self.verse.children.metas
+		const metas = this.verse.children.metas
 		metas.forEach(meta => {
 			const node = editor.objectByUuid(meta.parameters.uuid)
 
-			//alert(JSON.stringify(node))
 			if (node) {
-				meta.parameters.meta.name = node.name
+				meta.parameters.name = node.name
 				meta.parameters.transform.position = node.position
 				meta.parameters.transform.rotate = {
 					x: node.rotation.x,
@@ -225,7 +228,7 @@ function SpaceLoader(editor) {
 		window.BlobBuilder =
 			window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder
 		const data = {
-			from: 'space-loader',
+			from: 'mrpp-editor',
 			action: 'save-verse',
 			verse: JSON.stringify(self.verse)
 		}
@@ -233,25 +236,29 @@ function SpaceLoader(editor) {
 		window.parent.postMessage(data, '*')
 		console.error(self.verse)
 	}
-	this.loadSpace = async function (data) {
-		const light = await self.loadLight()
-		builder.addNode(light)
-		const room = await self.loadRoom(data.space)
-		light.add(room)
-		this.lockNode(light)
+
+	this.loadIt = async function () {
+		let space = editor.objectByUuid(this.data.space.mesh.md5)
+		if (typeof space === 'undefined') {
+			space = await self.loadSpace(this.data.space)
+			this.lockNode(space)
+			this.room.add(space)
+		}
+
+		editor.signals.sceneGraphChanged.dispatch()
 	}
-	this.loadMetas = async function (data) {
+	this.loadMetas = async function () {
 		const self = this
 
 		let metas = new Map()
-		data.links.forEach(m => {
+		this.data.links.forEach(m => {
 			metas.set(m.id, JSON.parse(m.data))
 		})
 		let resources = new Map()
-		data.resources.forEach(r => {
+		this.data.resources.forEach(r => {
 			resources.set(r.id, r)
 		})
-		//const verse = JSON.parse(data.data)
+
 		this.verse.children.metas.forEach(async meta => {
 			if (metas.has(meta.parameters.id)) {
 				const data = metas.get(meta.parameters.id)
@@ -259,11 +266,41 @@ function SpaceLoader(editor) {
 			}
 		})
 	}
-	this.load = async function (data) {
-		self.verse = JSON.parse(data.data)
+	this.removeNode = async function (oldValue, newValue) {
+		const oldMetas = oldValue.children.metas
+		const newMetas = newValue.children.metas
 
-		self.loadMetas(data)
-		self.loadSpace(data)
+		let metas = new Set()
+		newMetas.forEach(meta => {
+			metas.add(meta.parameters.uuid)
+		})
+		oldMetas.forEach(meta => {
+			if (!metas.has(meta.parameters.uuid)) {
+				const obj = editor.objectByUuid(meta.parameters.uuid)
+				if (typeof obj !== 'undefined') {
+					editor.removeObject(obj)
+				}
+			}
+		})
+	}
+	this.load = async function (data) {
+		this.data = data
+		if (typeof this.verse === 'undefined') {
+			this.verse = JSON.parse(data.data)
+		} else {
+			const verse = JSON.parse(data.data)
+			await this.removeNode(this.verse, verse)
+			this.verse = verse
+		}
+
+		if (typeof this.room === 'undefined') {
+			this.room = await this.loadRoom()
+			this.lockNode(this.room)
+			builder.addNode(this.room)
+		}
+		//	self.verse = JSON.parse(data.data)
+		self.loadMetas()
+		self.loadIt()
 	}
 }
 export { SpaceLoader }
