@@ -3,11 +3,10 @@ import Rete from 'rete'
 import ActionControl from './actionControl.vue'
 import VueNumControl from './numControl.vue'
 import MetaControl from './metaControl.vue'
+import KnightControl from './knightControl.vue'
 import TransformControl from './transformControl.vue'
 import StringControl from './stringControl.vue'
-import TitleControl from './titleControl.vue'
 import SelectControl from './selectControl.vue'
-import MetaNameControl from './metaNameControl.vue'
 import BoolControl from './boolControl.vue'
 import PolygenControl from './polygenControl.vue'
 import VideoControl from './videoControl.vue'
@@ -46,11 +45,8 @@ export class Control extends Rete.Control {
       case 'string':
         this.component = StringControl
         break
-      case 'title':
-        this.component = TitleControl
-        break
-      case 'meta-name':
-        this.component = MetaNameControl
+      case 'knight':
+        this.component = KnightControl
         break
       case 'polygen-reset':
         this.component = PolygenResetControl

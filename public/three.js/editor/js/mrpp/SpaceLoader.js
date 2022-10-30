@@ -11,6 +11,7 @@ function SpaceLoader(editor) {
 	})
 	const builder = new SceneBuilder(editor)
 	this.createMeta = async function (meta, context, resources) {
+		const matrix = builder.getMatrix4(meta.parameters.transform)
 		const data = {
 			metadata: {
 				version: 4.5,
@@ -22,7 +23,7 @@ function SpaceLoader(editor) {
 				type: 'Group',
 				name: meta.parameters.title,
 				layers: 1,
-				matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+				matrix: matrix.elements
 			}
 		}
 
@@ -37,12 +38,78 @@ function SpaceLoader(editor) {
 		})
 		return node
 	}
+
+	this.createKinght = async function (meta, context) {
+		const matrix = builder.getMatrix4(meta.parameters.transform)
+		//alert(matrix)
+		const data = {
+			metadata: {
+				version: 4.5,
+				type: 'Object',
+				generator: 'Object3D.toJSON'
+			},
+			object: {
+				uuid: meta.parameters.uuid,
+				type: 'Group',
+				name: meta.parameters.title,
+				layers: 1,
+				matrix: matrix.elements
+			}
+		}
+
+		let node = await builder.parseNode(data)
+		//node.matrix = builder.getMatrix4(meta.parameters.transform)
+		//alert(node.matrix)
+		builder.addNode(node)
+
+		let e = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+		if (context.info) {
+			const info = JSON.parse(context.info)
+			if (info.transform) {
+				const matrix = builder.getMatrix4(info.transform)
+				e = matrix.elements
+			}
+		}
+		const cdata = {
+			metadata: {
+				version: 4.5,
+				type: 'Object',
+				generator: 'Object3D.toJSON'
+			},
+			object: {
+				uuid: 'asdf',
+				type: 'Group',
+				name: 'child',
+				layers: 1,
+				matrix: e
+			}
+		}
+		let child = await builder.parseNode(cdata)
+		const polygen = await builder.loadPolygen(context.mesh.file.url)
+
+		polygen.name = 'meta.parameters.title'
+		polygen.uuid = context.mesh.file.md5
+
+		child.add(polygen)
+		node.add(child)
+		this.lockNode(child)
+		return node
+	}
+	this.addKnight = async function (meta, context) {
+		let node = editor.objectByUuid(meta.parameters.uuid)
+
+		if (typeof node === 'undefined') {
+			node = await this.createKinght(meta, context)
+		}
+		const matrix = builder.getMatrix4(meta.parameters.transform)
+		node.matrix = matrix
+	}
 	this.addMeta = async function (meta, context, resources) {
 		let node = editor.objectByUuid(meta.parameters.uuid)
 		if (typeof node === 'undefined') {
 			node = await this.createMeta(meta, context, resources)
 		}
-		node.matrix = builder.getMatrix4(meta.parameters.transform)
+		//node.matrix = matrix
 	}
 	this.getNodes = async function (entities, resources) {
 		if (typeof entities === 'undefined' || entities === null) {
@@ -63,37 +130,21 @@ function SpaceLoader(editor) {
 			entity.parameters.uuid,
 			matrix
 		)
-		/*
-		const data = {
-			metadata: {
-				version: 4.5,
-				type: 'Object',
-				generator: 'Object3D.toJSON'
-			},
-			object: {
-				uuid: entity.parameters.uuid,
-				type: 'Group',
-				name: entity.parameters.name,
-				layers: 1,
-				matrix: matrix.elements
-			}
-		}
-		let node = await builder.parseNode(data)
-		return node*/
 	}
 	this.getPolygen = async function (entity, resources) {
-		const matrix = builder.getMatrix4(entity.parameters.transform)
-
+		//alert(JSON.stringify(entity.parameters.transform))
+		const parent = await self.getPoint(entity, resources)
 		if (resources.has(entity.parameters.polygen)) {
 			const resource = resources.get(entity.parameters.polygen)
-			const node = await builder.loadPolygen(resource.fileData.url)
-			node.name = entity.parameters.name
-			node.uuid = resource.fileData.md5
+			const node = await builder.loadPolygen(resource.file.url)
+			node.name = entity.parameters.name + '[polygen]'
+			node.uuid = resource.file.md5
+			const matrix = builder.getMatrix4(entity.parameters.transform)
 			node.matrix = matrix
-			return node
+			parent.add(node)
 		}
 
-		return await this.getPoint(entity, resources)
+		return parent
 	}
 	this.lockNode = function (node) {
 		node.locked = true
@@ -204,14 +255,18 @@ function SpaceLoader(editor) {
 		const metas = this.verse.children.metas
 		metas.forEach(meta => {
 			const node = editor.objectByUuid(meta.parameters.uuid)
-
+			console.error(Math.PI)
 			if (node) {
 				meta.parameters.name = node.name
-				meta.parameters.transform.position = node.position
+				meta.parameters.transform.position = {
+					x: -node.position.x,
+					y: node.position.y,
+					z: node.position.z
+				}
 				meta.parameters.transform.rotate = {
-					x: node.rotation.x,
-					y: node.rotation.y,
-					z: node.rotation.z
+					x: (node.rotation.x / Math.PI) * 180,
+					y: (node.rotation.y / Math.PI) * 180,
+					z: (node.rotation.z / Math.PI) * 180
 				}
 				meta.parameters.transform.scale = {
 					x: node.scale.x,
@@ -247,22 +302,31 @@ function SpaceLoader(editor) {
 
 		editor.signals.sceneGraphChanged.dispatch()
 	}
-	this.loadMetas = async function () {
-		const self = this
+
+	this.loadDatas = async function () {
+		let knights = new Map()
+		this.data.datas.knights.forEach(m => {
+			knights.set(m.id, m)
+		})
 
 		let metas = new Map()
-		this.data.links.forEach(m => {
+		this.data.datas.metas.forEach(m => {
 			metas.set(m.id, JSON.parse(m.data))
 		})
+
 		let resources = new Map()
 		this.data.resources.forEach(r => {
 			resources.set(r.id, r)
 		})
 
 		this.verse.children.metas.forEach(async meta => {
-			if (metas.has(meta.parameters.id)) {
+			if (meta.type == 'Meta' && metas.has(meta.parameters.id)) {
 				const data = metas.get(meta.parameters.id)
 				await self.addMeta(meta, data, resources)
+			} else if (meta.type == 'Knight' && knights.has(meta.parameters.id)) {
+				const data = knights.get(meta.parameters.id)
+
+				await self.addKnight(meta, data)
 			}
 		})
 	}
@@ -283,6 +347,9 @@ function SpaceLoader(editor) {
 			}
 		})
 	}
+	this.clear = async function () {
+		this.scene.clear()
+	}
 	this.load = async function (data) {
 		this.data = data
 		if (typeof this.verse === 'undefined') {
@@ -299,7 +366,7 @@ function SpaceLoader(editor) {
 			builder.addNode(this.room)
 		}
 		//	self.verse = JSON.parse(data.data)
-		self.loadMetas()
+		self.loadDatas()
 		self.loadIt()
 	}
 }

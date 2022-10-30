@@ -28,6 +28,7 @@ export default {
     )
 
     return {
+      isInit: false,
       editor: null,
       data: null,
       src
@@ -42,7 +43,7 @@ export default {
         environment.api +
         path.join(
           '/v1/verses/',
-          this.id + qs.stringify({ expand: 'links,resources,space' }, true)
+          this.id + qs.stringify({ expand: 'datas,resources,space' }, true)
         )
       )
     }
@@ -67,14 +68,18 @@ export default {
             self.saveVerse(e.data.verse)
             break
           case 'ready':
-            const iframe = document.getElementById('editor')
-            const data = {
-              verify: 'mrpp.com',
-              action: 'load',
-              id: this.id,
-              url: this.url
+            if (self.isInit == false) {
+              self.isInit = true
+              const iframe = document.getElementById('editor')
+
+              const data = {
+                verify: 'mrpp.com',
+                action: 'load',
+                id: this.id,
+                url: this.url
+              }
+              iframe.contentWindow.postMessage(data, '*')
             }
-            iframe.contentWindow.postMessage(data, '*')
             break
         }
       }

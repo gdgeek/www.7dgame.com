@@ -1,13 +1,13 @@
 import { MetaSocket } from '@/node-editor/sockets/sockets'
 
-// import { MetaSocket } from '@/node-editor/sockets/sockets'
-var MetaType = {
-  title: 'Meta',
+var KnightType = {
+  title: 'Knight',
   controls: [
     {
       type: 'uuid',
       key: 'uuid'
     },
+
     {
       type: 'num',
       key: 'id',
@@ -15,10 +15,18 @@ var MetaType = {
       readonly: true
     },
     {
-      type: 'meta',
+      type: 'string',
       key: 'title',
       title: '标题',
       readonly: false
+    },
+
+    {
+      type: 'knight',
+      key: 'knight',
+      title: '骑士',
+      readonly: false,
+      ignore: true
     },
     {
       type: 'transform',
@@ -42,4 +50,4 @@ var MetaType = {
     }
   ]
 }
-export default MetaType
+export default KnightType

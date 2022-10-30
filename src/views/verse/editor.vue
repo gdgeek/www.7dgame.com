@@ -1,11 +1,23 @@
 <template>
   <div class="verse-index">
-    <resource-dialog @selected="selected" @cancel="cancel" ref="spaceDialog" />
+    <resource-dialog
+      @selected="spaceSelect"
+      @cancel="spaceCallback(null)"
+      @getDatas="getSpaces"
+      ref="spaceDialog"
+    />
+    <resource-dialog
+      @selected="knightSelect"
+      @cancel="knightCallback(null)"
+      @getDatas="getKnights"
+      ref="knightDialog"
+    />
     <el-container>
       <el-main>
         <el-card v-loading="loading" class="box-card">
           <div v-if="verse !== null" slot="header" class="clearfix">
             {{ word.project }}{{ verseName }}
+            {{ this.$store.state.resource.onKnight }}
             <el-button-group style="float: right">
               <el-button type="primary" size="mini" @click="arrange()">
                 <font-awesome-icon icon="project-diagram" />
@@ -30,6 +42,8 @@
 </template>
 
 <script>
+import { getKnights } from '@/api/v1/knight'
+import { getSpaces } from '@/api/v1/space'
 import { AbilityWorks, AbilityShare } from '@/ability/ability'
 import ReteVerse from '@/components/Rete/ReteVerse.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
@@ -76,35 +90,21 @@ export default {
       if (this.$store.state.resource.onSpace !== null) {
         this.$refs.spaceDialog.open()
       }
+    },
+    '$store.state.knight.onKnight': function () {
+      if (this.$store.state.knight.onKnight !== null) {
+        this.$refs.knightDialog.open()
+      }
     }
   },
   async created() {
-    const self = this
-
-    // this.setData({ redirect: null, path: '/polygen/index', meta: { title: 'sdfsdf' }})
-    self.setVerseId(this.id)
-    const response = await getVerse(this.id)
-    self.setVerseData(response.data)
-    self.verse = response.data
-
-    if (self.verse.data !== null) {
-      const data = await self.setup(self.verse.data)
-
-      response.data.metas.forEach(meta => {
-        if (!data.children.metas.find(item => item.parameters.id === meta.id)) {
-          self.addMeta(meta)
-        }
-      })
-
-      self.loading = false
-    } else {
-      const data = await self.create({
-        name: self.verse.name,
-        id: self.verse.id
-      })
-      await self.saveVerse(JSON.stringify(data))
-      self.loading = false
+    try {
+      await this.init()
+    } catch (e) {
+      alert(e.message)
     }
+
+    this.loading = false
   },
 
   methods: {
@@ -112,21 +112,50 @@ export default {
     ...mapActions('verse', {
       saveVerse: 'saveVerse'
     }),
-    ...mapMutations(['spaceSelect', 'spaceSetCallback']),
-    addMeta(meta) {
-      return this.$refs.rete.addMeta(meta)
+    ...mapMutations([
+      'spaceSelect',
+      'spaceCallback',
+      'knightSelect',
+      'knightCallback'
+    ]),
+    async init() {
+      const self = this
+
+      self.setVerseId(this.id)
+      const response = await getVerse(this.id)
+      self.setVerseData(response.data)
+      self.verse = response.data
+      if (self.verse.data !== null) {
+        const data = await self.$refs.rete.setup(self.verse.data)
+
+        response.data.metas.forEach(meta => {
+          if (
+            !data.children.metas.find(item => item.parameters.id === meta.id)
+          ) {
+            self.$refs.rete.addMeta(meta)
+          }
+        })
+
+        self.loading = false
+      } else {
+        const data = await self.$refs.rete.create({
+          name: self.verse.name,
+          id: self.verse.id
+        })
+        await self.saveVerse(JSON.stringify(data))
+        self.loading = false
+      }
     },
-    create(verse) {
-      return this.$refs.rete.create(verse)
+
+    getSpaces(data, callback) {
+      getSpaces(data.sorted, data.searched, data.current).then(response =>
+        callback(response)
+      )
     },
-    setup(data) {
-      return this.$refs.rete.setup(data)
-    },
-    selected(data) {
-      this.spaceSelect(data)
-    },
-    cancel() {
-      this.spaceSetCallback(null)
+    getKnights(data, callback) {
+      getKnights(data.sorted, data.searched, data.current).then(response =>
+        callback(response)
+      )
     },
     save() {
       this.$refs.rete.save()

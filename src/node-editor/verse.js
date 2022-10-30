@@ -7,9 +7,11 @@ import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import AutoArrangePlugin from 'rete-auto-arrange-plugin'
 import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
+import KnightPlugin from '@/node-editor/plugins/knight'
 import MetaPlugin from '@/node-editor/plugins/meta'
+import AlwaysConnectionPlugin from '@/node-editor/plugins/alwaysConnection'
 import { Component } from '@/node-editor/components/Component'
-import { Meta, Verse } from '@/node-editor/type/verseEditor'
+import { Meta, Verse, Knight } from '@/node-editor/type/verseEditor'
 import { Build } from '@/node-editor/factory'
 
 let editor_ = null
@@ -30,7 +32,7 @@ export const save = function () {
   editor_.trigger('process', { status: 'save' })
 }
 
-export const create = function (verse) {
+export const create = async function (verse) {
   const data = {
     type: 'Verse',
     parameters: { verse },
@@ -38,19 +40,17 @@ export const create = function (verse) {
       metas: []
     }
   }
-  return setup(data)
+  return await setup(data)
 }
-export const setup = function (data) {
-  return new Promise((resolve, reject) => {
-    Build(editor_, data).then(node => {
-      editor_.view.resize()
-      setTimeout(arrange, 100)
-      resolve(data)
-    })
-  })
+export const setup = async function (data) {
+  await Build(editor_, data)
+
+  editor_.view.resize()
+  setTimeout(arrange, 100)
+  return data
 }
 export const initVerse = async function ({ container, verseId, root }) {
-  const types = [Meta, Verse]
+  const types = [Meta, Verse, Knight]
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
   editor_.use(ConnectionPlugin)
   editor_.use(VueRenderPlugin)
@@ -59,7 +59,22 @@ export const initVerse = async function ({ container, verseId, root }) {
   editor_.use(AreaPlugin)
   editor_.use(LimitPlugin, [{ name: 'Verse', max: 1, min: 1 }])
   editor_.use(MetaPlugin, { verseId })
-  editor_.use(RandomStringPlugin, [{ component: 'Meta', target: 'title' }])
+  editor_.use(KnightPlugin, { verseId })
+
+  editor_.use(AlwaysConnectionPlugin, [
+    {
+      output: { name: 'Meta', socket: 'out' },
+      input: { name: 'Verse', socket: 'metas' }
+    },
+    {
+      output: { name: 'Knight', socket: 'out' },
+      input: { name: 'Verse', socket: 'metas' }
+    }
+  ])
+  editor_.use(RandomStringPlugin, [
+    { component: 'Meta', target: 'title' },
+    { component: 'Knight', target: 'title' }
+  ])
   engine_ = new Rete.Engine('MrPP@0.1.0')
 
   types.forEach(type => {

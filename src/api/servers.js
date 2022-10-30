@@ -20,7 +20,7 @@ export function logout() {
   })
 }
 export function sts() {
-  alert(2)
+  //alert(2)
   return request({
     url: '/servers/sts',
     method: 'get'

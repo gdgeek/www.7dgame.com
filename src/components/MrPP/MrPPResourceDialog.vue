@@ -34,6 +34,7 @@
                   <b class="card-title" nowrap>{{ item.title }}</b>
                 </span>
                 <img
+                  v-if="item.image"
                   style="width: 100%; height: 180px"
                   fit="contain"
                   :src="item.image.url"
@@ -107,17 +108,11 @@ export default {
       pagination: { current: 1, count: 1, size: 20, total: 20 }
     }
   },
-  created() {
-    this.refresh()
-  },
   methods: {
     open() {
       this.dialogVisible = true
+      this.refresh()
     },
-    /*  selected(data = null) {
-      this.dialogVisible = false
-      this.$emit('close', data)
-    },*/
     sort: function (value) {
       this.sorted = value
       this.refresh()
@@ -141,29 +136,29 @@ export default {
     },
     async refresh() {
       const self = this
-      try {
-        const response = await getSpaces(
-          self.sorted,
-          self.searched,
-          self.pagination.current
-        )
-        console.log(response.headers)
-        self.pagination = {
-          current: parseInt(response.headers['x-pagination-current-page']),
-          count: parseInt(response.headers['x-pagination-page-count']),
-          size: parseInt(response.headers['x-pagination-per-page']),
-          total: parseInt(response.headers['x-pagination-total-count'])
-        }
-        //alert(response.data)
-        console.error(response)
+      this.$emit(
+        'getDatas',
+        {
+          sorted: self.sorted,
+          searched: self.searched,
+          current: self.pagination.current
+        },
+        response => {
+          console.log(response.headers)
+          self.pagination = {
+            current: parseInt(response.headers['x-pagination-current-page']),
+            count: parseInt(response.headers['x-pagination-page-count']),
+            size: parseInt(response.headers['x-pagination-per-page']),
+            total: parseInt(response.headers['x-pagination-total-count'])
+          }
+          //alert(response.data)
+          console.error(response)
 
-        if (response.data) {
-          this.items = response.data
+          if (response.data) {
+            this.items = response.data
+          }
         }
-      } catch (err) {
-        alert(err)
-        console.log(err)
-      }
+      )
     }
   }
 }

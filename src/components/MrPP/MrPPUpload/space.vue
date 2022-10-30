@@ -24,7 +24,6 @@
 
 <script>
 import path from 'path'
-import { mapState } from 'vuex'
 
 import { postFile } from '@/api/files'
 import { postSpace } from '@/api/v1/space'
@@ -156,6 +155,7 @@ export default {
             dat_id: dat_data.id,
             info: JSON.stringify(info)
           }
+
           const space = await postSpace(data)
 
           progress(1)

@@ -1,6 +1,13 @@
-
-export function Build(editor, data, input = null) {
+export async function Build(editor, data, input = null) {
   return new Promise((resolve, reject) => {
+    if (data === null) {
+      resolve(null)
+      return
+    }
+    if (data.type === 'MetaKnight') {
+      data.type = 'Knight'
+    }
+
     const component = editor.getComponent(data.type)
 
     component
@@ -12,10 +19,7 @@ export function Build(editor, data, input = null) {
           editor.connect(node.outputs.get('out'), input)
         }
 
-        if (
-          typeof data.children !== 'undefined' &&
-            data.children !== null
-        ) {
+        if (typeof data.children !== 'undefined' && data.children !== null) {
           const keys = Object.keys(data.children)
           if (keys.length === 0) {
             resolve(node)

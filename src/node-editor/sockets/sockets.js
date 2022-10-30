@@ -17,4 +17,3 @@ export {
   ComponentSocket,
   ActionSocket
 }
-

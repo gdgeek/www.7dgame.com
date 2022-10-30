@@ -156,7 +156,7 @@ class SceneBuilder {
 		)
 		const scale = new THREE.Matrix4().makeScale(s.x, s.y, s.z)
 
-		rotate.multiply(scale).setPosition(p.x, p.y, p.z)
+		rotate.multiply(scale).setPosition(-p.x, p.y, p.z)
 		return rotate /*	*/
 	}
 	async parseNode(json) {

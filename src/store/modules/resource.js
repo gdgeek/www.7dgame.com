@@ -7,7 +7,7 @@ const state = {
 }
 
 const mutations = {
-  spaceSetCallback(state, callback) {
+  spaceCallback(state, callback) {
     state.onSpace = callback
   },
   spaceSelect(state, data) {

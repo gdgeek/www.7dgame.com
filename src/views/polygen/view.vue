@@ -156,7 +156,6 @@ export default {
     self.expire = true
     getPolygenOne(self.id).then(response => {
       self.data = response.data
-      // alert(JSON.stringify(response.data.file))
       // self.file = response.data.file.url
     })
   },

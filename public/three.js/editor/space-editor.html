@@ -219,7 +219,7 @@
 				if (confirm('Any unsaved data will be lost. Are you sure?')) {
 					const loader = new THREE.FileLoader()
 					loader.crossOrigin = ''
-					loader.load(file, function (text) {
+					await loader.load(file, function (text) {
 						editor.clear()
 						editor.fromJSON(JSON.parse(text))
 					})
@@ -244,6 +244,7 @@
 				if (e.data.verify === 'mrpp.com') {
 					switch (e.data.action) {
 						case 'load':
+
 						case 'reload':
 							loader.load(
 								e.data.url,

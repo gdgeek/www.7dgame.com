@@ -33,14 +33,14 @@ export default {
     save() {
       save()
     },
-    create(verse) {
-      return create(verse)
+    async create(verse) {
+      return await create(verse)
     },
     arrange() {
       arrange()
     },
-    setup(data) {
-      return setup(JSON.parse(data))
+    async setup(data) {
+      return await setup(JSON.parse(data))
     },
     addMeta(meta) {
       return addMeta({ name: meta.name, id: meta.id })

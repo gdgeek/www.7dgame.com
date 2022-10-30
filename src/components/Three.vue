@@ -14,10 +14,11 @@ import {
   Box3,
   DirectionalLight,
   AmbientLight,
+  PointLight,
   MeshPhysicalMaterial,
   Mesh
 } from 'three'
-
+import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
@@ -86,10 +87,13 @@ export default {
 
     //  canvas.appendChild(renderer.domElement) /**/
 
-    const light = new DirectionalLight(0xffffff)
+    const light = new DirectionalLight(0xffffff, 1)
     light.position.set(-0.5, 0, 0.7)
+
+    //let l = await this.light();
     self.scene.add(light)
-    const ambient = new AmbientLight(0x666666)
+    self.scene.add(new PointLight(0xffffff, 3))
+    const ambient = new AmbientLight(0xffffff, 1)
     self.scene.add(ambient)
 
     function animate() {
@@ -115,6 +119,72 @@ export default {
     self.refresh()
   },
   methods: {
+    async parseNode(json) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          var loader = new THREE.ObjectLoader()
+          const data = await loader.parseAsync(json)
+          resolve(data)
+        } catch (e) {
+          alert(e)
+          reject(e)
+        }
+      })
+    },
+    async light() {
+      // alert(12222)
+      /*
+      const light = {
+        metadata: {
+          version: 4.5,
+          type: 'Object',
+          generator: 'Object3D.toJSON'
+        },
+        object: {
+          uuid: '10331223-0128-441b-b358-c3016a6ecc2f',
+          type: 'Group',
+          name: 'Room',
+          layers: 1,
+          matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+          children: [
+            {
+              uuid: 'f4c131be-dac2-4a72-8e72-fbabc4e430bb',
+              type: 'PointLight',
+              name: 'PointLight',
+              layers: 1,
+              matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+              color: 16777215,
+              intensity: 1,
+              distance: 0,
+              decay: 1
+            },
+            {
+              uuid: '9d42f72e-d9f3-4f4b-beff-069ab0922a89',
+              type: 'DirectionalLight',
+              name: 'DirectionalLight',
+              layers: 1,
+              matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 10, 7.5, 1],
+              color: 16777215,
+              intensity: 1
+            },
+            {
+              uuid: '8b6b5b36-c5ed-4c21-9453-a8dd04ca53fe',
+              type: 'AmbientLight',
+              name: 'AmbientLight',
+              layers: 1,
+              matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+              color: 2236962,
+              intensity: 2
+            }
+          ]
+        }
+      }
+
+      let node = await this.parseNode(light)
+
+      return node
+      */
+    },
     screenshot() {
       return new Promise((resolve, reject) => {
         const self = this
@@ -165,7 +235,7 @@ export default {
               -center.z * scale
             )
             model.scene.scale.set(scale, scale, scale)
-            //   gltf.scene.position.set(0, 0, 0)
+
             self.scene.add(model.scene)
 
             self.$emit('loaded', {
