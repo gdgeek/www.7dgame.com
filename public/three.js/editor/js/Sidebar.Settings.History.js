@@ -14,31 +14,31 @@ function SidebarSettingsHistory(editor) {
 
 	container.add(new UIText(strings.getKey('sidebar/history').toUpperCase()))
 
-	//
+	//本地存储按钮
 
-	const persistent = new UIBoolean(
-		config.getKey('settings/history'),
-		strings.getKey('sidebar/history/persistent')
-	)
-	persistent.setPosition('absolute').setRight('8px')
-	persistent.onChange(function () {
-		const value = this.getValue()
+	// const persistent = new UIBoolean(
+	// 	config.getKey('settings/history'),
+	// 	strings.getKey('sidebar/history/persistent')
+	// )
+	// persistent.setPosition('absolute').setRight('8px')
+	// persistent.onChange(function () {
+	// 	const value = this.getValue()
 
-		config.setKey('settings/history', value)
+	// 	config.setKey('settings/history', value)
 
-		if (value) {
-			alert(
-				'The history will be preserved across sessions.\nThis can have an impact on performance when working with textures.'
-			)
+	// 	if (value) {
+	// 		alert(
+	// 			'The history will be preserved across sessions.\nThis can have an impact on performance when working with textures.'
+	// 		)
 
-			const lastUndoCmd = history.undos[history.undos.length - 1]
-			const lastUndoId = lastUndoCmd !== undefined ? lastUndoCmd.id : 0
-			editor.history.enableSerialization(lastUndoId)
-		} else {
-			signals.historyChanged.dispatch()
-		}
-	})
-	container.add(persistent)
+	// 		const lastUndoCmd = history.undos[history.undos.length - 1]
+	// 		const lastUndoId = lastUndoCmd !== undefined ? lastUndoCmd.id : 0
+	// 		editor.history.enableSerialization(lastUndoId)
+	// 	} else {
+	// 		signals.historyChanged.dispatch()
+	// 	}
+	// })
+	// container.add(persistent)
 
 	container.add(new UIBreak(), new UIBreak())
 
