@@ -2,9 +2,12 @@ function Config() {
 	const name = 'threejs-editor'
 
 	const storage = {
-		language: 'en',
+		// 默认中文
+		language: 'zh',
+		// language: 'en',
 
-		autosave: true,
+		// 自动存储
+		autosave: false,
 
 		'project/title': '',
 		'project/editable': false,
