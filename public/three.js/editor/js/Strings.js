@@ -1,14 +1,12 @@
-function Strings( config ) {
-
-	const language = config.getKey( 'language' );
+function Strings(config) {
+	const language = config.getKey('language')
 
 	const values = {
-
 		en: {
-
 			'menubar/file': 'File',
 			'menubar/file/new': 'New',
 			'menubar/file/import': 'Import',
+			'menubar/file/save': 'Save',
 			'menubar/file/export/geometry': 'Export Geometry',
 			'menubar/file/export/object': 'Export Object',
 			'menubar/file/export/scene': 'Export Scene',
@@ -336,14 +334,13 @@ function Strings( config ) {
 			'viewport/info/vertices': 'Vertices',
 			'viewport/info/triangles': 'Triangles',
 			'viewport/info/frametime': 'Frametime'
-
 		},
 
 		fr: {
-
 			'menubar/file': 'Fichier',
 			'menubar/file/new': 'Nouveau',
 			'menubar/file/import': 'Importer',
+			'menubar/file/save': 'Save',
 			'menubar/file/export/geometry': 'Exporter Geometrie',
 			'menubar/file/export/object': 'Exporter Objet',
 			'menubar/file/export/scene': 'Exporter Scene',
@@ -455,7 +452,7 @@ function Strings( config ) {
 			'sidebar/object/shadow': 'Ombre',
 			'sidebar/object/shadowBias': 'Biais directionnel des ombres',
 			'sidebar/object/shadowNormalBias': 'Shadow Normal Bias',
-			'sidebar/object/shadowRadius': 'Rayon de l\'ombre',
+			'sidebar/object/shadowRadius': "Rayon de l'ombre",
 			'sidebar/object/cast': 'Projète',
 			'sidebar/object/receive': 'Reçoit',
 			'sidebar/object/visible': 'Visible',
@@ -494,7 +491,8 @@ function Strings( config ) {
 			'sidebar/geometry/cylinder_geometry/radiusbottom': 'Rayon inférieur',
 			'sidebar/geometry/cylinder_geometry/height': 'Hauteur',
 			'sidebar/geometry/cylinder_geometry/radialsegments': 'Segments radiaux',
-			'sidebar/geometry/cylinder_geometry/heightsegments': 'Segments en hauteur',
+			'sidebar/geometry/cylinder_geometry/heightsegments':
+				'Segments en hauteur',
 			'sidebar/geometry/cylinder_geometry/openended': 'Extrémités ouvertes',
 
 			'sidebar/geometry/extrude_geometry/curveSegments': 'Segments de courbe',
@@ -555,7 +553,8 @@ function Strings( config ) {
 
 			'sidebar/geometry/torusKnot_geometry/radius': 'Rayon',
 			'sidebar/geometry/torusKnot_geometry/tube': 'Tube',
-			'sidebar/geometry/torusKnot_geometry/tubularsegments': 'Segments tubulaires',
+			'sidebar/geometry/torusKnot_geometry/tubularsegments':
+				'Segments tubulaires',
 			'sidebar/geometry/torusKnot_geometry/radialsegments': 'Segments radiaux',
 			'sidebar/geometry/torusKnot_geometry/p': 'P',
 			'sidebar/geometry/torusKnot_geometry/q': 'Q',
@@ -605,10 +604,10 @@ function Strings( config ) {
 			'sidebar/material/roughnessmap': 'Texture de rugosité',
 			'sidebar/material/metalnessmap': 'Texture métallique',
 			'sidebar/material/specularmap': 'Texture spéculaire',
-			'sidebar/material/envmap': 'Texture d\'environnement',
-			'sidebar/material/lightmap': 'Texture d\'éclairage',
-			'sidebar/material/aomap': 'Texture d\'occlusion ambiante',
-			'sidebar/material/emissivemap': 'Texture d\'émission',
+			'sidebar/material/envmap': "Texture d'environnement",
+			'sidebar/material/lightmap': "Texture d'éclairage",
+			'sidebar/material/aomap': "Texture d'occlusion ambiante",
+			'sidebar/material/emissivemap': "Texture d'émission",
 			'sidebar/material/gradientmap': 'Texture de gradient',
 			'sidebar/material/side': 'Côté',
 			'sidebar/material/size': 'Size',
@@ -671,14 +670,13 @@ function Strings( config ) {
 			'viewport/info/vertices': 'Sommets',
 			'viewport/info/triangles': 'Triangles',
 			'viewport/info/frametime': 'Temps de trame'
-
 		},
 
 		zh: {
-
 			'menubar/file': '文件',
 			'menubar/file/new': '新建',
 			'menubar/file/import': '导入',
+			'menubar/file/save': '保存',
 			'menubar/file/export/geometry': '导出几何体',
 			'menubar/file/export/object': '导出物体',
 			'menubar/file/export/scene': '导出场景',
@@ -1006,21 +1004,14 @@ function Strings( config ) {
 			'viewport/info/vertices': '顶点',
 			'viewport/info/triangles': '三角形',
 			'viewport/info/frametime': '帧时'
-
 		}
-
-	};
+	}
 
 	return {
-
-		getKey: function ( key ) {
-
-			return values[ language ][ key ] || '???';
-
+		getKey: function (key) {
+			return values[language][key] || '???'
 		}
-
-	};
-
+	}
 }
 
-export { Strings };
+export { Strings }

@@ -16,10 +16,10 @@ function MenubarStatus(editor) {
 		editor.signals.sceneGraphChanged.dispatch()
 		editor.signals.upload.dispatch()
 		//	editor.spaceLoader.save()
-		const scene = editor.scene
+		// const scene = editor.scene
 
-		console.log(scene)
-		console.error(scene.children)
+		// console.log(scene)
+		// console.error(scene.children)
 		/*
 		options.push(buildOption(camera, false))
 		options.push(buildOption(scene, false))
@@ -42,7 +42,7 @@ function MenubarStatus(editor) {
 		})(scene.children, 0)*/
 	})
 
-	container.add(button)
+	// container.add(button)
 
 	const autosave = new UIBoolean(
 		editor.config.getKey('autosave'),

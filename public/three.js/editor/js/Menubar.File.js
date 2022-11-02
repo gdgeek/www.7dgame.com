@@ -63,6 +63,16 @@ function MenubarFile(editor) {
 
 	options.add(new UIHorizontalRule())
 
+	// SAVE
+	option = new UIRow()
+	option.setClass('option')
+	option.setTextContent(strings.getKey('menubar/file/save'))
+	option.onClick(function () {
+		editor.signals.sceneGraphChanged.dispatch()
+		editor.signals.upload.dispatch()
+	})
+	options.add(option)
+
 	// Export Geometry
 
 	// option = new UIRow()
