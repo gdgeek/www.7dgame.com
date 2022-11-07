@@ -86,7 +86,8 @@ export default {
 }
 .home-header {
   min-height: 150px;
-  background-image: url('/media/image/bgcsky.jpg');
+  background-image: url('/media/image/header_bg.jpg');
+  // background-image: url('/media/image/bgcsky.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
