@@ -22,22 +22,9 @@
         </div>
       </el-col>
       <el-col :md="10" :span="24">
-        <span class="hidden-sm-and-down">
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-        </span>
-        <br />
+        <div class="hidden-sm-and-down hidden-box" />
         <div class="home-header-button">
-          <el-button
-            class="home-header-button-child"
-            size="small"
-            @click="gotoEdit()"
-          >
-            编辑个人资料
-          </el-button>
+          <el-button size="small" @click="gotoEdit()">编辑个人资料</el-button>
         </div>
       </el-col>
     </el-row>
@@ -103,23 +90,13 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-.home-header-button {
-  margin-top: 25px;
-  margin-left: 50px;
-  margin-right: 50px;
-  height: 25px;
-  //outline: dashed 1px black;
-  position: relative;
+.hidden-box {
+  height: 90px;
 }
 
-.home-header-button-child {
-  position: absolute;
-
-  margin-bottom: 15px;
-  margin-top: 10px;
-  bottom: 0;
-  right: 0;
+.home-header-button {
+  margin: 22px 50px 18px 0;
+  float: right;
 }
 
 .home-avatar-container {
