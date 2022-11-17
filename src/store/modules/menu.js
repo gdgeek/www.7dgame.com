@@ -117,6 +117,23 @@ const state = {
               icon: 'upload'
             }
           ]
+        },
+        {
+          label: '音频管理',
+          url: '/audio/',
+          icon: 'file-audio',
+          items: [
+            {
+              label: '音频列表',
+              url: '/audio/index',
+              icon: 'list'
+            },
+            {
+              label: '音频上传',
+              url: '/audio/upload',
+              icon: 'upload'
+            }
+          ]
         }
       ]
     },
