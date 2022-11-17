@@ -73,7 +73,7 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/index.css'
-import { getVideo, putVideo, deleteVideo } from '@/api/resources'
+import { getAudio, putAudio, deleteAudio } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 
@@ -133,7 +133,7 @@ export default {
     named: function (id, newValue) {
       const self = this
       const audio = { name: newValue }
-      putVideo(id, audio)
+      putAudio(id, audio)
         .then(response => {
           self.refresh()
         })
@@ -166,7 +166,7 @@ export default {
     deleted: function (id) {
       const self = this
 
-      deleteVideo(id)
+      deleteAudio(id)
         .then(response => {
           self.refresh()
         })
@@ -180,7 +180,7 @@ export default {
     },
     refresh() {
       const self = this
-      getVideo(self.sorted, self.searched, self.pagination.current)
+      getAudio(self.sorted, self.searched, self.pagination.current)
         .then(response => {
           console.log(response.headers)
           self.pagination = {

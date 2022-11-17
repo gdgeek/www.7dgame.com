@@ -58,7 +58,7 @@
   </div>
 </template>
 <script>
-import { getVideoOne, putVideo, deleteVideo } from '@/api/resources'
+import { getAudioOne, putAudio, deleteAudio } from '@/api/resources'
 import { postFile } from '@/api/files'
 import { printVector2 } from '@/assets/js/helper'
 import { mapState } from 'vuex'
@@ -114,7 +114,7 @@ export default {
   created: function () {
     const self = this
     self.expire = true
-    getVideoOne(self.id).then(response => {
+    getAudioOne(self.id).then(response => {
       //
       self.data = response.data
       console.log(response.data)
@@ -152,7 +152,7 @@ export default {
       postFile(data)
         .then(response => {
           const video = { image_id: response.data.id, info }
-          putVideo(self.data.id, video)
+          putAudio(self.data.id, video)
             .then(response => {
               self.data.image_id = response.data.image_id
               self.data.info = response.data.info
@@ -257,7 +257,7 @@ export default {
       const self = this
       console.log(self.api + '/resources/' + id + '?type=video')
 
-      deleteVideo(id)
+      deleteAudio(id)
         .then(response => {
           self.$router.push({ path: '/video/index' })
         })
@@ -292,7 +292,7 @@ export default {
       const self = this
       const video = { name }
       console.log(video)
-      putVideo(id, video)
+      putAudio(id, video)
         .then(response => {
           self.data.name = response.data.name
         })
