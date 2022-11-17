@@ -4,19 +4,22 @@
       <el-col :sm="16">
         <el-card class="box-card">
           <div slot="header">
-            <b id="title">图片名称：</b>
+            <b id="title">音频名称：</b>
             <span v-if="data">{{ data.name }}</span>
           </div>
           <div class="box-item" style="text-align: center">
-            <el-image
-              id="image"
-              v-loading="expire"
-              element-loading-text="正在预处理"
-              element-loading-background="rgba(255,255, 255, 0.3)"
+            <video
+              id="video"
+              controls="controls"
               style="height: 300px; width: 100%"
-              :src="file"
-              :fit="'contain'"
-              @load="dealWith()"
+            >
+              <source v-if="file !== null" id="src" :src="file" />
+            </video>
+            <video
+              id="new_video"
+              style="height: 100%; width: 100%"
+              hidden
+              @canplaythrough="dealWith()"
             />
           </div>
         </el-card>
@@ -55,18 +58,18 @@
   </div>
 </template>
 <script>
-import { getPictureOne, putPicture, deletePicture } from '@/api/resources'
+import { getVideoOne, putVideo, deleteVideo } from '@/api/resources'
 import { postFile } from '@/api/files'
 import { printVector2 } from '@/assets/js/helper'
-
 import { mapState } from 'vuex'
+
 export default {
   name: 'AudioView',
   data: function () {
     return {
       data: null,
       file: null,
-      expire: false
+      expire: true
     }
   },
   computed: {
@@ -77,7 +80,7 @@ export default {
       if (this.data !== null && this.prepare) {
         return [
           {
-            item: '图片名称',
+            item: '音频名称',
             text: this.data.name
           },
           {
@@ -89,19 +92,18 @@ export default {
             text: this.data.created_at
           },
           {
-            item: '图片尺寸',
-            text: printVector2(JSON.parse(this.data.info).size)
-          },
-          {
             item: '文件大小',
             text: this.data.file.size + '字节'
+          },
+          {
+            item: '音频尺寸',
+            text: printVector2(JSON.parse(this.data.info).size)
           }
         ]
       } else {
         return []
       }
     },
-
     id() {
       return this.$route.query.id
     },
@@ -109,38 +111,31 @@ export default {
       return this.data != null && this.data.info !== null
     }
   },
-  created: async function () {
+  created: function () {
     const self = this
-    try {
-      self.expire = true
-      const response = await getPictureOne(self.id)
+    self.expire = true
+    getVideoOne(self.id).then(response => {
+      //
       self.data = response.data
+      console.log(response.data)
       self.file = response.data.file.url
-    } catch (err) {
-      alert(err)
-    }
+      setTimeout(() => {
+        self.init()
+      }, 0)
+    })
   },
   methods: {
-    getImageSize: function (imageEl) {
-      return new Promise((resolve, reject) => {
-        const img = new Image() // 新建一个图片对象
-        img.src = imageEl.src
-        if (img.width === 0) {
-          img.onload = function () {
-            resolve({ x: img.width, y: img.height })
-          }
-        } else {
-          resolve({ x: img.width, y: img.height })
-        }
-      })
-    },
-    thumbnail: function (image, width, height) {
+    thumbnail: function (video, width, height) {
       return new Promise((resolve, reject) => {
         const image_type = 'image/jpeg'
         const canvas = document.createElement('canvas')
         canvas.width = width
         canvas.height = height
-        canvas.getContext('2d').drawImage(image, 0, 0, width, height)
+        // 将所截图片绘制到canvas上，并转化成图片
+        canvas
+          .getContext('2d')
+          .drawImage(video, 0, 0, canvas.width, canvas.height)
+
         canvas.toBlob(function (blob) {
           resolve(blob)
         }, image_type)
@@ -152,13 +147,12 @@ export default {
         md5,
         key: md5 + extension,
         filename: file.name,
-        url: self.store.fileUrl(md5, extension, handler, 'screenshot/picture')
+        url: self.store.fileUrl(md5, extension, handler, 'screenshot/video')
       }
-
       postFile(data)
         .then(response => {
-          const picture = { image_id: response.data.id, info }
-          putPicture(self.data.id, picture)
+          const video = { image_id: response.data.id, info }
+          putVideo(self.data.id, video)
             .then(response => {
               self.data.image_id = response.data.image_id
               self.data.info = response.data.info
@@ -173,59 +167,66 @@ export default {
         })
     },
 
-    async setup(size, image) {
+    async setup(video, size) {
       const self = this
-      const store = this.store
-
-      const info = JSON.stringify({ size })
-      if (size.x <= 1024) {
-        const picture = { image_id: self.data.file.id, info }
-        putPicture(self.data.id, picture).then(response => {
-          self.data.image_id = response.data.image_id
-          self.data.info = response.data.info
-          self.expire = false
-        })
-        return
-      }
-      const blob = await self.thumbnail(image, 512, size.y * (512 / size.x))
-
-      blob.name = self.data.name + '.thumbnail'
-      blob.extension = '.jpg'
-      const file = blob
-
-      const md5 = await store.fileMD5(file)
-      const handler = await store.fileHandler('store-1251022382', 'ap-nanjing')
-      const ret = await store.fileHas(
-        md5,
-        file.extension,
-        handler,
-        'screenshot/picture'
-      )
-      if (ret !== null) {
-        self.save(ret.md5, ret.extension, info, file, handler)
-      } else {
-        const r = await store.fileUpload(
+      const store = self.store
+      if (size.x !== 0) {
+        const info = JSON.stringify({ size })
+        const blob = await self.thumbnail(video, size.x * 0.5, size.y * 0.5)
+        blob.name = self.data.name + '.thumbnail'
+        blob.extension = '.jpg'
+        const file = blob
+        const md5 = await store.fileMD5(file)
+        const handler = await store.fileHandler(
+          'store-1251022382',
+          'ap-nanjing'
+        )
+        const ret = await store.fileHas(
           md5,
           file.extension,
-          file,
-          p => {},
           handler,
-          'screenshot/picture'
+          'screenshot/video'
         )
-        self.save(md5, file.extension, info, file, handler)
+        if (ret !== null) {
+          self.save(ret.md5, ret.extension, info, file, handler)
+        } else {
+          const r = await store.fileUpload(
+            md5,
+            file.extension,
+            file,
+            p => {},
+            handler,
+            'screenshot/video'
+          )
+          self.save(md5, file.extension, info, file, handler)
+        }
       }
     },
-    dealWith: async function () {
+    init: function () {
+      const video = document.getElementById('video')
+      const source = document.getElementById('src')
+
+      // 获取新的音频
+      const new_video = document.getElementById('new_video')
+      new_video.src = source.src + '?t=' + new Date()
+      new_video.crossOrigin = 'anonymous'
+      new_video.currentTime = 0.000001
+      video.addEventListener(
+        'timeupdate',
+        function () {
+          new_video.currentTime = video.currentTime
+        },
+        false
+      )
+    },
+    dealWith: function () {
       const self = this
       if (!self.prepare) {
-        const image = document.getElementById('image')
-        image.crossOrigin = 'anonymous'
-        if (image.complete) {
-          const size = await self.getImageSize(image)
-          console.log(size)
-
-          self.setup(size, image)
-        }
+        const video = document.getElementById('video')
+        // 获取新的音频
+        const new_video = document.getElementById('new_video')
+        const size = { x: video.videoWidth, y: video.videoHeight }
+        self.setup(new_video, size)
       } else {
         self.expire = false
       }
@@ -254,11 +255,11 @@ export default {
     },
     delete: function (id) {
       const self = this
-      console.log(self.api + '/resources/' + id + '?type=picture')
+      console.log(self.api + '/resources/' + id + '?type=video')
 
-      deletePicture(id)
+      deleteVideo(id)
         .then(response => {
-          self.$router.push({ path: '/picture/index' })
+          self.$router.push({ path: '/video/index' })
         })
         .catch(function (error) {
           console.log(error)
@@ -267,7 +268,7 @@ export default {
     },
     namedWindow: function () {
       const self = this
-      this.$prompt('请输入新名称', '修改图片名称', {
+      this.$prompt('请输入新名称', '修改音频名称', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,
@@ -277,7 +278,7 @@ export default {
           self.named(self.data.id, value)
           this.$message({
             type: 'success',
-            message: '新的图片名称: ' + value
+            message: '新的音频名称: ' + value
           })
         })
         .catch(() => {
@@ -289,9 +290,9 @@ export default {
     },
     named: function (id, name) {
       const self = this
-      const picture = { name }
-      console.log(picture)
-      putPicture(id, picture)
+      const video = { name }
+      console.log(video)
+      putVideo(id, video)
         .then(response => {
           self.data.name = response.data.name
         })

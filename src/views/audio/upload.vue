@@ -1,42 +1,41 @@
 <template>
   <div>
-    <mr-p-p-upload
-      dir="picture"
-      :file-type="fileType"
-      @saveResource="savePicture"
-    >
-      <div>选择音频并上传</div>
+    <mr-p-p-upload dir="audio" :file-type="fileType" @saveResource="saveVideo">
+      <div>选择音频，并上传</div>
     </mr-p-p-upload>
   </div>
 </template>
 
 <script>
-import MrPPUpload from '@/components/MrPP/MrPPUpload/index.vue'
+import MrPPUpload from '@/components/MrPP/MrPPUpload'
 
-import { postPicture } from '@/api/resources'
+import { postVideo } from '@/api/resources'
 export default {
-  name: 'AudioUpload',
+  name: 'VideoUpload',
   components: {
     MrPPUpload
   },
   data: function () {
     return {
-      fileType: 'image/gif, image/jpeg, image/png'
+      fileType: 'video/mp4, video/ogg'
     }
   },
   methods: {
-    async savePicture(name, file_id, callback) {
+    saveVideo(name, file_id, callback) {
       const self = this
-      try {
-        const response = await postPicture({ name, file_id })
-        self.$router.push({
-          path: '/picture/view',
-          query: { id: response.data.id }
+      postVideo({ name, file_id })
+        .then(response => {
+          console.log(response.data)
+
+          self.$router.push({
+            path: '/audio/view',
+            query: { id: response.data.id }
+          })
         })
-      } catch (err) {
-        alert(err)
-      }
-      callback()
+        .catch(err => {
+          console.log(err)
+        })
+        .finally(callback)
     }
   }
 }

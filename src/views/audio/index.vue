@@ -73,7 +73,7 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/index.css'
-import { getPicture, putPicture, deletePicture } from '@/api/resources'
+import { getVideo, putVideo, deleteVideo } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 
@@ -102,7 +102,7 @@ export default {
     },
     namedWindow: function (item) {
       const self = this
-      this.$prompt('请输入新名称', '修改图片名称', {
+      this.$prompt('请输入新名称', '修改音频名称', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,
@@ -112,7 +112,7 @@ export default {
           self.named(item.id, value)
           this.$message({
             type: 'success',
-            message: '新的图片名称: ' + value
+            message: '新的音频名称: ' + value
           })
         })
         .catch(() => {
@@ -132,8 +132,8 @@ export default {
     },
     named: function (id, newValue) {
       const self = this
-      const picture = { name: newValue }
-      putPicture(id, picture)
+      const audio = { name: newValue }
+      putVideo(id, audio)
         .then(response => {
           self.refresh()
         })
@@ -166,7 +166,7 @@ export default {
     deleted: function (id) {
       const self = this
 
-      deletePicture(id)
+      deleteVideo(id)
         .then(response => {
           self.refresh()
         })
@@ -180,7 +180,7 @@ export default {
     },
     refresh() {
       const self = this
-      getPicture(self.sorted, self.searched, self.pagination.current)
+      getVideo(self.sorted, self.searched, self.pagination.current)
         .then(response => {
           console.log(response.headers)
           self.pagination = {
