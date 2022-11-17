@@ -1,13 +1,13 @@
 <template>
   <div>
-    <mr-p-p-upload dir="audio" :file-type="fileType" @saveResource="saveVideo">
+    <mr-p-p-upload dir="audio" :file-type="fileType" @saveResource="saveAudio">
       <div>选择音频，并上传</div>
     </mr-p-p-upload>
   </div>
 </template>
 
 <script>
-import MrPPUpload from '@/components/MrPP/MrPPUpload'
+import MrPPUpload from '@/components/MrPP/MrPPUpload/index.vue'
 
 import { postAudio } from '@/api/resources'
 export default {
@@ -17,11 +17,11 @@ export default {
   },
   data: function () {
     return {
-      fileType: 'video/mp4, video/ogg'
+      fileType: 'video/mp4, audio/mp3'
     }
   },
   methods: {
-    saveVideo(name, file_id, callback) {
+    saveAudio(name, file_id, callback) {
       const self = this
       postAudio({ name, file_id })
         .then(response => {
