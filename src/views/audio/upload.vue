@@ -17,7 +17,7 @@ export default {
   },
   data: function () {
     return {
-      fileType: 'video/mp4, audio/mp3'
+      fileType: 'audio/mp3, audio/wav'
     }
   },
   methods: {

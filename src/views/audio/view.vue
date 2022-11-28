@@ -13,14 +13,19 @@
               controls="controls"
               style="height: 300px; width: 100%"
             >
-              <source v-if="file !== null" id="src" :src="file" />
+              <source
+                v-if="file !== null"
+                id="src"
+                :src="file"
+                type="audio/wav"
+              />
             </audio>
-            <audio
+            <!-- <audio
               id="new_audio "
               style="height: 100%; width: 100%"
               hidden
               @canplaythrough="dealWith()"
-            />
+            /> -->
           </div>
         </el-card>
         <br />
@@ -119,28 +124,28 @@ export default {
       self.data = response.data
       console.log(response.data)
       self.file = response.data.file.url
-      setTimeout(() => {
-        self.init()
-      }, 0)
+      // setTimeout(() => {
+      //   self.init()
+      // }, 0)
     })
   },
   methods: {
-    thumbnail: function (audio, width, height) {
-      return new Promise((resolve, reject) => {
-        const image_type = 'image/jpeg'
-        const canvas = document.createElement('canvas')
-        canvas.width = width
-        canvas.height = height
-        // 将所截图片绘制到canvas上，并转化成图片
-        canvas
-          .getContext('2d')
-          .drawImage(audio, 0, 0, canvas.width, canvas.height)
+    // thumbnail: function (audio, width, height) {
+    //   return new Promise((resolve, reject) => {
+    //     const image_type = 'image/jpeg'
+    //     const canvas = document.createElement('canvas')
+    //     canvas.width = width
+    //     canvas.height = height
+    //     // 将所截图片绘制到canvas上，并转化成图片
+    //     canvas
+    //       .getContext('2d')
+    //       .drawImage(audio, 0, 0, canvas.width, canvas.height)
 
-        canvas.toBlob(function (blob) {
-          resolve(blob)
-        }, image_type)
-      })
-    },
+    //     canvas.toBlob(function (blob) {
+    //       resolve(blob)
+    //     }, image_type)
+    //   })
+    // },
     save(md5, extension, info, file, handler) {
       const self = this
       const data = {
@@ -167,70 +172,71 @@ export default {
         })
     },
 
-    async setup(audio, size) {
-      const self = this
-      const store = self.store
-      if (size.x !== 0) {
-        const info = JSON.stringify({ size })
-        const blob = await self.thumbnail(audio, size.x * 0.5, size.y * 0.5)
-        blob.name = self.data.name + '.thumbnail'
-        blob.extension = '.jpg'
-        const file = blob
-        const md5 = await store.fileMD5(file)
-        const handler = await store.fileHandler(
-          'store-1251022382',
-          'ap-nanjing'
-        )
-        const ret = await store.fileHas(
-          md5,
-          file.extension,
-          handler,
-          'screenshot/audio'
-        )
-        if (ret !== null) {
-          self.save(ret.md5, ret.extension, info, file, handler)
-        } else {
-          const r = await store.fileUpload(
-            md5,
-            file.extension,
-            file,
-            p => {},
-            handler,
-            'screenshot/audio'
-          )
-          self.save(md5, file.extension, info, file, handler)
-        }
-      }
-    },
-    init: function () {
-      const audio = document.getElementById('audio')
-      const source = document.getElementById('src')
+    // async setup(audio, size) {
+    //   const self = this
+    //   const store = self.store
+    //   console.log(store, 'store23213')
+    //   if (size.x !== 0) {
+    //     const info = JSON.stringify({ size })
+    //     const blob = await self.thumbnail(audio, size.x * 0.5, size.y * 0.5)
+    //     blob.name = self.data.name + '.thumbnail'
+    //     blob.extension = '.jpg'
+    //     const file = blob
+    //     const md5 = await store.fileMD5(file)
+    //     const handler = await store.fileHandler(
+    //       'store-1251022382',
+    //       'ap-nanjing'
+    //     )
+    //     const ret = await store.fileHas(
+    //       md5,
+    //       file.extension,
+    //       handler,
+    //       'screenshot/audio'
+    //     )
+    //     if (ret !== null) {
+    //       self.save(ret.md5, ret.extension, info, file, handler)
+    //     } else {
+    //       const r = await store.fileUpload(
+    //         md5,
+    //         file.extension,
+    //         file,
+    //         p => {},
+    //         handler,
+    //         'screenshot/audio'
+    //       )
+    //       self.save(md5, file.extension, info, file, handler)
+    //     }
+    //   }
+    // },
+    // init: function () {
+    //   const audio = document.getElementById('audio')
+    //   const source = document.getElementById('src')
 
-      // 获取新的音频
-      const new_audio = document.getElementById('new_audio')
-      new_audio.src = source.src + '?t=' + new Date()
-      new_audio.crossOrigin = 'anonymous'
-      new_audio.currentTime = 0.000001
-      audio.addEventListener(
-        'timeupdate',
-        function () {
-          new_audio.currentTime = audio.currentTime
-        },
-        false
-      )
-    },
-    dealWith: function () {
-      const self = this
-      if (!self.prepare) {
-        const audio = document.getElementById('audio')
-        // 获取新的音频
-        const new_audio = document.getElementById('new_audio')
-        const size = { x: audio.audioWidth, y: audio.audioHeight }
-        self.setup(new_audio, size)
-      } else {
-        self.expire = false
-      }
-    },
+    //   // 获取新的音频
+    //   const new_audio = document.getElementById('new_audio')
+    //   new_audio.src = source.src + '?t=' + new Date()
+    //   new_audio.crossOrigin = 'anonymous'
+    //   new_audio.currentTime = 0.000001
+    //   audio.addEventListener(
+    //     'timeupdate',
+    //     function () {
+    //       new_audio.currentTime = audio.currentTime
+    //     },
+    //     false
+    //   )
+    // },
+    // dealWith: function () {
+    //   const self = this
+    //   if (!self.prepare) {
+    //     const audio = document.getElementById('audio')
+    //     // 获取新的音频
+    //     const new_audio = document.getElementById('new_audio')
+    //     const size = { x: audio.audioWidth, y: audio.audioHeight }
+    //     self.setup(new_audio, size)
+    //   } else {
+    //     self.expire = false
+    //   }
+    // },
     deleteWindow: function () {
       const self = this
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
