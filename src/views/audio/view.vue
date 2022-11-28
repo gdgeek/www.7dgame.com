@@ -8,15 +8,15 @@
             <span v-if="data">{{ data.name }}</span>
           </div>
           <div class="box-item" style="text-align: center">
-            <video
-              id="video"
+            <audio
+              id="audio"
               controls="controls"
               style="height: 300px; width: 100%"
             >
               <source v-if="file !== null" id="src" :src="file" />
-            </video>
-            <video
-              id="new_video"
+            </audio>
+            <audio
+              id="new_audio "
               style="height: 100%; width: 100%"
               hidden
               @canplaythrough="dealWith()"
@@ -125,7 +125,7 @@ export default {
     })
   },
   methods: {
-    thumbnail: function (video, width, height) {
+    thumbnail: function (audio, width, height) {
       return new Promise((resolve, reject) => {
         const image_type = 'image/jpeg'
         const canvas = document.createElement('canvas')
@@ -134,7 +134,7 @@ export default {
         // 将所截图片绘制到canvas上，并转化成图片
         canvas
           .getContext('2d')
-          .drawImage(video, 0, 0, canvas.width, canvas.height)
+          .drawImage(audio, 0, 0, canvas.width, canvas.height)
 
         canvas.toBlob(function (blob) {
           resolve(blob)
@@ -147,12 +147,12 @@ export default {
         md5,
         key: md5 + extension,
         filename: file.name,
-        url: self.store.fileUrl(md5, extension, handler, 'screenshot/video')
+        url: self.store.fileUrl(md5, extension, handler, 'screenshot/audio')
       }
       postFile(data)
         .then(response => {
-          const video = { image_id: response.data.id, info }
-          putAudio(self.data.id, video)
+          const audio = { image_id: response.data.id, info }
+          putAudio(self.data.id, audio)
             .then(response => {
               self.data.image_id = response.data.image_id
               self.data.info = response.data.info
@@ -167,12 +167,12 @@ export default {
         })
     },
 
-    async setup(video, size) {
+    async setup(audio, size) {
       const self = this
       const store = self.store
       if (size.x !== 0) {
         const info = JSON.stringify({ size })
-        const blob = await self.thumbnail(video, size.x * 0.5, size.y * 0.5)
+        const blob = await self.thumbnail(audio, size.x * 0.5, size.y * 0.5)
         blob.name = self.data.name + '.thumbnail'
         blob.extension = '.jpg'
         const file = blob
@@ -185,7 +185,7 @@ export default {
           md5,
           file.extension,
           handler,
-          'screenshot/video'
+          'screenshot/audio'
         )
         if (ret !== null) {
           self.save(ret.md5, ret.extension, info, file, handler)
@@ -196,25 +196,25 @@ export default {
             file,
             p => {},
             handler,
-            'screenshot/video'
+            'screenshot/audio'
           )
           self.save(md5, file.extension, info, file, handler)
         }
       }
     },
     init: function () {
-      const video = document.getElementById('video')
+      const audio = document.getElementById('audio')
       const source = document.getElementById('src')
 
       // 获取新的音频
-      const new_video = document.getElementById('new_video')
-      new_video.src = source.src + '?t=' + new Date()
-      new_video.crossOrigin = 'anonymous'
-      new_video.currentTime = 0.000001
-      video.addEventListener(
+      const new_audio = document.getElementById('new_audio')
+      new_audio.src = source.src + '?t=' + new Date()
+      new_audio.crossOrigin = 'anonymous'
+      new_audio.currentTime = 0.000001
+      audio.addEventListener(
         'timeupdate',
         function () {
-          new_video.currentTime = video.currentTime
+          new_audio.currentTime = audio.currentTime
         },
         false
       )
@@ -222,11 +222,11 @@ export default {
     dealWith: function () {
       const self = this
       if (!self.prepare) {
-        const video = document.getElementById('video')
+        const audio = document.getElementById('audio')
         // 获取新的音频
-        const new_video = document.getElementById('new_video')
-        const size = { x: video.videoWidth, y: video.videoHeight }
-        self.setup(new_video, size)
+        const new_audio = document.getElementById('new_audio')
+        const size = { x: audio.audioWidth, y: audio.audioHeight }
+        self.setup(new_audio, size)
       } else {
         self.expire = false
       }
@@ -255,11 +255,11 @@ export default {
     },
     delete: function (id) {
       const self = this
-      console.log(self.api + '/resources/' + id + '?type=video')
+      console.log(self.api + '/resources/' + id + '?type=audio')
 
       deleteAudio(id)
         .then(response => {
-          self.$router.push({ path: '/video/index' })
+          self.$router.push({ path: '/audio/index' })
         })
         .catch(function (error) {
           console.log(error)
@@ -290,9 +290,9 @@ export default {
     },
     named: function (id, name) {
       const self = this
-      const video = { name }
-      console.log(video)
-      putAudio(id, video)
+      const audio = { name }
+      console.log(audio)
+      putAudio(id, audio)
         .then(response => {
           self.data.name = response.data.name
         })
