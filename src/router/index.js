@@ -240,6 +240,33 @@ export const constantRoutes = [
           }
         ]
       },
+      {
+        path: 'audio',
+        name: 'audio',
+        meta: { title: '音频资源' },
+        redirect: '/audio/index',
+        component: Empty,
+        children: [
+          {
+            meta: { title: '列表' },
+            path: 'index',
+            name: 'AudioIndex',
+            component: () => import('@/views/audio/index')
+          },
+          {
+            path: 'upload',
+            name: 'AudioUpload',
+            meta: { title: '音频上传' },
+            component: () => import('@/views/audio/upload')
+          },
+          {
+            path: 'view',
+            name: 'AudioView',
+            meta: { title: '音频处理' },
+            component: () => import('@/views/audio/view')
+          }
+        ]
+      },
 
       {
         path: 'verse',

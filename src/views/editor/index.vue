@@ -50,7 +50,7 @@ export default {
   },
   created() {
     const self = this
-    /*getMeta(this.id).then(response => {
+    /* getMeta(this.id).then(response => {
       self.data = JSON.parse(response.data.data)
 
       if (this.editor !== null) {
@@ -87,7 +87,12 @@ export default {
   },
   methods: {
     async saveVerse(verse) {
-      await putVerse(this.id, { data: verse })
+      await putVerse(this.id, { data: verse }).then(response => {
+        this.$message({
+          type: 'success',
+          message: '保存成功!'
+        })
+      })
       const iframe = document.getElementById('editor')
       const data = {
         verify: 'mrpp.com',

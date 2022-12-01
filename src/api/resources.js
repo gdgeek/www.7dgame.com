@@ -23,6 +23,12 @@ export function postVideo(data) {
   data.type = 'video'
   return postResources(data)
 }
+
+export function postAudio(data) {
+  data.type = 'audio'
+  return postResources(data)
+}
+
 function deleteResources(id) {
   return request({
     url: '/resources/' + id,
@@ -39,6 +45,10 @@ export function deletePicture(id) {
 export function deleteVideo(id) {
   return deleteResources(id)
 }
+export function deleteAudio(id) {
+  return deleteResources(id)
+}
+
 function putResources(id, resource) {
   console.log('resource')
   return request({
@@ -56,6 +66,9 @@ export function putPicture(id, picture) {
 }
 export function putVideo(id, video) {
   return putResources(id, video)
+}
+export function putAudio(id, audio) {
+  return putResources(id, audio)
 }
 
 function getResources(type, sort = '-created_at', search = '', page = 0) {
@@ -88,6 +101,9 @@ export function getPicture(sort = '-created_at', search = '', page = 0) {
 export function getVideo(sort = '-created_at', search = '', page = 0) {
   return getResources('video', sort, search, page)
 }
+export function getAudio(sort = '-created_at', search = '', page = 0) {
+  return getResources('audio', sort, search, page)
+}
 
 function getResourcesOne(type, id) {
   return request({
@@ -103,4 +119,7 @@ export function getPictureOne(id) {
 }
 export function getVideoOne(id) {
   return getResourcesOne('video', id)
+}
+export function getAudioOne(id) {
+  return getResourcesOne('audio', id)
 }
