@@ -1,16 +1,19 @@
 <template>
   <div class="project-index">
-    <br>
+    <br />
     <el-container>
       <el-header>
-        <mr-p-p-header :sorted="sorted" :searched="searched" @search="search" @sort="sort">
+        <mr-p-p-header
+          :sorted="sorted"
+          :searched="searched"
+          @search="search"
+          @sort="sort"
+        >
           <el-button-group :inline="true">
             <router-link to="/video/upload">
-              <el-button
-                size="mini"
-                type="primary"
-                icon="el-icon-upload"
-              ><span class="hidden-sm-and-down">上传视频</span></el-button>
+              <el-button size="mini" type="primary" icon="el-icon-upload">
+                <span class="hidden-sm-and-down">上传视频</span>
+              </el-button>
             </router-link>
           </el-button-group>
         </mr-p-p-header>
@@ -27,22 +30,30 @@
             :lg="6"
             :xl="4"
           >
-            <mr-p-p-card :item="item" @named="namedWindow" @deleted="deletedWindow">
-
-              <router-link slot="enter" :to="'/video/view?id='+item.id">
-                <el-button v-if="item.info === null || item.image === null" type="warning" size="mini">初始视频数据</el-button>
-                <el-button v-else type="primary" size="mini">查看视频</el-button>
-
+            <mr-p-p-card
+              :item="item"
+              @named="namedWindow"
+              @deleted="deletedWindow"
+            >
+              <router-link slot="enter" :to="'/video/view?id=' + item.id">
+                <el-button
+                  v-if="item.info === null || item.image === null"
+                  type="warning"
+                  size="mini"
+                >
+                  初始视频数据
+                </el-button>
+                <el-button v-else type="primary" size="mini">
+                  查看视频
+                </el-button>
               </router-link>
             </mr-p-p-card>
 
-            <br>
-
+            <br />
           </el-col>
         </el-row>
       </el-main>
       <el-footer>
-
         <el-card class="box-card">
           <el-pagination
             :current-page="pagination.current"
@@ -55,15 +66,14 @@
           />
         </el-card>
       </el-footer>
-
     </el-container>
-    <br>
+    <br />
   </div>
 </template>
 
 <script>
 import 'element-ui/lib/theme-chalk/index.css'
-import { getVideo, putVideo, deleteVideo } from '@/api/resources'
+import { getVideos, putVideo, deleteVideo } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
@@ -80,89 +90,97 @@ export default {
     }
   },
 
-  created: function() {
+  created: function () {
     this.refresh()
   },
   methods: {
-    handleCurrentChange: function(page) {
+    handleCurrentChange: function (page) {
       this.pagination.current = page
       this.refresh()
       console.log(this.pagination.current)
     },
-    namedWindow: function(item) {
+    namedWindow: function (item) {
       const self = this
       this.$prompt('请输入新名称', '修改视频名称', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,
         inputValue: item.name
-      }).then(({ value }) => {
-        self.named(item.id, value)
-        this.$message({
-          type: 'success',
-          message: '新的视频名称: ' + value
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        })
       })
+        .then(({ value }) => {
+          self.named(item.id, value)
+          this.$message({
+            type: 'success',
+            message: '新的视频名称: ' + value
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          })
+        })
     },
-    sort: function(value) {
+    sort: function (value) {
       this.sorted = value
       this.refresh()
     },
-    search: function(value) {
+    search: function (value) {
       this.searched = value
       this.refresh()
     },
-    named: function(id, newValue) {
+    named: function (id, newValue) {
       const self = this
       const video = { name: newValue }
-      putVideo(id, video).then((response) => {
-        self.refresh()
-      }).catch(err => {
-        console.log(err)
-      })
+      putVideo(id, video)
+        .then(response => {
+          self.refresh()
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    deletedWindow: function(item) {
+    deletedWindow: function (item) {
       const self = this
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,
         type: 'warning'
-      }).then(() => {
-        self.deleted(item.id)
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
       })
+        .then(() => {
+          self.deleted(item.id)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
-    deleted: function(id) {
+    deleted: function (id) {
       const self = this
 
-      deleteVideo(id).then((response) => {
-        self.refresh()
-      }).catch(function(error) {
-        console.log(error)
-      })
+      deleteVideo(id)
+        .then(response => {
+          self.refresh()
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     },
-    succeed: function(data) {
+    succeed: function (data) {
       console.log(data)
       this.items = data
     },
     refresh() {
       const self = this
-      getVideo(self.sorted, self.searched, self.pagination.current)
-        .then((response) => {
+      getVideos(self.sorted, self.searched, self.pagination.current)
+        .then(response => {
           console.log(response.headers)
           self.pagination = {
             current: parseInt(response.headers['x-pagination-current-page']),
@@ -173,7 +191,8 @@ export default {
           if (response.data) {
             self.succeed(response.data)
           }
-        }).catch(function(error) {
+        })
+        .catch(function (error) {
           console.log(error)
         })
     }

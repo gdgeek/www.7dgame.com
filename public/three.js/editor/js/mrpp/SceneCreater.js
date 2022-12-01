@@ -220,8 +220,8 @@ class SceneCreater {
 				return self.thePolygen(data, resource)
 			case 'Picture':
 				return self.thePicture(data, resource)
-			case 'Video':
-				return self.getVideo(data, resource)
+			//case 'Video':
+			//	return self.getVideo(data, resource)
 		}
 
 		return self.theNode(data)

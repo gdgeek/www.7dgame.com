@@ -74,7 +74,7 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/index.css'
-import { getPolygen, putPolygen, deletePolygen } from '@/api/resources'
+import { postPolygens, putPolygen, deletePolygen } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
@@ -180,7 +180,7 @@ export default {
     },
     refresh() {
       const self = this
-      getPolygen(self.sorted, self.searched, self.pagination.current)
+      postPolygens(self.sorted, self.searched, self.pagination.current)
         .then(response => {
           console.log(response.headers)
           self.pagination = {

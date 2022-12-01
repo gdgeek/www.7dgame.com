@@ -73,7 +73,7 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/index.css'
-import { getPicture, putPicture, deletePicture } from '@/api/resources'
+import { getPictures, putPicture, deletePicture } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 
@@ -180,7 +180,7 @@ export default {
     },
     refresh() {
       const self = this
-      getPicture(self.sorted, self.searched, self.pagination.current)
+      getPictures(self.sorted, self.searched, self.pagination.current)
         .then(response => {
           console.log(response.headers)
           self.pagination = {

@@ -67,7 +67,7 @@
   </div>
 </template>
 <script>
-import { getPolygenOne, putPolygen, deletePolygen } from '@/api/resources'
+import { getPolygen, putPolygen, deletePolygen } from '@/api/resources'
 import { createVerseFromPolygen } from '@/api/v1/meta-verse'
 import { postFile } from '@/api/files'
 import { printVector3 } from '@/assets/js/helper'
@@ -151,13 +151,11 @@ export default {
       return '等待更新'
     }
   },
-  created: function () {
+  created: async function () {
     const self = this
     self.expire = true
-    getPolygenOne(self.id).then(response => {
-      self.data = response.data
-      // self.file = response.data.file.url
-    })
+    const response = await getPolygen(self.id)
+    self.data = response.data
   },
   methods: {
     progress(percentage) {

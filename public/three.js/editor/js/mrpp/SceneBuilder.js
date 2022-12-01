@@ -230,14 +230,13 @@ class SceneBuilder {
 			} */
 	getNode(data, resource) {
 		const self = this
-		//	alert(data.type)
 		switch (data.type) {
 			case 'Polygen':
 				return self.thePolygen(data, resource)
 			case 'Picture':
 				return self.thePicture(data, resource)
-			case 'Video':
-				return self.getVideo(data, resource)
+			//	case 'Video':
+			//			return self.getVideo(data, resource)
 		}
 
 		return self.theNode(data)

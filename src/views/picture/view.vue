@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import { getPictureOne, putPicture, deletePicture } from '@/api/resources'
+import { getPicture, putPicture, deletePicture } from '@/api/resources'
 import { postFile } from '@/api/files'
 import { printVector2 } from '@/assets/js/helper'
 
@@ -113,7 +113,7 @@ export default {
     const self = this
     try {
       self.expire = true
-      const response = await getPictureOne(self.id)
+      const response = await getPicture(self.id)
       self.data = response.data
       self.file = response.data.file.url
     } catch (err) {

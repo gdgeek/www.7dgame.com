@@ -43,7 +43,7 @@ import ReteMeta from '@/components/Rete/ReteMeta.vue'
 import { AbilityWorks, AbilityShare } from '@/ability/ability'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { getMeta } from '@/api/v1/meta'
-import { getPolygen, getPicture, getVideo } from '@/api/resources'
+import { postPolygens, getPictures, getVideos } from '@/api/resources'
 export default {
   name: 'MetaEditor',
   components: {
@@ -95,18 +95,18 @@ export default {
   },
   created() {
     const self = this
-    getPolygen().then(response => {
+    postPolygens().then(response => {
       console.log(response.data)
       self.setPolygenList(response.data)
       console.log(self.polygenList)
     })
 
-    getPicture().then(response => {
+    getPictures().then(response => {
       console.log(response.data)
       self.setPictureList(response.data)
     })
 
-    getVideo().then(response => {
+    getVideos().then(response => {
       console.log(response.data)
       self.setVideoList(response.data)
       console.log(self.videoList)
