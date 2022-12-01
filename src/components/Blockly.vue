@@ -36,9 +36,7 @@ export default {
       require: true
     }
   },
-  /* components: {
-    highlightjs: hljsVuePlugin.component
-  },*/
+
   data() {
     return {
       workspace: null,

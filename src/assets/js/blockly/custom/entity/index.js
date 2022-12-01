@@ -18,15 +18,15 @@ const EntityCategory = {
     TextEntity.toolbox
   ]
 }
-function RegisterData(root, data) {
+function RegisterData(root, index, data) {
   Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(root)
+  Blockly.Lua[data.title] = data.getLua(index)
 }
-function EntityRegister(root) {
-  RegisterData(root, Entity)
-  RegisterData(root, PolygenEntity)
-  RegisterData(root, PictureEntity)
-  RegisterData(root, VideoEntity)
-  RegisterData(root, TextEntity)
+function EntityRegister(root, index) {
+  RegisterData(root, index, Entity)
+  RegisterData(root, index, PolygenEntity)
+  RegisterData(root, index, PictureEntity)
+  RegisterData(root, index, VideoEntity)
+  RegisterData(root, index, TextEntity)
 }
 export { EntityCategory, EntityRegister }

@@ -6,7 +6,6 @@ import LineExecute from './line_execute'
 import TweenExecute from './tween_execute'
 import VisualExecute from './visual_execute'
 
-
 const ExecuteCategory = {
   kind: 'category',
   name: '可执行',
@@ -19,17 +18,15 @@ const ExecuteCategory = {
     VisualExecute.toolbox
   ]
 }
-function RegisterData(root, data) {
+function RegisterData(root, index, data) {
   Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(root)
+  Blockly.Lua[data.title] = data.getLua(index)
 }
-function ExecuteRegister(root) {
-  RegisterData(root, BoomExecute)
-  RegisterData(root, FunctionExecute)
-  RegisterData(root, LineExecute)
-  RegisterData(root, TweenExecute)
-  RegisterData(root, VisualExecute)
-  
-  
+function ExecuteRegister(root, index) {
+  RegisterData(root, index, BoomExecute)
+  RegisterData(root, index, FunctionExecute)
+  RegisterData(root, index, LineExecute)
+  RegisterData(root, index, TweenExecute)
+  RegisterData(root, index, VisualExecute)
 }
 export { ExecuteCategory, ExecuteRegister }

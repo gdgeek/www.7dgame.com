@@ -8,7 +8,6 @@
 
 <script>
 import MrPPUpload from '@/components/MrPP/MrPPUpload/space'
-//import { postSpace } from '@/api/v1/space'
 export default {
   name: 'SpaceUpload',
   components: {

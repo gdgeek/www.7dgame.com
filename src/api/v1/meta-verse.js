@@ -12,13 +12,21 @@ export function createVerseFromPolygen(name, resource) {
     z: -info.center.z * r
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const json = {
+      name,
       description: '通过模型[' + resource.name + ']创建的简单场景。',
-      version: 2
+      course: -1
     }
 
-    const vd = { name, info: JSON.stringify(json), image_id: resource.image_id }
+    const vd = {
+      name,
+      info: JSON.stringify(json),
+      image_id: resource.image_id,
+      version: 2
+    }
+    try {
+    } catch (e) {}
     postVerse(vd)
       .then(response => {
         const verse = response.data
@@ -35,10 +43,8 @@ export function createVerseFromPolygen(name, resource) {
               type: 'Verse',
               parameters: {
                 uuid: uuidv4(),
-                verse: {
-                  name: verse.name,
-                  id: verse.id
-                }
+                //id: verse.id,
+                space: { id: -1, occlusion: false }
               },
               children: {
                 metas: [
@@ -46,10 +52,8 @@ export function createVerseFromPolygen(name, resource) {
                     type: 'Meta',
                     parameters: {
                       uuid: uuidv4(),
-                      meta: {
-                        name: meta.name,
-                        id: meta.id
-                      },
+                      id: meta.id,
+                      title: 'polygen',
                       transform: {
                         position: { x: 0, y: 0, z: 2 },
                         rotate: { x: 0, y: 0, z: 0 },
@@ -67,11 +71,8 @@ export function createVerseFromPolygen(name, resource) {
                 const mj = {
                   type: 'MetaRoot',
                   parameters: {
-                    uuid: uuidv4(),
-                    name: {
-                      name: meta.name,
-                      id: meta.id
-                    }
+                    uuid: uuidv4()
+                    // id: meta.id
                   },
                   children: {
                     entities: [

@@ -21,7 +21,7 @@ export const data = [
     url: 'https://1251022382.vod2.myqcloud.com/3ebf9041vodtransgzp1251022382/8d947abb4564972818757571628/v.f20.mp4',
     image: '/media/video/video_04.png',
     title: 'HoloLens电柜装配',
-    describe: '通过HoloLens 实现的电柜装配引导，一个比较实用的混合现实程序。'
+    describe: '通过HoloLens 实现的电柜装配引导，一个比较实用的元宇宙实景程序。'
   }
 ]
 

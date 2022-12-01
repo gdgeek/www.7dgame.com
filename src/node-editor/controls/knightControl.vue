@@ -12,7 +12,7 @@
           <div v-else>
             <el-popover
               placement="top-start"
-              :title="'骑士:' + item.title"
+              :title="'标题:' + item.title"
               width="200"
               trigger="hover"
             >

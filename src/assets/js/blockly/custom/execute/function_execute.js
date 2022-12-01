@@ -40,7 +40,7 @@ const block = {
     }
     return data
   },
-  getLua(root) {
+  getLua(index) {
     const lua = function (block) {
       var dropdown_function = block.getFieldValue('function')
       // TODO: Assemble Lua into code variable.

@@ -1,10 +1,12 @@
 <template>
   <div class="portal-main-background">
     <div class="content" align="right">
-        <h3 class="text">混合现实编程平台 </h3>
-        <h1 class="text">让每个人都可以快乐地创造世界</h1>
-        <el-button @click="goto('/site/index')"  type="primary">登入平台</el-button>
-        <el-button @click="goto('/web/download')" >相关下载</el-button>
+      <h3 class="text">元宇宙实景编程平台</h3>
+      <h1 class="text">让每个人都可以快乐地创造世界</h1>
+      <el-button @click="goto('/site/index')" type="primary">
+        登入平台
+      </el-button>
+      <el-button @click="goto('/web/download')">相关下载</el-button>
     </div>
   </div>
 </template>
@@ -16,9 +18,9 @@ export default {
   data() {
     return {}
   },
-  methods:{
-    goto(path){
-      this.$router.push(path);
+  methods: {
+    goto(path) {
+      this.$router.push(path)
     }
   }
 }
@@ -33,13 +35,13 @@ export default {
   // background-size: 100%;
 }
 
-.text{
-  color:whitesmoke
+.text {
+  color: whitesmoke;
 }
-.content{
+.content {
   padding-right: 50px;
   padding-top: 50px;
   padding-left: 50px;
-  float:right;
+  float: right;
 }
 </style>

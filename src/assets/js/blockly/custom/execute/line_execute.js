@@ -42,7 +42,7 @@ const block = {
     }
     return data
   },
-  getLua(root) {
+  getLua(index) {
     const lua = function (block) {
       var value_from = Blockly.Lua.valueToCode(
         block,

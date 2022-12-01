@@ -39,7 +39,7 @@ const block = {
     }
     return block
   },
-  getLua(root) {
+  getLua(index) {
     const lua = function (block) {
       var value_position = Blockly.Lua.valueToCode(
         block,

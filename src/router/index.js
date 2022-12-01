@@ -289,6 +289,12 @@ export const constantRoutes = [
             name: 'VerseCode',
             meta: { title: '逻辑' },
             component: () => import('@/views/verse/code')
+          },
+          {
+            path: 'cyber',
+            name: 'VerseCyber',
+            meta: { title: '逻辑' },
+            component: () => import('@/views/verse/cyber')
           }
         ]
       },

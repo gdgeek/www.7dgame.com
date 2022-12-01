@@ -9,6 +9,19 @@ var MetaRootType = {
     {
       type: 'uuid',
       key: 'uuid'
+    },
+    {
+      type: 'button',
+      label: '逻辑',
+      title: '进入编辑',
+      key: 'cyber',
+      callback: function (root) {
+        root.$router.push({
+          path: '/verse/cyber',
+          query: root.$route.query
+        })
+      },
+      ignore: true
     }
   ],
   inputs: [

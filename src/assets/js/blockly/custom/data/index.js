@@ -11,12 +11,12 @@ const DataCategory = {
   contents: [Vector3Data.toolbox, TransformData.toolbox]
 }
 
-function RegisterData(root, data) {
+function RegisterData(root, index, data) {
   Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(root)
+  Blockly.Lua[data.title] = data.getLua(index)
 }
-function DataRegister(root) {
-  RegisterData(root, Vector3Data)
-  RegisterData(root, TransformData)
+function DataRegister(root, index) {
+  RegisterData(root, index, Vector3Data)
+  RegisterData(root, index, TransformData)
 }
 export { DataCategory, DataRegister }

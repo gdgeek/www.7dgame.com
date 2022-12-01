@@ -30,6 +30,8 @@ function SpaceLoader(editor) {
 		let node = await builder.parseNode(data)
 
 		builder.addNode(node)
+		//alert(JSON.stringify(context))
+
 		const children = await this.getNodes(context.children.entities, resources)
 
 		children.forEach(child => {
@@ -40,6 +42,7 @@ function SpaceLoader(editor) {
 	}
 
 	this.createKinght = async function (meta, context) {
+		//alert(JSON.stringify(context))
 		const matrix = builder.getMatrix4(meta.parameters.transform)
 		//alert(matrix)
 		const data = {
@@ -265,7 +268,7 @@ function SpaceLoader(editor) {
 				}
 				meta.parameters.transform.rotate = {
 					x: (node.rotation.x / Math.PI) * 180,
-					y: (node.rotation.y / Math.PI) * 180,
+					y: -(node.rotation.y / Math.PI) * 180,
 					z: (node.rotation.z / Math.PI) * 180
 				}
 				meta.parameters.transform.scale = {
@@ -275,9 +278,9 @@ function SpaceLoader(editor) {
 				}
 
 				meta.parameters.transform.active = node.visible
+				//(JSON.stringify(meta.parameters.transform.rotate))
 			}
 		})
-		//alert(window)
 
 		window.URL = window.URL || window.webkitURL
 		window.BlobBuilder =
@@ -287,7 +290,7 @@ function SpaceLoader(editor) {
 			action: 'save-verse',
 			verse: JSON.stringify(self.verse)
 		}
-
+		console.error(data)
 		window.parent.postMessage(data, '*')
 		console.error(self.verse)
 	}
@@ -322,11 +325,15 @@ function SpaceLoader(editor) {
 		this.verse.children.metas.forEach(async meta => {
 			if (meta.type == 'Meta' && metas.has(meta.parameters.id)) {
 				const data = metas.get(meta.parameters.id)
-				await self.addMeta(meta, data, resources)
+
+				if (data !== null) {
+					await self.addMeta(meta, data, resources)
+				}
 			} else if (meta.type == 'Knight' && knights.has(meta.parameters.id)) {
 				const data = knights.get(meta.parameters.id)
-
-				await self.addKnight(meta, data)
+				if (data !== null && data.data !== null) {
+					await self.addKnight(meta, data)
+				}
 			}
 		})
 	}

@@ -8,8 +8,8 @@ function companies() {
 const cs = companies()
 const state = {
   data: {
-    title: '混合现实编程平台',
-    description: 'Mixed Reality Programming Platform',
+    title: '元宇宙实景编程平台',
+    description: 'Metaverse Relity Programming Platform',
     companies: cs,
     version: '20220624.1',
     beian: '沪ICP备15039333号',

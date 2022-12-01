@@ -55,9 +55,9 @@
 </template>
 <script>
 import { getSpace, putSpace, deleteSpace } from '@/api/v1/space'
-import { createVerseFromPolygen } from '@/api/v1/meta-verse'
+//import { createVerseFromPolygen } from '@/api/v1/meta-verse'
 import { postFile } from '@/api/files'
-import { printVector3 } from '@/assets/js/helper'
+//import { printVector3 } from '@/assets/js/helper'
 import { mapState } from 'vuex'
 import Three from '@/components/Three.vue'
 
@@ -143,45 +143,7 @@ export default {
     progress(percentage) {
       this.percentage = percentage
     },
-    createVerse: function () {
-      const self = this
-      this.$prompt('用此模型创建' + self.word.project, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputValue: self.data.title,
-        // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '请填写相应名称'
-      })
-        .then(({ value }) => {
-          self.loading = true
-          createVerseFromPolygen(value, this.data)
-            .then(data => {
-              self.loading = false
 
-              this.$message({
-                type: 'success',
-                message: '你创建了新的场景: ' + value
-              })
-              setTimeout(() => {
-                this.$router.push('/verse/index')
-              }, 300)
-            })
-            .catch(error => {
-              self.loading = false
-
-              this.$message({
-                type: 'error',
-                message: '创建失败: ' + error
-              })
-            })
-        })
-        .catch(err => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          })
-        })
-    },
     deleteWindow: function () {
       const self = this
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {

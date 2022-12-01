@@ -35,7 +35,7 @@ export async function getKnights(
         }),
         method: 'get'
       })
-      //  console.error(response)
+
       resolve(response)
     } catch (err) {
       reject(err)

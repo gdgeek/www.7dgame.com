@@ -22,7 +22,6 @@ function install(editor, options) {
     }
     component.data['name'] = { name: '读取中...', readonly: true }
     getMeta(options.metaId).then(response => {
-      alert(1)
       console.log(response.data.name)
       name.setValue({
         name: response.data.name,

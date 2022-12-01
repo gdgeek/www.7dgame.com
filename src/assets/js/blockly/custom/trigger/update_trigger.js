@@ -30,7 +30,7 @@ const block = {
     }
     return block
   },
-  getLua(root) {
+  getLua(index) {
     const lua = function (block) {
       var statements_content = Blockly.Lua.statementToCode(block, 'content')
       // TODO: Assemble Lua into code variable.

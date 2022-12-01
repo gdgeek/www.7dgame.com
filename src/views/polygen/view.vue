@@ -28,7 +28,7 @@
             @click="createVerse()"
           >
             <font-awesome-icon icon="plus" />
-            &nbsp;用此模型创建{{ word.project }}
+            &nbsp;用此模型创建【宇宙】
           </el-button>
         </el-card>
 
@@ -165,11 +165,10 @@ export default {
     },
     createVerse: function () {
       const self = this
-      this.$prompt('用此模型创建' + self.word.project, '提示', {
+      this.$prompt('用此模型创建【宇宙】', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputValue: self.data.name,
-        // inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: '请填写相应名称'
       })
         .then(({ value }) => {

@@ -28,7 +28,6 @@ export async function getSpaces(
       if (page > 1) {
         query['page'] = page
       }
-
       const response = await request({
         url: url.format({
           pathname: '/v1/spaces',

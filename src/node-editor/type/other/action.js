@@ -15,7 +15,7 @@ var ActionType = {
     },
     {
       type: 'string',
-      key: 'action_parameter',
+      key: 'parameter',
       title: '参数'
     }
   ],

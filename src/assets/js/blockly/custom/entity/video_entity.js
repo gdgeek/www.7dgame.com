@@ -19,7 +19,6 @@ const block = {
             const videos = root.$store.state.blockly.data.videos
             let opt = [['none', '']]
             videos.forEach(poly => {
-              // alert(poly.name)
               opt.push([poly.name, poly.uuid])
             })
             return opt
@@ -42,12 +41,13 @@ const block = {
     }
     return data
   },
-  getLua(root) {
+  getLua(index) {
     const lua = function (block) {
       var dropdown_video = block.getFieldValue('Video')
       //alert(dropdown_video);
       // TODO: Assemble Lua into code variable.
-      var code = 'CS.MrPP.Lua.Handler("video", "' + dropdown_video + '")'
+      var code =
+        'CS.MrPP.Lua.Handler("' + index + '", "' + dropdown_video + '")'
       // TODO: Change ORDER_NONE to the correct strength.
       return [code, Blockly.Lua.ORDER_NONE]
     }

@@ -36,7 +36,7 @@ const block = {
     }
     return data
   },
-  getLua(root) {
+  getLua(index) {
     const lua = function (block) {
       var value_boom = Blockly.Lua.valueToCode(
         block,

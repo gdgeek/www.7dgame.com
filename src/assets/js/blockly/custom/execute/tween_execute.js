@@ -11,8 +11,7 @@ const block = {
   getBlockJson(root) {
     const json = {
       type: data.name,
-      message0:
-        '实体 %1 经过 %2 移动到 %3 %4',
+      message0: '实体 %1 经过 %2 移动到 %3 %4',
       args0: [
         {
           type: 'input_value',
@@ -53,7 +52,7 @@ const block = {
     }
     return data
   },
-  getLua(root) {
+  getLua(index) {
     const lua = function (block) {
       var value_entity = Blockly.Lua.valueToCode(
         block,

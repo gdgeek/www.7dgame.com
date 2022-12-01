@@ -34,15 +34,11 @@ export function getVersesWithShare(
   query['expand'] = expand
   query['sort'] = sort
 
-  //let url = 'v1/verses/share?expand=' + expand + '&sort=' + sort
-
   if (search !== '') {
     query['VerseSearch[name]'] = search
-    //url += '&VerseSearch[name]=' + search
   }
   if (page > 1) {
     query['page'] = page
-    //url += '&page=' + page
   }
 
   return request({

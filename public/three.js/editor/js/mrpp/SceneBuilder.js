@@ -149,7 +149,7 @@ class SceneBuilder {
 		const rotate = new THREE.Matrix4().makeRotationFromEuler(
 			new THREE.Euler(
 				THREE.Math.degToRad(r.x),
-				THREE.Math.degToRad(r.y),
+				THREE.Math.degToRad(-r.y),
 				THREE.Math.degToRad(r.z),
 				'XYZ'
 			)

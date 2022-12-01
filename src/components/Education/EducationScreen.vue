@@ -6,17 +6,27 @@
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
           <div class="section-title-dark" align="left">
-            <p style="font-weight:lighter">{{ infoTitle }}</p>
-            <p> <a ref="telPhone" :href="'tel'+':'+infoTel" style="border-bottom: 2px solid #1e82e8;">点击拨打<i class="el-icon-phone-outline" /> {{ infoTel }}</a></p>
+            <p style="font-weight: lighter">{{ infoTitle }}</p>
+            <p>
+              <a
+                ref="telPhone"
+                :href="'tel' + ':' + infoTel"
+                style="border-bottom: 2px solid #1e82e8"
+              >
+                点击拨打
+                <i class="el-icon-phone-outline" />
+                {{ infoTel }}
+              </a>
+            </p>
           </div>
         </div>
       </el-col>
       <!-- PC显示 -->
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
-          <div class="section-title-dark " align="left">
-            <h3 style="font-weight:lighter">{{ infoTitle }}</h3>
-            <h1 style="font-weight:lighter">即刻拨打 {{ infoTel }}</h1>
+          <div class="section-title-dark" align="left">
+            <h3 style="font-weight: lighter">{{ infoTitle }}</h3>
+            <h1 style="font-weight: lighter">即刻拨打 {{ infoTel }}</h1>
           </div>
         </div>
       </el-col>
@@ -30,13 +40,11 @@ export default {
 
   data() {
     return {
-      infoTitle: '混合现实编程平台 创造未来教育',
+      infoTitle: '元宇宙实景编程平台 创造未来教育',
       infoTel: 15000159790
     }
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 
@@ -54,5 +62,4 @@ export default {
   background-size: cover;
   // background-size: 100%;
 }
-
 </style>

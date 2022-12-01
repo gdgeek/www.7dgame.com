@@ -23,11 +23,7 @@
           :key="index"
           style="width: 230px"
         >
-          <el-card
-            style="width: 220px"
-            v-if="item.image !== null"
-            class="box-card"
-          >
+          <el-card style="width: 220px" class="box-card">
             <div slot="header">
               <el-card shadow="hover" :body-style="{ padding: '0px' }">
                 <span slot="header" class="mrpp-title">
@@ -87,7 +83,6 @@
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 
-import { getSpaces } from '@/api/v1/space'
 import Card from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {

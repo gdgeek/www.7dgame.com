@@ -19,14 +19,24 @@
     </el-dialog>
 
     <el-card class="box-card">
-      <div v-if="$route.path.includes('web/example')" align="center" style="padding:30px 0">
-        <h2 style="color:#666666">混合现实赋能用户创造内容</h2>
-        <h1 style="margin:50px 0">精彩案例</h1>
-        <p style="color:#666666">基于iPad实现的第三人称视角，多设备无延时互动，多人联机，真实场景物理模拟</p>
+      <div
+        v-if="$route.path.includes('web/example')"
+        align="center"
+        style="padding: 30px 0"
+      >
+        <h2 style="color: #666666">元宇宙实景赋能用户创造内容</h2>
+        <h1 style="margin: 50px 0">精彩案例</h1>
+        <p style="color: #666666">
+          基于iPad实现的第三人称视角，多设备无延时互动，多人联机，真实场景物理模拟
+        </p>
       </div>
       <div v-else slot="header" class="clearfix">
         <span>相关案例</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="goto('/web/example')">
+        <el-button
+          style="float: right; padding: 3px 0"
+          type="text"
+          @click="goto('/web/example')"
+        >
           更多内容
         </el-button>
       </div>
@@ -47,23 +57,23 @@
                 class="image"
                 style="width: 100%; position: relative; z-index: 0"
                 @click="onSelected(item)"
-              >
+              />
             </div>
             <div style="padding: 14px">
               <div style="height: 60px">
                 <span>{{ item.title }}</span>
                 <div class="bottom clearfix">
                   <time class="time">{{ item.describe }}</time>
-                  <br>
+                  <br />
                 </div>
               </div>
               <el-button type="text" class="button" @click="onSelected(item)">
                 播放视频
               </el-button>
-              <br>
+              <br />
             </div>
           </el-card>
-          <br>
+          <br />
         </el-col>
       </el-row>
     </el-card>
@@ -91,7 +101,7 @@ export default {
         muted: true,
         language: 'en',
         autoplay: true,
-        fullscreen: { options: { navigationUI: 'hide' }},
+        fullscreen: { options: { navigationUI: 'hide' } },
         playbackRates: [0.7, 1.0, 1.5, 2.0],
         sources: [
           {

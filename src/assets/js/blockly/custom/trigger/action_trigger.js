@@ -49,7 +49,7 @@ const block = {
     }
     return data
   },
-  getLua(root) {
+  getLua(index) {
     const lua = function (block) {
       var dropdown_option = block.getFieldValue('Action')
       var statements_content = Blockly.Lua.statementToCode(block, 'content')
@@ -59,7 +59,7 @@ const block = {
       var code =
         "self.handling['" +
         dropdown_option +
-        "'] = function(self, parameter, target) \n\
+        "'] = function(self, parameter) \n\
   print('" +
         dropdown_option +
         "')\n" +

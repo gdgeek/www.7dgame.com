@@ -42,12 +42,14 @@ const block = {
     }
     return data
   },
-  getLua(root) {
+  getLua(index) {
+    alert(index)
     const lua = function (block) {
       var dropdown_polygen = block.getFieldValue('Polygen')
       //alert(dropdown_polygen);
       // TODO: Assemble Lua into code variable.
-      var code = 'CS.MrPP.Lua.Handler("polygen", "' + dropdown_polygen + '")'
+      var code =
+        "CS.MrPP.Lua.Handler('" + index + "', '" + dropdown_polygen + "')"
       // TODO: Change ORDER_NONE to the correct strength.
       return [code, Blockly.Lua.ORDER_NONE]
     }

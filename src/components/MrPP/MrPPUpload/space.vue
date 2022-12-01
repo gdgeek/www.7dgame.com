@@ -150,6 +150,7 @@ export default {
 
           const data = {
             title: info.name,
+            name: info.name,
             sample_id: occlusion_glb_data.id,
             mesh_id: authoring_glb_data.id,
             dat_id: dat_data.id,
@@ -193,7 +194,7 @@ export default {
             },
             handler,
             path.join('release', md5),
-            10000
+            60000
           )
 
           if (json === null) {
