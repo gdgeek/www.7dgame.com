@@ -7,7 +7,6 @@ var KnightType = {
       type: 'uuid',
       key: 'uuid'
     },
-
     {
       type: 'num',
       key: 'id',

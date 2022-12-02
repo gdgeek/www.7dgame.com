@@ -8,9 +8,10 @@ import TransformControl from './transformControl.vue'
 import StringControl from './stringControl.vue'
 import SelectControl from './selectControl.vue'
 import BoolControl from './boolControl.vue'
-import PolygenControl from './polygenControl.vue'
-import VideoControl from './videoControl.vue'
-import PictureControl from './pictureControl.vue'
+//import PolygenControl from './polygenControl.vue'
+//import VideoControl from './videoControl.vue'
+//import PictureControl from './pictureControl.vue'
+import ResourceControl from './resourceControl.vue'
 import Vector2Control from './vector2Control.vue'
 import Vector3Control from './vector3Control.vue'
 import IconsControl from './iconsControl.vue'
@@ -19,7 +20,7 @@ import UUIDControl from './uuidControl.vue'
 import CodeControl from './codeControl.vue'
 import ButtonControl from './buttonControl.vue'
 import SpaceControl from './spaceControl.vue'
-import PolygenResetControl from './polygenResetControl.vue'
+//import PolygenResetControl from './polygenResetControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, { data, root, node }) {
@@ -32,6 +33,9 @@ export class Control extends Rete.Control {
         break
       case 'meta':
         this.component = MetaControl
+        break
+      case 'resource':
+        this.component = ResourceControl
         break
       case 'action':
         this.component = ActionControl
@@ -54,18 +58,18 @@ export class Control extends Rete.Control {
       case 'bool':
         this.component = BoolControl
         break
-      case 'polygen':
+      /* case 'polygen':
         this.component = PolygenControl
         break
       case 'video':
         this.component = VideoControl
-        break
+        break*/
       case 'space':
         this.component = SpaceControl
         break
-      case 'picture':
+      /* case 'picture':
         this.component = PictureControl
-        break
+        break*/
       case 'vector3':
         this.component = Vector3Control
         break

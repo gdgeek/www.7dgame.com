@@ -26,8 +26,9 @@ var VideoType = {
       readonly: false
     },
     {
-      type: 'video',
+      type: 'resource',
       key: 'video',
+      resource: 'video',
       title: '视频',
       readonly: false
     },

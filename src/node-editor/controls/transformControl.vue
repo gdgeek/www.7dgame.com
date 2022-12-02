@@ -1,23 +1,95 @@
 <template>
   <div>
-    <el-form size="mini" :inline="true">
+    <el-form :hidden="hidden" size="mini" :inline="true">
       <el-form-item class="tranform-item" label="位置">
-        <input v-model.number="position_x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x">
-        <input v-model.number="position_y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y">
-        <input v-model.number="position_z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z">
+        <input
+          v-model.number="position_x"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-left"
+          style="width: 45px; display: inline"
+          placeholder="x"
+        />
+        <input
+          v-model.number="position_y"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-min"
+          style="width: 45px; display: inline"
+          placeholder="y"
+        />
+        <input
+          v-model.number="position_z"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-right"
+          style="width: 45px; display: inline"
+          placeholder="z"
+        />
       </el-form-item>
-      <br>
+      <br />
       <el-form-item class="tranform-item" label="旋转">
-        <input v-model.number="rotate_x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x">
-        <input v-model.number="rotate_y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y">
-        <input v-model.number="rotate_z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z">
+        <input
+          v-model.number="rotate_x"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-left"
+          style="width: 45px; display: inline"
+          placeholder="x"
+        />
+        <input
+          v-model.number="rotate_y"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-min"
+          style="width: 45px; display: inline"
+          placeholder="y"
+        />
+        <input
+          v-model.number="rotate_z"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-right"
+          style="width: 45px; display: inline"
+          placeholder="z"
+        />
       </el-form-item>
 
-      <br>
+      <br />
       <el-form-item class="tranform-item" label="缩放">
-        <input v-model.number="scale_x" step="0.01" :readonly="data.readonly" type="number" class="input-left" style="width:45px;display:inline;" placeholder="x">
-        <input v-model.number="scale_y" step="0.01" :readonly="data.readonly" type="number" class="input-min" style="width:45px;display:inline;" placeholder="y">
-        <input v-model.number="scale_z" step="0.01" :readonly="data.readonly" type="number" class="input-right" style="width:45px;display:inline;" placeholder="z">
+        <input
+          v-model.number="scale_x"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-left"
+          style="width: 45px; display: inline"
+          placeholder="x"
+        />
+        <input
+          v-model.number="scale_y"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-min"
+          style="width: 45px; display: inline"
+          placeholder="y"
+        />
+        <input
+          v-model.number="scale_z"
+          step="0.01"
+          :readonly="data.readonly"
+          type="number"
+          class="input-right"
+          style="width: 45px; display: inline"
+          placeholder="z"
+        />
       </el-form-item>
     </el-form>
   </div>
@@ -29,16 +101,20 @@ export default {
 
   data() {
     return {
-
       value_: {
         position: { x: 0, y: 0, z: 0 },
         rotate: { x: 0, y: 0, z: 0 },
         scale: { x: 1, y: 1, z: 1 }
       }
-
     }
   },
   computed: {
+    hidden() {
+      if (typeof this.data.hidden !== 'undefined' && this.data.hidden) {
+        return true
+      }
+      return false
+    },
     position_x: {
       get() {
         return this.value_.position.x
@@ -150,9 +226,10 @@ export default {
   },
 
   methods: {
-
     refresh() {
-      if (this.data) { this.putData(this.data.key, this.value) }
+      if (this.data) {
+        this.putData(this.data.key, this.value)
+      }
       this.emitter.trigger('process', { status: 'node' })
     }
   }
@@ -160,49 +237,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .input-left{
-      border:solid 1px;
-      border-color:darkgray;
-      border-top-left-radius:3px;
-      border-top-right-radius:0px;
-      border-bottom-right-radius:0px;
-      border-bottom-left-radius:3px;
-      color: #666;
-      font-size: 12px;
-      padding:0px;
-      text-align:center;
-
-  }
-  .input-right{
-      border:solid 1px;
-      border-color:darkgray;
-      border-top-left-radius:0px;
-      border-top-right-radius:3px;
-      border-bottom-right-radius:3px;
-      border-bottom-left-radius:0px;
-      color: #666;
-      font-size: 12px;
-      padding:0px;
-      text-align:center;
-
-  }
-  .input-min{
-      border:solid 1px;
-      border-color:darkgray;
-      border-top-left-radius:0px;
-      border-top-right-radius:0px;
-      border-bottom-right-radius:0px;
-      border-bottom-left-radius:0px;
-      color: #666;
-      font-size: 12px;
-      padding:0px;
-      text-align:center;
-  }
-    .input-with-select .el-input-group__prepend {
-      background-color: #fff;
-    }
-.tranform-item{
-   max-height:0px;
-   max-height:20px;
+.input-left {
+  border: solid 1px;
+  border-color: darkgray;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 3px;
+  color: #666;
+  font-size: 12px;
+  padding: 0px;
+  text-align: center;
+}
+.input-right {
+  border: solid 1px;
+  border-color: darkgray;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 0px;
+  color: #666;
+  font-size: 12px;
+  padding: 0px;
+  text-align: center;
+}
+.input-min {
+  border: solid 1px;
+  border-color: darkgray;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  color: #666;
+  font-size: 12px;
+  padding: 0px;
+  text-align: center;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+.tranform-item {
+  max-height: 0px;
+  max-height: 20px;
 }
 </style>

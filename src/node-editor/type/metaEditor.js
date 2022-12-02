@@ -6,6 +6,7 @@ import tooltip from '@/node-editor/type/components/tooltip'
 import billboard from '@/node-editor/type/components/billboard'
 import moved from '@/node-editor/type/components/moved'
 import video from '@/node-editor/type/video'
+import sound from '@/node-editor/type/sound'
 import entity from '@/node-editor/type/entity'
 import transparent from '@/node-editor/type/components/transparent'
 import lockedScale from '@/node-editor/type/components/lockedScale'
@@ -18,6 +19,7 @@ export const MetaRoot = metaRoot
 export const Polygen = polygen
 export const Picture = picture
 export const Video = video
+export const Sound = sound
 export const Text = text
 export const Entity = entity
 export const Transparent = transparent

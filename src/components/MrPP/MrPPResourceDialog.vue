@@ -13,7 +13,9 @@
           @search="search"
           @sort="sort"
         >
-          <el-tag><b>选择相应空间</b></el-tag>
+          <el-tag>
+            <b>{{ message }}</b>
+          </el-tag>
         </mr-p-p-header>
       </span>
 
@@ -27,7 +29,7 @@
             <div slot="header">
               <el-card shadow="hover" :body-style="{ padding: '0px' }">
                 <span slot="header" class="mrpp-title">
-                  <b class="card-title" nowrap>{{ item.title }}</b>
+                  <b class="card-title" nowrap>{{ title(item) }}</b>
                 </span>
                 <img
                   v-if="item.image"
@@ -93,7 +95,12 @@ export default {
     Card,
     MrPPHeader
   },
-  props: {},
+  props: {
+    message: {
+      type: String,
+      default: '选择相应空间'
+    }
+  },
   data() {
     return {
       dialogVisible: false,
@@ -103,7 +110,18 @@ export default {
       pagination: { current: 1, count: 1, size: 20, total: 20 }
     }
   },
+
   methods: {
+    title(item) {
+      if (item.title !== undefined) {
+        return item.title
+      }
+
+      if (item.name !== undefined) {
+        return item.name
+      }
+      return 'title'
+    },
     open() {
       this.dialogVisible = true
       this.refresh()

@@ -4,12 +4,14 @@
       @selected="spaceSelect"
       @cancel="spaceCallback(null)"
       @getDatas="getSpaces"
+      message="选择相应空间"
       ref="spaceDialog"
     />
     <resource-dialog
       @selected="knightSelect"
       @cancel="knightCallback(null)"
       @getDatas="getKnights"
+      message="选择相应骑士"
       ref="knightDialog"
     />
     <el-container>
@@ -86,8 +88,8 @@ export default {
     }
   },
   watch: {
-    '$store.state.resource.onSpace': function () {
-      if (this.$store.state.resource.onSpace !== null) {
+    '$store.state.space.onSpace': function () {
+      if (this.$store.state.space.onSpace !== null) {
         this.$refs.spaceDialog.open()
       }
     },

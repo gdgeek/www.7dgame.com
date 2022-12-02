@@ -268,7 +268,7 @@ export default {
           })
           resolve()
         } catch (err) {
-          alert(err)
+          //    alert(err)
           reject(err)
         }
       })

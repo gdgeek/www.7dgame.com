@@ -72,7 +72,7 @@ export function putAudio(id, audio) {
   return putResources(id, audio)
 }
 
-function getResources(
+export function getResources(
   type,
   sort = '-created_at',
   search = '',
@@ -112,25 +112,28 @@ export function getPictures(sort = '-created_at', search = '', page = 0) {
 export function getVideos(sort = '-created_at', search = '', page = 0) {
   return getResources('video', sort, search, page)
 }
-export function getAudio(sort = '-created_at', search = '', page = 0) {
+export function getAudios(sort = '-created_at', search = '', page = 0) {
   return getResources('audio', sort, search, page)
 }
 
-function getResource(type, id) {
+export function getResource(type, id, expand = 'image,author') {
+  let query = []
+  query['type'] = type
+  query['expand'] = expand
   return request({
-    url: '/resources/' + id + '?expand=image,file,author&type=' + type,
+    url: path.join('resources', id + qs.stringify(query, true)), // '/resources/' + id + '?expand=image,file,author&type=' + type,
     method: 'get'
   })
 }
-export function getPolygen(id) {
-  return getResource('polygen', id)
+export function getPolygen(id, expand = 'image,file,author') {
+  return getResource('polygen', id, expand)
 }
-export function getPicture(id) {
-  return getResource('picture', id)
+export function getPicture(id, expand = 'image,file,author') {
+  return getResource('picture', id, expand)
 }
-export function getVideoOne(id) {
-  return getResource('video', id)
+export function getVideo(id, expand = 'image,file,author') {
+  return getResource('video', id, expand)
 }
-export function getAudioOne(id) {
-  return getResource('audio', id)
+export function getAudio(id, expand = 'image,file,author') {
+  return getResource('audio', id, expand)
 }

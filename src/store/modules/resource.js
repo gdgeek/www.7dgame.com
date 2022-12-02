@@ -1,50 +1,17 @@
 const state = {
-  polygenList: null,
-  videoList: null,
-  pictureList: null,
-  onSpace: null,
-  onPicture: null
+  onResource: null,
+  type: null
 }
 
 const mutations = {
-  spaceCallback(state, callback) {
-    state.onSpace = callback
+  resourceSetup(state, { callback, type } = { callback: null, type: null }) {
+    state.onResource = callback
+    state.type = type
   },
-  spaceSelect(state, data) {
-    if (state.onSpace !== null) {
-      state.onSpace(data)
+  resourceSelect(state, data) {
+    if (state.onResource !== null) {
+      state.onResource(data)
     }
-  },
-
-  setPolygenList(state, list) {
-    state.polygenList = []
-    list.forEach(item => {
-      state.polygenList.push({
-        name: item.name,
-        id: item.id,
-        image: item.image ? item.image.url : null
-      })
-    })
-  },
-  setVideoList(state, list) {
-    state.videoList = []
-    list.forEach(item => {
-      state.videoList.push({
-        name: item.name,
-        id: item.id,
-        image: item.image ? item.image.url : null
-      })
-    })
-  },
-  setPictureList(state, list) {
-    state.pictureList = []
-    list.forEach(item => {
-      state.pictureList.push({
-        name: item.name,
-        id: item.id,
-        image: item.image ? item.image.url : null
-      })
-    })
   }
 }
 

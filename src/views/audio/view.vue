@@ -63,7 +63,7 @@
   </div>
 </template>
 <script>
-import { getAudioOne, putAudio, deleteAudio } from '@/api/resources'
+import { getAudio, putAudio, deleteAudio } from '@/api/resources'
 import { postFile } from '@/api/files'
 import { printVector2 } from '@/assets/js/helper'
 import { mapState } from 'vuex'
@@ -116,36 +116,16 @@ export default {
       return this.data != null && this.data.info !== null
     }
   },
-  created: function () {
+  created: async function () {
     const self = this
     self.expire = true
-    getAudioOne(self.id).then(response => {
-      //
-      self.data = response.data
-      console.log(response.data)
-      self.file = response.data.file.url
-      // setTimeout(() => {
-      //   self.init()
-      // }, 0)
-    })
+
+    const response = await getAudio(self.id)
+    self.data = response.data
+    console.log(response.data)
+    self.file = response.data.file.url
   },
   methods: {
-    // thumbnail: function (audio, width, height) {
-    //   return new Promise((resolve, reject) => {
-    //     const image_type = 'image/jpeg'
-    //     const canvas = document.createElement('canvas')
-    //     canvas.width = width
-    //     canvas.height = height
-    //     // 将所截图片绘制到canvas上，并转化成图片
-    //     canvas
-    //       .getContext('2d')
-    //       .drawImage(audio, 0, 0, canvas.width, canvas.height)
-
-    //     canvas.toBlob(function (blob) {
-    //       resolve(blob)
-    //     }, image_type)
-    //   })
-    // },
     save(md5, extension, info, file, handler) {
       const self = this
       const data = {

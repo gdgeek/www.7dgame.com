@@ -1,7 +1,7 @@
 import { EntitySocket, ComponentSocket } from '@/node-editor/sockets/sockets'
 
-var PolygenType = {
-  title: 'Polygen',
+var SoundType = {
+  title: 'Sound',
   allocate: ['实体'],
   controls: [
     {
@@ -17,29 +17,30 @@ var PolygenType = {
     {
       type: 'transform',
       key: 'transform',
-      readonly: false
+      readonly: true,
+      hidden: true
     },
     {
       type: 'bool',
       key: 'active',
       title: '激活',
-      readonly: false
+      readonly: true,
+      hidden: true
     },
-
     {
       type: 'resource',
-      key: 'polygen',
-      resource: 'polygen',
-      title: '模型',
+      key: 'sound',
+      resource: 'audio',
+      title: '音频',
       readonly: false
-    }
-    /*,
+    },
     {
-      type: 'polygen-reset',
-      key: 'reset',
-      title: '重制模型大小',
-      readonly: false
-    }*/
+      type: 'number',
+      key: 'volume',
+      title: '音量',
+      readonly: false,
+      default: 1
+    }
   ],
   inputs: [
     {
@@ -64,4 +65,4 @@ var PolygenType = {
     }
   ]
 }
-export default PolygenType
+export default SoundType

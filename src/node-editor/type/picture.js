@@ -25,9 +25,11 @@ var PictureType = {
       title: '激活',
       readonly: false
     },
+
     {
-      type: 'picture',
+      type: 'resource',
       key: 'picture',
+      resource: 'picture',
       title: '图片',
       readonly: false
     },

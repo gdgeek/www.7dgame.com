@@ -58,7 +58,7 @@
   </div>
 </template>
 <script>
-import { getVideoOne, putVideo, deleteVideo } from '@/api/resources'
+import { getVideo, putVideo, deleteVideo } from '@/api/resources'
 import { postFile } from '@/api/files'
 import { printVector2 } from '@/assets/js/helper'
 import { mapState } from 'vuex'
@@ -111,18 +111,16 @@ export default {
       return this.data != null && this.data.info !== null
     }
   },
-  created: function () {
+  created: async function () {
     const self = this
     self.expire = true
-    getVideoOne(self.id).then(response => {
-      //
-      self.data = response.data
-      console.log(response.data)
-      self.file = response.data.file.url
-      setTimeout(() => {
-        self.init()
-      }, 0)
-    })
+    const response = await getVideo(self.id)
+
+    self.data = response.data
+    self.file = response.data.file.url
+    setTimeout(() => {
+      self.init()
+    }, 0)
   },
   methods: {
     thumbnail: function (video, width, height) {

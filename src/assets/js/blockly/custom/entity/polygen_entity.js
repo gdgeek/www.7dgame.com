@@ -43,7 +43,7 @@ const block = {
     return data
   },
   getLua(index) {
-    alert(index)
+    // alert(index)
     const lua = function (block) {
       var dropdown_polygen = block.getFieldValue('Polygen')
       //alert(dropdown_polygen);

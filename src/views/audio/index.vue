@@ -71,7 +71,7 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/index.css'
-import { getAudio, putAudio, deleteAudio } from '@/api/resources'
+import { getAudios, putAudio, deleteAudio } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 
@@ -178,7 +178,7 @@ export default {
     },
     refresh() {
       const self = this
-      getAudio(self.sorted, self.searched, self.pagination.current)
+      getAudios(self.sorted, self.searched, self.pagination.current)
         .then(response => {
           console.log(response.headers)
           self.pagination = {
