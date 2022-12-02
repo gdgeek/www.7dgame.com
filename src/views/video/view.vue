@@ -29,7 +29,7 @@
       <el-col :sm="8">
         <el-card class="box-card">
           <div slot="header">
-            <b>图片信息</b>
+            <b>视频信息</b>
             :
           </div>
           <div class="box-item">
@@ -65,7 +65,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'VideoView',
-  data: function () {
+  data() {
     return {
       data: null,
       file: null,
@@ -80,7 +80,7 @@ export default {
       if (this.data !== null && this.prepare) {
         return [
           {
-            item: '图片名称',
+            item: '视频名称',
             text: this.data.name
           },
           {
@@ -170,7 +170,7 @@ export default {
       const store = self.store
       if (size.x !== 0) {
         const info = JSON.stringify({ size })
-        let blob = await self.thumbnail(video, size.x * 0.5, size.y * 0.5)
+        const blob = await self.thumbnail(video, size.x * 0.5, size.y * 0.5)
         blob.name = self.data.name + '.thumbnail'
         blob.extension = '.jpg'
         const file = blob

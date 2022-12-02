@@ -34,7 +34,7 @@
       <el-col :sm="8">
         <el-card class="box-card">
           <div slot="header">
-            <b>图片信息</b>
+            <b>音频信息</b>
             :
           </div>
           <div class="box-item">
@@ -65,12 +65,12 @@
 <script>
 import { getAudio, putAudio, deleteAudio } from '@/api/resources'
 import { postFile } from '@/api/files'
-import { printVector2 } from '@/assets/js/helper'
+// import { printVector2 } from '@/assets/js/helper'
 import { mapState } from 'vuex'
 
 export default {
   name: 'AudioView',
-  data: function () {
+  data() {
     return {
       data: null,
       file: null,
@@ -82,7 +82,7 @@ export default {
       store: state => state.config.store
     }),
     tableData() {
-      if (this.data !== null && this.prepare) {
+      if (this.data !== null) {
         return [
           {
             item: '音频名称',
@@ -99,11 +99,11 @@ export default {
           {
             item: '文件大小',
             text: this.data.file.size + '字节'
-          },
-          {
-            item: '音频尺寸',
-            text: printVector2(JSON.parse(this.data.info).size)
           }
+          // {
+          //   item: '音频尺寸',
+          //   text: printVector2(JSON.parse(this.data.info).size)
+          // }
         ]
       } else {
         return []
@@ -122,7 +122,6 @@ export default {
 
     const response = await getAudio(self.id)
     self.data = response.data
-    console.log(response.data)
     self.file = response.data.file.url
   },
   methods: {
