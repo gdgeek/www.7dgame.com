@@ -1,10 +1,14 @@
 import Type from './type'
 import Blockly from 'blockly'
-import PolygenEntity from './polygen_entity'
-import PictureEntity from './picture_entity'
-import VideoEntity from './video_entity'
-import TextEntity from './text_entity'
+//import PolygenEntity from './polygen_entity'
+//import PictureEntity from './picture_entity'
+//import VideoEntity from './video_entity'
+//import TextEntity from './text_entity'
+import LineExecute from './line_execute'
 import Entity from './entity'
+
+import TweenExecute from './tween_execute'
+import VisualExecute from './visual_execute'
 
 const EntityCategory = {
   kind: 'category',
@@ -12,10 +16,12 @@ const EntityCategory = {
   colour: Type.colour,
   contents: [
     Entity.toolbox,
-    PolygenEntity.toolbox,
-    PictureEntity.toolbox,
-    VideoEntity.toolbox,
-    TextEntity.toolbox
+    LineExecute.toolbox,
+    TweenExecute.toolbox,
+    VisualExecute.toolbox
+    //PictureEntity.toolbox,
+    //VideoEntity.toolbox,
+    //TextEntity.toolbox
   ]
 }
 function RegisterData(root, index, data) {
@@ -24,9 +30,9 @@ function RegisterData(root, index, data) {
 }
 function EntityRegister(root, index) {
   RegisterData(root, index, Entity)
-  RegisterData(root, index, PolygenEntity)
-  RegisterData(root, index, PictureEntity)
-  RegisterData(root, index, VideoEntity)
-  RegisterData(root, index, TextEntity)
+  RegisterData(root, index, LineExecute)
+  RegisterData(root, index, TweenExecute)
+  RegisterData(root, index, VisualExecute)
+  //RegisterData(root, index, TextEntity)
 }
 export { EntityCategory, EntityRegister }

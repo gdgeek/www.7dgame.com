@@ -1,12 +1,39 @@
 const state = {
   data: {
+    // actions:
     actions: [],
     polygens: [],
     pictures: [],
     videos: [],
     texts: [],
+    sounds: [],
     entities: []
   }
+}
+function testAction(data) {
+  if (
+    typeof data.parameters !== 'undefined' &&
+    typeof data.parameters.action !== 'undefined'
+  ) {
+    return {
+      uuid: data.parameters.uuid,
+      name: data.parameters.action,
+      parameter: data.parameters.parameter
+    }
+  }
+}
+
+function testPoint(data, typeList) {
+  let ret
+  typeList.forEach(type => {
+    if (data.type.toLowerCase() === type.toLowerCase()) {
+      ret = {
+        uuid: data.parameters.uuid,
+        name: data.parameters.name
+      }
+    }
+  })
+  return ret
 }
 
 const mutations = {
@@ -15,56 +42,55 @@ const mutations = {
     state.polygens = []
     state.pictures = []
     state.videos = []
+    state.sounds = []
+    state.texts = []
   },
   addMetaData(state, data) {
     if (data === null) {
       return
     }
+
     console.error(data)
-
-    if (
-      typeof data.parameters !== 'undefined' &&
-      typeof data.parameters.action !== 'undefined'
-    ) {
-      state.data.actions.push({
-        uuid: data.parameters.uuid,
-        name: data.parameters.action,
-        parameter: data.parameters.parameter
-      })
+    const action = testAction(data)
+    if (action) {
+      state.data.actions.push(action)
     }
 
-    switch (data.type) {
-      case 'Polygen':
-        state.data.polygens.push({
-          uuid: data.parameters.uuid,
-          name: data.parameters.name
-        })
-        break
-      case 'Entity':
-        state.data.entities.push({
-          uuid: data.parameters.uuid,
-          name: data.parameters.name
-        })
-        break
-      case 'Video':
-        state.data.videos.push({
-          uuid: data.parameters.uuid,
-          name: data.parameters.name
-        })
-        break
-      case 'Picture':
-        state.data.pictures.push({
-          uuid: data.parameters.uuid,
-          name: data.parameters.name
-        })
-        break
-      case 'Text':
-        state.data.texts.push({
-          uuid: data.parameters.uuid,
-          name: data.parameters.name
-        })
-        break
+    const entity = testPoint(data, ['polygen', 'entity', 'video', 'picture'])
+
+    if (entity) {
+      state.data.entities.push(entity)
     }
+
+    const polygen = testPoint(data, ['polygen'])
+
+    if (polygen) {
+      state.data.polygens.push(polygen)
+    }
+
+    const video = testPoint(data, ['video'])
+
+    if (video) {
+      state.data.videos.push(video)
+    }
+
+    const picture = testPoint(data, ['picture'])
+
+    if (picture) {
+      state.data.pictures.push(picture)
+    }
+    const sound = testPoint(data, ['sound'])
+
+    if (sound) {
+      state.data.sounds.push(sound)
+    }
+
+    const text = testPoint(data, ['text'])
+
+    if (text) {
+      state.data.texts.push(text)
+    }
+
     if (typeof data.children !== 'undefined') {
       const keys = Object.keys(data.children)
       keys.forEach(key => {

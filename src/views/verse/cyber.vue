@@ -11,7 +11,7 @@
                 【元：{{ title }}】
               </el-link>
             </router-link>
-            / 【逻辑】
+            / 【赛博】
 
             <el-button-group style="float: right">
               <el-button

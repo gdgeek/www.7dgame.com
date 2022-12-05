@@ -1,7 +1,7 @@
 import Blockly from 'blockly'
 import DataType from './type'
 const data = {
-  name: 'picture_entity'
+  name: 'sound_entity'
 }
 const block = {
   title: data.name,
@@ -10,23 +10,22 @@ const block = {
   getBlockJson(root) {
     const json = {
       type: data.name,
-      message0: '图片 %1',
+      message0: '音频 %1',
       args0: [
         {
           type: 'field_dropdown',
-          name: 'Picture',
+          name: 'Sound',
           options: function () {
-            const pictures = root.$store.state.blockly.data.pictures
+            const sounds = root.$store.state.blockly.data.sounds
             let opt = [['none', '']]
-            pictures.forEach(poly => {
-              // alert(poly.name)
+            sounds.forEach(poly => {
               opt.push([poly.name, poly.uuid])
             })
             return opt
           }
         }
       ],
-      output: 'Entity',
+      output: 'Sound',
       colour: DataType.colour,
       tooltip: '',
       helpUrl: ''
@@ -44,11 +43,11 @@ const block = {
   },
   getLua(index) {
     const lua = function (block) {
-      var dropdown_picture = block.getFieldValue('Picture')
-      //alert(dropdown_picture);
+      var dropdown_sound = block.getFieldValue('Sound')
+      //alert(dropdown_video);
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MrPP.Lua.Handler("' + index + '", "' + dropdown_picture + '")'
+        'CS.MrPP.Lua.Handler("' + index + '", "' + dropdown_sound + '")'
       // TODO: Change ORDER_NONE to the correct strength.
       return [code, Blockly.Lua.ORDER_NONE]
     }
