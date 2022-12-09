@@ -36,7 +36,7 @@ const block = {
       var statements_content = Blockly.Lua.statementToCode(block, 'content')
       // TODO: Assemble Lua into code variable.
       var code =
-        "self.handling['@destroy'] = function(self) \n\
+        "meta['@destroy'] = function() \n\
   print('@destroy')\n" +
         statements_content +
         'end\n'

@@ -58,7 +58,7 @@ export default {
   mounted() {
     const self = this
     const index = 'meta_' + self.id.toString()
-    alert(index)
+    //alert(index)
     AddBlocks(this, index)
     this.workspace = Blockly.inject('blocklyDiv', {
       media: 'resource/blockly/media/',
@@ -93,7 +93,8 @@ export default {
     },
     handleClick(tab, event) {
       if (this.activeName === 'script') {
-        this.script = Blockly.Lua.workspaceToCode(this.workspace)
+        this.script =
+          'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
       }
       console.log(tab, event)
     },
@@ -106,7 +107,8 @@ export default {
         })
         if (response.data !== null) {
           const find = await findCyberScript(response.data.id, 'lua')
-          const script = Blockly.Lua.workspaceToCode(this.workspace)
+          const script =
+            'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
 
           if (find.data !== null) {
             await putCyberScript(find.data.id, { script })

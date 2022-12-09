@@ -36,7 +36,7 @@ const block = {
       var statements_content = Blockly.Lua.statementToCode(block, 'content')
       // TODO: Assemble Lua into code variable.
       var code =
-        "self.handling['@init'] = function(self) \n\
+        "model['@init'] = function() \n\
     print('@init')\n" +
         statements_content +
         'end\n'

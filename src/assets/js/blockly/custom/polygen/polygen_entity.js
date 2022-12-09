@@ -1,5 +1,6 @@
 import Blockly from 'blockly'
 import DataType from './type'
+import Helper from '../helper'
 const data = {
   name: 'polygen_entity'
 }
@@ -48,10 +49,9 @@ const block = {
       var dropdown_polygen = block.getFieldValue('Polygen')
       //alert(dropdown_polygen);
       // TODO: Assemble Lua into code variable.
-      var code =
-        "CS.MrPP.Lua.Handler('" + index + "', '" + dropdown_polygen + "')"
+      // var code =
       // TODO: Change ORDER_NONE to the correct strength.
-      return [code, Blockly.Lua.ORDER_NONE]
+      return [Helper.handler(index, dropdown_polygen), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

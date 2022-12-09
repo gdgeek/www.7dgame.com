@@ -57,9 +57,9 @@ const block = {
       var code = '..'
 
       var code =
-        "self.handling['" +
+        "meta['@" +
         dropdown_option +
-        "'] = function(self, parameter) \n\
+        "'] = function(parameter) \n\
   print('" +
         dropdown_option +
         "')\n" +

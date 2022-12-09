@@ -1,5 +1,7 @@
 import Blockly from 'blockly'
 import DataType from './type'
+
+import Helper from '../helper'
 const data = {
   name: 'picture_entity'
 }
@@ -44,13 +46,16 @@ const block = {
   },
   getLua(index) {
     const lua = function (block) {
-      var dropdown_picture = block.getFieldValue('Picture')
+      var dropdown = block.getFieldValue('Picture')
       //alert(dropdown_picture);
       // TODO: Assemble Lua into code variable.
-      var code =
-        'CS.MrPP.Lua.Handler("' + index + '", "' + dropdown_picture + '")'
+
+      // var code =
+      //  "CS.MrPP.Lua.Handler('" + index + "', '" + dropdown_picture + "')"
       // TODO: Change ORDER_NONE to the correct strength.
-      return [code, Blockly.Lua.ORDER_NONE]
+      // return [code, Blockly.Lua.ORDER_NONE]
+
+      return [Helper.handler(index, dropdown), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

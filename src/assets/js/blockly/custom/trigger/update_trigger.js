@@ -35,7 +35,7 @@ const block = {
       var statements_content = Blockly.Lua.statementToCode(block, 'content')
       // TODO: Assemble Lua into code variable.
       var code =
-        "self.handling['@update'] = function(self, interval) \n\
+        "meta['@update'] = function(interval) \n\
   print('@update')\n" +
         statements_content +
         'end\n'
