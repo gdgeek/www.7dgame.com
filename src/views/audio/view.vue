@@ -8,7 +8,7 @@
             <span v-if="data">{{ data.name }}</span>
           </div>
           <div class="box-item" style="text-align: center">
-            <audio
+            <!-- <audio
               id="audio"
               controls="controls"
               style="height: 300px; width: 100%"
@@ -19,13 +19,26 @@
                 :src="file"
                 type="audio/wav"
               />
-            </audio>
-            <!-- <audio
-              id="new_audio "
-              style="height: 100%; width: 100%"
-              hidden
-              @canplaythrough="dealWith()"
-            /> -->
+            </audio> -->
+            <div class="audio-bgc">
+              <img
+                :class="[
+                  isPlay == true ? 'audio-bgc-imgPlay' : 'audio-bgc-img'
+                ]"
+                @click="handlePlayAudio()"
+              />
+              <!-- <img class="audio-bgc-img" @click="handlePlayAudio()" /> -->
+              <audio
+                id="audio"
+                controls="controls"
+                style="width: 95%; height: 80px"
+                :src="file"
+                preload="auto"
+                @play="listenPlay()"
+                @pause="listenPause()"
+                @ended="listenEnd()"
+              />
+            </div>
           </div>
         </el-card>
         <br />
@@ -74,7 +87,8 @@ export default {
     return {
       data: null,
       file: null,
-      expire: true
+      expire: true,
+      isPlay: false
     }
   },
   computed: {
@@ -125,6 +139,31 @@ export default {
     self.file = response.data.file.url
   },
   methods: {
+    handlePlayAudio() {
+      const audio = document.getElementById('audio')
+      // console.log(this.$refs.audio1.durationchange, 'this.$refs.audio1')
+
+      if (this.isPlay === false) {
+        audio.play()
+        this.isPlay = true
+      } else {
+        audio.pause()
+        this.isPlay = true
+      }
+      // this.isPlay = !this.isPlay
+    },
+    listenPlay() {
+      this.isPlay = true
+      console.log('开始播放', this.isPlay)
+    },
+    listenPause() {
+      this.isPlay = false
+      console.log('暂停播放', this.isPlay)
+    },
+    listenEnd() {
+      this.isPlay = false
+      console.log('结束播放', this.isPlay)
+    },
     save(md5, extension, info, file, handler) {
       const self = this
       const data = {
@@ -290,5 +329,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/view-style.scss';
+// @import '~@/styles/view-style.scss';
+.audio-bgc {
+  width: 100%;
+  height: 350px;
+  background-color: rgb(112, 219, 205);
+  // animation: mymove 6s infinite;
+}
+
+// @keyframes mymove {
+//   from {
+//     background-color: rgb(91, 196, 182);
+//   }
+//   to {
+//     background-color: rgb(202, 128, 94);
+//   }
+
+// }
+.audio-bgc-img {
+  margin-top: 60px;
+  width: 190px;
+  height: 190px;
+  border-radius: 51%;
+  background-color: #f0f0f0;
+  background: url('/media/bg/audio-play.jpg') center no-repeat;
+  background-size: cover;
+}
+.audio-bgc-imgPlay {
+  margin-top: 60px;
+  width: 190px;
+  height: 190px;
+  border-radius: 51%;
+  background-color: #f0f0f0;
+  background: url('/media/bg/audio-play.jpg') center no-repeat;
+  background-size: cover;
+  animation: spin 6s infinite linear;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0edg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>
