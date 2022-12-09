@@ -20,25 +20,32 @@
                 type="audio/wav"
               />
             </audio> -->
-            <div class="audio-bgc">
-              <img
-                :class="[
-                  isPlay == true ? 'audio-bgc-imgPlay' : 'audio-bgc-img'
-                ]"
-                @click="handlePlayAudio()"
-              />
-              <!-- <img class="audio-bgc-img" @click="handlePlayAudio()" /> -->
+            <section class="audio-bgc">
+              <br />
+              <div class="audio-box">
+                <div
+                  class="audio-record"
+                  :class="[isPlay == true ? 'audio-record-playfast' : '']"
+                  @click="handlePlayAudio()"
+                />
+                <div
+                  class="audio-record-image"
+                  :class="[isPlay == true ? 'audio-record-play' : '']"
+                  @click="handlePlayAudio()"
+                />
+                <!-- <img class="audio-bgc-img" @click="handlePlayAudio()" /> -->
+              </div>
               <audio
                 id="audio"
                 controls="controls"
-                style="width: 95%; height: 80px"
+                style="width: 95%; height: 84px"
                 :src="file"
                 preload="auto"
                 @play="listenPlay()"
                 @pause="listenPause()"
                 @ended="listenEnd()"
               />
-            </div>
+            </section>
           </div>
         </el-card>
         <br />
@@ -331,39 +338,54 @@ export default {
 <style lang="scss" scoped>
 // @import '~@/styles/view-style.scss';
 .audio-bgc {
+  position: relative;
   width: 100%;
   height: 350px;
-  background-color: rgb(112, 219, 205);
-  // animation: mymove 6s infinite;
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgb(169, 196, 228) 100%
+  );
 }
-
-// @keyframes mymove {
-//   from {
-//     background-color: rgb(91, 196, 182);
-//   }
-//   to {
-//     background-color: rgb(202, 128, 94);
-//   }
-
-// }
-.audio-bgc-img {
-  margin-top: 60px;
-  width: 190px;
-  height: 190px;
-  border-radius: 51%;
-  background-color: #f0f0f0;
-  background: url('/media/bg/audio-play.jpg') center no-repeat;
+.audio-box {
+  position: relative;
+  margin: auto;
+  margin-top: 26px;
+  width: 200px;
+  height: 200px;
+}
+.audio-record {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: url('/media/bg/audio-record.jpg') center no-repeat;
   background-size: cover;
 }
-.audio-bgc-imgPlay {
-  margin-top: 60px;
-  width: 190px;
-  height: 190px;
-  border-radius: 51%;
-  background-color: #f0f0f0;
-  background: url('/media/bg/audio-play.jpg') center no-repeat;
-  background-size: cover;
+.audio-record-image {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  background: url('/media/bg/audio-img.jpg') center no-repeat;
+  background-size: 113%;
+}
+.audio-record-play {
   animation: spin 6s infinite linear;
+}
+.audio-record-playfast {
+  animation: recordfast 0.16s infinite linear;
 }
 @keyframes spin {
   0% {
@@ -371,6 +393,14 @@ export default {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@keyframes recordfast {
+  0% {
+    transform: rotate(0edg);
+  }
+  100% {
+    transform: rotate(1.1deg);
   }
 }
 </style>
