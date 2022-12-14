@@ -30,6 +30,13 @@ var MetaType = {
       key: 'active',
       title: '激活',
       readonly: false
+    },
+
+    {
+      type: 'event',
+      key: 'event',
+      label: '事件',
+      ignore: true
     }
   ],
   inputs: null,
