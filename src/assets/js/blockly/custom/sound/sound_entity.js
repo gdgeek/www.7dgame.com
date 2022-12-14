@@ -9,7 +9,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(root) {
+  getBlockJson({ resource }) {
     const json = {
       type: data.name,
       message0: '音频 %1',
@@ -18,10 +18,10 @@ const block = {
           type: 'field_dropdown',
           name: 'Sound',
           options: function () {
-            const sounds = root.$store.state.blockly.data.sounds
+            const sound = resource.sound
             let opt = [['none', '']]
-            sounds.forEach(poly => {
-              opt.push([poly.name, poly.uuid])
+            sound.forEach(({ name, uuid }) => {
+              opt.push([name, uuid])
             })
             return opt
           }
@@ -34,16 +34,16 @@ const block = {
     }
     return json
   },
-  getBlock: function (root) {
+  getBlock: function (parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }
     return data
   },
-  getLua(index) {
+  getLua({ index }) {
     const lua = function (block) {
       var dropdown = block.getFieldValue('Sound')
       //alert(dropdown_video);

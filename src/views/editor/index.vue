@@ -65,6 +65,7 @@ export default {
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
           case 'save-verse':
+            alert(1222)
             self.saveVerse(e.data.verse)
             break
           case 'ready':

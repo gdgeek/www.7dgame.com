@@ -8,7 +8,7 @@ const block = {
   title: data.name,
   type: TriggerType.name,
   colour: TriggerType.colour,
-  getBlock(root) {
+  getBlock(parameters) {
     const block = {
       init: function () {
         this.jsonInit({
@@ -31,7 +31,7 @@ const block = {
     }
     return block
   },
-  getLua(index) {
+  getLua({}) {
     const lua = function (block) {
       var statements_content = Blockly.Lua.statementToCode(block, 'content')
       // TODO: Assemble Lua into code variable.

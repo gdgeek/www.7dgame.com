@@ -18,14 +18,14 @@ const TriggerCategory = {
   ]
 }
 
-function RegisterData(root, index, data) {
-  Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(index)
+function RegisterData(data, parameters) {
+  Blockly.Blocks[data.title] = data.getBlock(parameters)
+  Blockly.Lua[data.title] = data.getLua(parameters)
 }
-function TriggerRegister(root, index) {
-  RegisterData(root, index, ActionTrigger)
-  RegisterData(root, index, DestroyTrigger)
-  RegisterData(root, index, InitTrigger)
-  RegisterData(root, index, UpdateTrigger)
+function TriggerRegister(parameters) {
+  RegisterData(ActionTrigger, parameters)
+  RegisterData(DestroyTrigger, parameters)
+  RegisterData(InitTrigger, parameters)
+  RegisterData(UpdateTrigger, parameters)
 }
 export { TriggerCategory, TriggerRegister }

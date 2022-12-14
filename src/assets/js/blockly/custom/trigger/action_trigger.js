@@ -9,7 +9,7 @@ const block = {
   title: data.name,
   type: TriggerType.name,
   colour: TriggerType.colour,
-  getBlockJson(root) {
+  getBlockJson({ resource }) {
     const json = {
       type: data.name,
       message0: '动作 %1 %2 %3',
@@ -18,10 +18,10 @@ const block = {
           type: 'field_dropdown',
           name: 'Action',
           options: function () {
-            const actions = root.$store.state.blockly.data.actions
+            const action = resource.action
             let opt = [['none', '']]
-            actions.forEach(act => {
-              opt.push([act.name, act.uuid])
+            action.forEach(({ name, uuid }) => {
+              opt.push([name, uuid])
             })
             return opt
           }
@@ -40,16 +40,16 @@ const block = {
     }
     return json
   },
-  getBlock(root) {
+  getBlock(parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }
     return data
   },
-  getLua(index) {
+  getLua(parameters) {
     const lua = function (block) {
       var dropdown_option = block.getFieldValue('Action')
       var statements_content = Blockly.Lua.statementToCode(block, 'content')

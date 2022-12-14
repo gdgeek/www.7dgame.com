@@ -34,7 +34,7 @@
       </el-header>
       <el-main>
         <el-row>
-          <mr-p-p-verse-list :items="items" @refresh="refresh" />
+          <verse-list :items="items" @refresh="refresh" />
         </el-row>
       </el-main>
       <el-footer>
@@ -58,7 +58,7 @@
 <script>
 import 'element-ui/lib/theme-chalk/index.css'
 import { postVerse, putVerse } from '@/api/v1/verse'
-import MrPPVerseList from '@/components/MrPP/MrPPVerseList'
+import VerseList from '@/components/MrPP/MrPPVerseList'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 import Create from '@/components/MrPP/MrPPVerseWindow/Create.vue'
 
@@ -66,7 +66,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'VerseEditor',
   components: {
-    MrPPVerseList,
+    VerseList,
     MrPPHeader,
     Create
   },

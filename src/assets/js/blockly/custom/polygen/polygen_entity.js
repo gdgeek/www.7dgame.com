@@ -8,7 +8,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(root) {
+  getBlockJson({ resource }) {
     const json = {
       type: data.name,
       message0: '模型 %1',
@@ -17,9 +17,9 @@ const block = {
           type: 'field_dropdown',
           name: 'Polygen',
           options: function () {
-            const polygens = root.$store.state.blockly.data.polygens
+            const polygen = resource.polygen
             let opt = [['none', '']]
-            polygens.forEach(poly => {
+            polygen.forEach(poly => {
               // alert(poly.name)
               opt.push([poly.name, poly.uuid])
             })
@@ -34,16 +34,16 @@ const block = {
     }
     return json
   },
-  getBlock: function (root) {
+  getBlock: function (parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }
     return data
   },
-  getLua(index) {
+  getLua({ index }) {
     // alert(index)
     const lua = function (block) {
       var dropdown_polygen = block.getFieldValue('Polygen')

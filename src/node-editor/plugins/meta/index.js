@@ -4,8 +4,7 @@
  * Released under the MIT license.
  */
 import { postMeta, deleteMeta } from '@/api/v1/meta'
-//var randomWords = require('random-words')
-//let removeNope = -1
+
 function install(editor, options) {
   editor.on('noderemove', async component => {
     if (component.name !== 'Meta' || editor.silent) {
@@ -14,10 +13,6 @@ function install(editor, options) {
     const id = component.data['id']
 
     if (id !== -1) {
-      //removeNope = component.id
-      // setTimeout(() => {
-      // removeNope = -1
-      // })
       try {
         await deleteMeta(id)
         console.log('delete ok' + id)
@@ -29,20 +24,10 @@ function install(editor, options) {
     }
     return true
   })
-  /*
-  editor.on('connectionremove', connection => {
-    if (connection.output.node.id === removeNope) {
-      return true
-    }
-
-    return false
-  })*/
   editor.on('nodecreate', async component => {
     if (component.name !== 'Meta' || editor.silent) {
       return true
     }
-
-    //component.controls.get('title').setId(123)
 
     if (typeof component.data['meta'] !== 'undefined') {
       component.data['id'] = component.data['meta'].id
@@ -58,14 +43,10 @@ function install(editor, options) {
       const data = response.data
       id = data.id
       component.controls.get('id').setValue(id)
-      /*
-      const verse = editor.nodes.find(n => n.name === 'Verse')
-      if (verse !== null) {
-        editor.connect(component.outputs.get('out'), verse.inputs.get('metas'))
-      }*/
     }
     setTimeout(() => {
       component.controls.get('title').$emit('setId', id)
+      component.controls.get('event').$emit('setId', id)
     })
 
     return true

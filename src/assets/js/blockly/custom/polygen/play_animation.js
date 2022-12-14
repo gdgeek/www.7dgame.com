@@ -8,7 +8,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(root) {
+  getBlockJson(parameters) {
     const json = {
       type: 'block_type',
       message0: '播放模型动画 %1 %2',
@@ -32,16 +32,16 @@ const block = {
     }
     return json
   },
-  getBlock: function (root) {
+  getBlock: function (parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }
     return data
   },
-  getLua(index) {
+  getLua(parameters) {
     const lua = function (block) {
       var text_animation = block.getFieldValue('animation')
       var value_polygen = Blockly.Lua.valueToCode(

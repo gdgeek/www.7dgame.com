@@ -6,7 +6,7 @@ const data = {
 const block = {
   title: data.name,
   type: DataType.name,
-  getBlock(root) {
+  getBlock({}) {
     const block = {
       init: function () {
         this.jsonInit({
@@ -39,7 +39,7 @@ const block = {
     }
     return block
   },
-  getLua(index) {
+  getLua({}) {
     const lua = function (block) {
       var value_position = Blockly.Lua.valueToCode(
         block,

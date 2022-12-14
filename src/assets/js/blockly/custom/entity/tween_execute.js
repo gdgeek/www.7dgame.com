@@ -1,4 +1,4 @@
-import DataType from './type'
+import DataType from '../execute/type'
 
 import Blockly from 'blockly'
 const data = {
@@ -8,7 +8,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(root) {
+  getBlockJson({}) {
     const json = {
       type: data.name,
       message0: '实体 %1 经过 %2 移动到 %3 %4',
@@ -43,16 +43,16 @@ const block = {
     }
     return json
   },
-  getBlock: function (root) {
+  getBlock: function (parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }
     return data
   },
-  getLua(index) {
+  getLua({}) {
     const lua = function (block) {
       var value_entity = Blockly.Lua.valueToCode(
         block,

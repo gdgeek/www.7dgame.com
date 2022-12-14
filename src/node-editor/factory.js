@@ -1,3 +1,5 @@
+import Rete from 'rete'
+import { MetaSocket } from '@/node-editor/sockets/sockets'
 export async function Build(editor, data, input = null) {
   return new Promise((resolve, reject) => {
     if (data === null) {
@@ -7,7 +9,6 @@ export async function Build(editor, data, input = null) {
     if (data.type === 'MetaKnight') {
       data.type = 'Knight'
     }
-
     const component = editor.getComponent(data.type)
 
     component

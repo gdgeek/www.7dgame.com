@@ -7,15 +7,15 @@ import { PictureRegister } from '@/assets/js/blockly/custom/picture'
 import { VideoRegister } from '@/assets/js/blockly/custom/video'
 import { SoundRegister } from '@/assets/js/blockly/custom/sound'
 
-function AddBlocks(root, index) {
-  TriggerRegister(root, index)
-  EntityRegister(root, index)
-  PolygenRegister(root, index)
-  DataRegister(root, index)
-  ExecuteRegister(root, index)
-  PictureRegister(root, index)
-  VideoRegister(root, index)
-  SoundRegister(root, index)
+function AddBlocks(parameters) {
+  TriggerRegister(parameters)
+  EntityRegister(parameters)
+  PolygenRegister(parameters)
+  DataRegister(parameters)
+  ExecuteRegister(parameters)
+  PictureRegister(parameters)
+  VideoRegister(parameters)
+  SoundRegister(parameters)
 }
 
 export { AddBlocks }

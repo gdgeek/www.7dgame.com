@@ -9,7 +9,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(root) {
+  getBlockJson({ resource }) {
     const json = {
       type: data.name,
       message0: '文本 %1',
@@ -18,11 +18,11 @@ const block = {
           type: 'field_dropdown',
           name: 'Text',
           options: function () {
-            const texts = root.$store.state.blockly.data.texts
+            const text = resource.text
             let opt = [['none', '']]
-            texts.forEach(text => {
+            text.forEach(t => {
               // alert(poly.name)
-              opt.push([text.name, text.uuid])
+              opt.push([t.name, t.uuid])
             })
             return opt
           }
@@ -35,10 +35,10 @@ const block = {
     }
     return json
   },
-  getBlock: function (root) {
+  getBlock: function (parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }

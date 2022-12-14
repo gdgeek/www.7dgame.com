@@ -8,7 +8,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(root) {
+  getBlockJson({}) {
     const json = {
       type: 'block_type',
       message0: '实体 %1 显示/隐藏 %2 %3',
@@ -35,16 +35,16 @@ const block = {
     }
     return json
   },
-  getBlock: function (root) {
+  getBlock: function (parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }
     return data
   },
-  getLua(index) {
+  getLua({}) {
     const lua = function (block) {
       var value_entity = Blockly.Lua.valueToCode(
         block,

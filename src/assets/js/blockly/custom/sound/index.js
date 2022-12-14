@@ -10,13 +10,13 @@ const SoundCategory = {
   colour: Type.colour,
   contents: [SoundEntity.toolbox, PlaySound.toolbox, PlaySoundCallback.toolbox]
 }
-function RegisterData(root, index, data) {
-  Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(index)
+function RegisterData(data, parameters) {
+  Blockly.Blocks[data.title] = data.getBlock(parameters)
+  Blockly.Lua[data.title] = data.getLua(parameters)
 }
-function SoundRegister(root, index) {
-  RegisterData(root, index, SoundEntity)
-  RegisterData(root, index, PlaySound)
-  RegisterData(root, index, PlaySoundCallback)
+function SoundRegister(parameters) {
+  RegisterData(SoundEntity, parameters)
+  RegisterData(PlaySound, parameters)
+  RegisterData(PlaySoundCallback, parameters)
 }
 export { SoundCategory, SoundRegister }

@@ -9,7 +9,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(root) {
+  getBlockJson({ resource }) {
     const json = {
       type: data.name,
       message0: '视频 %1',
@@ -18,10 +18,10 @@ const block = {
           type: 'field_dropdown',
           name: 'Video',
           options: function () {
-            const videos = root.$store.state.blockly.data.videos
+            const video = resource.video
             let opt = [['none', '']]
-            videos.forEach(poly => {
-              opt.push([poly.name, poly.uuid])
+            video.forEach(vd => {
+              opt.push([vd.name, vd.uuid])
             })
             return opt
           }
@@ -34,24 +34,18 @@ const block = {
     }
     return json
   },
-  getBlock: function (root) {
+  getBlock: function (parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }
     return data
   },
-  getLua(index) {
+  getLua({ index }) {
     const lua = function (block) {
       var dropdown = block.getFieldValue('Video')
-      //alert(dropdown_video);
-      // TODO: Assemble Lua into code variable.
-      //  var code = Helper.handler(index, dropdown_video)
-      //    "CS.MrPP.Lua.Handler('" + index + "', '" + dropdown_video + "')"
-      // TODO: Change ORDER_NONE to the correct strength.
-      //return [code, Blockly.Lua.ORDER_NONE]
 
       return [Helper.handler(index, dropdown), Blockly.Lua.ORDER_NONE]
     }

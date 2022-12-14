@@ -7,7 +7,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(root) {
+  getBlockJson({}) {
     const json = {
       type: data.name,
       message0: '爆炸 %1',
@@ -27,16 +27,16 @@ const block = {
     }
     return json
   },
-  getBlock: function (root) {
+  getBlock: function (parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }
     return data
   },
-  getLua(index) {
+  getLua({}) {
     const lua = function (block) {
       var value_boom = Blockly.Lua.valueToCode(
         block,

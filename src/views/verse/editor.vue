@@ -99,13 +99,13 @@ export default {
       }
     }
   },
+
   async created() {
     try {
       await this.init()
     } catch (e) {
       alert(e.message)
     }
-
     this.loading = false
   },
 
@@ -129,7 +129,7 @@ export default {
       self.verse = response.data
       if (self.verse.data !== null) {
         const data = await self.$refs.rete.setup(self.verse.data)
-
+        /*
         response.data.metas.forEach(meta => {
           if (
             !data.children.metas.find(item => item.parameters.id === meta.id)
@@ -137,7 +137,7 @@ export default {
             self.$refs.rete.addMeta(meta)
           }
         })
-
+        */
         self.loading = false
       } else {
         const data = await self.$refs.rete.create({

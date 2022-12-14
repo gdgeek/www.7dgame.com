@@ -1,4 +1,4 @@
-import meta from './meta'
+import meta from './meta.js'
 import verse from './verse'
 import knight from './knight'
 export const Meta = meta

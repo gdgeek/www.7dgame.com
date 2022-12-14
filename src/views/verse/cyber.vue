@@ -26,7 +26,13 @@
             </el-button-group>
           </div>
 
-          <coding v-if="cyber !== null" ref="blockly" :cyber="cyber" :id="id" />
+          <coding
+            v-if="cyber !== null"
+            :meta="meta"
+            ref="blockly"
+            :cyber="cyber"
+            :id="id"
+          />
         </el-card>
       </el-main>
     </el-container>
@@ -75,8 +81,9 @@ export default {
   },
   async created() {
     const self = this
-    const response = await getMeta(this.id, 'cyber')
+    const response = await getMeta(this.id, 'cyber, event')
     self.meta = response.data
+    //alert(JSON.stringify(self.meta))
     this.setData({
       redirect: null,
       path: path.join(
@@ -85,7 +92,6 @@ export default {
       ),
       meta: { title: '编辑-' + self.title }
     })
-    //alert(JSON.stringify(meta.data))
     if (self.meta.cyber === null) {
       const response = await postCyber({ meta_id: self.meta.id })
 
