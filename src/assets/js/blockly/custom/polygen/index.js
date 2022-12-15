@@ -9,12 +9,12 @@ const PolygenCategory = {
   colour: Type.colour,
   contents: [PolygenEntity.toolbox, PlayAnimation.toolbox]
 }
-function RegisterData(root, index, data) {
-  Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(index)
+function RegisterData(data, parameters) {
+  Blockly.Blocks[data.title] = data.getBlock(parameters)
+  Blockly.Lua[data.title] = data.getLua(parameters)
 }
-function PolygenRegister(root, index) {
-  RegisterData(root, index, PolygenEntity)
-  RegisterData(root, index, PlayAnimation)
+function PolygenRegister(parameters) {
+  RegisterData(PolygenEntity, parameters)
+  RegisterData(PlayAnimation, parameters)
 }
 export { PolygenCategory, PolygenRegister }

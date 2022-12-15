@@ -66,10 +66,8 @@ export default {
 
     this.$on('setId', async function (id) {
       self.id = id
-      //alert(id)
       let r = await getMetaKnight(id)
       const value = r.data.knight_id
-      //alert(JSON.stringify(r.data))
       if (typeof value !== 'undefined') {
         this.value = value
       } else if (typeof this.data.default !== 'undefined') {

@@ -40,6 +40,10 @@ export default {
       type: Object,
       require: true
     },
+    meta: {
+      type: Object,
+      require: true
+    },
     id: {
       type: Number,
       require: true
@@ -55,11 +59,13 @@ export default {
       script: ''
     }
   },
+
   mounted() {
     const self = this
-    const index = 'meta_' + self.id.toString()
-    //alert(index)
-    AddBlocks(this, index)
+    AddBlocks({
+      index: 'meta_' + self.id.toString(),
+      resource: self.getResource(this.meta)
+    })
     this.workspace = Blockly.inject('blocklyDiv', {
       media: 'resource/blockly/media/',
       toolbox: toolbox,
@@ -88,6 +94,105 @@ export default {
     console.log(this.workspace) /**/
   },
   methods: {
+    getResource(meta) {
+      const data = JSON.parse(meta.data)
+      const slots = JSON.parse(meta.event.slots)
+
+      const ret = {
+        action: [],
+        polygen: [],
+        picture: [],
+        video: [],
+        text: [],
+        sound: [],
+        entity: [],
+        input: slots.input,
+        output: slots.output
+      }
+      this.addMetaData(data, ret)
+      return ret
+    },
+    addMetaData(data, ret) {
+      const self = this
+      const action = self.testAction(data)
+      if (action) {
+        ret.actions.push(action)
+      }
+
+      const entity = self.testPoint(data, [
+        'polygen',
+        'entity',
+        'video',
+        'picture'
+      ])
+
+      if (entity) {
+        ret.entity.push(entity)
+      }
+
+      const polygen = self.testPoint(data, ['polygen'])
+
+      if (polygen) {
+        ret.polygen.push(polygen)
+      }
+
+      const video = self.testPoint(data, ['video'])
+
+      if (video) {
+        ret.video.push(video)
+      }
+
+      const picture = self.testPoint(data, ['picture'])
+
+      if (picture) {
+        ret.picture.push(picture)
+      }
+      const sound = self.testPoint(data, ['sound'])
+
+      if (sound) {
+        ret.sound.push(sound)
+      }
+
+      const text = self.testPoint(data, ['text'])
+
+      if (text) {
+        ret.text.push(text)
+      }
+
+      if (typeof data.children !== 'undefined') {
+        const keys = Object.keys(data.children)
+        keys.forEach(key => {
+          data.children[key].forEach(item => {
+            self.addMetaData(item, ret)
+          })
+        })
+      }
+    },
+    testAction(data) {
+      if (
+        typeof data.parameters !== 'undefined' &&
+        typeof data.parameters.action !== 'undefined'
+      ) {
+        return {
+          uuid: data.parameters.uuid,
+          name: data.parameters.action,
+          parameter: data.parameters.parameter
+        }
+      }
+    },
+
+    testPoint(data, typeList) {
+      let ret
+      typeList.forEach(type => {
+        if (data.type.toLowerCase() === type.toLowerCase()) {
+          ret = {
+            uuid: data.parameters.uuid,
+            name: data.parameters.name
+          }
+        }
+      })
+      return ret
+    },
     load(data) {
       Blockly.serialization.workspaces.load(JSON.parse(data), this.workspace)
     },

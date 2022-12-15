@@ -1,22 +1,30 @@
 <template>
   <div class="verse-code">
     <el-container>
-
       <el-main>
         <el-card v-loading="loading" class="box-card">
           <div slot="header" class="clearfix">
-            <router-link :to="'/verse/editor?id='+id">
-              <el-link v-if="verse" :underline="false"> {{ word.project }}{{ verse.name }}</el-link>
+            <router-link :to="'/verse/editor?id=' + id">
+              <el-link v-if="verse" :underline="false">
+                {{ word.project }}{{ verse.name }}
+              </el-link>
             </router-link>
-            / 【逻辑】
+            / 【赛博】
 
             <el-button-group style="float: right">
-              <el-button v-if="canSave" type="primary" size="mini" @click="save()"><font-awesome-icon icon="save" />  保存 </el-button>
+              <el-button
+                v-if="canSave"
+                type="primary"
+                size="mini"
+                @click="save()"
+              >
+                <font-awesome-icon icon="save" />
+                保存
+              </el-button>
             </el-button-group>
           </div>
 
           <blockly v-if="cybers !== null" ref="blockly" :cybers="cybers" />
-
         </el-card>
       </el-main>
     </el-container>
@@ -29,7 +37,6 @@ import Blockly from '@/components/Blockly.vue'
 import { mapMutations, mapState } from 'vuex'
 import { getVerse } from '@/api/v1/verse'
 import { postVerseCyber } from '@/api/v1/verse-cyber'
-
 import { AbilityWorks } from '@/ability/ability'
 export default {
   name: 'VerseCode',
@@ -44,7 +51,6 @@ export default {
     }
   },
   computed: {
-
     ...mapState({
       word: state => state.settings.word
     }),
@@ -68,7 +74,11 @@ export default {
     getVerse(this.id, 'verseCybers,metas').then(response => {
       self.verse = response.data
 
-      this.setData({ redirect: null, path: '/verse/editor?id=' + this.verse.id, meta: { title: '编辑-' + this.verse.name }})
+      this.setData({
+        redirect: null,
+        path: '/verse/editor?id=' + this.verse.id,
+        meta: { title: '编辑-' + this.verse.name }
+      })
       console.log(self.verse)
       if (self.verse.verseCybers.length === 0) {
         postVerseCyber({ verse_id: self.verse.id }).then(response => {
@@ -86,17 +96,13 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.canSave) { this.save() }
+    if (this.canSave) {
+      this.save()
+    }
   },
   methods: {
-
-    ...mapMutations('breadcrumb', [
-      'setData',
-      'clear'
-    ]),
-    ...mapMutations('blockly', [
-      'addMeta'
-    ]),
+    ...mapMutations('breadcrumb', ['setData', 'clear']),
+    ...mapMutations('blockly', ['addMeta']),
     save() {
       this.$refs.blockly.save()
     }

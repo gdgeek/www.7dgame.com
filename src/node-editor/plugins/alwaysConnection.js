@@ -37,14 +37,25 @@ function install(editor, options) {
 
     return true
   })
-
+  editor.on('connectioncreate', (connection, a, b) => {
+    if (connection.output.node.id === connection.input.node.id) {
+      return false
+    }
+    return true
+  })
   editor.on('connectionremove', connection => {
     if (editor.silent) {
       return true
     }
-
     if (map.has(connection.output.node.name)) {
-      if (connection.output.node.id !== removeNode) {
+      const item = map.get(connection.output.node.name)
+      if (
+        item.input.name === connection.input.node.name &&
+        item.input.socket === connection.input.key &&
+        item.output.name === connection.output.node.name &&
+        item.output.socket === connection.output.key &&
+        connection.output.node.id !== removeNode
+      ) {
         return false
       }
     }

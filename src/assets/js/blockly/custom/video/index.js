@@ -8,11 +8,11 @@ const VideoCategory = {
   colour: Type.colour,
   contents: [VideoEntity.toolbox]
 }
-function RegisterData(root, index, data) {
-  Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(index)
+function RegisterData(data, parameters) {
+  Blockly.Blocks[data.title] = data.getBlock(parameters)
+  Blockly.Lua[data.title] = data.getLua(parameters)
 }
-function VideoRegister(root, index) {
-  RegisterData(root, index, VideoEntity)
+function VideoRegister(parameters) {
+  RegisterData(VideoEntity, parameters)
 }
 export { VideoCategory, VideoRegister }

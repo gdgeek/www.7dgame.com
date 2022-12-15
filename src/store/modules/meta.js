@@ -1,4 +1,3 @@
-
 import { putMeta } from '@/api/v1/meta'
 
 const state = {
@@ -24,7 +23,6 @@ const mutations = {
   }
 }
 const actions = {
-
   saveMeta({ state }, data) {
     return new Promise((resolve, reject) => {
       putMeta(state.data.id, {

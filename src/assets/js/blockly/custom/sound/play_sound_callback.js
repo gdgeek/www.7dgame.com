@@ -8,7 +8,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(root) {
+  getBlockJson(parameters) {
     const json = {
       type: 'block_type',
       message0: '播放 %1 回调 %2',
@@ -31,16 +31,16 @@ const block = {
     }
     return json
   },
-  getBlock: function (root) {
+  getBlock: function (parameters) {
     const data = {
       init: function () {
-        const json = block.getBlockJson(root)
+        const json = block.getBlockJson(parameters)
         this.jsonInit(json)
       }
     }
     return data
   },
-  getLua(index) {
+  getLua(parameters) {
     const lua = function (block) {
       var value_sound = Blockly.Lua.valueToCode(
         block,
@@ -55,7 +55,7 @@ const block = {
       //alert(statements_callback)
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MrPP.Lua.LuaExecuter.PlaySoundCallback(' +
+        'CS.MrPP.Lua.LuaExecuter.PlaySound(' +
         value_sound +
         ',' +
         JSON.stringify(statements_callback) +

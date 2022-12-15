@@ -8,11 +8,11 @@ const PictureCategory = {
   colour: Type.colour,
   contents: [PictureEntity.toolbox]
 }
-function RegisterData(root, index, data) {
-  Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(index)
+function RegisterData(data, parameters) {
+  Blockly.Blocks[data.title] = data.getBlock(parameters)
+  Blockly.Lua[data.title] = data.getLua(parameters)
 }
-function PictureRegister(root, index) {
-  RegisterData(root, index, PictureEntity)
+function PictureRegister(parameters) {
+  RegisterData(PictureEntity, parameters)
 }
 export { PictureCategory, PictureRegister }

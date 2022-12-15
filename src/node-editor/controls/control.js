@@ -8,9 +8,6 @@ import TransformControl from './transformControl.vue'
 import StringControl from './stringControl.vue'
 import SelectControl from './selectControl.vue'
 import BoolControl from './boolControl.vue'
-//import PolygenControl from './polygenControl.vue'
-//import VideoControl from './videoControl.vue'
-//import PictureControl from './pictureControl.vue'
 import ResourceControl from './resourceControl.vue'
 import Vector2Control from './vector2Control.vue'
 import Vector3Control from './vector3Control.vue'
@@ -20,7 +17,7 @@ import UUIDControl from './uuidControl.vue'
 import CodeControl from './codeControl.vue'
 import ButtonControl from './buttonControl.vue'
 import SpaceControl from './spaceControl.vue'
-//import PolygenResetControl from './polygenResetControl.vue'
+import EventControl from './eventControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, { data, root, node }) {
@@ -30,6 +27,9 @@ export class Control extends Rete.Control {
     switch (data.type) {
       case 'select':
         this.component = SelectControl
+        break
+      case 'event':
+        this.component = EventControl
         break
       case 'meta':
         this.component = MetaControl
@@ -58,18 +58,10 @@ export class Control extends Rete.Control {
       case 'bool':
         this.component = BoolControl
         break
-      /* case 'polygen':
-        this.component = PolygenControl
-        break
-      case 'video':
-        this.component = VideoControl
-        break*/
+
       case 'space':
         this.component = SpaceControl
         break
-      /* case 'picture':
-        this.component = PictureControl
-        break*/
       case 'vector3':
         this.component = Vector3Control
         break
@@ -108,8 +100,6 @@ export class Control extends Rete.Control {
     this.vueContext.refresh()
   }
   $emit(action, value) {
-    //console.error(this.vueContext.$emit)
     this.vueContext.$emit(action, value)
-    // alert(action)
   }
 }

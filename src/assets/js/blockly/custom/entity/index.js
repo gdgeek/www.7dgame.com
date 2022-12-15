@@ -19,20 +19,17 @@ const EntityCategory = {
     LineExecute.toolbox,
     TweenExecute.toolbox,
     VisualExecute.toolbox
-    //PictureEntity.toolbox,
-    //VideoEntity.toolbox,
-    //TextEntity.toolbox
   ]
 }
-function RegisterData(root, index, data) {
-  Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(index)
+function RegisterData(data, parameters) {
+  Blockly.Blocks[data.title] = data.getBlock(parameters)
+  Blockly.Lua[data.title] = data.getLua(parameters)
 }
-function EntityRegister(root, index) {
-  RegisterData(root, index, Entity)
-  RegisterData(root, index, LineExecute)
-  RegisterData(root, index, TweenExecute)
-  RegisterData(root, index, VisualExecute)
+function EntityRegister(parameters) {
+  RegisterData(Entity, parameters)
+  RegisterData(LineExecute, parameters)
+  RegisterData(TweenExecute, parameters)
+  RegisterData(VisualExecute, parameters)
   //RegisterData(root, index, TextEntity)
 }
 export { EntityCategory, EntityRegister }

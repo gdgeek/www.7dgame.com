@@ -18,15 +18,12 @@ const ExecuteCategory = {
     // VisualExecute.toolbox
   ]
 }
-function RegisterData(root, index, data) {
-  Blockly.Blocks[data.title] = data.getBlock(root)
-  Blockly.Lua[data.title] = data.getLua(index)
+function RegisterData(data, parameters) {
+  Blockly.Blocks[data.title] = data.getBlock(parameters)
+  Blockly.Lua[data.title] = data.getLua(parameters)
 }
-function ExecuteRegister(root, index) {
-  RegisterData(root, index, BoomExecute)
-  RegisterData(root, index, FunctionExecute)
-  // RegisterData(root, index, LineExecute)
-  // RegisterData(root, index, TweenExecute)
-  //RegisterData(root, index, VisualExecute)
+function ExecuteRegister(parameters) {
+  RegisterData(BoomExecute, parameters)
+  RegisterData(FunctionExecute, parameters)
 }
 export { ExecuteCategory, ExecuteRegister }
