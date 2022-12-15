@@ -1,6 +1,8 @@
 <template>
   <!-- 巨幕板块 -->
-  <section class="background-box">
+  <section>
+    <!-- demo展示板块 视频 3D等 -->
+    <demo-screen-show />
     <el-row>
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
@@ -35,8 +37,13 @@
 </template>
 
 <script>
+import DemoScreenShow from '@/components/MrPP/MrPPDemo/DemoScreenShow.vue'
+
 export default {
   name: 'EducationScreen',
+  components: {
+    DemoScreenShow
+  },
 
   data() {
     return {
@@ -51,6 +58,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/screenstyle.scss';
 @import '~@/styles/sandtable.scss';
+
 .background-box-image {
   display: flex;
   align-items: center;
@@ -58,8 +66,9 @@ export default {
   width: 100%;
   height: 30vw;
   max-height: 650px;
-  background: url('/media/bg/edu1.jpg') center no-repeat;
-  background-size: cover;
+  background-color: #c9eaf3;
+  // background: url('/media/bg/edu1.jpg') center no-repeat;
+  // background-size: cover;
   // background-size: 100%;
 }
 </style>
