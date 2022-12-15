@@ -65,12 +65,13 @@ export default {
 
 .sidebar-logo-container {
   position: relative;
-  width: 100%;
+  width: 400px;
   height: 50px;
   line-height: 50px;
-  text-align: center;
+  // text-align: center;
   overflow: hidden;
   margin-top: 4px;
+  margin-left: 20px;
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;
@@ -91,9 +92,9 @@ export default {
       font-size: 15px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
+      min-width: 180px;
     }
   }
-
   &.collapse {
     .sidebar-logo {
       margin-right: 0px;
