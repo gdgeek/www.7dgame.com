@@ -7,13 +7,15 @@
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
-          <div class="section-title-dark" align="left">
-            <p style="font-weight: lighter">{{ infoTitle }}</p>
+          <div class="education-phone-box" align="left">
+            <p style="font-weight: 600; color: #32373f">
+              {{ infoTitle }}{{ infoTitle2 }}
+            </p>
             <p>
               <a
                 ref="telPhone"
                 :href="'tel' + ':' + infoTel"
-                style="border-bottom: 2px solid #1e82e8"
+                style="border-bottom: 2px solid #1e82e8; color: #e361a1"
               >
                 点击拨打
                 <i class="el-icon-phone-outline" />
@@ -26,9 +28,13 @@
       <!-- PC显示 -->
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
-          <div class="section-title-dark" align="left">
-            <h3 style="font-weight: lighter">{{ infoTitle }}</h3>
-            <h1 style="font-weight: lighter">即刻拨打 {{ infoTel }}</h1>
+          <div class="education-pc-box" align="left">
+            <div class="education-pc-title">{{ infoTitle }}</div>
+            <div class="education-pc-title">{{ infoTitle2 }}</div>
+            <h1 style="font-weight: lighter; margin-top: 8%; color: #e361a1">
+              即刻拨打
+              {{ infoTel }}
+            </h1>
           </div>
         </div>
       </el-col>
@@ -47,7 +53,8 @@ export default {
 
   data() {
     return {
-      infoTitle: '元宇宙实景编程平台 创造未来教育',
+      infoTitle: '为教育打造的',
+      infoTitle2: '元宇宙实景编程平台',
       infoTel: 15000159790
     }
   },
@@ -56,8 +63,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/screenstyle.scss';
-@import '~@/styles/sandtable.scss';
+// @import '~@/styles/screenstyle.scss';
+// @import '~@/styles/sandtable.scss';
 
 .background-box-image {
   display: flex;
@@ -66,9 +73,22 @@ export default {
   width: 100%;
   height: 30vw;
   max-height: 650px;
-  background-color: #c9eaf3;
-  // background: url('/media/bg/edu1.jpg') center no-repeat;
-  // background-size: cover;
-  // background-size: 100%;
+  // background-color: #c9eaf3;
+  background: url('/media/bg/education.jpg') center no-repeat;
+  background-size: cover;
+  background-size: 100%;
+}
+
+.education-phone-box {
+  margin-left: 3%;
+}
+.education-pc-box {
+  margin-left: 10%;
+}
+.education-pc-title {
+  margin-bottom: 2%;
+  font-size: 52px;
+  font-weight: 600;
+  color: #32373f;
 }
 </style>
