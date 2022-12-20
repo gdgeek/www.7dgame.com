@@ -6,6 +6,8 @@
 import { postMetaKnight, deleteMetaKnight } from '@/api/v1/meta-knight'
 //var randomWords = require('random-words')
 //let removeNope = -1
+
+import { v4 as uuidv4 } from 'uuid'
 function install(editor, options) {
   editor.on('noderemove', async component => {
     if (component.name !== 'Knight' || editor.silent) {
@@ -31,17 +33,19 @@ function install(editor, options) {
     if (component.name !== 'Knight' || editor.silent) {
       return true
     }
-
+    const uuid = uuidv4()
     let id = component.data['id']
 
     if (typeof id === 'undefined') {
       const response = await postMetaKnight({
-        verse_id: options.verseId
+        verse_id: options.verseId,
+        uuid
       })
       //alert(JSON.stringify(response))
       const data = response.data
       id = data.id
       component.controls.get('id').setValue(id)
+      component.controls.get('uuid').setValue(uuid)
     }
     setTimeout(() => {
       component.controls.get('knight').$emit('setId', id)

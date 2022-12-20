@@ -101,9 +101,9 @@ export default {
     open() {
       const self = this
       this.$nextTick(function () {
-        const slots = JSON.parse(self.target.slots)
-        self.input.list = slots.input
-        self.output.list = slots.output
+        const data = JSON.parse(self.target.data)
+        self.input.list = data.input
+        self.output.list = data.output
 
         this.visible = true
       })

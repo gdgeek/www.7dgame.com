@@ -39,8 +39,7 @@ export const eventSave = async function () {
   let ret = []
   list.forEach(node => {
     let nd = {
-      type: node.name,
-      id: node.data.id,
+      node: node.data.uuid,
       linked: []
     }
     node.outputs.forEach((output, key) => {
@@ -62,10 +61,8 @@ export const eventSave = async function () {
           })
 
           od.connections.push(co)
-          co.type = n.name
-          co.id = n.data.id
+          co.node = n.data.uuid
           co.uuid = item.input
-          // alert(JSON.stringify(item))
         })
       }
       if (nd.linked.length !== 0) {
@@ -101,7 +98,7 @@ export const setup = async function (data) {
   return data
 }
 export const loadEvent = async function (id, oldValue, newValue) {
-  const node = getNode({ type: 'Meta', id })
+  const node = getNodeByID({ id })
   if (!node) {
     return
   }
@@ -179,45 +176,73 @@ export const loadEvent = async function (id, oldValue, newValue) {
   editor_.selectNode(node)
   editor_.selected.clear()
 }
-const getNode = function ({ type, id }) {
+export const getNodeByUUID = function ({ uuid }) {
   const node = editor_.nodes.find(item => {
-    if (item.name.toLowerCase() === type.toLowerCase() && item.data.id === id) {
+    if (item.data && item.data.uuid === uuid) {
       return true
     }
     return false
   })
   return node
 }
-export const addLinks = async function ({ type, id, linked }) {
-  const node = getNode({ type, id })
-  if (node) {
+
+export const getNodeByID = function ({ id }) {
+  const node = editor_.nodes.find(item => {
+    if (item.data.id && item.data.id === id) {
+      return true
+    }
+    return false
+  })
+  return node
+}
+export const removeLinked = async function () {
+  const list = []
+  editor_.nodes.forEach(node => {
+    const connections = node.getConnections()
+    connections.forEach(connection => {
+      if (
+        connection.input.socket.name.toLowerCase() == 'event' &&
+        connection.input.node.id == node.id
+      ) {
+        list.push(connection)
+      }
+    })
+  })
+  list.forEach(item => {
+    editor_.removeConnection(item)
+  })
+}
+export const addLinked = async function ({ node, linked }) {
+  const n = getNodeByUUID({ uuid: node })
+  if (n) {
     linked.forEach(item => {
-      const output = node.outputs.get(item.uuid)
+      const output = n.outputs.get(item.uuid)
 
       item.connections.forEach(c => {
-        const node2 = getNode(c)
+        // alert(JSON.stringify(c))
+        const node2 = getNodeByUUID({ uuid: c.node })
         const input = node2.inputs.get(c.uuid)
         editor_.connect(output, input)
       })
     })
   }
 }
-export const addEvent = async function (id, event) {
+export const addEvent = async function (uuid, event) {
   const node = editor_.nodes.find(n => {
-    if (n.name.toLowerCase() === 'meta' && n.data.id === id) {
+    if (n.name.toLowerCase() === 'meta' && n.data.uuid === uuid) {
       return true
     }
     return false
   })
 
   if (node) {
-    const slots = JSON.parse(event.slots)
-    slots.output.forEach(o => {
+    const data = JSON.parse(event.data)
+    data.output.forEach(o => {
       node.addOutput(
         new Rete.Output(o.uuid, '[' + o.title + ']', EventSocket, 'multiConns')
       )
     })
-    slots.input.forEach(i => {
+    data.input.forEach(i => {
       node.addInput(
         new Rete.Input(i.uuid, '[' + i.title + ']', EventSocket, 'multiConns')
       )

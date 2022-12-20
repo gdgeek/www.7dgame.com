@@ -27,11 +27,12 @@
           </div>
 
           <coding
-            v-if="cyber !== null"
+            v-if="cyber !== null && meta !== null"
             :meta="meta"
             ref="blockly"
             :cyber="cyber"
             :id="id"
+            :index="meta.uuid"
           />
         </el-card>
       </el-main>
@@ -83,7 +84,6 @@ export default {
     const self = this
     const response = await getMeta(this.id, 'cyber, event')
     self.meta = response.data
-    //alert(JSON.stringify(self.meta))
     this.setData({
       redirect: null,
       path: path.join(
@@ -99,7 +99,7 @@ export default {
     } else {
       self.cyber = self.meta.cyber
     }
-    self.addMetaData(JSON.parse(self.meta.data))
+    // self.addMetaData(JSON.parse(self.meta.data))
   },
 
   beforeDestroy() {
@@ -109,7 +109,6 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setData', 'clear']),
-    ...mapMutations('blockly', ['addMetaData']),
     save() {
       this.$refs.blockly.save()
     }

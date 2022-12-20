@@ -6,16 +6,18 @@ import { PolygenRegister } from '@/assets/js/blockly/custom/polygen'
 import { PictureRegister } from '@/assets/js/blockly/custom/picture'
 import { VideoRegister } from '@/assets/js/blockly/custom/video'
 import { SoundRegister } from '@/assets/js/blockly/custom/sound'
+import { EventRegister } from '@/assets/js/blockly/custom/event'
 
 function AddBlocks(parameters) {
   TriggerRegister(parameters)
   EntityRegister(parameters)
   PolygenRegister(parameters)
   DataRegister(parameters)
-  ExecuteRegister(parameters)
+  //ExecuteRegister(parameters)
   PictureRegister(parameters)
   VideoRegister(parameters)
   SoundRegister(parameters)
+  EventRegister(parameters)
 }
 
 export { AddBlocks }

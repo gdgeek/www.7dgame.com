@@ -5,6 +5,7 @@ import Texts from '@/assets/js/blockly/texts'
 import List from '@/assets/js/blockly/list'
 import Colour from '@/assets/js/blockly/colour'
 
+import { EventCategory } from '@/assets/js/blockly/custom/event'
 import { EntityCategory } from '@/assets/js/blockly/custom/entity'
 import { PolygenCategory } from '@/assets/js/blockly/custom/polygen'
 import { DataCategory } from '@/assets/js/blockly/custom/data'
@@ -43,7 +44,8 @@ export default {
     sep,
     DataCategory,
     TriggerCategory,
-    ExecuteCategory,
+    EventCategory,
+    //ExecuteCategory,
     sep,
     EntityCategory,
     PolygenCategory,

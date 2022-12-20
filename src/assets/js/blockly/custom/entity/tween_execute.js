@@ -1,4 +1,4 @@
-import DataType from '../execute/type'
+import DataType from './type'
 
 import Blockly from 'blockly'
 const data = {

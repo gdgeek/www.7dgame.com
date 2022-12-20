@@ -47,6 +47,10 @@ export default {
     id: {
       type: Number,
       require: true
+    },
+    index: {
+      type: String,
+      require: true
     }
   },
   /* components: {
@@ -63,7 +67,7 @@ export default {
   mounted() {
     const self = this
     AddBlocks({
-      index: 'meta_' + self.id.toString(),
+      index: self.index,
       resource: self.getResource(this.meta)
     })
     this.workspace = Blockly.inject('blocklyDiv', {
@@ -96,7 +100,7 @@ export default {
   methods: {
     getResource(meta) {
       const data = JSON.parse(meta.data)
-      const slots = JSON.parse(meta.event.slots)
+      const event = JSON.parse(meta.event.data)
 
       const ret = {
         action: [],
@@ -106,8 +110,8 @@ export default {
         text: [],
         sound: [],
         entity: [],
-        input: slots.input,
-        output: slots.output
+        input: event.input,
+        output: event.output
       }
       this.addMetaData(data, ret)
       return ret
@@ -116,7 +120,7 @@ export default {
       const self = this
       const action = self.testAction(data)
       if (action) {
-        ret.actions.push(action)
+        ret.action.push(action)
       }
 
       const entity = self.testPoint(data, [

@@ -5,6 +5,7 @@
  */
 import { postMeta, deleteMeta } from '@/api/v1/meta'
 
+import { v4 as uuidv4 } from 'uuid'
 function install(editor, options) {
   editor.on('noderemove', async component => {
     if (component.name !== 'Meta' || editor.silent) {
@@ -37,12 +38,16 @@ function install(editor, options) {
     let id = component.data['id']
 
     if (typeof id === 'undefined') {
+      const uuid = uuidv4()
       const response = await postMeta({
-        verse_id: options.verseId
+        verse_id: options.verseId,
+        uuid: uuid
       })
       const data = response.data
       id = data.id
       component.controls.get('id').setValue(id)
+      // alert(uuid)
+      component.controls.get('uuid').setValue(uuid)
     }
     setTimeout(() => {
       component.controls.get('title').$emit('setId', id)

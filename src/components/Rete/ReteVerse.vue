@@ -17,10 +17,9 @@ import {
   arrange,
   save,
   eventSave,
-  addMeta,
-  getMeta,
   addEvent,
-  addLinks,
+  addLinked,
+  removeLinked,
   loadEvent
 } from '@/node-editor/verse'
 import { putVerse } from '@/api/v1/verse'
@@ -29,6 +28,14 @@ import {
   putMetaEvent,
   postMetaEvent
 } from '@/api/v1/meta-event'
+
+getVerseEventByVerseId
+
+import {
+  getVerseEventByVerseId,
+  putVerseEvent,
+  postVerseEvent
+} from '@/api/v1/verse-event'
 import EventDialog from './EventDialog.vue'
 export default {
   components: {
@@ -44,7 +51,8 @@ export default {
     return {
       visible: true,
       target: null,
-      data: null,
+      // data: null,
+      linked: null,
       map: new Map()
     }
   },
@@ -57,16 +65,35 @@ export default {
     initVerse({ container: self.$refs.rete, verseId: self.verseId, root: self })
   },
   methods: {
-    async getEvent(id) {
+    //getVerseEvent
+    async getVerseEvent(verseId) {
       let event = null
       try {
-        const response = await getMetaEventByMetaId(id)
+        const response = await getVerseEventByVerseId(verseId)
 
         if (response.data.length == 0) {
+          const response = await postVerseEvent({
+            verse_id: verseId,
+            data: JSON.stringify({})
+          })
+          event = response.data
+        } else {
+          event = response.data[0]
+        } /**/
+      } catch (e) {
+        console.error(e)
+      }
+      return event
+    },
+    async getMetaEvent(metaId) {
+      let event = null
+      try {
+        const response = await getMetaEventByMetaId(metaId)
+        // alert()
+        if (response.data.length == 0) {
           const response = await postMetaEvent({
-            meta_id: id,
-            slots: JSON.stringify({ input: [], output: [] }),
-            links: JSON.stringify({})
+            meta_id: metaId,
+            data: JSON.stringify({ input: [], output: [] })
           })
           event = response.data
         } else {
@@ -75,18 +102,20 @@ export default {
       } catch (e) {
         console.error(e)
       }
+      //alert(JSON.stringify(event))
       return event
     },
     async postEvent({ input, output }) {
       const self = this
       if (this.target) {
         const response = await putMetaEvent(this.target.id, {
-          slots: JSON.stringify({ input, output })
+          data: JSON.stringify({ input, output })
         })
         const data = response.data
         if (self.map.has(data.meta_id)) {
           const item = self.map.get(data.meta_id)
-          loadEvent(data.meta_id, JSON.parse(item.slots), {
+
+          loadEvent(data.meta_id, JSON.parse(item.data), {
             input,
             output
           })
@@ -102,7 +131,7 @@ export default {
       if (self.map.has(id)) {
         self.target = self.map.get(id)
       } else {
-        self.target = await self.getEvent(id)
+        self.target = await self.getMetaEvent(id)
         self.map.set(id, self.target)
       }
 
@@ -113,49 +142,72 @@ export default {
     },
     async save() {
       const self = this
+
+      const list = await eventSave()
+      if (!self.linked) {
+        self.linked = await self.getVerseEvent(self.verseId)
+      }
+      await putVerseEvent(self.linked.id, { data: JSON.stringify(list) })
+
+      await removeLinked()
+      //unlink
       const data = await save()
       await putVerse(self.verseId, {
         data
       })
-      const list = await eventSave()
-      list.forEach(async links => {
-        if (self.map.has(links.id)) {
-          const event = self.map.get(links.id)
-          await putMetaEvent(event.id, { links: JSON.stringify(links) })
-        }
-        //alert(JSON.stringify(links))
-      })
+
+      await self.addLinked()
+      //link
     },
     async create(verse) {
       return await create(verse)
     },
-    arrange() {
+    async arrange() {
+      await removeLinked()
       arrange()
+      await this.addLinked()
     },
-    async setup(data) {
-      this.data = JSON.parse(data)
-      const ret = await setup(this.data)
-      this.checkMetas(this.data)
-      this.setSlots(this.data)
+    async setup(json) {
+      const data = JSON.parse(json)
+      const ret = await setup(data)
+      this.checkMetas(data)
+      this.setSlots(data)
 
       return ret
     },
+    async addLinked() {
+      const self = this
+      self.linked = await self.getVerseEvent(self.verseId)
+      const linked = JSON.parse(self.linked.data)
 
+      linked.forEach(async item => {
+        await addLinked(item)
+      })
+    },
     async setSlots(data) {
       const self = this
       for (let i = 0; i < data.children.metas.length; ++i) {
         const item = data.children.metas[i]
         if (item.type.toLowerCase() == 'meta') {
-          const event = await self.getEvent(item.parameters.id)
+          const event = await self.getMetaEvent(item.parameters.id)
           self.map.set(item.parameters.id, event)
 
-          await addEvent(item.parameters.id, event)
+          await addEvent(item.parameters.uuid, event)
 
           this.$nextTick(function () {
             arrange()
           })
         }
       }
+      await self.addLinked()
+      /* self.linked = await self.getVerseEvent(self.verseId)
+      const linked = JSON.parse(self.linked.data)
+
+      linked.forEach(async item => {
+        await addLinked(item)
+      })
+*/
+      /*
       self.map.forEach(async (value, key) => {
         if (value.links != '') {
           const links = JSON.parse(value.links)
@@ -166,7 +218,7 @@ export default {
             await addLinks(links)
           }
         }
-      })
+      })*/
     },
     checkMetas(data) {
       data.children.metas.forEach(async item => {

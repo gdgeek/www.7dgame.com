@@ -120,24 +120,4 @@ export function createVerseFromPolygen(name, resource) {
       })
       .catch(error => reject(error))
   })
-  /*
-  const metaData = {
-
-  }
-  postMeta(metaData).then(
-
-  )
-  const data = {
-    type: 'MetaRoot',
-    parameters: {
-      uuid: uuidv4(),
-      name: 'Polygen'
-    }
-
-  }
-  const meta = {
-    name: 'Polygen',
-    data: JSON.stringify(data)
-
-  }*/
 }
