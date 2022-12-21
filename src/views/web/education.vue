@@ -6,13 +6,13 @@
     <!-- 应用场景 -->
     <education-solution />
 
-    <!-- 私有云 -->
+    <!-- 产品中心 -->
     <education-cloud />
 
     <!-- 系统子幕图-->
     <education-subscreen />
 
-    <!-- 技术部署 -->
+    <!-- 创新协同体验 -->
     <education-deploy />
 
     <!-- 联系我们板块 -->

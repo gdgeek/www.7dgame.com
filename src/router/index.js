@@ -471,54 +471,38 @@ export const constantRoutes = [
         meta: { title: '网站首页' },
         path: 'index',
         name: 'WebIndex',
-
         component: () => import('@/views/web/index')
         // component: () => import('@/views/portal/index')
       },
-
       {
         meta: { title: '相关下载' },
         path: 'download',
         name: 'WebDownload',
-
         component: () => import('@/views/web/download')
-        // component: () => import('@/views/portal/index')
       },
-
       {
         meta: { title: '案例展示' },
         path: 'example',
         name: 'WebExample',
-
         component: () => import('@/views/web/example')
-        // component: () => import('@/views/portal/index')
       },
-
       {
         meta: { title: '商业合作' },
         path: 'business',
         name: 'WebBusiness',
-
         component: () => import('@/views/web/business')
-        // component: () => import('@/views/portal/index')
       },
-
       {
         meta: { title: '相关文档' },
         path: 'document',
         name: 'WebDocument',
-
         component: () => import('@/views/web/document')
-        // component: () => import('@/views/portal/index')
       },
-
       {
         meta: { title: '沙盘制作' },
         path: 'sandTable',
         name: 'WebSandTable',
-
         component: () => import('@/views/web/sandtable')
-        // component: () => import('@/views/portal/index')
       },
       {
         meta: { title: '教育合作' },
@@ -526,7 +510,12 @@ export const constantRoutes = [
         name: 'WebEducation',
 
         component: () => import('@/views/web/education')
-        // component: () => import('@/views/portal/index')
+      },
+      {
+        meta: { title: '教育产品' },
+        path: 'education-product',
+        name: 'EducationProduct',
+        component: () => import('@/views/web/education-product')
       }
     ]
   },
