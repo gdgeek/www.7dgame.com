@@ -5,24 +5,23 @@
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
-          <div class="section-title" align="left">
-            <h3 style="font-weight:lighter">{{ infoTel }}</h3>
-            <small style="font-weight:lighter">{{ infoTitle }}</small>
+          <div class="section-title-dark" align="left">
+            <h3>{{ infoTel }}</h3>
+            <small style="font-weight: lighter">{{ infoTitle }}</small>
           </div>
         </div>
       </el-col>
       <!-- PC显示 -->
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
-          <div class="section-title " align="left">
-            <h1 style="font-weight:lighter">{{ infoTel }}</h1>
-            <p style="font-weight:lighter">{{ infoTitle }}</p>
+          <div class="section-title-dark" align="left" style="padding-left: 3%">
+            <h1>{{ infoTel }}</h1>
+            <p style="font-weight: lighter">{{ infoTitle }}</p>
           </div>
         </div>
       </el-col>
     </el-row>
   </section>
-
 </template>
 
 <script>
@@ -31,13 +30,11 @@ export default {
 
   data() {
     return {
-      infoTel: '从用户视角出发，用行动创造未来',
-      infoTitle: '根据项目实际需求悉心设计，助力更多的用户数字化升级。'
+      infoTel: '融合AR/MR生态，引领教育未来',
+      infoTitle: '根据项目实际需求设计，助力用户开启创造之门。'
     }
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 
@@ -49,10 +46,9 @@ export default {
   align-items: center;
   padding: 1px 3% 20px;
   width: 100%;
-  height: 30vw;
-  max-height: 250px;
-  background: url('/media/bg/cloudbgc3.jpg') center no-repeat;
+  height: 40vw;
+  max-height: 500px;
+  background: url('/media/bg/ep-subbg.jpg') center no-repeat;
   background-size: cover;
-  // background-size: 100%;
 }
 </style>

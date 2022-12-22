@@ -8,7 +8,9 @@
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
           <div class="education-phone-box" align="left">
-            <p style="font-weight: 600; color: #32373f">
+            <p
+              style="width:200px;font-weight: 600; font-size: 18px; color: #32373f；word-wrap:break-word ;"
+            >
               {{ infoTitle }}{{ infoTitle2 }}
             </p>
             <p>
@@ -81,6 +83,7 @@ export default {
 
 .education-phone-box {
   margin-left: 3%;
+  padding-top: 10px;
 }
 .education-pc-box {
   margin-left: 10%;
