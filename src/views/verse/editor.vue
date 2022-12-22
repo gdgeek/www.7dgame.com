@@ -18,7 +18,7 @@
       <el-main>
         <el-card v-loading="loading" class="box-card">
           <div v-if="verse !== null" slot="header" class="clearfix">
-            {{ word.project }}{{ verseName }}
+            【宇宙】{{ verseName }}
             {{ this.$store.state.resource.onKnight }}
             <el-button-group style="float: right">
               <el-button type="primary" size="mini" @click="arrange()">

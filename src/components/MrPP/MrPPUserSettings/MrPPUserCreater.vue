@@ -56,7 +56,7 @@
             <template slot="label">
               <router-link class="info-content-label-link" :to="'/verse/index'">
                 <font-awesome-icon class="icon" icon="adjust" />
-                工程
+                宇宙
               </router-link>
             </template>
             {{ creation.verseCount }}

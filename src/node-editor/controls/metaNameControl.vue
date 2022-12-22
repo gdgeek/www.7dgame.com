@@ -44,7 +44,7 @@ export default {
     changeMetaName() {
       const id = this.root.$store.state.meta.data.id
       const self = this
-      this.$prompt('请输入新的名称', '修改' + self.word.entity + '名称', {
+      this.$prompt('请输入新的名称', '修改【元】名称', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,

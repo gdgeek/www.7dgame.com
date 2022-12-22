@@ -42,7 +42,7 @@ export default {
     changeVerseName() {
       const id = this.root.$store.state.verse.data.id
       const self = this
-      this.$prompt('请输入新的名称', '修改' + this.word.project + '名称', {
+      this.$prompt('请输入新的名称', '修改【宇宙】名称', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         closeOnClickModal: false,

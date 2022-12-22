@@ -7,7 +7,7 @@
       <el-col :sm="16">
         <el-card v-if="verse" class="box-card">
           <div slot="header">
-            <b id="title">{{ word.project }}名称：</b>
+            <b id="title">【宇宙】名称：</b>
             <span>{{ verse.name }}</span>
           </div>
 
@@ -35,7 +35,7 @@
             @click="comeIn()"
           >
             <font-awesome-icon icon="edit" />
-            &nbsp;编辑{{ word.project }}
+            &nbsp;编辑【宇宙】
           </el-button>
           <br />
         </el-card>
@@ -52,7 +52,7 @@
       <el-col :sm="8">
         <el-card class="box-card">
           <div slot="header">
-            <b>{{ word.project }}信息</b>
+            <b>【宇宙】信息</b>
           </div>
           <div class="box-item">
             <info-content v-if="verse" :info="JSON.parse(verse.info)" />
@@ -76,7 +76,7 @@
             @click="open()"
           >
             <font-awesome-icon icon="eye" />
-            &nbsp;开放{{ word.project }}
+            &nbsp;开放【宇宙】
           </el-button>
 
           <el-button
@@ -87,7 +87,7 @@
             @click="close()"
           >
             <font-awesome-icon icon="eye-slash" />
-            &nbsp;关闭{{ word.project }}
+            &nbsp;关闭【宇宙】
           </el-button>
         </el-card>
         <share v-if="canShare" :verseId="verse.id" />
@@ -185,7 +185,7 @@ export default {
           self.briefing = self.message
         } else {
           self.briefing = {
-            title: '【工程】名称：' + self.verse.name,
+            title: '【元宇宙】名称：' + self.verse.name,
             body: this.info.description
           }
         }

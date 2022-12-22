@@ -23,7 +23,7 @@ const state = {
       icon: 'adjust',
       items: [
         {
-          label: word.projectList,
+          label: '元宇宙列表',
           url: '/verse/index',
           icon: 'list'
         },

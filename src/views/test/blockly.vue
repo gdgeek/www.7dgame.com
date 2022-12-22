@@ -5,7 +5,7 @@
         <el-card v-loading="loading" class="box-card">
           <div slot="header" class="clearfix">
             <router-link :to="'/verse/editor?id=' + id">
-              <el-link :underline="false">{{ word.project }}</el-link>
+              <el-link :underline="false">【宇宙】</el-link>
             </router-link>
             /{{ word.logic }}
             <el-button-group style="float: right">
@@ -44,8 +44,7 @@ export default {
       return parseInt(this.$route.query.id)
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {}
 }
 </script>

@@ -3,19 +3,13 @@ import * as THREE from 'three'
 import { AddObjectCommand } from '../commands/AddObjectCommand.js'
 import { GLTFLoader } from '../../../examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
-/*
-					const { DRACOLoader } = await import(
-						'../../examples/jsm/loaders/DRACOLoader.js'
-					)
-					const { GLTFLoader } = await import(
-						'../../examples/jsm/loaders/GLTFLoader.js'
-					)
-*/
+
 class SceneBuilder {
 	constructor(editor) {
 		this.editor = editor
 	}
 	async loadPolygen(url) {
+		//	alert(url)
 		return new Promise((resolve, reject) => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
 			const dracoLoader = new DRACOLoader()
@@ -141,8 +135,6 @@ class SceneBuilder {
 		return {}
 	}
 	getMatrix4(transform) {
-		console.error(transform)
-
 		const p = transform.position
 		const s = transform.scale
 		const r = transform.rotate
@@ -202,34 +194,10 @@ class SceneBuilder {
 				})
 		})
 	}
-	/*{
-				"uuid": "8af2edba-43bd-4bb3-be26-ad5695b9ef2f",
-				"type": "PointLight",
-				"name": "PointLight",
-				"layers": 1,
-				"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
-				"color": 16777215,
-				"intensity": 3,
-				"distance": 0,
-				"decay": 0,
-				"shadow": {
-					"camera": {
-						"uuid": "9d0910b6-4fb1-443e-9df8-24a7a7792c4d",
-						"type": "PerspectiveCamera",
-						"layers": 1,
-						"fov": 90,
-						"zoom": 1,
-						"near": 0.5,
-						"far": 500,
-						"focus": 10,
-						"aspect": 1,
-						"filmGauge": 35,
-						"filmOffset": 0
-					}
-				}
-			} */
+
 	getNode(data, resource) {
 		const self = this
+		//alert(1)
 		switch (data.type) {
 			case 'Polygen':
 				return self.thePolygen(data, resource)
@@ -327,6 +295,7 @@ class SceneBuilder {
 		}
 		return scene
 	}
+	/*
 	theVideo(data, resources) {
 		const self = this
 		return new Promise((resolve, reject) => {
@@ -390,7 +359,9 @@ class SceneBuilder {
 		})
 	}
 	// 修改区结束
+	*/
 	thePolygen(data, resources) {
+		//alert(123)
 		const self = this
 		return new Promise((resolve, reject) => {
 			const id = data.parameters['polygen']

@@ -178,11 +178,15 @@ export default {
     async addLinked() {
       const self = this
       self.linked = await self.getVerseEvent(self.verseId)
-      const linked = JSON.parse(self.linked.data)
+      if (self.linked && self.linked.data) {
+        const linked = JSON.parse(self.linked.data)
 
-      linked.forEach(async item => {
-        await addLinked(item)
-      })
+        if (linked instanceof Array) {
+          linked.forEach(async item => {
+            await addLinked(item)
+          })
+        }
+      }
     },
     async setSlots(data) {
       const self = this

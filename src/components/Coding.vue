@@ -91,8 +91,7 @@ export default {
         pinch: true
       }
     })
-
-    if (typeof self.cyber !== null && self.cyber.data !== null) {
+    if (self.cyber.data) {
       self.load(self.cyber.data)
     }
     console.log(this.workspace) /**/

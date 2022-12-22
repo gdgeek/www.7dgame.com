@@ -6,7 +6,7 @@
           <div slot="header" class="clearfix">
             <router-link :to="'/verse/editor?id=' + id">
               <el-link v-if="verse" :underline="false">
-                {{ word.project }}{{ verse.name }}
+                【宇宙】:{{ verse.name }}
               </el-link>
             </router-link>
             / 【赛博】

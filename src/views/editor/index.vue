@@ -19,6 +19,7 @@ var qs = require('querystringify')
 var path = require('path')
 import environment from '@/environment.js'
 import { putVerse } from '@/api/v1/verse'
+import { getVerse } from '@/api/e1/verse'
 export default {
   name: 'VerseEditor',
   data() {
@@ -39,13 +40,13 @@ export default {
       return parseInt(this.$route.query.id)
     },
     url() {
-      return (
+      const uri =
         environment.api +
         path.join(
           '/v1/verses/',
           this.id + qs.stringify({ expand: 'datas,resources,space' }, true)
         )
-      )
+      return uri
     }
   },
   created() {
@@ -61,23 +62,23 @@ export default {
   },
   mounted() {
     const self = this
-    window.addEventListener('message', e => {
+    window.addEventListener('message', async e => {
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
           case 'save-verse':
-            alert(1222)
             self.saveVerse(e.data.verse)
             break
           case 'ready':
             if (self.isInit == false) {
               self.isInit = true
               const iframe = document.getElementById('editor')
+              const r = await getVerse(this.id)
 
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
                 id: this.id,
-                url: this.url
+                data: r.data
               }
               iframe.contentWindow.postMessage(data, '*')
             }
@@ -94,12 +95,13 @@ export default {
           message: '保存成功!'
         })
       })
-      const iframe = document.getElementById('editor')
+      const r = await getVerse(this.id)
       const data = {
         verify: 'mrpp.com',
         action: 'reload',
-        url: this.url
+        data: r.data
       }
+      const iframe = document.getElementById('editor')
       iframe.contentWindow.postMessage(data, '*')
     }
   }

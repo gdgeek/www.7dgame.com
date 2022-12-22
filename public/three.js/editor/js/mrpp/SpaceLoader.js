@@ -2,6 +2,7 @@ import * as THREE from 'three'
 //import { ThrowStatement } from '../libs/esprima.js'
 
 import { SceneBuilder } from './SceneBuilder.js'
+
 function SpaceLoader(editor) {
 	//editor.spaceLoader = this
 	const self = this
@@ -30,7 +31,6 @@ function SpaceLoader(editor) {
 		let node = await builder.parseNode(data)
 
 		builder.addNode(node)
-		//alert(JSON.stringify(context))
 
 		const children = await this.getNodes(context.children.entities, resources)
 
@@ -42,9 +42,7 @@ function SpaceLoader(editor) {
 	}
 
 	this.createKinght = async function (meta, context) {
-		//alert(JSON.stringify(context))
 		const matrix = builder.getMatrix4(meta.parameters.transform)
-		//alert(matrix)
 		const data = {
 			metadata: {
 				version: 4.5,
@@ -61,8 +59,7 @@ function SpaceLoader(editor) {
 		}
 
 		let node = await builder.parseNode(data)
-		//node.matrix = builder.getMatrix4(meta.parameters.transform)
-		//alert(node.matrix)
+
 		builder.addNode(node)
 
 		let e = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
@@ -80,7 +77,7 @@ function SpaceLoader(editor) {
 				generator: 'Object3D.toJSON'
 			},
 			object: {
-				uuid: 'asdf',
+				uuid: '8b6bfb36-c51d-4c21-9453-a8dd04ca53fe',
 				type: 'Group',
 				name: 'child',
 				layers: 1,
@@ -112,7 +109,6 @@ function SpaceLoader(editor) {
 		if (typeof node === 'undefined') {
 			node = await this.createMeta(meta, context, resources)
 		}
-		//node.matrix = matrix
 	}
 	this.getNodes = async function (entities, resources) {
 		if (typeof entities === 'undefined' || entities === null) {
@@ -134,8 +130,35 @@ function SpaceLoader(editor) {
 			matrix
 		)
 	}
+	this.getPlane = async function (url, width, height) {
+		//
+		const textureLoader = new THREE.TextureLoader()
+		return new Promise(resolve => {
+			textureLoader.load(url, texture => {
+				const geometry = new THREE.PlaneGeometry(width, height)
+				const material = new THREE.MeshBasicMaterial({
+					color: 0xffffff,
+					side: THREE.DoubleSide,
+					map: texture
+				})
+				const plane = new THREE.Mesh(geometry, material)
+				resolve(plane)
+			})
+		})
+	}
+	this.getVideo = async function (entity, resources) {
+		const parent = await self.getPoint(entity, resources)
+
+		const resource = resources.get(entity.parameters.video)
+		const info = JSON.parse(resource.info)
+		const size = info.size
+		const width = entity.parameters.width
+		const height = width * (size.y / size.x)
+		const plane = await self.getPlane(resource.image.url, width, height)
+		parent.add(plane)
+		return parent
+	}
 	this.getPolygen = async function (entity, resources) {
-		//alert(JSON.stringify(entity.parameters.transform))
 		const parent = await self.getPoint(entity, resources)
 		if (resources.has(entity.parameters.polygen)) {
 			const resource = resources.get(entity.parameters.polygen)
@@ -143,14 +166,14 @@ function SpaceLoader(editor) {
 			node.name = entity.parameters.name + '[polygen]'
 			node.uuid = resource.file.md5
 			const matrix = builder.getMatrix4(entity.parameters.transform)
-			node.matrix = matrix
+			//node.matrix = matrix
 			parent.add(node)
 		}
 
 		return parent
 	}
 	this.lockNode = function (node) {
-		node.locked = true
+		//node.locked = true
 
 		node.children.forEach(item => {
 			this.lockNode(item)
@@ -161,6 +184,9 @@ function SpaceLoader(editor) {
 		switch (entity.type.toLowerCase()) {
 			case 'polygen':
 				node = await this.getPolygen(entity, resources)
+				break
+			case 'video':
+				node = await this.getVideo(entity, resources)
 				break
 		}
 		if (node === null) {
@@ -243,8 +269,6 @@ function SpaceLoader(editor) {
 		let node = await builder.parseNode(light)
 
 		return node
-		//this.lockNode(node)
-		//builder.addNode(node)
 	}
 
 	this.loadSpace = async function (data) {
@@ -308,6 +332,7 @@ function SpaceLoader(editor) {
 
 	this.loadDatas = async function () {
 		let knights = new Map()
+		console.error(this.data)
 		this.data.datas.knights.forEach(m => {
 			knights.set(m.id, m)
 		})

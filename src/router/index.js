@@ -271,7 +271,7 @@ export const constantRoutes = [
       {
         path: 'verse',
         name: 'Verse',
-        meta: { title: word.projectList },
+        meta: { title: '宇宙' },
         redirect: '/verse/index',
         component: Empty,
         children: [
@@ -296,7 +296,7 @@ export const constantRoutes = [
           {
             path: 'view',
             name: 'VerseView',
-            meta: { title: word.project },
+            meta: { title: '【宇宙】' },
             component: () => import('@/views/verse/view')
           },
           {
@@ -308,20 +308,20 @@ export const constantRoutes = [
           {
             path: 'meta/editor',
             name: 'VerseMetaEditor',
-            meta: { title: word.entity },
+            meta: { title: '【元】' },
             component: () => import('@/views/verse/meta/editor')
-          },
-          {
-            path: 'code',
-            name: 'VerseCode',
-            meta: { title: '逻辑' },
-            component: () => import('@/views/verse/code')
           },
           {
             path: 'cyber',
             name: 'VerseCyber',
             meta: { title: '逻辑' },
             component: () => import('@/views/verse/cyber')
+          },
+          {
+            path: 'scene',
+            name: 'VerseSceneEditor',
+            meta: { title: '场景编辑器' },
+            component: () => import('@/views/verse/index')
           }
         ]
       },

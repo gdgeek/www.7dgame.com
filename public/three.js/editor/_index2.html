@@ -85,7 +85,6 @@
 			import { Sidebar } from './js/Sidebar.js'
 			import { Menubar } from './js/Menubar.js'
 			import { Resizer } from './js/Resizer.js'
-			import { SpaceLoader } from './js/mrpp/SpaceLoader.js'
 			import { VRButton } from '../examples/jsm/webxr/VRButton.js'
 
 			window.URL = window.URL || window.webkitURL
@@ -132,7 +131,7 @@
 					if (isLoadingFromHash) return
 
 					if (state !== undefined) {
-						//	editor.fromJSON( state );
+						//		editor.fromJSON( state );
 					}
 
 					const selected = editor.config.getKey('selected')
@@ -219,7 +218,7 @@
 				if (confirm('Any unsaved data will be lost. Are you sure?')) {
 					const loader = new THREE.FileLoader()
 					loader.crossOrigin = ''
-					await loader.load(file, function (text) {
+					loader.load(file, function (text) {
 						editor.clear()
 						editor.fromJSON(JSON.parse(text))
 					})
@@ -235,31 +234,6 @@
 					navigator.serviceWorker.register('sw.js')
 				} catch (error) {}
 			}
-
-			const loader = new SpaceLoader(editor)
-			window.addEventListener('message', e => {
-				const urlParams = new URLSearchParams(window.location.search)
-				const id = urlParams.get('id')
-
-				if (e.data.verify === 'mrpp.com') {
-					switch (e.data.action) {
-						case 'load':
-						case 'reload':
-							loader.load(e.data.data)
-
-							break
-					}
-				}
-			})
-
-			const data = {
-				from: 'mrpp-editor',
-				action: 'ready',
-				verse: JSON.stringify(self.verse)
-			}
-
-			window.parent.postMessage(data, '*')
-			///
 		</script>
 	</body>
 </html>

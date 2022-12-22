@@ -4,7 +4,7 @@
       v-if="created"
       ref="createdDialog"
       :close-on-click-modal="false"
-      :dialog-title="'创建！' + word.project"
+      :dialog-title="'创建！【宇宙】'"
       dialog-submit="创 建"
       @submit="(form, item, imageId) => submitCreate(form, imageId)"
     />
@@ -27,7 +27,7 @@
             >
               <font-awesome-icon icon="plus" />
               &nbsp;
-              <span class="hidden-sm-and-down">创建{{ word.project }}</span>
+              <span class="hidden-sm-and-down">创建【宇宙】</span>
             </el-button>
           </el-button-group>
         </mr-p-p-header>

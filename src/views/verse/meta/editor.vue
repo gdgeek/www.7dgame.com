@@ -106,7 +106,7 @@ export default {
       if (self.meta === null) {
         return false
       }
-      console.error(self.meta)
+      //console.error(self.meta)
 
       return (
         self.$can('update', new AbilityWorks(self.meta.author_id)) ||
@@ -134,7 +134,7 @@ export default {
       this.setData({
         redirect: null,
         path: '/verse/editor?id=' + this.meta.verse.id,
-        meta: { title: '编辑-' + this.meta.verse.name }
+        meta: { title: '编辑：' + this.meta.verse.name + '' }
       })
       self.setMetaData(self.meta)
       if (self.meta.data !== null) {

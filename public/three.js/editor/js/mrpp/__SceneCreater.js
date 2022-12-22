@@ -3,14 +3,7 @@ import * as THREE from 'three'
 import { AddObjectCommand } from '../commands/AddObjectCommand.js'
 import { GLTFLoader } from '../../../examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
-/*
-					const { DRACOLoader } = await import(
-						'../../examples/jsm/loaders/DRACOLoader.js'
-					)
-					const { GLTFLoader } = await import(
-						'../../examples/jsm/loaders/GLTFLoader.js'
-					)
-*/
+
 class SceneCreater {
 	constructor(editor) {
 		this.editor = editor
@@ -214,6 +207,7 @@ class SceneCreater {
 	}
 	getNode(data, resource) {
 		const self = this
+		alert(12)
 		//	alert(data.type)
 		switch (data.type) {
 			case 'Polygen':
@@ -312,6 +306,7 @@ class SceneCreater {
 		}
 		return scene
 	}
+	/*
 	theVideo(data, resources) {
 		const self = this
 		return new Promise((resolve, reject) => {
@@ -373,9 +368,10 @@ class SceneCreater {
 			plane.visible = data.parameters['active']
 			resolve(plane)
 		})
-	}
+	}*/
 	// 修改区结束
 	thePolygen(data, resources) {
+		alert(123)
 		const self = this
 		return new Promise((resolve, reject) => {
 			const id = data.parameters['polygen']

@@ -78,16 +78,12 @@ export default {
 
     deletedWindow: function () {
       const self = this
-      this.$confirm(
-        '此操作将永久销毁此' + self.word.project + ', 是否继续?',
-        '提示',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          closeOnClickModal: false,
-          type: 'warning'
-        }
-      )
+      this.$confirm('此操作将永久销毁此【宇宙】, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        type: 'warning'
+      })
         .then(() => {
           self.del()
         })
