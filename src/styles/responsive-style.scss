@@ -1,10 +1,3 @@
-.background-screen-max {
-  max-width:1600px;
-  margin: 0 auto;
-}
-.section-card-padding {
-  padding: 4%;
-}
 @media screen and (min-width: 1600px) {
   .background-screen-border{
   border: 1px double #eceef5;
@@ -15,20 +8,16 @@
 
 // 手机端
 @media screen and (max-width: 700px) {
-  // section标题大小
-  .section-title-size {
-    font-size: 22px;
-  }
-  .title-ph-l {
+  .rsph-title-l {
     font-size: 24px !important;
   }
-  .title-ph-m {
+  .rsph-title-m {
     font-size: 22px !important;
   }
-  .title-ph-s {
+  .rsph-title-s {
   font-size: 18px !important;
   }
-  .section-card-padding {
-  padding: 1%;
+  .rsph-body-width {
+    padding: 0 3% !important;
   }
 }

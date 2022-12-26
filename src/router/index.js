@@ -516,6 +516,12 @@ export const constantRoutes = [
         path: 'education-product',
         name: 'EducationProduct',
         component: () => import('@/views/web/education-product')
+      },
+      {
+        meta: { title: '医疗合作' },
+        path: 'medical',
+        name: 'WebMedical',
+        component: () => import('@/views/web/medical')
       }
     ]
   },

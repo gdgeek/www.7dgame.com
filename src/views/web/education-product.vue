@@ -3,45 +3,55 @@
     <!-- 巨幕板块 -->
     <section class="portal-main-background">
       <div align="center">
-        <div class="education-pc-title">产品中心，选择合适的方案</div>
-        <p class="education-gray-title">根据您的使用场景，做出最佳选择</p>
+        <div class="portal-h1-title title-ph-l">产品中心，选择合适的方案</div>
+        <p class="education-gray-title title-ph-s">
+          根据您的使用场景，做出最佳选择
+        </p>
       </div>
       <el-row class="product-box" :gutter="30">
-        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-          <section style="margin-bottom: 20px">
-            <el-card
-              class="product-card"
-              shadow="hover"
-              :body-style="{ padding: '0px' }"
-            >
-              <div style="width: 100%; height: 200px" align="center">
-                <p class="portal-main-title">高级版</p>
-                <p style="color: #808896; font-size: 16px">提升教育交互体验</p>
-              </div>
-              <div class="product-price-content">
-                <h3>高级功能及特属资源</h3>
-              </div>
-            </el-card>
-          </section>
+        <el-col
+          :xs="24"
+          :sm="24"
+          :md="12"
+          :lg="12"
+          :xl="12"
+          class="product-col"
+        >
+          <el-card
+            class="product-card"
+            shadow="hover"
+            :body-style="{ padding: '0px' }"
+          >
+            <div style="width: 100%; height: 200px" align="center">
+              <p class="portal-h3-title title-ph-m">高级版</p>
+              <p class="portal-p-title">提升教育交互体验</p>
+            </div>
+            <div class="product-price-content">
+              <h3>高级功能及特属资源</h3>
+            </div>
+          </el-card>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-          <section style="margin-bottom: 20px">
-            <el-card
-              class="product-card"
-              shadow="hover"
-              :body-style="{ padding: '0px' }"
-            >
-              <div style="width: 100%; height: 200px" align="center">
-                <p class="portal-main-title">私有部署</p>
-                <p style="color: #808896; font-size: 16px">
-                  满足企业定制化要求
-                </p>
-              </div>
-              <div class="product-price-content">
-                <h3>深度功能定制及专家服务</h3>
-              </div>
-            </el-card>
-          </section>
+        <el-col
+          :xs="24"
+          :sm="24"
+          :md="12"
+          :lg="12"
+          :xl="12"
+          class="product-col"
+        >
+          <el-card
+            class="product-card"
+            shadow="hover"
+            :body-style="{ padding: '0px' }"
+          >
+            <div style="width: 100%; height: 200px" align="center">
+              <p class="portal-h3-title title-ph-m">私有部署</p>
+              <p style="color: #808896; font-size: 18px">满足企业定制化要求</p>
+            </div>
+            <div class="product-price-content">
+              <h3>深度功能定制及专家服务</h3>
+            </div>
+          </el-card>
         </el-col>
       </el-row>
     </section>
@@ -49,20 +59,44 @@
     <section class="portal-body-background">
       <br />
       <div align="center">
-        <div class="education-pc-title">产品说明</div>
+        <div class="portal-h1-title title-ph-l">产品说明</div>
       </div>
       <el-row class="product-box" :gutter="30">
-        <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" align="left">
+        <el-col
+          :xs="24"
+          :sm="24"
+          :md="12"
+          :lg="8"
+          :xl="8"
+          align="left"
+          class="product-col"
+        >
           <el-card class="product-card product-explain-height" shadow="hover">
             <div class="education-sub-title">示例与体验</div>
           </el-card>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" align="left">
+        <el-col
+          :xs="24"
+          :sm="24"
+          :md="12"
+          :lg="8"
+          :xl="8"
+          align="left"
+          class="product-col"
+        >
           <el-card class="product-card product-explain-height" shadow="hover">
             <div class="education-sub-title">部署与教程</div>
           </el-card>
         </el-col>
-        <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" align="left">
+        <el-col
+          :xs="24"
+          :sm="24"
+          :md="12"
+          :lg="8"
+          :xl="8"
+          align="left"
+          class="product-col"
+        >
           <el-card class="product-card product-explain-height" shadow="hover">
             <div class="education-sub-title">后期服务</div>
           </el-card>
@@ -98,19 +132,18 @@ export default {
   position: relative;
   width: 100%;
   min-height: 800px;
-  padding-top: 160px;
+  padding-top: 10%;
   background: url('/media/bg/ep-bg.jpg') no-repeat;
   background-position: center;
   background-size: cover;
-  // background-size: 100%;
-  // border-bottom: 1px solid #e1e6f9;
 }
 .product-box {
-  padding: 60px 12% 130px;
-  // background-color: rgb(204, 204, 204);
+  padding: 60px 12% 100px;
+}
+.product-col {
+  padding-bottom: 30px;
 }
 .product-card {
-  padding-top: 20px;
   max-width: 460px;
   border-radius: 14px;
   margin: 0 auto;
@@ -120,7 +153,7 @@ export default {
   width: 100%;
   height: 460px;
   background-color: #f9faff;
-  border-radius: 0 0 14px 14px;
+  border-radius: 14px;
 }
 .product-explain-height {
   height: 300px;
@@ -131,16 +164,20 @@ export default {
   width: 100%;
   background-color: #f8fafa;
 }
-.education-pc-title {
+.portal-h1-title {
   margin-bottom: 2%;
   font-size: 50px;
   font-weight: 600;
   color: #32373f;
 }
-.portal-main-title {
+.portal-h3-title {
   font-weight: 600;
   font-size: 28px;
   color: #32373f;
+}
+.portal-p-title {
+  color: #808896;
+  font-size: 18px;
 }
 .education-gray-title {
   font-size: 24px;
