@@ -54,7 +54,10 @@
 
           <el-descriptions-item>
             <template slot="label">
-              <router-link class="info-content-label-link" :to="'/verse/index'">
+              <router-link
+                class="info-content-label-link"
+                :to="'/meta-verse/index'"
+              >
                 <font-awesome-icon class="icon" icon="adjust" />
                 宇宙
               </router-link>

@@ -45,21 +45,6 @@ export const constantRoutes = [
 
     children: [
       {
-        path: 'editor',
-        name: 'Editor',
-        meta: { title: '编辑器' },
-        redirect: '/editor/index',
-        component: Empty,
-        children: [
-          {
-            meta: { title: '编辑器' },
-            path: 'index',
-            name: 'EditorIndex',
-            component: () => import('@/views/editor/index')
-          }
-        ]
-      },
-      {
         meta: { title: '个人中心' },
         path: 'home',
         name: 'Home',
@@ -267,32 +252,62 @@ export const constantRoutes = [
           }
         ]
       },
+      {
+        path: 'meta',
+        name: 'Meta',
+        meta: { title: '元' },
+        redirect: '/meta/editor',
+        component: Empty,
+        children: [
+          {
+            path: 'editor',
+            name: 'VerseMetaEditor',
+            meta: { title: '【元】' },
+            component: () => import('@/views/meta/editor')
+          },
+          {
+            path: 'cyber',
+            name: 'VerseCyber',
+            meta: { title: '逻辑' },
+            component: () => import('@/views/meta/cyber')
+          }
+        ]
+      },
 
       {
-        path: 'verse',
-        name: 'Verse',
-        meta: { title: '宇宙' },
-        redirect: '/verse/index',
+        path: 'meta-verse',
+        name: 'MetaVerse',
+        meta: { title: '元-宇宙' },
+        redirect: '/meta-verse/index',
         component: Empty,
         children: [
           {
             path: 'index',
             name: 'VerseIndex',
             meta: { title: '列表' },
-            component: () => import('@/views/verse/index')
+            component: () => import('@/views/meta-verse/index')
           },
           {
             path: 'open',
             name: 'VerseOpen',
             meta: { title: '开放列表' },
-            component: () => import('@/views/verse/open')
+            component: () => import('@/views/meta-verse/open')
           },
           {
             path: 'share',
             name: 'VerseShare',
             meta: { title: '共享列表' },
-            component: () => import('@/views/verse/share')
-          },
+            component: () => import('@/views/meta-verse/share')
+          }
+        ]
+      },
+      {
+        path: 'verse',
+        name: 'Verse',
+        meta: { title: '宇宙' },
+        redirect: '/verse/view',
+        component: Empty,
+        children: [
           {
             path: 'view',
             name: 'VerseView',
@@ -306,22 +321,10 @@ export const constantRoutes = [
             component: () => import('@/views/verse/editor')
           },
           {
-            path: 'meta/editor',
-            name: 'VerseMetaEditor',
-            meta: { title: '【元】' },
-            component: () => import('@/views/verse/meta/editor')
-          },
-          {
-            path: 'cyber',
-            name: 'VerseCyber',
-            meta: { title: '逻辑' },
-            component: () => import('@/views/verse/cyber')
-          },
-          {
             path: 'scene',
             name: 'VerseSceneEditor',
             meta: { title: '场景编辑器' },
-            component: () => import('@/views/verse/index')
+            component: () => import('@/views/verse/scene')
           }
         ]
       },

@@ -107,9 +107,35 @@ export default {
       alert(e.message)
     }
     this.loading = false
+
+    this.setBreadcrumbs({
+      list: [
+        {
+          path: '/',
+          meta: { title: '元宇宙实景编程平台' }
+        },
+        {
+          path: '/verse/view?id=' + this.id,
+          meta: { title: '【宇宙】' + this.verseName }
+        },
+        {
+          path: '/verse/editor?id=' + this.id,
+          meta: { title: '编辑' }
+        }
+      ]
+    })
   },
 
+  destroyed() {
+    this.setBreadcrumbs({ list: [] })
+  },
+  beforeDestroy() {
+    if (this.canSave) {
+      this.save()
+    }
+  },
   methods: {
+    ...mapMutations('breadcrumb', ['setBreadcrumbs']),
     ...mapMutations('verse', ['setVerseId', 'setVerseData']),
     ...mapActions('verse', {
       saveVerse: 'saveVerse'
@@ -162,11 +188,6 @@ export default {
     },
     save() {
       this.$refs.rete.save()
-    },
-    beforeDestroy() {
-      if (this.canSave) {
-        this.save()
-      }
     },
     arrange() {
       this.$refs.rete.arrange() // .$emit('arrange')

@@ -2,12 +2,15 @@
   <div>
     <el-breadcrumb class="app-breadcrumb" separator="/">
       <transition-group name="breadcrumb">
-
-        <el-breadcrumb-item v-for="(item,index) in list" :key="item.path">
-          <span v-if="item.redirect==='noRedirect'||index==list.length-1" class="no-redirect">{{ item.meta.title }}</span>
+        <el-breadcrumb-item v-for="(item, index) in list" :key="item.path">
+          <span
+            v-if="item.redirect === 'noRedirect' || index == list.length - 1"
+            class="no-redirect"
+          >
+            {{ item.meta.title }}
+          </span>
           <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
         </el-breadcrumb-item>
-
       </transition-group>
     </el-breadcrumb>
   </div>
@@ -18,7 +21,6 @@ import pathToRegexp from 'path-to-regexp'
 
 import { mapState } from 'vuex'
 export default {
-
   data() {
     return {
       levelList: null
@@ -29,13 +31,19 @@ export default {
       information: state => state.information
     }),
     list() {
+      if (
+        this.$store.state.breadcrumb.list !== null &&
+        this.$store.state.breadcrumb.list.length !== 0
+      ) {
+        return this.$store.state.breadcrumb.list
+      }
       const list = []
       for (let i = 0; i < this.levelList.length; ++i) {
-        const data = this.$store.state.breadcrumb.data
-        if (i === (this.levelList.length - 1) && data !== null) {
-          list.push(data)
-        }
-        list.push({ redirect: this.levelList[i].redirect, path: this.levelList[i].path, meta: this.levelList[i].meta })
+        list.push({
+          redirect: this.levelList[i].redirect,
+          path: this.levelList[i].path,
+          meta: this.levelList[i].meta
+        })
       }
 
       return list
@@ -45,8 +53,8 @@ export default {
     $route() {
       this.getBreadcrumb()
     },
-    '$store.state.breadcrumb.data': function() {
-    //  alert(JSON.stringify(this.$store.state.breadcrumb.data))
+    '$store.state.breadcrumb.data': function () {
+      //  alert(JSON.stringify(this.$store.state.breadcrumb.data))
     }
   },
   created() {
@@ -54,17 +62,21 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
+      let matched = this.$route.matched.filter(
+        item => item.meta && item.meta.title
+      )
       const first = matched[0]
 
       // alert()
       if (!this.isDashboard(first)) {
         matched = [
-          { path: '/', meta: { title: this.information.data.title }}
+          { path: '/', meta: { title: this.information.data.title } }
         ].concat(matched)
       }
 
-      this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+      this.levelList = matched.filter(
+        item => item.meta && item.meta.title && item.meta.breadcrumb !== false
+      )
     },
     isDashboard(route) {
       const name = route && route.name

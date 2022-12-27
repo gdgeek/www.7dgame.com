@@ -53,7 +53,7 @@ export default {
   methods: {
     editor() {
       this.root.$router.push({
-        path: '/verse/meta/editor',
+        path: '/meta/editor',
         query: { id: this.id, title: this.title }
       })
     },

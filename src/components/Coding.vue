@@ -206,14 +206,18 @@ export default {
       }
       console.log(tab, event)
     },
+
     async save() {
       const data = Blockly.serialization.workspaces.save(this.workspace)
-
+      if (this.cyber.data === JSON.stringify(data)) {
+        return
+      }
       try {
         const response = await putCyber(this.cyber.id, {
           data: JSON.stringify(data)
         })
         if (response.data !== null) {
+          this.cyber = response.data
           const find = await findCyberScript(response.data.id, 'lua')
           const script =
             'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)

@@ -180,7 +180,7 @@ export default {
                 message: '你创建了新的场景: ' + value
               })
               setTimeout(() => {
-                this.$router.push('/verse/index')
+                this.$router.push('/meta-verse/index')
               }, 300)
             })
             .catch(error => {

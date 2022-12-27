@@ -57,7 +57,6 @@
               <font-awesome-icon class="icon" icon="times" />
             </el-button>
           </template>
-          {{ JSON.parse(item.info).content }}
         </el-descriptions-item>
       </el-descriptions>
       <br />

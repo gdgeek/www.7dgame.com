@@ -59,9 +59,9 @@ export function UpdateAbility($ability, roles, userId) {
 
     router = router.concat([
       '/verse/editor',
-      '/verse/meta/editor',
-      '/verse/code',
-      '/verse/cyber'
+      '/meta/editor',
+      //'/verse/code',
+      '/meta/cyber'
     ])
     menu = menu.concat([
       '/site/logout',
@@ -72,6 +72,8 @@ export function UpdateAbility($ability, roles, userId) {
       /^\/video[\/]/,
       /^\/home[\/]/,
       /^\/verse[\/]/,
+      /^\/meta[\/]/,
+      /^\/meta-verse[\/]/,
       /^\/settings[\/]/,
       /^\/discovery[\/]/,
       /^\/community[\/]/,

@@ -21,21 +21,6 @@ var TextType = {
     },
 
     {
-      type: 'vector2',
-      key: 'rect',
-      title: '区域',
-      readonly: false,
-      default: {x:1, y:1}
-    },
-
-    {
-      type: 'number',
-      key: 'size',
-      title: '大小',
-      readonly: false,
-      default: 10
-    },
-    {
       type: 'string',
       key: 'text',
       title: '内容',

@@ -103,7 +103,7 @@ export default {
   methods: {
     click() {
       this.root.$router.push({
-        path: '/editor/index',
+        path: '/verse/scene',
         query: { id: this.root.$route.query.id }
       })
     },

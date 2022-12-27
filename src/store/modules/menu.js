@@ -18,23 +18,23 @@ const state = {
       ]
     },
     {
-      label: word.projectEnitiy,
+      label: '元宇宙',
       url: '/verse/',
       icon: 'adjust',
       items: [
         {
-          label: '元宇宙列表',
-          url: '/verse/index',
+          label: '自己创造',
+          url: '/meta-verse/index',
           icon: 'list'
         },
         {
-          label: '开放（系统推荐）',
-          url: '/verse/open',
+          label: '系统推荐',
+          url: '/meta-verse/open',
           icon: 'list'
         },
         {
-          label: '协作（朋友分享）',
-          url: '/verse/share',
+          label: '朋友分享',
+          url: '/meta-verse/share',
           icon: 'list'
         }
       ]

@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 //import { ThrowStatement } from '../libs/esprima.js'
 
+import { TextGeometry } from '../../../examples/jsm/geometries/TextGeometry.js'
 import { SceneBuilder } from './SceneBuilder.js'
 
 function SpaceLoader(editor) {
@@ -146,6 +147,22 @@ function SpaceLoader(editor) {
 			})
 		})
 	}
+	this.getText = async function (entity, resources) {
+		const parent = await self.getPoint(entity, resources)
+		const text = entity.parameters.text
+
+		const geometry = new THREE.PlaneGeometry(
+			0.1 * text.length + 0.05,
+			0.1 + 0.05
+		)
+		const material = new THREE.MeshBasicMaterial({
+			color: 0x8888ff,
+			side: THREE.DoubleSide
+		})
+		const plane = new THREE.Mesh(geometry, material)
+		parent.add(plane)
+		return parent
+	}
 	this.getVideo = async function (entity, resources) {
 		const parent = await self.getPoint(entity, resources)
 
@@ -173,7 +190,7 @@ function SpaceLoader(editor) {
 		return parent
 	}
 	this.lockNode = function (node) {
-		//node.locked = true
+		node.locked = true
 
 		node.children.forEach(item => {
 			this.lockNode(item)
@@ -187,6 +204,9 @@ function SpaceLoader(editor) {
 				break
 			case 'video':
 				node = await this.getVideo(entity, resources)
+				break
+			case 'text':
+				node = await this.getText(entity, resources)
 				break
 		}
 		if (node === null) {

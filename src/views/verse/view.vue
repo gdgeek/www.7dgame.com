@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import MrPPMessageFrom from '@/components/MrPP/MrPPMessageFrom.vue'
 import { getVerse } from '@/api/v1/verse'
 
@@ -166,14 +166,37 @@ export default {
     Reply,
     Share
   },
+
+  destroyed() {
+    this.setBreadcrumbs({ list: [] })
+  },
   created: function () {
     const self = this
     this.refresh()
     if (self.tagsMap == null) {
       self.refreshTags()
     }
+
+    this.setBreadcrumbs({
+      list: [
+        {
+          path: '/',
+          meta: { title: '元宇宙实景编程平台' }
+        },
+
+        {
+          path: '/meta-verse',
+          meta: { title: '元-宇宙' }
+        },
+        {
+          path: '/',
+          meta: { title: '【宇宙】' }
+        }
+      ]
+    })
   },
   methods: {
+    ...mapMutations('breadcrumb', ['setBreadcrumbs']),
     ...mapActions('tags', {
       refreshTags: 'refreshTags'
     }),
@@ -193,7 +216,7 @@ export default {
     },
     deleted: function (verse) {
       const self = this
-      self.$router.push({ path: '/verse/index' })
+      self.$router.push({ path: '/meta-verse/index' })
     },
     changed: function (verse) {
       const self = this

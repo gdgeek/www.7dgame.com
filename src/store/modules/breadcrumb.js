@@ -1,13 +1,11 @@
 const state = {
-  data: null
+  list: []
 }
 
 const mutations = {
-  clear(state) {
-    state.data = null
-  },
-  setData(state, data) {
-    state.data = data
+  setBreadcrumbs(state, { list }) {
+    //alert(list)
+    state.list = list
   }
 }
 

@@ -4,9 +4,7 @@
       <el-main>
         <el-card v-loading="loading" class="box-card">
           <div slot="header" class="clearfix">
-            <router-link
-              :to="'/verse/meta/editor?id=' + id + '&title=' + title"
-            >
+            <router-link :to="'/meta/editor?id=' + id + '&title=' + title">
               <el-link v-if="meta" :underline="false">
                 【元：{{ title }}】
               </el-link>
@@ -78,28 +76,40 @@ export default {
     }
   },
   destroyed() {
-    this.clear()
+    this.setBreadcrumbs({ list: [] })
   },
   async created() {
     const self = this
     const response = await getMeta(this.id, 'cyber, event')
     self.meta = response.data
-    this.setData({
-      redirect: null,
-      path: path.join(
-        '/verse/meta/editor/',
-        qs.stringify({ id: self.id, title: self.title }, true)
-      ),
-      meta: { title: '编辑-' + self.title }
+    this.setBreadcrumbs({
+      list: [
+        {
+          path: '/',
+          meta: { title: '元宇宙实景编程平台' }
+        },
+        {
+          path: path.join(
+            '/meta/editor/',
+            qs.stringify({ id: self.id, title: self.title }, true)
+          ),
+          meta: { title: '【元:' + self.title + '】' }
+        },
+        {
+          path: path.join(
+            '/meta/editor/',
+            qs.stringify({ id: self.id, title: self.title }, true)
+          ),
+          meta: { title: '【赛博】' }
+        }
+      ]
     })
     if (self.meta.cyber === null) {
       const response = await postCyber({ meta_id: self.meta.id })
-
       self.cyber = response.data
     } else {
       self.cyber = self.meta.cyber
     }
-    // self.addMetaData(JSON.parse(self.meta.data))
   },
 
   beforeDestroy() {
@@ -108,7 +118,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('breadcrumb', ['setData', 'clear']),
+    ...mapMutations('breadcrumb', ['setBreadcrumbs']),
     save() {
       this.$refs.blockly.save()
     }

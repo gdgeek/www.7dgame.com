@@ -115,7 +115,7 @@ export default {
     }
   },
   destroyed() {
-    this.clear()
+    this.setBreadcrumbs({ list: [] })
   },
 
   beforeDestroy() {
@@ -131,11 +131,23 @@ export default {
     getMeta(this.id).then(response => {
       self.meta = response.data
 
-      this.setData({
-        redirect: null,
-        path: '/verse/editor?id=' + this.meta.verse.id,
-        meta: { title: '编辑：' + this.meta.verse.name + '' }
+      this.setBreadcrumbs({
+        list: [
+          {
+            path: '/',
+            meta: { title: '元宇宙实景编程平台' }
+          },
+          {
+            path: '/verse/editor?id=' + this.meta.verse.id,
+            meta: { title: '【宇宙】' + this.meta.verse.name }
+          },
+          {
+            path: '',
+            meta: { title: '【元】' + this.title }
+          }
+        ]
       })
+
       self.setMetaData(self.meta)
       if (self.meta.data !== null) {
         self.setup(self.meta.data).then(data => {
@@ -154,10 +166,12 @@ export default {
     ...mapMutations(['resourceSelect', 'resourceSetup']),
     ...mapMutations('meta', ['setMetaId', 'setMetaData']),
 
-    ...mapMutations('breadcrumb', ['setData', 'clear']),
+    ...mapMutations('breadcrumb', ['setBreadcrumbs']),
+
     ...mapActions('meta', {
       saveMeta: 'saveMeta'
     }),
+
     //...mapMutations(['setPolygenList', 'setPictureList', 'setVideoList']),
 
     setup(data) {
