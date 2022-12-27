@@ -6,7 +6,26 @@
     <el-row>
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
-        <div class="background-box-image">修改中</div>
+        <div class="background-box-image">
+          <div class="education-phone-box" align="left">
+            <p
+              style="width:200px;font-weight: 600; font-size: 22px; color: #32373f；word-wrap:break-word ;"
+            >
+              {{ infoTitle2 }}
+            </p>
+            <p>
+              <a
+                ref="telPhone"
+                :href="'tel' + ':' + infoTel"
+                style="border-bottom: 2px solid #1e82e8; color: #e361a1"
+              >
+                点击拨打
+                <i class="el-icon-phone-outline" />
+                {{ infoTel }}
+              </a>
+            </p>
+          </div>
+        </div>
       </el-col>
       <!-- PC显示 -->
       <el-col :span="24" class="hidden-sm-and-down">
@@ -14,7 +33,7 @@
           <div class="medical-pc-box" align="left">
             <div class="medical-pc-title">{{ infoTitle }}</div>
             <div class="medical-pc-title">{{ infoTitle2 }}</div>
-            <h1 style="font-weight: lighter; margin-top: 8%; color: #e361a1">
+            <h1 style="font-weight: lighter; margin-top: 8%; color: #00cccc">
               即刻拨打
               {{ infoTel }}
             </h1>
@@ -36,8 +55,8 @@ export default {
 
   data() {
     return {
-      infoTitle: 'AR医疗',
-      infoTitle2: '元宇宙实景编程平台',
+      infoTitle: '欢迎体验',
+      infoTitle2: '元宇宙实景医疗',
       infoTel: 15000159790
     }
   },
@@ -52,12 +71,12 @@ export default {
 .background-box-image {
   display: flex;
   align-items: center;
-  padding: 1px 3% 20px;
+  padding: 1px 30px 20px;
   width: 100%;
   height: 30vw;
-  max-height: 650px;
+  max-height: 600px;
   // background-color: #c9eaf3;
-  background: url('/media/bg/ep-bg.jpg') center no-repeat;
+  background: url('/media/bg/m2-screen.jpg') center no-repeat;
   background-size: cover;
   background-size: 100%;
 }
@@ -67,12 +86,13 @@ export default {
   padding-top: 10px;
 }
 .medical-pc-box {
-  margin-left: 10%;
+  margin-left: 8%;
 }
 .medical-pc-title {
   margin-bottom: 2%;
-  font-size: 52px;
+  font-size: 46px;
   font-weight: 600;
+  // color: #00cccc;
   color: #32373f;
 }
 </style>
