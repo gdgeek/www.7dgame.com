@@ -172,6 +172,7 @@ export default {
 .product-button{
   font-size: 20px;
   line-height: 50px;
+  text-align: center;
   font-weight: 600;
   border-radius: 8px;
   color: #fff;

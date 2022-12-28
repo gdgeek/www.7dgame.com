@@ -30,7 +30,7 @@ export default {
 
   data() {
     return {
-      infoTel: '融合AR/MR生态，引领教育未来',
+      infoTel: '融合AR/MR生态，引领创造未来',
       infoTitle: '根据项目实际需求设计，助力用户开启创造之门。'
     }
   },

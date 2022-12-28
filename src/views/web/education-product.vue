@@ -24,7 +24,7 @@
           >
             <div style="width: 100%; height: 200px" align="center">
               <p class="portal-h3-title title-ph-m">高级版</p>
-              <p class="portal-p-title">提升教育交互体验</p>
+              <p class="portal-p-title">提升实景交互体验</p>
             </div>
             <div class="product-price-content">
               <h3>高级功能及特属资源</h3>
