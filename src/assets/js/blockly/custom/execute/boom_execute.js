@@ -45,7 +45,7 @@ const block = {
       )
       // TODO: Assemble Lua into code variable.
 
-      var code = 'CS.MrPP.Lua.LuaExecuter.Boom(target, ' + value_boom + ')\n'
+      var code = 'CS.MrPP.Run.Boom(target, ' + value_boom + ')\n'
       return code
     }
     return lua

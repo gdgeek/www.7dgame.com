@@ -97,7 +97,7 @@ export default {
         },
         {
           path: path.join(
-            '/meta/editor/',
+            '.',
             qs.stringify({ id: self.id, title: self.title }, true)
           ),
           meta: { title: '【赛博】' }

@@ -1,30 +1,32 @@
+import Blockly from 'blockly'
 import DataType from './type'
+import Helper from '../helper'
 const data = {
-  name: 'function_execute'
+  name: 'text_entity'
 }
 const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson(parameters) {
+  getBlockJson({ resource }) {
     const json = {
       type: data.name,
-      message0: '执行 %1',
+      message0: '文字 %1',
       args0: [
         {
           type: 'field_dropdown',
-          name: 'function',
-          options: [
-            ['redo', 'CS.MrPP.Run.Redo()'],
-            ['undo', 'CS.MrPP.Run.Undo()'],
-            ['boom_reset', 'CS.MrPP.Run.BoomReset(target)'],
-            ['sample_reset', 'CS.MrPP.Run.SampleReset(target)']
-          ]
+          name: 'Text',
+          options: function () {
+            const text = resource.text
+            let opt = [['none', '']]
+            text.forEach(t => {
+              opt.push([t.name, t.uuid])
+            })
+            return opt
+          }
         }
       ],
-      inputsInline: false,
-      previousStatement: null,
-      nextStatement: null,
+      output: 'Text',
       colour: DataType.colour,
       tooltip: '',
       helpUrl: ''
@@ -40,12 +42,15 @@ const block = {
     }
     return data
   },
-  getLua(parameters) {
+  getLua({ index }) {
+    // alert(index)
     const lua = function (block) {
-      var dropdown_function = block.getFieldValue('function')
+      var dropdown_text = block.getFieldValue('Text')
+      //alert(dropdown_polygen);
       // TODO: Assemble Lua into code variable.
-      var code = dropdown_function + '\n'
-      return code
+      // var code =
+      // TODO: Change ORDER_NONE to the correct strength.
+      return [Helper.handler(index, dropdown_text), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

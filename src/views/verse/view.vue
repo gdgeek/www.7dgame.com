@@ -189,7 +189,7 @@ export default {
           meta: { title: '元-宇宙' }
         },
         {
-          path: '/',
+          path: '.',
           meta: { title: '【宇宙】' }
         }
       ]

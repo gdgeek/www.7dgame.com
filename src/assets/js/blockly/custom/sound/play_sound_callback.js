@@ -55,7 +55,7 @@ const block = {
       //alert(statements_callback)
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MrPP.Lua.LuaExecuter.PlaySound(' +
+        'CS.MrPP.Run.PlaySound(' +
         value_sound +
         ',' +
         JSON.stringify(statements_callback) +

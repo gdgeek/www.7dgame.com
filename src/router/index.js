@@ -270,6 +270,12 @@ export const constantRoutes = [
             name: 'VerseCyber',
             meta: { title: '逻辑' },
             component: () => import('@/views/meta/cyber')
+          },
+          {
+            path: 'scene',
+            name: 'MetaSceneEditor',
+            meta: { title: '【元】编辑器' },
+            component: () => import('@/views/meta/scene')
           }
         ]
       },

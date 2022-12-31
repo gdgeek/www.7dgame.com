@@ -2,7 +2,7 @@ import DataType from './type'
 
 import Blockly from 'blockly'
 const data = {
-  name: 'video_option'
+  name: 'play_video'
 }
 const block = {
   title: data.name,
@@ -11,21 +11,17 @@ const block = {
   getBlockJson(parameters) {
     const json = {
       type: 'block_type',
-      message0: '执行操作 %1 视频 %2',
+      message0: '播放视频 %1 独占 %2',
       args0: [
-        {
-          type: 'field_dropdown',
-          name: 'option',
-          options: [
-            ['播放', 'Play'],
-            ['暂停', 'Pause'],
-            ['停止', 'Stop']
-          ]
-        },
         {
           type: 'input_value',
           name: 'video',
           check: 'Video'
+        },
+        {
+          type: 'field_checkbox',
+          name: 'occupy',
+          checked: true
         }
       ],
       previousStatement: null,
@@ -47,20 +43,19 @@ const block = {
   },
   getLua(parameters) {
     const lua = function (block) {
-      var option = block.getFieldValue('option')
       var value_video = Blockly.Lua.valueToCode(
         block,
         'video',
         Blockly.Lua.ORDER_NONE
       )
-      // TODO: Assemble Lua into code variable.
-      var code =
-        'CS.MrPP.Lua.LuaExecuter.VideoControl(' +
+      var checkbox_occupy = block.getFieldValue('occupy') === 'TRUE'
+      return (
+        'CS.MrPP.Run.VideoPlay(' +
         value_video +
-        ',' +
-        JSON.stringify(option) +
+        ', ' +
+        JSON.stringify(checkbox_occupy) +
         ')\n'
-      return code
+      )
     }
     return lua
   },

@@ -126,7 +126,8 @@ export default {
         'polygen',
         'entity',
         'video',
-        'picture'
+        'picture',
+        'text'
       ])
 
       if (entity) {
@@ -208,8 +209,9 @@ export default {
     },
 
     async save() {
+      const self = this
       const data = Blockly.serialization.workspaces.save(this.workspace)
-      if (this.cyber.data === JSON.stringify(data)) {
+      if (self.cyber.data === JSON.stringify(data)) {
         return
       }
       try {
@@ -217,7 +219,7 @@ export default {
           data: JSON.stringify(data)
         })
         if (response.data !== null) {
-          this.cyber = response.data
+          //self.cyber = response.data
           const find = await findCyberScript(response.data.id, 'lua')
           const script =
             'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)

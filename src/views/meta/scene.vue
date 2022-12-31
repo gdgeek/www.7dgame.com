@@ -20,20 +20,17 @@ var path = require('path')
 
 import { mapMutations } from 'vuex'
 import environment from '@/environment.js'
-import { putVerse } from '@/api/v1/verse'
-import { getVerse } from '@/api/e1/verse'
+import { putMeta } from '@/api/v1/meta'
+import { getMeta } from '@/api/e1/meta'
+
 export default {
   name: 'VerseScene',
   data() {
-    const src = path.join(
-      'three.js/editor',
-      'space-editor.html' + qs.stringify({ id: this.$route.query.id }, true)
-    )
+    const src = path.join('three.js/editor', 'meta-editor.html')
 
     return {
       isInit: false,
-      editor: null,
-      data: null,
+      //  data: null,
       src
     }
   },
@@ -61,8 +58,8 @@ export default {
           meta: { title: '元宇宙实景编程平台' }
         },
         {
-          path: '.',
-          meta: { title: '场景编辑' }
+          path: '//',
+          meta: { title: '元编辑' }
         }
       ]
     })
@@ -72,19 +69,17 @@ export default {
     window.addEventListener('message', async e => {
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
-          case 'save-verse':
-            self.saveVerse(e.data.verse)
+          case 'save-meta':
+            self.saveMeta(e.data.meta)
             break
           case 'ready':
             if (self.isInit == false) {
               self.isInit = true
               const iframe = document.getElementById('editor')
-              const r = await getVerse(this.id)
-
+              const r = await getMeta(this.id)
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
-                id: this.id,
                 data: r.data
               }
               iframe.contentWindow.postMessage(data, '*')
@@ -96,14 +91,13 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-    async saveVerse(verse) {
-      await putVerse(this.id, { data: verse }).then(response => {
-        this.$message({
-          type: 'success',
-          message: '保存成功!'
-        })
+    async saveMeta(meta) {
+      await putMeta(this.id, { data: meta })
+      this.$message({
+        type: 'success',
+        message: '保存成功!'
       })
-      const r = await getVerse(this.id)
+      const r = await getMeta(this.id)
       const data = {
         verify: 'mrpp.com',
         action: 'reload',

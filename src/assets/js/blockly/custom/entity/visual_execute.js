@@ -16,7 +16,7 @@ const block = {
         {
           type: 'input_value',
           name: 'entity',
-          check: 'Entity'
+          check: ['Entity', 'Polygen', 'Picture', 'Video', 'Text']
         },
         {
           type: 'input_dummy'
@@ -58,11 +58,7 @@ const block = {
       )
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MrPP.Lua.LuaExecuter.SetVisual(' +
-        value_entity +
-        ', ' +
-        value_bool +
-        ')\n'
+        'CS.MrPP.Run.SetVisual(' + value_entity + ', ' + value_bool + ')\n'
       return code
     }
     return lua

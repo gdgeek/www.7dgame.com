@@ -321,7 +321,7 @@ function SpaceLoader(editor) {
 					z: node.scale.z
 				}
 
-				meta.parameters.transform.active = node.visible
+				//meta.parameters.transform.active = node.visible
 				//(JSON.stringify(meta.parameters.transform.rotate))
 			}
 		})
@@ -346,8 +346,6 @@ function SpaceLoader(editor) {
 			this.lockNode(space)
 			this.room.add(space)
 		}
-
-		editor.signals.sceneGraphChanged.dispatch()
 	}
 
 	this.loadDatas = async function () {
@@ -420,6 +418,8 @@ function SpaceLoader(editor) {
 		//	self.verse = JSON.parse(data.data)
 		self.loadDatas()
 		self.loadIt()
+
+		editor.signals.sceneGraphChanged.dispatch()
 	}
 }
 export { SpaceLoader }

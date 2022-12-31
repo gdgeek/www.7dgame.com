@@ -1,6 +1,8 @@
 import DataType from './type'
+
+import Blockly from 'blockly'
 const data = {
-  name: 'function_execute'
+  name: 'set_text'
 }
 const block = {
   title: data.name,
@@ -8,21 +10,20 @@ const block = {
   colour: DataType.colour,
   getBlockJson(parameters) {
     const json = {
-      type: data.name,
-      message0: '执行 %1',
+      type: 'block_type',
+      message0: '文本 %1 设置为 %2',
       args0: [
         {
-          type: 'field_dropdown',
-          name: 'function',
-          options: [
-            ['redo', 'CS.MrPP.Run.Redo()'],
-            ['undo', 'CS.MrPP.Run.Undo()'],
-            ['boom_reset', 'CS.MrPP.Run.BoomReset(target)'],
-            ['sample_reset', 'CS.MrPP.Run.SampleReset(target)']
-          ]
+          type: 'input_value',
+          name: 'text',
+          check: 'Text'
+        },
+        {
+          type: 'field_input',
+          name: 'value',
+          text: 'default'
         }
       ],
-      inputsInline: false,
       previousStatement: null,
       nextStatement: null,
       colour: DataType.colour,
@@ -42,9 +43,11 @@ const block = {
   },
   getLua(parameters) {
     const lua = function (block) {
-      var dropdown_function = block.getFieldValue('function')
+      var value = block.getFieldValue('value')
+      var text = Blockly.Lua.valueToCode(block, 'text', Blockly.Lua.ORDER_NONE)
       // TODO: Assemble Lua into code variable.
-      var code = dropdown_function + '\n'
+      var code =
+        'CS.MrPP.Run.SetText(' + text + ',' + JSON.stringify(value) + ')\n'
       return code
     }
     return lua

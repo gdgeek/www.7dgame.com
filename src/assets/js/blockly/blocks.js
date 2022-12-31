@@ -2,6 +2,7 @@ import { EntityRegister } from '@/assets/js/blockly/custom/entity'
 import { DataRegister } from '@/assets/js/blockly/custom/data'
 import { TriggerRegister } from '@/assets/js/blockly/custom/trigger'
 import { ExecuteRegister } from '@/assets/js/blockly/custom/execute'
+import { TextRegister } from '@/assets/js/blockly/custom/text'
 import { PolygenRegister } from '@/assets/js/blockly/custom/polygen'
 import { PictureRegister } from '@/assets/js/blockly/custom/picture'
 import { VideoRegister } from '@/assets/js/blockly/custom/video'
@@ -13,7 +14,7 @@ function AddBlocks(parameters) {
   EntityRegister(parameters)
   PolygenRegister(parameters)
   DataRegister(parameters)
-  //ExecuteRegister(parameters)
+  TextRegister(parameters)
   PictureRegister(parameters)
   VideoRegister(parameters)
   SoundRegister(parameters)

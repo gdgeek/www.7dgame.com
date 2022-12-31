@@ -6,6 +6,7 @@ import List from '@/assets/js/blockly/list'
 import Colour from '@/assets/js/blockly/colour'
 
 import { EventCategory } from '@/assets/js/blockly/custom/event'
+import { TextCategory } from '@/assets/js/blockly/custom/text'
 import { EntityCategory } from '@/assets/js/blockly/custom/entity'
 import { PolygenCategory } from '@/assets/js/blockly/custom/polygen'
 import { DataCategory } from '@/assets/js/blockly/custom/data'
@@ -50,6 +51,7 @@ export default {
     EntityCategory,
     PolygenCategory,
     PictureCategory,
+    TextCategory,
     VideoCategory,
     SoundCategory,
     sep,
