@@ -1,28 +1,40 @@
 <template>
   <div class="background-screen-border">
-    <!-- 巨幕板块 -->
+    <!-- 医疗巨幕板块 -->
     <medical-screen />
-
-    <!-- 系统子幕图-->
-
-    <!-- 联系我们板块 -->
-    <relation :is-blue="isBlue" />
-    <!-- 合作伙伴板块 -->
-    <partner :is-blue="isBlue" />
+    <!-- 视频应用白底色 -->
+    <medical-video />
+    <!-- 产品列表灰底色 -->
+    <medical-list />
+    <!-- 系统子幕图绿底色-->
+    <medical-column />
+    <!-- 联系我们板块白底色 -->
+    <medical-relation />
+    <!-- <relation :is-blue="isBlue" /> -->
+    <!-- 合作伙伴板块新通用组件 -->
+    <div style="height: 600px; background-color: #f0f0f0">合作伙伴重构中</div>
   </div>
 </template>
 
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
 import MedicalScreen from '@/components/Medical/MedicalScreen.vue'
-import Relation from '@/components/SandTable/Relation.vue'
-import Partner from '@/components/SandTable/Partner.vue'
+import MedicalVideo from '@/components/Medical/MedicalVideo.vue'
+import MedicalList from '@/components/Medical/MedicalList.vue'
+import MedicalColumn from '@/components/Medical/MedicalColumn.vue'
+import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
+// import Relation from '@/components/SandTable/Relation.vue'
+// import Partner from '@/components/SandTable/Partner.vue'
 export default {
   name: 'Medical',
   components: {
     MedicalScreen,
-    Relation,
-    Partner
+    MedicalVideo,
+    MedicalList,
+    MedicalColumn,
+    MedicalRelation
+    // Relation,
+    // Partner
   },
   data() {
     return {
@@ -34,5 +46,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/screenstyle.scss';
+@import '~@/styles/responsive-style.scss';
 </style>
