@@ -36,13 +36,13 @@
               @deleted="deletedWindow"
             >
               <router-link slot="enter" :to="'/audio/view?id=' + item.id">
-                <!-- <el-button
+                <el-button
                   v-if="item.info === null || item.image === null"
                   type="warning"
                   size="mini"
                 >
                   初始化音频数据
-                </el-button> -->
+                </el-button>
                 <el-button type="primary" size="mini">查看音频</el-button>
               </router-link>
             </mr-p-p-card>
@@ -173,7 +173,7 @@ export default {
         })
     },
     succeed: function (data) {
-      // console.log(data)
+      console.log(data, 'data')
       this.items = data
     },
     refresh() {

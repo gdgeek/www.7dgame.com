@@ -7,19 +7,8 @@
             <b id="title">音频名称：</b>
             <span v-if="data">{{ data.name }}</span>
           </div>
+          <img id="imgs" :src="imgSrc" style="display: none" />
           <div class="box-item" style="text-align: center">
-            <!-- <audio
-              id="audio"
-              controls="controls"
-              style="height: 300px; width: 100%"
-            >
-              <source
-                v-if="file !== null"
-                id="src"
-                :src="file"
-                type="audio/wav"
-              />
-            </audio> -->
             <section class="audio-bgc">
               <br />
               <div class="audio-box">
@@ -44,6 +33,7 @@
                 @play="listenPlay()"
                 @pause="listenPause()"
                 @ended="listenEnd()"
+                @canplaythrough="dealWith()"
               />
             </section>
           </div>
@@ -95,7 +85,8 @@ export default {
       data: null,
       file: null,
       expire: true,
-      isPlay: false
+      isPlay: false,
+      imgSrc: '/media/bg/audio-cover.jpg'
     }
   },
   computed: {
@@ -196,43 +187,70 @@ export default {
           console.log(err)
         })
     },
+    dealWith: function () {
+      const self = this
+      if (!self.prepare) {
+        const audio = document.getElementById('audio')
+        // 获取新的音频
+        // const new_audio = document.getElementById('new_audio')
+        const size = { x: 800, y: 800 }
+        self.setup(audio, size)
+      } else {
+        self.expire = false
+      }
+    },
+    thumbnail: function (video, width, height) {
+      return new Promise((resolve, reject) => {
+        const image_type = 'image/jpeg'
+        const canvas = document.createElement('canvas')
+        const bgImg = document.getElementById('imgs')
+        canvas.width = width
+        canvas.height = height
+        // 将图片绘制到canvas上，并转化成图片
+        const ctx1 = canvas.getContext('2d')
+        ctx1.drawImage(bgImg, 0, 0, width, height)
 
-    // async setup(audio, size) {
-    //   const self = this
-    //   const store = self.store
-    //   console.log(store, 'store23213')
-    //   if (size.x !== 0) {
-    //     const info = JSON.stringify({ size })
-    //     const blob = await self.thumbnail(audio, size.x * 0.5, size.y * 0.5)
-    //     blob.name = self.data.name + '.thumbnail'
-    //     blob.extension = '.jpg'
-    //     const file = blob
-    //     const md5 = await store.fileMD5(file)
-    //     const handler = await store.fileHandler(
-    //       'store-1251022382',
-    //       'ap-nanjing'
-    //     )
-    //     const ret = await store.fileHas(
-    //       md5,
-    //       file.extension,
-    //       handler,
-    //       'screenshot/audio'
-    //     )
-    //     if (ret !== null) {
-    //       self.save(ret.md5, ret.extension, info, file, handler)
-    //     } else {
-    //       const r = await store.fileUpload(
-    //         md5,
-    //         file.extension,
-    //         file,
-    //         p => {},
-    //         handler,
-    //         'screenshot/audio'
-    //       )
-    //       self.save(md5, file.extension, info, file, handler)
-    //     }
-    //   }
-    // },
+        canvas.toBlob(function (blob) {
+          resolve(blob)
+        }, image_type)
+      })
+    },
+    async setup(audio, size) {
+      const self = this
+      const store = self.store
+      // console.log(store, 'store23213')
+      if (size.x !== 0) {
+        const info = JSON.stringify({ size })
+        const blob = await self.thumbnail(audio, size.x * 0.5, size.y * 0.5)
+        blob.name = self.data.name + '.thumbnail'
+        blob.extension = '.jpg'
+        const file = blob
+        const md5 = await store.fileMD5(file)
+        const handler = await store.fileHandler(
+          'store-1251022382',
+          'ap-nanjing'
+        )
+        const ret = await store.fileHas(
+          md5,
+          file.extension,
+          handler,
+          'screenshot/audio'
+        )
+        if (ret !== null) {
+          self.save(ret.md5, ret.extension, info, file, handler)
+        } else {
+          const r = await store.fileUpload(
+            md5,
+            file.extension,
+            file,
+            p => {},
+            handler,
+            'screenshot/audio'
+          )
+          self.save(md5, file.extension, info, file, handler)
+        }
+      }
+    },
     // init: function () {
     //   const audio = document.getElementById('audio')
     //   const source = document.getElementById('src')
@@ -250,18 +268,7 @@ export default {
     //     false
     //   )
     // },
-    // dealWith: function () {
-    //   const self = this
-    //   if (!self.prepare) {
-    //     const audio = document.getElementById('audio')
-    //     // 获取新的音频
-    //     const new_audio = document.getElementById('new_audio')
-    //     const size = { x: audio.audioWidth, y: audio.audioHeight }
-    //     self.setup(new_audio, size)
-    //   } else {
-    //     self.expire = false
-    //   }
-    // },
+
     deleteWindow: function () {
       const self = this
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
