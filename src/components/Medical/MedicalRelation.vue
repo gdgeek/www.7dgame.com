@@ -1,25 +1,71 @@
 <template>
   <!-- 产品中心 -->
   <section class="section-box">
-    <div class="reletion-title-small">以用户为中心</div>
-    <div class="reletion-title-h1 p-title-m">欢迎联系我们</div>
-
-    <el-row :gutter="20">
-      <!-- content部分 -->
-      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-        <div class="reletion-title-h3 p-title-s">机构地址</div>
-        <div class="reletion-content">icon 上海市...................</div>
-        <br />
-        <div class="reletion-content">icon 上海市...................</div>
-        <br />
+    <el-row :gutter="30">
+      <el-col :span="22" :offset="2">
+        <div class="reletion-title-small">以用户为中心</div>
+        <div class="reletion-title-h1 p-title-m">欢迎联系我们</div>
+      </el-col>
+      <el-col :xs="22" :sm="22" :md="10" :lg="10" :xl="10" :offset="2">
+        <div class="reletion-title-h3 p-title-s">公司简介</div>
+        <div class="qfe_wrapper">
+          <div
+            style="
+              line-height: 40px;
+              letter-spacing: 2px;
+              width: 90%;
+              margin-bottom: 30px;
+            "
+          >
+            <span style="color: rgb(102, 102, 102)">
+              <span style="font-family: arial; font-size: 16px">
+                上海游七网络科技有限公司，作为国内制作元宇宙AR实景应用最早的高新科技企业，
+                团队项目开发经验丰富，技术方案灵活多样。在开发过程中与客户深入沟通，节约成本，提高交付效率。
+              </span>
+            </span>
+          </div>
+        </div>
       </el-col>
       <!-- 视频位置 -->
-      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+      <el-col :xs="22" :sm="22" :md="10" :lg="10" :xl="10" :offset="2">
         <div class="reletion-title-h3 p-title-s">联系方式</div>
-        <div class="reletion-content">icon 电话...................</div>
-        <br />
-        <div class="reletion-content">icon 微信...................</div>
-        <br />
+        <div class="qfe_wrapper">
+          <div style="letter-spacing: 3px; line-height: 40px">
+            <span style="color: rgb(102, 102, 102); font-size: 16px">
+              <img
+                src="/media/icon/relation-icon1.png"
+                style="width: 20px; height: 20px"
+              />
+              上海市徐汇区虹漕路25-1号
+            </span>
+            <span style="font-size: 16px" />
+          </div>
+          <div style="letter-spacing: 3px; line-height: 40px">
+            <span style="font-size: 16px">
+              <span style="color: rgb(102, 102, 102)">
+                <img
+                  src="/media/icon/relation-icon2.png"
+                  style="width: 18px; height: 18px"
+                />
+                15000159790
+                <br />
+              </span>
+            </span>
+          </div>
+          <div style="letter-spacing: 3px; line-height: 40px">
+            <span style="color: rgb(102, 102, 102)">
+              <span style="font-size: 16px">
+                <img
+                  src="/media/icon/relation-icon3.png"
+                  style="width: 20px; height: 20px"
+                />
+                dirui@bujiaban.com
+              </span>
+              <br />
+            </span>
+          </div>
+          <br />
+        </div>
       </el-col>
     </el-row>
   </section>
@@ -37,7 +83,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/responsive-style.scss';
 .section-box {
-  padding: 8% 8% 6%;
+  padding: 8% 4% 6%;
 }
 
 .reletion-title-h1 {
@@ -47,17 +93,24 @@ export default {
   margin-bottom: 65px;
 }
 .reletion-title-h3 {
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   font-size: 26px;
   font-weight: 600;
   color: #32373f;
 }
 .reletion-title-small {
   color: #2f2f2f;
+  font-size: 16px;
   margin-bottom: 8px;
+  font-weight: lighter;
 }
 .reletion-content {
   color: #5a5a5b;
   margin-bottom: 8px;
+}
+
+.qfe_wrapper {
+  word-wrap: break-word;
+  margin-bottom: 30px;
 }
 </style>

@@ -531,6 +531,12 @@ export const constantRoutes = [
         path: 'medical',
         name: 'WebMedical',
         component: () => import('@/views/web/medical')
+      },
+      {
+        meta: { title: '实景展馆' },
+        path: 'exhibition',
+        name: 'WebExhibition',
+        component: () => import('@/views/web/exhibition')
       }
     ]
   },
