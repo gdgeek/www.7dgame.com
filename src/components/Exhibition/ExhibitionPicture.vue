@@ -2,32 +2,36 @@
   <!-- 展馆 -->
   <section>
     <el-row :gutter="40" style="padding: 5% 10%">
-      <!-- content部分 -->
       <el-col :span="24">
         <div align="center" style="padding: 30px 5%">
-          <div class="exhibition-title-h3 p-title-m">
-            为您提供独特的技术专利
-          </div>
+          <div class="exhibition-title-h3 p-title-m">亲自体验元宇宙展馆</div>
           <p class="exhibition-content-small p-title-ss">
-            我们积累了多项元宇宙技术，不断优化提升交互体验，提供更好的服务和支持。
+            世界的维度正在发生变化。我们引领场馆的的数字可视化，利用元宇宙数字孪生，快速搭建场景
+            实现任何类型的空间数字化——展馆、办公室和酒店到工厂和商店。整个物业生命周期的行业正在实现前所未有的价值。
           </p>
         </div>
       </el-col>
+      <!-- picture部分 -->
       <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
-        <div style="width: 50%; height: 200px; background-color: pink">
-          icon
+        <div style="width: 100%; height: 260px; background-color: pink">
+          宣传画
         </div>
+        <p>内容阐述</p>
       </el-col>
+      <br />
+      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
+        <div style="width: 100%; height: 260px; background-color: pink">
+          宣传画
+        </div>
+        <p>内容阐述</p>
+      </el-col>
+      <br />
       <!-- 视频位置 -->
       <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
-        <div style="width: 50%; height: 200px; background-color: pink">
-          icon
+        <div style="width: 100%; height: 260px; background-color: pink">
+          宣传画
         </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
-        <div style="width: 50%; height: 200px; background-color: pink">
-          icon
-        </div>
+        <p>内容阐述</p>
       </el-col>
     </el-row>
   </section>
@@ -35,7 +39,7 @@
 
 <script>
 export default {
-  name: 'ExhibitionBody',
+  name: 'ExhibitionPicture',
   data() {
     return {}
   }
