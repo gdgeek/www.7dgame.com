@@ -33,7 +33,7 @@
           <div class="education-pc-box" align="left">
             <div class="education-pc-title">{{ infoTitle }}</div>
             <div class="education-pc-title">{{ infoTitle2 }}</div>
-            <h1 style="font-weight: lighter; margin-top: 8%; color: #e361a1">
+            <h1 style="font-weight: lighter; margin-top: 8%; color: #32373f">
               即刻拨打
               {{ infoTel }}
             </h1>

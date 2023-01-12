@@ -12,24 +12,24 @@
         </div>
       </el-col>
       <!-- picture部分 -->
-      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
-        <div style="width: 100%; height: 260px; background-color: pink">
-          宣传画
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="center">
+        <div style="width: 100%; height: 260px; background-color: #c0b6b7">
+          场景图
         </div>
         <p>内容阐述</p>
       </el-col>
       <br />
-      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
-        <div style="width: 100%; height: 260px; background-color: pink">
-          宣传画
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="center">
+        <div style="width: 100%; height: 260px; background-color: #c0b6b7">
+          场景图
         </div>
         <p>内容阐述</p>
       </el-col>
       <br />
       <!-- 视频位置 -->
-      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
-        <div style="width: 100%; height: 260px; background-color: pink">
-          宣传画
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="center">
+        <div style="width: 100%; height: 260px; background-color: #c0b6b7">
+          场景图
         </div>
         <p>内容阐述</p>
       </el-col>
@@ -47,6 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/responsive-style.scss';
 // @import '~@/styles/sandtable.scss';
 .title-box {
   max-width: 800px;

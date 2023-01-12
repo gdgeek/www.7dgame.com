@@ -4,30 +4,31 @@
     <el-row :gutter="40" style="padding: 5% 10%">
       <!-- content部分 -->
       <el-col :span="24">
-        <div align="center" style="padding: 30px 5%">
-          <div class="exhibition-title-h3 p-title-m">
-            为您提供独特的技术专利
-          </div>
-          <p class="exhibition-content-small p-title-ss">
-            我们积累了多项元宇宙技术，不断优化提升交互体验，提供更好的服务和支持。
-          </p>
+        <div align="left" style="padding: 30px 0">
+          <div class="exhibition-title-h3 p-title-m">开始部署一个展馆</div>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="left">
         <div style="width: 50%; height: 200px; background-color: pink">
           icon
         </div>
+        <h4>suntitle</h4>
+        <p>content</p>
       </el-col>
       <!-- 视频位置 -->
-      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="left">
         <div style="width: 50%; height: 200px; background-color: pink">
           icon
         </div>
+        <h4>suntitle</h4>
+        <p>content</p>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="8" :lg="8" :xl="8" align="center">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="left">
         <div style="width: 50%; height: 200px; background-color: pink">
           icon
         </div>
+        <h4>suntitle</h4>
+        <p>content</p>
       </el-col>
     </el-row>
   </section>
@@ -43,6 +44,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/responsive-style.scss';
 // @import '~@/styles/sandtable.scss';
 .title-box {
   max-width: 800px;

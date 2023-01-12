@@ -1,7 +1,7 @@
 <template>
   <!-- 产品中心 -->
   <section class="section-box">
-    <el-row :gutter="30" class="p-pc-pfr">
+    <el-row :gutter="30" style="padding: 5% 10%">
       <!-- content部分 -->
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" align="left">
         <div class="title-box">
@@ -53,7 +53,7 @@ export default {
   background-color: #f5f4f3;
 }
 .title-box {
-  margin: 2% 0 2% 4%;
+  margin: 2% 0;
   max-width: 530px;
 }
 
@@ -80,7 +80,7 @@ export default {
 }
 .medical-video-box {
   padding-top: 2%;
-  width: 90%;
+  width: 100%;
 }
 .button-box {
   padding: 35px 0 15px;

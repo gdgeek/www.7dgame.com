@@ -74,7 +74,7 @@ export default {
   padding: 1px 30px 20px;
   width: 100%;
   height: 30vw;
-  max-height: 600px;
+  max-height: 500px;
   background-color: #f8cab0;
   background: url('/media/bg/ex-bg3.jpg') center no-repeat;
   background-size: cover;
