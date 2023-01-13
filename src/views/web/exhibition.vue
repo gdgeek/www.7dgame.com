@@ -7,9 +7,10 @@
     <exhibition-picture />
     <!-- 视频案例 -->
     <exhibition-video />
-    <!-- 展馆结构 -->
+    <!-- 实施步骤 -->
     <exhibition-body />
     <!-- 预留 -->
+
     <div style="height: 710px; background-color: #222222" />
     <!-- 联系我们 -->
     <medical-relation />
