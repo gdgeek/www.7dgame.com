@@ -18,7 +18,6 @@
                     v-model="form.body"
                     :editor-toolbar="customToolbar"
                   />
-
                 </el-form-item>
                 <el-form-item>
                   <el-button
@@ -45,10 +44,9 @@
               >
                 <div class="replytitle">
                   <div class="replyicon">
-                    <img src="" alt="" class="el-icon-user">
+                    <img src="" alt="" class="el-icon-user" />
                   </div>
                   <div class="replynickname">{{ reply.author.nickname }}</div>
-
                 </div>
                 <el-card :body-style="{ padding: '15px 10px 0px 20px' }">
                   <div style="min-height: 80px" v-html="reply.body" />
@@ -69,7 +67,6 @@
                       icon="el-icon-delete"
                       size="mini"
                       type="text"
-
                       @click="deletedWindow(reply.id, deletedReply)"
                     />
                   </div>
@@ -87,15 +84,12 @@
             />
           </el-timeline>
         </div>
-
       </el-main>
-
     </el-container>
   </div>
 </template>
 
 <script>
-
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { getReplies, postReply, deleteReply } from '@/api/v1/reply'
 
@@ -154,7 +148,7 @@ export default {
       refreshTags: 'refreshTags'
     }),
 
-    handleCurrentChange: function(page) {
+    handleCurrentChange: function (page) {
       this.pagination.current = page
       this.refresh()
     },
@@ -174,49 +168,45 @@ export default {
     canDelete(item) {
       return this.$can('delete', new AbilityWorks(item.author_id))
     },
-    signature(reply) {
-      if (typeof reply.info !== 'undefined' && reply.info !== null) {
-        const info = JSON.parse(reply.info)
-        return info.signature
-      }
-      return null
-    },
 
-    deletedWindow: function(id, deleted) {
-      this.$confirm('是否确定删除?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        closeOnClickModal: false,
-        type: 'warning'
-      }).then(() => {
+    deletedWindow: async function (id, deleted) {
+      try {
+        await this.$confirm('是否确定删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          closeOnClickModal: false,
+          type: 'warning'
+        })
         deleted(id)
         this.$message({
           message: '确定删除'
         })
-      }).catch(() => {
+      } catch (e) {
         this.$message({
           type: 'info',
           message: '已取消删除'
         })
-      })
+      }
     },
-    deletedReply: function(id) {
+    deletedReply: function (id) {
       const self = this
-      deleteReply(id).then((response) => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+      deleteReply(id)
+        .then(response => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          const replies = []
+          self.replies.forEach(item => {
+            if (item.id !== id) {
+              replies.push(item)
+            }
+          })
+          self.replies = replies
         })
-        const replies = []
-        self.replies.forEach(item => {
-          if (item.id !== id) {
-            replies.push(item)
-          }
+        .catch(function (error) {
+          console.log(error)
         })
-        self.replies = replies
-      }).catch(function(error) {
-        console.log(error)
-      })
     },
 
     clear() {
@@ -225,28 +215,31 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    submitForm(formName) {
+    async submitForm(formName) {
       const self = this
       self.isDisable = true
       setTimeout(() => {
         self.isDisable = false // 点击一次时隔三秒后才能再次点击
       }, 3000)
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
-          postReply({ body: self.form.body, message_id: self.message_id, info: JSON.stringify({ 'signature': self.userData.nickname }) }).then(r => {
-            self.clear()
-            if (self.replies === null) {
-              self.replies = []
-              // console.error(r.data)
-            }
-            const data = r.data
-            data.author_id = self.userData.id
-            data.updated_at = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-            self.replies.unshift(data)
-            self.$message({
-              message: '回复成功',
-              type: 'success'
-            })
+          const r = await postReply({
+            body: self.form.body,
+            message_id: self.message_id
+          })
+
+          self.clear()
+          if (self.replies === null) {
+            self.replies = []
+          }
+          const data = r.data
+          //alert(JSON.stringify(data))
+          //data.author_id = self.userData.id
+          // data.updated_at = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+          self.replies.unshift(data)
+          self.$message({
+            message: '回复成功',
+            type: 'success'
           })
         } else {
           console.log('error submit!!')
@@ -259,32 +252,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.postheader{
+.postheader {
   width: 100%;
   height: 100%;
   padding-left: 40px;
   line-height: 60px;
-  font-weight:500;
+  font-weight: 500;
   font-size: 18px;
-  color:#31829f;
+  color: #31829f;
   background-color: #f1f6f3;
 }
-.replytitle{
+.replytitle {
   position: relative;
-  top:-9px;
+  top: -9px;
   height: 32px;
   min-width: 200px;
 }
-.replyicon{
+.replyicon {
   float: left;
   width: 32px;
   height: 32px;
   background-color: rgb(205, 206, 199);
   text-align: center;
   line-height: 32px;
-  border-radius:50%
+  border-radius: 50%;
 }
-.replynickname{
+.replynickname {
   float: left;
   height: 100%;
   line-height: 48px;
@@ -292,4 +285,3 @@ export default {
   color: #444343;
 }
 </style>
-

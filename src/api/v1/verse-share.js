@@ -1,4 +1,7 @@
 import request from '@/utils/request'
+
+var qs = require('querystringify')
+var path = require('path')
 export function postVerseShare(data) {
   return request({
     url: 'v1/verse-shares',
@@ -7,16 +10,38 @@ export function postVerseShare(data) {
   })
 }
 
-export function getVerseShare(verseId) {
+export function getVerseShares(
+  sort = '-created_at',
+  search = '',
+  page = 0,
+  expand = 'image,author'
+) {
+  let query = []
+  query['expand'] = expand
+  query['sort'] = sort
+
+  if (search !== '') {
+    query['VerseSearch[name]'] = search
+  }
+  if (page > 1) {
+    query['page'] = page
+  }
+
   return request({
-    url: 'v1/verse-shares?verse_id=' + verseId,
+    url: path.join('v1', 'verse-shares' + qs.stringify(query, true)),
     method: 'get'
   })
 }
 
-export function delVerseShare(userId, verseId) {
+export function getVerseShareList(verseId) {
   return request({
-    url: 'v1/verse-shares/0?user_id=' + userId + '&verse_id=' + verseId,
+    url: 'v1/verse-shares/list?verse_id=' + verseId,
+    method: 'get'
+  })
+}
+export function deleteVerseShare(id) {
+  return request({
+    url: 'v1/verse-shares/' + id,
     method: 'delete'
   })
 }

@@ -158,37 +158,26 @@ export default {
       })
       return self.$can('update', new AbilityMessage(message.author_id, managed))
     },
-    ILike(like) {
+    async ILike(like) {
       const self = this
-      if (like) {
-        removeLike(self.userData.id, self.message_id)
-          .then(() => {
-            this.$message({
-              type: 'success',
-              message: '已撤销'
-            })
+      try {
+        if (like) {
+          await removeLike(self.message_id)
+          this.$message({
+            type: 'success',
+            message: '已撤销'
           })
-          .catch(function (e) {
-            console.error(e)
+        } else {
+          await postLike(self.message_id)
+          this.$message({
+            type: 'success',
+            message: '已点赞'
           })
-          .finally(() => {
-            self.refresh()
-          })
-      } else {
-        postLike(self.userData.id, self.message_id)
-          .then(() => {
-            this.$message({
-              type: 'success',
-              message: '已点赞'
-            })
-          })
-          .catch(function (error) {
-            console.error(error)
-          })
-          .finally(() => {
-            self.refresh()
-          })
+        }
+      } catch (e) {
+        console.error(e)
       }
+      self.refresh()
     },
 
     deletedWindow: function (id, deleted) {

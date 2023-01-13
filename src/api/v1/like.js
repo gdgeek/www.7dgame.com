@@ -1,6 +1,6 @@
 import request from '@/utils/request'
-export function postLike(user_id, message_id) {
-  const data = { user_id, message_id }
+export function postLike(message_id) {
+  const data = { message_id }
   return request({
     url: 'v1/likes',
     method: 'post',
@@ -8,14 +8,15 @@ export function postLike(user_id, message_id) {
   })
 }
 
-export function removeLike(user_id, message_id) {
+export function removeLike(message_id) {
   return request({
-    url: 'v1/likes/0?message_id=' + message_id + '&user_id=' + user_id,
-    method: 'delete'
+    url: 'v1/likes/remove?message_id=' + message_id,
+    method: 'post'
   })
 }
 
-export function isLike(user_id, message_id) { // 我是否like
+export function isLike(user_id, message_id) {
+  // 我是否like
   return request({
     url:
       'v1/likes?LikeSearch[message_id]=' +

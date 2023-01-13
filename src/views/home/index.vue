@@ -12,7 +12,6 @@
       <el-tab-pane label="案例教程">
         <document-list :category-id="79" />
       </el-tab-pane>
-      <el-tab-pane label="搞笑视频"></el-tab-pane>
     </el-tabs>
 
     <el-tabs v-else type="border-card" lazy>
