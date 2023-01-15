@@ -6,7 +6,7 @@
           <div slot="header" class="clearfix">
             <router-link :to="'/meta/editor?id=' + id + '&title=' + title">
               <el-link v-if="meta" :underline="false">
-                【元：{{ title }}】
+                【元：{{ title }}】{{ canSave }}
               </el-link>
             </router-link>
             / 【赛博】
@@ -25,7 +25,7 @@
           </div>
 
           <coding
-            v-if="cyber !== null && meta !== null"
+            v-if="meta !== null"
             :meta="meta"
             ref="blockly"
             :cyber="cyber"
@@ -44,10 +44,9 @@ import Coding from '@/components/Coding.vue'
 import { mapMutations } from 'vuex'
 import { getMeta } from '@/api/v1/meta'
 import { postCyber } from '@/api/v1/cyber'
-
+import { AbilityWorks, AbilityShare } from '@/ability/ability'
 var qs = require('querystringify')
 var path = require('path')
-import { AbilityWorks } from '@/ability/ability'
 export default {
   name: 'Cyber',
   components: {
@@ -69,10 +68,15 @@ export default {
     },
     canSave() {
       const self = this
+
       if (self.meta === null) {
         return false
       }
-      return self.$can('update', new AbilityWorks(self.meta.author_id))
+
+      return (
+        self.$can('update', new AbilityWorks(self.meta.author_id)) ||
+        self.$can('share', new AbilityShare(self.meta.share))
+      )
     }
   },
   destroyed() {
@@ -80,7 +84,7 @@ export default {
   },
   async created() {
     const self = this
-    const response = await getMeta(this.id, 'cyber, event')
+    const response = await getMeta(this.id, 'cyber,event,share')
     self.meta = response.data
     this.setBreadcrumbs({
       list: [
@@ -105,8 +109,10 @@ export default {
       ]
     })
     if (self.meta.cyber === null) {
-      const response = await postCyber({ meta_id: self.meta.id })
-      self.cyber = response.data
+      if (this.canSave) {
+        const response = await postCyber({ meta_id: self.meta.id })
+        self.cyber = response.data
+      }
     } else {
       self.cyber = self.meta.cyber
     }

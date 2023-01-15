@@ -294,21 +294,11 @@ const initVerse = async function ({ container, verseId, root }) {
     if (typeof e === 'object' && typeof e.status === 'string') {
       if (e.status === 'save') {
         await engine_.abort()
-        console.error('editor_.toJSON()')
-        console.error(editor_.toJSON())
         await root.save()
-        /*
-        await engine_.process(editor_.toJSON(), null, async function (data) {
-          console.error(data)
-          response = await root._saveVerse(data)
-          console.log(response)
-        })*/
       }
     }
   })
 
-  // editor_.view.resize()
-  // AreaPlugin.zoomAt(editor_)
   editor_.trigger('process', { status: 'init' })
 }
 export default {

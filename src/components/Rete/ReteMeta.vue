@@ -12,7 +12,9 @@
         <el-card v-loading="loading" class="box-card">
           <div v-if="meta !== null" slot="header" class="clearfix">
             <router-link :to="'/verse/editor?id=' + meta.verse.id">
-              <el-link :underline="false">【宇宙】</el-link>
+              <el-link :underline="false">
+                【宇宙】{{ meta.verse.name }} {{ meta.share }}
+              </el-link>
             </router-link>
             / 【元】{{ title }}
             <el-button-group style="float: right">
@@ -49,7 +51,6 @@
 import editor from '@/node-editor/meta'
 import { getMeta, putMeta } from '@/api/v1/meta'
 import { getResources } from '@/api/resources'
-import { mapMutations } from 'vuex'
 import ResourceDialog from '@/components/MrPP/MrPPResourceDialog.vue'
 import { AbilityWorks, AbilityShare } from '@/ability/ability'
 /*
@@ -89,7 +90,7 @@ export default {
   },
   computed: {
     resourceMessage() {
-      switch (this.$store.state.resource.type) {
+      switch (this.resource.type) {
         case 'video':
           return '选择相应视频'
         case 'audio':
@@ -110,7 +111,6 @@ export default {
       if (self.meta === null) {
         return false
       }
-
       return (
         self.$can('update', new AbilityWorks(self.meta.author_id)) ||
         self.$can('share', new AbilityShare(self.meta.share))
@@ -123,9 +123,9 @@ export default {
       container: this.$refs.rete,
       root: this
     })
-    const response = await getMeta(this.id)
+    const response = await getMeta(this.id, 'verse,share')
     this.meta = response.data
-
+    //alert(JSON.stringify(this.meta))
     if (this.meta.data !== null) {
       await editor.setup(JSON.parse(this.meta.data))
     } else {
@@ -136,6 +136,9 @@ export default {
       await this.save()
     }
     this.loading = false
+    if (!this.canSave) {
+      editor.ban()
+    }
   },
   beforeDestroy() {
     if (this.canSave) {
@@ -144,11 +147,13 @@ export default {
   },
   methods: {
     openResources({ callback, type } = { callback: null, type: null }) {
-      this.resource.callback = callback
-      this.resource.type = type
+      if (this.canSave) {
+        this.resource.callback = callback
+        this.resource.type = type
 
-      if (callback !== null) {
-        this.$refs.dialog.open()
+        if (callback !== null) {
+          this.$refs.dialog.open()
+        }
       }
     },
     selectResources(data) {

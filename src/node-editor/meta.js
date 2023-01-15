@@ -7,6 +7,7 @@ import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
 import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import { Component } from './components/Component'
+import BanPlugin from '@/node-editor/plugins/ban'
 
 import { Build } from '@/node-editor/factory'
 import {
@@ -49,6 +50,9 @@ const arrange = function () {
   if (editor_.nodes.length > 0) {
     editor_.trigger('arrange', editor_.nodes)
   }
+}
+const ban = function () {
+  editor_.use(BanPlugin)
 }
 const create = function (meta) {
   //alert(JSON.stringify(meta))
@@ -168,5 +172,6 @@ export default {
   save,
   setup,
   create,
-  arrange
+  arrange,
+  ban
 }

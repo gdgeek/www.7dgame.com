@@ -62,10 +62,14 @@ export default {
 
   mounted() {
     const self = this
-    AddBlocks({
-      index: self.index,
-      resource: self.getResource(this.meta)
-    })
+
+    if (this.meta.data) {
+      AddBlocks({
+        index: self.index,
+        resource: self.getResource(this.meta)
+      })
+    }
+
     this.workspace = Blockly.inject('blocklyDiv', {
       media: 'resource/blockly/media/',
       toolbox: toolbox,
@@ -87,7 +91,8 @@ export default {
         pinch: true
       }
     })
-    if (self.cyber.data) {
+
+    if (self.cyber && self.cyber.data) {
       self.load(self.cyber.data)
     }
     console.log(this.workspace) /**/
@@ -175,6 +180,8 @@ export default {
     },
     testAction(data) {
       if (
+        data &&
+        data.parameters &&
         typeof data.parameters !== 'undefined' &&
         typeof data.parameters.action !== 'undefined'
       ) {

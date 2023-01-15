@@ -87,6 +87,7 @@ function MetaLoader(editor) {
 	}
 
 	this.loadDatas = async function () {
+		alert(JSON.stringify(self.meta))
 		let root = editor.objectByUuid(self.meta.parameters.uuid)
 
 		if (typeof root === 'undefined') {
@@ -148,10 +149,13 @@ function MetaLoader(editor) {
 		this.scene.clear()
 	}
 	this.load = async function (data) {
+		if (data.data == null) {
+			return
+		}
 		self.data = data
 
 		editor.addObject(await builder.loadRoom())
-		//alert(JSON.stringify(data.resources))
+		alert(JSON.stringify(data))
 		if (typeof self.meta === 'undefined') {
 			self.meta = JSON.parse(data.data)
 		} else {

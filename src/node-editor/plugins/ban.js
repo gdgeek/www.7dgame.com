@@ -6,12 +6,12 @@
 
 function install(editor, options) {
   editor.on('noderemove', component => {
-    alert('当前无法操作')
+    alert('无权限进行操作')
     return false
   })
 
   editor.on('nodecreate', component => {
-    alert('当前无法操作')
+    alert('无权限进行操作')
     return false
   })
 }

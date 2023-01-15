@@ -8,7 +8,7 @@ export class AbilityRouter {
 }
 export class AbilityShare {
   constructor(share) {
-    this.share = share != null
+    this.share = share
   }
 }
 export class AbilityWorks {
