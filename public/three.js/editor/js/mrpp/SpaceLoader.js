@@ -302,7 +302,7 @@ function SpaceLoader(editor) {
 		const metas = this.verse.children.metas
 		metas.forEach(meta => {
 			const node = editor.objectByUuid(meta.parameters.uuid)
-			console.error(Math.PI)
+
 			if (node) {
 				meta.parameters.name = node.name
 				meta.parameters.transform.position = {

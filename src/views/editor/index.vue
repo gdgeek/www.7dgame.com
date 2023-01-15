@@ -62,6 +62,7 @@ export default {
   },
   mounted() {
     const self = this
+    alert(123)
     window.addEventListener('message', async e => {
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
@@ -73,7 +74,7 @@ export default {
               self.isInit = true
               const iframe = document.getElementById('editor')
               const r = await getVerse(this.id)
-
+              alert(JSON.stringify(r.data))
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',

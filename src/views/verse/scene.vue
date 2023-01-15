@@ -18,6 +18,7 @@
 var qs = require('querystringify')
 var path = require('path')
 
+import { AbilityWorks, AbilityShare } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import environment from '@/environment.js'
 import { putVerse } from '@/api/v1/verse'
@@ -53,7 +54,7 @@ export default {
   },
   created() {
     const self = this
-
+    //alert(1)
     this.setBreadcrumbs({
       list: [
         {
@@ -80,12 +81,14 @@ export default {
               self.isInit = true
               const iframe = document.getElementById('editor')
               const r = await getVerse(this.id)
-
+              console.error(r.data)
+              // alert(JSON.stringify(r.data))
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
                 id: this.id,
-                data: r.data
+                data: r.data,
+                canSave: this.canSave(r.data.author_id, r.data.share)
               }
               iframe.contentWindow.postMessage(data, '*')
             }
@@ -96,6 +99,17 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
+    canSave(id, share) {
+      const self = this
+
+      if (self.meta === null) {
+        return false
+      }
+      return (
+        self.$can('update', new AbilityWorks(id)) ||
+        self.$can('share', new AbilityShare(share))
+      )
+    },
     async saveVerse(verse) {
       await putVerse(this.id, { data: verse }).then(response => {
         this.$message({

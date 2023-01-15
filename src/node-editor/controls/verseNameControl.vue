@@ -35,9 +35,6 @@ export default {
     }
   },
   mounted() {
-    console.error(this.root)
-    this.root.$emit('test')
-    this.root.test()
     this.value.name = this.root.verse.name
     this.value.id = this.root.verse.id
     this.refresh()
