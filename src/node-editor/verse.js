@@ -8,6 +8,7 @@ import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import AutoArrangePlugin from 'rete-auto-arrange-plugin'
 import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
+import BanPlugin from '@/node-editor/plugins/ban'
 import KnightPlugin from '@/node-editor/plugins/knight'
 import MetaPlugin from '@/node-editor/plugins/meta'
 import AlwaysConnectionPlugin from '@/node-editor/plugins/alwaysConnection'
@@ -17,11 +18,11 @@ import { Build } from '@/node-editor/factory'
 
 let editor_ = null
 let engine_ = null
-export const arrange = function () {
+const arrange = function () {
   editor_.trigger('arrange', editor_.nodes)
 }
 let outMeta_ = 0
-export const addMeta = function (meta) {
+const addMeta = function (meta) {
   const component = editor_.getComponent('Meta')
   component.createNode({ meta }).then(node => {
     node.position = [-300 + outMeta_ * 50, -150 + outMeta_ * 50]
@@ -29,7 +30,7 @@ export const addMeta = function (meta) {
     outMeta_++
   })
 }
-export const eventSave = async function () {
+const saveEvent = async function () {
   const list = editor_.nodes.filter(node => {
     if (node.name.toLowerCase() === 'meta') {
       return true
@@ -72,7 +73,7 @@ export const eventSave = async function () {
   })
   return ret
 }
-export const save = async function () {
+const save = async function () {
   await engine_.abort()
   let ret = null
   await engine_.process(editor_.toJSON(), null, function (data) {
@@ -81,7 +82,7 @@ export const save = async function () {
   return ret
 }
 
-export const create = async function (verse) {
+const create = async function (verse) {
   const data = {
     type: 'Verse',
     parameters: { verse },
@@ -91,13 +92,14 @@ export const create = async function (verse) {
   }
   return await setup(data)
 }
-export const setup = async function (data) {
+const setup = async function (data) {
   await Build(editor_, data)
+
   editor_.view.resize()
   setTimeout(arrange, 100)
-  return data
+  AreaPlugin.zoomAt(editor_)
 }
-export const loadEvent = async function (id, oldValue, newValue) {
+const loadEvent = async function (id, oldValue, newValue) {
   const node = getNodeByID({ id })
   if (!node) {
     return
@@ -176,7 +178,7 @@ export const loadEvent = async function (id, oldValue, newValue) {
   editor_.selectNode(node)
   editor_.selected.clear()
 }
-export const getNodeByUUID = function ({ uuid }) {
+const getNodeByUUID = function ({ uuid }) {
   const node = editor_.nodes.find(item => {
     if (item.data && item.data.uuid === uuid) {
       return true
@@ -186,7 +188,7 @@ export const getNodeByUUID = function ({ uuid }) {
   return node
 }
 
-export const getNodeByID = function ({ id }) {
+const getNodeByID = function ({ id }) {
   const node = editor_.nodes.find(item => {
     if (item.data.id && item.data.id === id) {
       return true
@@ -195,7 +197,7 @@ export const getNodeByID = function ({ id }) {
   })
   return node
 }
-export const removeLinked = async function () {
+const removeLinked = async function () {
   const list = []
   editor_.nodes.forEach(node => {
     const connections = node.getConnections()
@@ -212,7 +214,7 @@ export const removeLinked = async function () {
     editor_.removeConnection(item)
   })
 }
-export const addLinked = async function ({ node, linked }) {
+const addLinked = async function ({ node, linked }) {
   const n = getNodeByUUID({ uuid: node })
   if (n) {
     linked.forEach(item => {
@@ -227,7 +229,7 @@ export const addLinked = async function ({ node, linked }) {
     })
   }
 }
-export const addEvent = async function (uuid, event) {
+const addEvent = async function (uuid, event) {
   const node = editor_.nodes.find(n => {
     if (n.name.toLowerCase() === 'meta' && n.data.uuid === uuid) {
       return true
@@ -251,7 +253,10 @@ export const addEvent = async function (uuid, event) {
     editor_.selected.clear()
   }
 }
-export const initVerse = async function ({ container, verseId, root }) {
+const ban = function () {
+  editor_.use(BanPlugin)
+}
+const initVerse = async function ({ container, verseId, root }) {
   const types = [Meta, Verse, Knight]
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
   editor_.use(ConnectionPlugin)
@@ -260,8 +265,9 @@ export const initVerse = async function ({ container, verseId, root }) {
   editor_.use(AutoArrangePlugin, { margin: { x: 50, y: 50 }, depth: 110 })
   editor_.use(AreaPlugin)
   editor_.use(LimitPlugin, [{ name: 'Verse', max: 1, min: 1 }])
-  editor_.use(MetaPlugin, { verseId })
-  editor_.use(KnightPlugin, { verseId })
+  //alert(root)
+  editor_.use(MetaPlugin, { verseId, root })
+  editor_.use(KnightPlugin, { verseId, root })
 
   editor_.use(AlwaysConnectionPlugin, [
     {
@@ -290,17 +296,31 @@ export const initVerse = async function ({ container, verseId, root }) {
         await engine_.abort()
         console.error('editor_.toJSON()')
         console.error(editor_.toJSON())
-        await engine_.process(editor_.toJSON(), null, function (data) {
+        await root.save()
+        /*
+        await engine_.process(editor_.toJSON(), null, async function (data) {
           console.error(data)
-          root.$store.dispatch('verse/saveVerse', data).then(response => {
-            console.log(response)
-          })
-        })
+          response = await root._saveVerse(data)
+          console.log(response)
+        })*/
       }
     }
   })
 
-  editor_.view.resize()
-  AreaPlugin.zoomAt(editor_)
+  // editor_.view.resize()
+  // AreaPlugin.zoomAt(editor_)
   editor_.trigger('process', { status: 'init' })
+}
+export default {
+  ban,
+  initVerse,
+  setup,
+  create,
+  arrange,
+  save,
+  saveEvent,
+  addEvent,
+  addLinked,
+  removeLinked,
+  loadEvent
 }

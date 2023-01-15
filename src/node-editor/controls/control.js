@@ -100,6 +100,8 @@ export class Control extends Rete.Control {
     this.vueContext.refresh()
   }
   $emit(action, value) {
-    this.vueContext.$emit(action, value)
+    if (this.vueContext) {
+      this.vueContext.$emit(action, value)
+    }
   }
 }

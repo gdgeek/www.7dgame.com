@@ -15,8 +15,10 @@ function install(editor, options) {
 
     if (id !== -1) {
       try {
-        await deleteMeta(id)
-        console.log('delete ok' + id)
+        if (options.root.canSave) {
+          await deleteMeta(id)
+          console.log('delete ok' + id)
+        }
       } catch (e) {
         console.error(e)
       }
@@ -37,7 +39,7 @@ function install(editor, options) {
 
     let id = component.data['id']
 
-    if (typeof id === 'undefined') {
+    if (typeof id === 'undefined' && options.root.canSave) {
       const uuid = uuidv4()
       const response = await postMeta({
         verse_id: options.verseId,
@@ -46,13 +48,15 @@ function install(editor, options) {
       const data = response.data
       id = data.id
       component.controls.get('id').setValue(id)
-      // alert(uuid)
+
       component.controls.get('uuid').setValue(uuid)
     }
-    setTimeout(() => {
-      component.controls.get('title').$emit('setId', id)
-      component.controls.get('event').$emit('setId', id)
-    })
+    if (typeof id !== 'undefined') {
+      setTimeout(() => {
+        component.controls.get('title').$emit('setId', id)
+        component.controls.get('event').$emit('setId', id)
+      })
+    }
 
     return true
   })

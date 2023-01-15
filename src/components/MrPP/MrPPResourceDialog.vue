@@ -126,6 +126,10 @@ export default {
       this.dialogVisible = true
       this.refresh()
     },
+    close() {
+      this.dialogVisible = false
+      //   this.refresh()
+    },
     sort: function (value) {
       this.sorted = value
       this.refresh()

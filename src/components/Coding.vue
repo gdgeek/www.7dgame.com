@@ -24,11 +24,7 @@ import Blockly from 'blockly'
 import toolbox from '@/assets/js/blockly/toolbox'
 import { AddBlocks } from '@/assets/js/blockly/blocks'
 import { putCyber } from '@/api/v1/cyber'
-import {
-  putCyberScript,
-  findCyberScript,
-  postCyberScript
-} from '@/api/v1/cyberScript'
+
 import 'blockly/lua'
 
 // import hljs from 'highlight.js/lib/common'
@@ -99,7 +95,6 @@ export default {
   methods: {
     getResource(meta) {
       const data = JSON.parse(meta.data)
-      const event = JSON.parse(meta.event.data)
 
       const ret = {
         action: [],
@@ -109,9 +104,15 @@ export default {
         text: [],
         sound: [],
         entity: [],
-        input: event.input,
-        output: event.output
+        input: [],
+        output: []
       }
+      if (meta.event !== null) {
+        const event = JSON.parse(meta.event.data)
+        ret.input = event.input
+        ret.output = event.output
+      }
+
       this.addMetaData(data, ret)
       return ret
     },
@@ -214,26 +215,15 @@ export default {
       if (self.cyber.data === JSON.stringify(data)) {
         return
       }
-      try {
-        const response = await putCyber(this.cyber.id, {
-          data: JSON.stringify(data)
-        })
-        if (response.data !== null) {
-          //self.cyber = response.data
-          const find = await findCyberScript(response.data.id, 'lua')
-          const script =
-            'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
 
-          if (find.data !== null) {
-            await putCyberScript(find.data.id, { script })
-          } else {
-            await postCyberScript({
-              cyber_id: response.data.id,
-              language: 'lua',
-              script
-            })
-          }
-        }
+      try {
+        const script =
+          'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
+
+        const response = await putCyber(this.cyber.id, {
+          data: JSON.stringify(data),
+          script
+        })
 
         this.$message({
           message: '代码保存成功',

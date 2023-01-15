@@ -3,8 +3,8 @@ import request from '@/utils/request'
 var qs = require('querystringify')
 var path = require('path')
 export function postVerseEvent(data) {
+  console.error(1)
   const url = path.join('v1', 'verse-events')
-  alert(url)
   return request({
     url,
     method: 'post',

@@ -207,7 +207,7 @@ class SceneCreater {
 	}
 	getNode(data, resource) {
 		const self = this
-		alert(12)
+
 		//	alert(data.type)
 		switch (data.type) {
 			case 'Polygen':
@@ -371,7 +371,6 @@ class SceneCreater {
 	}*/
 	// 修改区结束
 	thePolygen(data, resources) {
-		alert(123)
 		const self = this
 		return new Promise((resolve, reject) => {
 			const id = data.parameters['polygen']

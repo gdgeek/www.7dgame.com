@@ -42,7 +42,7 @@ function SpaceLoader(editor) {
 		return node
 	}
 
-	this.createKinght = async function (meta, context) {
+	this.createKnight = async function (meta, context) {
 		const matrix = builder.getMatrix4(meta.parameters.transform)
 		const data = {
 			metadata: {
@@ -100,7 +100,7 @@ function SpaceLoader(editor) {
 		let node = editor.objectByUuid(meta.parameters.uuid)
 
 		if (typeof node === 'undefined') {
-			node = await this.createKinght(meta, context)
+			node = await this.createKnight(meta, context)
 		}
 		const matrix = builder.getMatrix4(meta.parameters.transform)
 		node.matrix = matrix

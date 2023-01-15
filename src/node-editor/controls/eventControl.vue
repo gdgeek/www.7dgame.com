@@ -51,7 +51,7 @@ export default {
   methods: {
     open() {
       const self = this
-      this.root.$emit('onEvent', { id: self.metaId })
+      this.root._doEvent(self.metaId)
     },
 
     click() {

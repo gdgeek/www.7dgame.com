@@ -1,10 +1,10 @@
 import request from '@/utils/request'
-import path from 'path'
-import url from 'url'
+var qs = require('querystringify')
+var path = require('path')
 
 export function postKnight(data) {
   return request({
-    url: '/v1/knights',
+    url: path.join('v1', 'knights'),
     method: 'post',
     data
   })
@@ -15,39 +15,33 @@ export async function getKnights(
   page = 0,
   expand = 'image, author'
 ) {
-  return new Promise(async function (resolve, reject) {
-    try {
-      let query = {
-        expand,
-        sort
-      }
-      if (search !== null) {
-        query['KnightSearch[title]'] = search
-      }
-      if (page > 1) {
-        query['page'] = page
-      }
+  let query = {
+    expand,
+    sort
+  }
+  if (search !== null) {
+    query['KnightSearch[title]'] = search
+  }
+  if (page > 1) {
+    query['page'] = page
+  }
 
-      const response = await request({
-        url: url.format({
-          pathname: '/v1/knights',
-          query
-        }),
-        method: 'get'
-      })
+  const url = path.join('v1', 'knights' + qs.stringify(query, true))
 
-      resolve(response)
-    } catch (err) {
-      reject(err)
-    }
+  return await request({
+    url,
+    method: 'get'
   })
 }
 export function getKnight(id, query = {}) {
+  const url = path.join(
+    'v1',
+    'knights',
+    id.toString() + qs.stringify(query, true)
+  )
+
   return request({
-    url: url.format({
-      pathname: path.join('/v1/knights', id.toString()),
-      query
-    }),
+    url,
     method: 'get'
   })
 }

@@ -26,7 +26,7 @@ export default {
     },
     metaName: {
       get() {
-        return this.root.$store.state.meta.data.name
+        return this.root.metaData.name
       },
       set(value) {
         this.root.$store.commit('setMetaName', value)
@@ -35,14 +35,14 @@ export default {
     }
   },
   mounted() {
-    this.value.name = this.root.$store.state.meta.data.name
-    this.value.id = this.root.$store.state.meta.data.id
+    this.value.name = this.root.metaData.name
+    this.value.id = this.root.metaData.id
     this.refresh()
   },
 
   methods: {
     changeMetaName() {
-      const id = this.root.$store.state.meta.data.id
+      const id = this.root.metaData.id
       const self = this
       this.$prompt('请输入新的名称', '修改【元】名称', {
         confirmButtonText: '确定',
@@ -54,7 +54,6 @@ export default {
           putMeta(id, { name: value }).then(() => {
             this.root.$store.commit('meta/setMetaName', value)
             self.value.name = value
-            //  this.root.$store.state.meta.data.name = value
             this.$message({
               type: 'success',
               message: '新的名称是: ' + value

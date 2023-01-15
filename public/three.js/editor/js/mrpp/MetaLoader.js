@@ -50,7 +50,7 @@ function MetaLoader(editor) {
 		for (let i = 0; i < self.meta.children.entities.length; ++i) {
 			self.saveEntity(self.meta.children.entities[i])
 		}
-		alert(JSON.stringify(self.meta))
+		//alert(JSON.stringify(self.meta))
 
 		window.URL = window.URL || window.webkitURL
 		window.BlobBuilder =
