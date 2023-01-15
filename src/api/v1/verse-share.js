@@ -14,7 +14,7 @@ export function getVerseShares(
   sort = '-created_at',
   search = '',
   page = 0,
-  expand = 'image,author'
+  expand = 'image,author,share'
 ) {
   let query = []
   query['expand'] = expand

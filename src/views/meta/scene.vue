@@ -18,6 +18,7 @@
 var qs = require('querystringify')
 var path = require('path')
 
+import { AbilityWorks, AbilityShare } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import environment from '@/environment.js'
 import { putMeta } from '@/api/v1/meta'
@@ -31,7 +32,8 @@ export default {
     return {
       isInit: false,
       //  data: null,
-      src
+      src,
+      _canSave: null
     }
   },
   computed: {
@@ -77,10 +79,12 @@ export default {
               self.isInit = true
               const iframe = document.getElementById('editor')
               const r = await getMeta(this.id)
+              self._canSave = this.canSave(r.data.author_id, r.data.share)
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
-                data: r.data
+                data: r.data,
+                canSave: self._canSave
               }
               iframe.contentWindow.postMessage(data, '*')
             }
@@ -91,7 +95,25 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
+    canSave(id, share) {
+      const self = this
+
+      if (self.meta === null) {
+        return false
+      }
+      return (
+        self.$can('update', new AbilityWorks(id)) ||
+        self.$can('share', new AbilityShare(share))
+      )
+    },
     async saveMeta(meta) {
+      if (!this._canSave) {
+        this.$message({
+          type: 'info',
+          message: '没有保存权限!'
+        })
+        return
+      }
       await putMeta(this.id, { data: meta })
       this.$message({
         type: 'success',

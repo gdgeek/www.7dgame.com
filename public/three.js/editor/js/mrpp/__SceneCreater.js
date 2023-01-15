@@ -434,9 +434,7 @@ class SceneCreater {
 			self.editor.scripts = self.getScripts()
 			loader.parseAsync(self.getScene()).then(scene => {
 				self.editor.setScene(scene)
-				self.addNode(data, null, resources).then(item => {
-					//	alert(1)
-				})
+				self.addNode(data, null, resources).then(item => {})
 			})
 		})
 	}

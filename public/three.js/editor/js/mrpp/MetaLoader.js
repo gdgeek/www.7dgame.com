@@ -47,8 +47,10 @@ function MetaLoader(editor) {
 	}
 
 	this.save = async function () {
-		for (let i = 0; i < self.meta.children.entities.length; ++i) {
-			self.saveEntity(self.meta.children.entities[i])
+		if (typeof self.meta !== 'undefined') {
+			for (let i = 0; i < self.meta.children.entities.length; ++i) {
+				self.saveEntity(self.meta.children.entities[i])
+			}
 		}
 		//alert(JSON.stringify(self.meta))
 
@@ -87,6 +89,7 @@ function MetaLoader(editor) {
 	}
 
 	this.loadDatas = async function () {
+		alert(self.meta)
 		alert(JSON.stringify(self.meta))
 		let root = editor.objectByUuid(self.meta.parameters.uuid)
 
@@ -102,13 +105,14 @@ function MetaLoader(editor) {
 		self.data.resources.forEach(r => {
 			resources.set(r.id, r)
 		})
-
-		for (let i = 0; i < self.meta.children.entities.length; ++i) {
-			const node = await self.addEntity(
-				self.meta.children.entities[i],
-				resources
-			)
-			root.add(node)
+		if (self.meta.children) {
+			for (let i = 0; i < self.meta.children.entities.length; ++i) {
+				const node = await self.addEntity(
+					self.meta.children.entities[i],
+					resources
+				)
+				root.add(node)
+			}
 		}
 		editor.addObject(root)
 		//alert(resources.size)
@@ -149,22 +153,20 @@ function MetaLoader(editor) {
 		this.scene.clear()
 	}
 	this.load = async function (data) {
-		if (data.data == null) {
-			return
-		}
-		self.data = data
-
 		editor.addObject(await builder.loadRoom())
-		alert(JSON.stringify(data))
-		if (typeof self.meta === 'undefined') {
-			self.meta = JSON.parse(data.data)
-		} else {
-			const meta = JSON.parse(data.data)
-			await this.removeNode(self.meta, meta)
-			self.meta = meta
-		}
-		self.loadDatas()
+		if (data.data !== null) {
+			self.data = data
 
+			alert(JSON.stringify(data))
+			if (typeof self.meta === 'undefined') {
+				self.meta = JSON.parse(data.data)
+			} else {
+				const meta = JSON.parse(data.data)
+				await this.removeNode(self.meta, meta)
+				self.meta = meta
+			}
+			self.loadDatas()
+		}
 		editor.signals.sceneGraphChanged.dispatch()
 		//alert(JSON.stringify(self.meta))
 	}

@@ -35,7 +35,8 @@ export default {
       isInit: false,
       editor: null,
       data: null,
-      src
+      src,
+      _canSave: null
     }
   },
   computed: {
@@ -75,6 +76,7 @@ export default {
         switch (e.data.action) {
           case 'save-verse':
             self.saveVerse(e.data.verse)
+
             break
           case 'ready':
             if (self.isInit == false) {
@@ -82,7 +84,8 @@ export default {
               const iframe = document.getElementById('editor')
               const r = await getVerse(this.id)
               console.error(r.data)
-              // alert(JSON.stringify(r.data))
+
+              this._canSave = this.canSave(r.data.author_id, r.data.share)
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
@@ -111,6 +114,13 @@ export default {
       )
     },
     async saveVerse(verse) {
+      if (!this._canSave) {
+        this.$message({
+          type: 'info',
+          message: '没有保存权限!'
+        })
+        return
+      }
       await putVerse(this.id, { data: verse }).then(response => {
         this.$message({
           type: 'success',

@@ -20,7 +20,8 @@ export default {
         const response = await getVerseShares(
           data.sorted,
           data.searched,
-          data.current
+          data.current,
+          'image,author,share'
         )
         const pagination = {
           current: parseInt(response.headers['x-pagination-current-page']),

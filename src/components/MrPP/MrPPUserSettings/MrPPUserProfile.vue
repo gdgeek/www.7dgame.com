@@ -38,7 +38,7 @@
         <aside style="margin-top: 10px; margin-bottom: 15px; float: right">
           <el-button type="primary" plain size="mini" @click="gotoPeople()">
             <i class="el-icon-edit" />
-            进入
+            进入b
           </el-button>
         </aside>
       </div>

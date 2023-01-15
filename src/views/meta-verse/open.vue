@@ -19,7 +19,8 @@ export default {
         const response = await getVersesOpens(
           data.sorted,
           data.searched,
-          data.current
+          data.current,
+          'image,author,share'
         )
 
         const pagination = {

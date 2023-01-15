@@ -244,6 +244,9 @@
 				if (e.data.verify === 'mrpp.com') {
 					switch (e.data.action) {
 						case 'load':
+							loader.load(e.data.data)
+
+							break
 						case 'reload':
 							loader.load(e.data.data)
 

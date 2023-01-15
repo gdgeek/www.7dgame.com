@@ -37,7 +37,8 @@ import { mapState } from 'vuex'
 import { putVerse, deleteVerse } from '@/api/v1/verse'
 import MrPPVerseQrcode from '@/components/MrPP/MrPPQRCodeVerse.vue'
 
-import { AbilityWorks } from '@/ability/ability'
+import { AbilityWorks, AbilityShare } from '@/ability/ability'
+
 import MrPPVerseWindowCreate from '@/components/MrPP/MrPPVerseWindow/Create.vue'
 export default {
   name: 'VerseToolbar',
@@ -64,7 +65,7 @@ export default {
     },
     canSave() {
       const self = this
-
+      console.error(self.verse)
       if (self.verse === null) {
         return false
       }
