@@ -7,7 +7,7 @@
             <router-link :to="'/verse/editor?id=' + id">
               <el-link :underline="false">【宇宙】</el-link>
             </router-link>
-            /{{ word.logic }}
+            /逻辑
             <el-button-group style="float: right">
               <el-button type="primary" size="mini" @click="save()">
                 <font-awesome-icon icon="save" />
@@ -37,9 +37,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      word: state => state.settings.word
-    }),
     id() {
       return parseInt(this.$route.query.id)
     }

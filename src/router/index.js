@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import defaultSettings from '@/settings.js'
 
-const { word } = defaultSettings
 Vue.use(VueRouter)
 
 /* Layout */

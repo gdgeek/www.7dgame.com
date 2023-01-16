@@ -1,7 +1,6 @@
 import defaultSettings from '@/settings.js'
 
 import environment from '@/environment.js'
-const { word } = defaultSettings
 
 const state = {
   data: [
@@ -78,7 +77,7 @@ const state = {
             },
             {
               label: '模型上传(高级)',
-              hidden: !environment.local,
+              hidden: true,
               url: '/polygen/upload-advanced',
               icon: 'upload'
             }
@@ -173,7 +172,7 @@ const state = {
     },
 
     {
-      hidden: !environment.local,
+      hidden: environment.mode !== 'internal',
       label: '管理',
       url: '/manager/user',
       icon: 'address-card'

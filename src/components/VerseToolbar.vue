@@ -56,9 +56,6 @@ export default {
     return {}
   },
   computed: {
-    ...mapState({
-      word: state => state.settings.word
-    }),
     canDelete() {
       const self = this
       return self.$can('delete', new AbilityWorks(self.verse.author_id))

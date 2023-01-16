@@ -21,9 +21,6 @@ export default {
     }
   },
   computed: {
-    word() {
-      return this.root.$store.state.settings.word
-    },
     metaName: {
       get() {
         return this.root.metaData.name

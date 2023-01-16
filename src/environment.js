@@ -1,5 +1,6 @@
 module.exports = {
   local: process.env.VUE_APP_LOCAL ? true : false,
+  mode: process.env.VUE_APP_BASE_MODE,
   ip: document.domain,
   api: process.env.VUE_APP_BASE_API.replace('[ip]', document.domain),
   url: process.env.VUE_APP_BASE_URL.replace('[ip]', document.domain),

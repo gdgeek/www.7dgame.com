@@ -42,7 +42,7 @@ export function UpdateAbility($ability, roles, userId) {
     '/test',
     /^\/test[\/]/
   ])
-
+  //alert(environment.mode)
   if (!environment.local) {
     router.push(/^\/web[\/]/)
   } else {

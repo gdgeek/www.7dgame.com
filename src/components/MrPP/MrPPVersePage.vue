@@ -87,9 +87,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      word: state => state.settings.word
-    }),
     dialogTitle() {
       return ''
     }

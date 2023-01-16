@@ -124,7 +124,6 @@ export default {
 
   computed: {
     ...mapState({
-      word: state => state.settings.word,
       tagsMap: state => state.tags.tagsMap
     }),
     canShare() {
