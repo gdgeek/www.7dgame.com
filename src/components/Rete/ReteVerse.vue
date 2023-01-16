@@ -176,13 +176,13 @@ export default {
           this.event.target = this.event.map.get(id)
         } else {
           this.event.target = await this.getMetaEvent(id)
-          this.map.set(id, this.event.target)
+
+          this.event.map.set(id, this.event.target)
         }
         this.$refs.dialog.open()
       }
     },
 
-    test() {},
     ///////////event
     async getVerseEvent(id) {
       try {
