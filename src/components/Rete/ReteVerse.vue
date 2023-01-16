@@ -149,7 +149,7 @@ export default {
 
     getKnights(data, callback) {
       getKnights(data.sorted, data.searched, data.current).then(response => {
-        console.error(response)
+        // console.error(response)
         callback(response)
       })
     },

@@ -131,7 +131,7 @@ export default {
         const data = res.data
         self.dialogVisible = true
         self.order = data
-        console.error(data)
+        // console.error(data)
       })
     },
     handleClose() {

@@ -24,7 +24,7 @@ export default {
             size: parseInt(response.headers['x-pagination-per-page']),
             total: parseInt(response.headers['x-pagination-total-count'])
           }
-          console.error(response.data)
+          // console.error(response.data)
           result({ data: response.data, pagination: pagination })
         })
         .catch(function (error) {

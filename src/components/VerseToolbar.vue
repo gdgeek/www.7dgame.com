@@ -62,7 +62,7 @@ export default {
     },
     canSave() {
       const self = this
-      console.error(self.verse)
+      //console.error(self.verse)
       if (self.verse === null) {
         return false
       }

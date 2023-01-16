@@ -83,7 +83,7 @@ export default {
               self.isInit = true
               const iframe = document.getElementById('editor')
               const r = await getVerse(this.id)
-              console.error(r.data)
+              // console.error(r.data)
 
               this._canSave = this.canSave(r.data.author_id, r.data.share)
               const data = {
