@@ -1,14 +1,15 @@
 function canRegister() {
-  alert(process.env.VUE_APP_BASE_MODE)
-  alert('mrpp.com' !== process.env.VUE_APP_BASE_MODE)
-  return 'mrpp.com' !== process.env.VUE_APP_BASE_MODE
+  return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
 }
 
 function canWeb() {
-  return 'mrpp.com' !== process.env.VUE_APP_BASE_MODE
+  return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
 }
 function canSetup() {
-  return 'local' === process.env.VUE_APP_BASE_MODE
+  return (
+    'local' === process.env.VUE_APP_BASE_MODE ||
+    '4mr.cn' === process.env.VUE_APP_BASE_MODE
+  )
 }
 function subtitle() {
   switch (process.env.VUE_APP_BASE_MODE) {
