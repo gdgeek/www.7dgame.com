@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 
 import { ready } from '@/api/v1/local'
-import environment from '@/environment.js'
+import env from '@/environment.js'
 import { AbilityRouter } from '@/ability/ability'
 import ability from './ability'
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -29,11 +29,8 @@ router.beforeEach(async (to, from, next) => {
   } else {
     document.title = `${store.state.information.data.title}`
   }
-  /*
-  if (to.path != environment.local) {
-    
-  }*/
-  if (environment.local && !to.path.includes('setup')) {
+
+  if (env.local && !to.path.includes('setup')) {
     const result = await ready()
     if (!result.data.result) {
       next(`/setup/index`)
@@ -45,12 +42,10 @@ router.beforeEach(async (to, from, next) => {
     next()
     NProgress.done()
   } else {
-    if (environment.local) {
-      next(`/site`)
-    } else if (document.domain.toLowerCase().indexOf('u7gm.com') >= 0) {
-      next(`/web/sandtable`)
-    } else {
+    if (env.canWeb()) {
       next(`/web`)
+    } else {
+      next(`/site`)
     }
     NProgress.done()
   }
