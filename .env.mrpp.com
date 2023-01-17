@@ -1,5 +1,5 @@
 # just a flag
-ENV = 'staging'
+ENV = 'mrpp.com'
 
 
 # base api

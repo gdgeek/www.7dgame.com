@@ -1,4 +1,3 @@
-alert(JSON.stringify(process.env))
 function canRegister() {
   return 'mrpp.com' !== process.env.VUE_APP_BASE_MODE
 }
@@ -28,5 +27,8 @@ module.exports = {
   url: process.env.VUE_APP_BASE_URL.replace('[ip]', document.domain),
   doc: process.env.VUE_APP_DOC_API,
   version: 2,
-  canRegister
+  canRegister,
+  canWeb,
+  canSetup,
+  subtitle
 }
