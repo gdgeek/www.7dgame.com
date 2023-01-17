@@ -1,15 +1,15 @@
 function canRegister() {
   return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
 }
+
+function canWeb() {
+  return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
+}
 function canSetup() {
   return (
     'local' === process.env.VUE_APP_BASE_MODE ||
     '4mr.cn' === process.env.VUE_APP_BASE_MODE
   )
-}
-
-function canWeb() {
-  return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
 }
 
 function subtitle() {
