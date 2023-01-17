@@ -1,4 +1,6 @@
 function canRegister() {
+  alert(process.env.VUE_APP_BASE_MODE)
+  alert('mrpp.com' !== process.env.VUE_APP_BASE_MODE)
   return 'mrpp.com' !== process.env.VUE_APP_BASE_MODE
 }
 
