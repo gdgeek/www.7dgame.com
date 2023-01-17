@@ -4,6 +4,7 @@ function canRegister() {
 function canWeb() {
   return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
 }
+
 function canSetup() {
   return (
     'local' === process.env.VUE_APP_BASE_MODE ||
