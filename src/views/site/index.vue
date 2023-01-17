@@ -8,7 +8,11 @@
         <el-tab-pane name="login" label="账户密码登录">
           <mr-p-p-login>账户密码登录</mr-p-p-login>
         </el-tab-pane>
-        <el-tab-pane v-if="!local" name="qrcode" label="微信扫码（登陆/注册）">
+        <el-tab-pane
+          v-if="env.canRegister()"
+          name="qrcode"
+          label="微信扫码（登陆/注册）"
+        >
           <mr-p-p-qrcode :active="qrcode">微信扫码进入</mr-p-p-qrcode>
         </el-tab-pane>
       </el-tabs>
@@ -36,6 +40,9 @@ export default {
     }
   },
   computed: {
+    env() {
+      return environment
+    },
     qrcode() {
       return this.activeName === 'qrcode'
     }

@@ -1,6 +1,6 @@
 import { AbilityBuilder, Ability } from '@casl/ability'
 
-import environment from '@/environment.js'
+import env from '@/environment.js'
 export class AbilityRouter {
   constructor(path) {
     this.path = path
@@ -42,10 +42,11 @@ export function UpdateAbility($ability, roles, userId) {
     '/test',
     /^\/test[\/]/
   ])
-  //alert(environment.mode)
-  if (!environment.local) {
+  if (env.canWeb()) {
     router.push(/^\/web[\/]/)
-  } else {
+  }
+
+  if (env.canSetup()) {
     router.push(/^\/setup[\/]/)
   }
 
