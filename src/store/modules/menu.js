@@ -1,6 +1,6 @@
 import defaultSettings from '@/settings.js'
 
-import environment from '@/environment.js'
+import env from '@/environment.js'
 
 const state = {
   data: [
@@ -141,7 +141,7 @@ const state = {
       label: '探索',
       url: '/discovery/',
       icon: 'compass',
-      hidden: environment.local,
+      hidden: !env.canDocument(),
       items: [
         {
           label: '文档',
@@ -165,14 +165,13 @@ const state = {
       ]
     },*/
     {
-      hidden: environment.local,
       label: '交流',
       url: '/community/index',
       icon: 'address-card'
     },
 
     {
-      hidden: environment.mode !== 'internal',
+      hidden: !env.canManager(),
       label: '管理',
       url: '/manager/user',
       icon: 'address-card'

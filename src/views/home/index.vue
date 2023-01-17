@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs v-if="!environment.local" type="border-card" lazy>
+    <el-tabs v-if="env.canDocument()" type="border-card" lazy>
       <el-tab-pane label="首页">
         <document :post-id="999" :category="true" />
         <br />
@@ -36,7 +36,7 @@ export default {
     LocalPage
   },
   computed: {
-    environment() {
+    env() {
       return environment
     },
     ...mapState({

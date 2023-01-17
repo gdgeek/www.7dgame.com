@@ -2,16 +2,24 @@ function canRegister() {
   return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
 }
 
+function useCloud() {
+  return 'local' !== process.env.VUE_APP_BASE_MODE
+}
+function canDocument() {
+  return 'local' !== process.env.VUE_APP_BASE_MODE
+}
 function canWeb() {
   return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
 }
 function canSetup() {
+  return 'local' === process.env.VUE_APP_BASE_MODE
+}
+function canManager() {
   return (
     'local' === process.env.VUE_APP_BASE_MODE ||
     '4mr.cn' === process.env.VUE_APP_BASE_MODE
   )
 }
-
 function subtitle() {
   switch (process.env.VUE_APP_BASE_MODE) {
     case '4mr.cn':
@@ -34,5 +42,8 @@ module.exports = {
   canRegister,
   canWeb,
   canSetup,
-  subtitle
+  subtitle,
+  canManager,
+  useCloud,
+  canDocument
 }

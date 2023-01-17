@@ -50,9 +50,7 @@ export default {
     },
     open(id) {
       const self = this
-      const data = environment.local
-        ? { projectId: id, api: environment.api, veri: 'MrPP.com' }
-        : { projectId: id, veri: 'MrPP.com' }
+      const data = { projectId: id, veri: 'MrPP.com' }
       self.value = JSON.stringify(data)
       self.dialogVisible = true
     }

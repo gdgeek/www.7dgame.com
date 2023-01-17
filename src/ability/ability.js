@@ -50,6 +50,10 @@ export function UpdateAbility($ability, roles, userId) {
     router.push(/^\/setup[\/]/)
   }
 
+  if (env.canManager()) {
+    router.push(/^\/setup[\/]/)
+  }
+
   if (
     roles.find(role => role === 'root' || role === 'manager' || role === 'user')
   ) {

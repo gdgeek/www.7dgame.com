@@ -35,7 +35,6 @@ export default {
   },
   data() {
     return {
-      local: environment.local,
       activeName: 'login'
     }
   },

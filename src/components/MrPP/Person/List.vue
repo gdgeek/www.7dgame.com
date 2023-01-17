@@ -8,30 +8,7 @@
         style="width: 160px"
       >
         <el-card style="width: 150px" :body-style="{ padding: '0px' }">
-          <img :src="getUrl(item)" class="image" />
-          <div style="padding: 14px">
-            <span>{{ item.username }}</span>
-            <div class="bottom clearfix">
-              <el-descriptions
-                class="margin-top"
-                :title="item.nickname"
-                :column="1"
-                size="mini"
-              >
-                <el-descriptions-item label="权限">
-                  {{ getAblity(item.roles) }}
-                </el-descriptions-item>
-              </el-descriptions>
-              <el-button
-                v-if="!item.roles.includes('root')"
-                type="text"
-                class="button"
-                @click="deleted(item)"
-              >
-                删除
-              </el-button>
-            </div>
-          </div>
+          {{ item }}
         </el-card>
         <br />
 

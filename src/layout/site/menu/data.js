@@ -1,7 +1,7 @@
 export const data = []
 
-import environment from '@/environment.js'
-if (!environment.local) {
+import env from '@/environment.js'
+if (env.canWeb()) {
   data.concat([
     {
       path: '/web/index',

@@ -89,8 +89,6 @@ function MetaLoader(editor) {
 	}
 
 	this.loadDatas = async function () {
-		alert(self.meta)
-		alert(JSON.stringify(self.meta))
 		let root = editor.objectByUuid(self.meta.parameters.uuid)
 
 		if (typeof root === 'undefined') {

@@ -18,7 +18,6 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
-      local: environment.local,
       activeNames: []
     }
   },

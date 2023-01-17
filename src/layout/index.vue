@@ -17,13 +17,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { Navbar, Sidebar, AppMain } from './components'
-
 import TheFooter from '@/layout/components/Footer.vue'
 import ResizeMixin from './mixin/ResizeHandler'
 
-import environment from '@/environment.js'
 export default {
   name: 'Layout',
   components: {
@@ -34,15 +31,7 @@ export default {
   },
   mixins: [ResizeMixin],
 
-  data() {
-    return {
-      local: environment.local
-    }
-  },
   computed: {
-    ...mapState({
-      information: state => state.information
-    }),
     sidebar() {
       return this.$store.state.app.sidebar
     },

@@ -40,12 +40,12 @@ export default {
         this.$message.error('权限不足！' + to.path)
       }
     })
-    if (environment.local) {
+    /*if (environment.local) {
       information().then(response => {
         //alert(JSON.stringify(response.data))
         self.setData(response.data)
       })
-    }
+    }*/
   },
   methods: {
     ...mapMutations('information', ['setData']),

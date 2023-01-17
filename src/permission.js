@@ -30,7 +30,7 @@ router.beforeEach(async (to, from, next) => {
     document.title = `${store.state.information.data.title}`
   }
 
-  if (env.local && !to.path.includes('setup')) {
+  if (env.canSetup() && !to.path.includes('setup')) {
     const result = await ready()
     if (!result.data.result) {
       next(`/setup/index`)

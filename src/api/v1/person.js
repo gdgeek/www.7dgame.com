@@ -1,7 +1,10 @@
 import request from '@/utils/request'
+
+var qs = require('querystringify')
+var path = require('path')
 export function postPerson(data) {
   return request({
-    url: 'v1/person',
+    url: 'v1/people',
     method: 'post',
     data: data
   })
@@ -9,30 +12,37 @@ export function postPerson(data) {
 
 export function deletePerson(id) {
   return request({
-    url: 'v1/person/' + id,
+    url: 'v1/people/' + id,
     method: 'delete'
   })
 }
 
 export function putPerson(id, data) {
   return request({
-    url: 'v1/person/' + id,
+    url: 'v1/people/' + id,
     method: 'put',
     data
   })
 }
 
-export function getPerson(sort = '-created_at', search = null, page = 0) {
-  let url = 'v1/person?expand=data,roles&sort=' + sort
+export function getPerson(
+  sort = '-created_at',
+  search = null,
+  page = 0,
+  expand = 'data,roles'
+) {
+  let query = []
+  query['expand'] = expand
+  query['sort'] = sort
 
-  if (search) {
-    url += '&PersonSearch[username]=' + search
+  if (search !== '') {
+    query['PersonSearch[username]'] = search
   }
   if (page > 1) {
-    url += '&page=' + page
+    query['page'] = page
   }
   return request({
-    url,
+    url: path.join('v1', 'people' + qs.stringify(query, true)),
     method: 'get'
   })
 }
