@@ -41,7 +41,7 @@ export function getPerson(
   if (page > 1) {
     query['page'] = page
   }
-  alert(path.join('v1', 'people' + qs.stringify(query, true)))
+  //alert(path.join('v1', 'people' + qs.stringify(query, true)))
   return request({
     url: path.join('v1', 'people' + qs.stringify(query, true)),
     method: 'get'
