@@ -67,7 +67,7 @@ export default {
       } else if (roles.includes('user')) {
         return '用户'
       }
-      return 'none'
+      return JSON.stringify(roles)
     },
     refresh() {
       const self = this

@@ -11,7 +11,7 @@ const state = {
     title: '元宇宙实景编程平台',
     description: 'Metaverse Relity Programming Platform',
     companies: cs,
-    version: '20230112.1',
+    version: '20230118.1',
     beian: '沪ICP备15039333号',
     logo: '/media/image/mrpp_.png'
   }
