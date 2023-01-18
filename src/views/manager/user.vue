@@ -16,7 +16,7 @@ export default {
 
   methods: {
     loaded(data, result) {
-      getPerson(data.sorted, data.searched, data.current)
+      getPerson(data.sorted, data.searched, data.current, 'roles, avatar')
         .then(response => {
           const pagination = {
             current: parseInt(response.headers['x-pagination-current-page']),

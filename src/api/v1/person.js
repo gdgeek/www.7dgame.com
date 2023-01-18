@@ -28,19 +28,20 @@ export function putPerson(id, data) {
 export function getPerson(
   sort = '-created_at',
   search = null,
-  page = 0,
-  expand = 'data,roles'
+  page = 1,
+  expand = ''
 ) {
   let query = []
   query['expand'] = expand
   query['sort'] = sort
 
   if (search !== '') {
-    query['PersonSearch[username]'] = search
+    query['UserSearch[username]'] = search
   }
   if (page > 1) {
     query['page'] = page
   }
+  alert(path.join('v1', 'people' + qs.stringify(query, true)))
   return request({
     url: path.join('v1', 'people' + qs.stringify(query, true)),
     method: 'get'

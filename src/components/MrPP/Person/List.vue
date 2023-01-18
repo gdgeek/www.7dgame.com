@@ -8,7 +8,25 @@
         style="width: 160px"
       >
         <el-card style="width: 150px" :body-style="{ padding: '0px' }">
-          {{ item }}
+          <img :src="getUrl(item)" class="image" />
+          <div style="padding: 14px">
+            <span>{{ item.username }}</span>
+            <div class="bottom clearfix">
+              <el-descriptions
+                class="margin-top"
+                :title="item.nickname"
+                :column="1"
+                size="mini"
+              >
+                <el-descriptions-item label="权限">
+                  {{ getAblity(item.roles) }}
+                </el-descriptions-item>
+              </el-descriptions>
+              <el-button type="text" class="button" @click="deleted(item)">
+                删除
+              </el-button>
+            </div>
+          </div>
         </el-card>
         <br />
 
@@ -34,13 +52,8 @@ export default {
   },
   methods: {
     getUrl(item) {
-      if (
-        !!item &&
-        !!item.data &&
-        !!item.data.avatar &&
-        !!item.data.avatar.url
-      ) {
-        return item.data.avatar.url
+      if (!!item && !!item.avatar && !!item.avatar.url) {
+        return item.avatar.url
       }
 
       return require('@/assets/image/author-boy.png')
@@ -53,6 +66,7 @@ export default {
       } else if (roles.includes('user')) {
         return '用户'
       }
+      return 'none'
     },
     refresh() {
       const self = this

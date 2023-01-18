@@ -172,9 +172,9 @@ const state = {
 
     {
       hidden: !env.canManager(),
-      label: '管理',
+      label: '用户管理',
       url: '/manager/user',
-      icon: 'address-card'
+      icon: 'users'
     },
 
     {
