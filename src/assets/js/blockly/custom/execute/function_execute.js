@@ -15,10 +15,10 @@ const block = {
           type: 'field_dropdown',
           name: 'function',
           options: [
-            ['redo', 'CS.MrPP.Run.Redo()'],
-            ['undo', 'CS.MrPP.Run.Undo()'],
-            ['boom_reset', 'CS.MrPP.Run.BoomReset(target)'],
-            ['sample_reset', 'CS.MrPP.Run.SampleReset(target)']
+            ['redo', 'CS.MLua.Helper.Redo()'],
+            ['undo', 'CS.MLua.Helper.Undo()'],
+            ['boom_reset', 'CS.MLua.Helper.BoomReset(target)'],
+            ['sample_reset', 'CS.MLua.Helpern.SampleReset(target)']
           ]
         }
       ],

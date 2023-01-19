@@ -67,7 +67,7 @@ const block = {
       )
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MrPP.Run.Tween(' +
+        'CS.MLua.Helper.Tween(' +
         value_entity +
         ', ' +
         number_time +

@@ -94,10 +94,11 @@ const create = async function (verse) {
 }
 const setup = async function (data) {
   await Build(editor_, data)
-
-  editor_.view.resize()
-  setTimeout(arrange, 100)
-  AreaPlugin.zoomAt(editor_)
+  setTimeout(() => {
+    arrange()
+    editor_.view.resize()
+    AreaPlugin.zoomAt(editor_)
+  }, 250)
 }
 const loadEvent = async function (id, oldValue, newValue) {
   const node = getNodeByID({ id })

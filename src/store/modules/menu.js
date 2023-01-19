@@ -17,7 +17,7 @@ const state = {
       ]
     },
     {
-      label: '元宇宙',
+      label: '元&宇宙',
       url: '/verse/',
       icon: 'adjust',
       items: [

@@ -255,14 +255,14 @@ export const constantRoutes = [
         path: 'meta',
         name: 'Meta',
         meta: { title: '元' },
-        redirect: '/meta/editor',
+        redirect: '/meta/rete-meta',
         component: Empty,
         children: [
           {
-            path: 'editor',
+            path: 'rete-meta',
             name: 'VerseMetaEditor',
             meta: { title: '【元】' },
-            component: () => import('@/views/meta/editor')
+            component: () => import('@/views/meta/rete-meta')
           },
           {
             path: 'cyber',
@@ -282,7 +282,7 @@ export const constantRoutes = [
       {
         path: 'meta-verse',
         name: 'MetaVerse',
-        meta: { title: '元-宇宙' },
+        meta: { title: '元&宇宙' },
         redirect: '/meta-verse/index',
         component: Empty,
         children: [
@@ -320,10 +320,10 @@ export const constantRoutes = [
             component: () => import('@/views/verse/view')
           },
           {
-            path: 'editor',
+            path: 'rete-verse',
             name: 'VerseEditor',
             meta: { title: '编辑' },
-            component: () => import('@/views/verse/editor')
+            component: () => import('@/views/verse/rete-verse')
           },
           {
             path: 'scene',

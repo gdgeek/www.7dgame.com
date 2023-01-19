@@ -63,8 +63,8 @@ export function UpdateAbility($ability, roles, userId) {
     can(['update'], AbilityMessage.name, { id: userId })
 
     router = router.concat([
-      '/verse/editor',
-      '/meta/editor',
+      '/verse/rete-verse',
+      '/meta/rete-meta',
       //'/verse/code',
       '/meta/cyber'
     ])

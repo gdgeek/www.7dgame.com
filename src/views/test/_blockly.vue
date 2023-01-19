@@ -4,7 +4,7 @@
       <el-main>
         <el-card v-loading="loading" class="box-card">
           <div slot="header" class="clearfix">
-            <router-link :to="'/verse/editor?id=' + id">
+            <router-link :to="'/verse/rete-verse?id=' + id">
               <el-link :underline="false">【宇宙】</el-link>
             </router-link>
             /逻辑

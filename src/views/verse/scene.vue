@@ -53,9 +53,10 @@ export default {
       return uri
     }
   },
+  destroyed() {
+    this.setBreadcrumbs({ list: [] })
+  },
   created() {
-    const self = this
-    //alert(1)
     this.setBreadcrumbs({
       list: [
         {

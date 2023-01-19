@@ -49,7 +49,7 @@ const block = {
       var dropdown = block.getFieldValue('Text')
       //alert(dropdown_picture);
       // TODO: Assemble Lua into code variable.
-      // var code = "CS.MrPP.Run.Handler('" + index + "', '" + dropdown_text + "')"
+      // var code = "CS.MLua.Handler('" + index + "', '" + dropdown_text + "')"
       // TODO: Change ORDER_NONE to the correct strength.
       return [Helper.handler(index, dropdown), Blockly.Lua.ORDER_NONE]
     }

@@ -13,7 +13,7 @@
           <div v-if="meta !== null" slot="header" class="clearfix">
             <router-link :to="'/verse/rete-verse?id=' + meta.verse.id">
               <el-link :underline="false">
-                【宇宙】{{ meta.verse.name }} {{ meta.share }}
+                【宇宙】{{ meta.verse.name }}
               </el-link>
             </router-link>
             / 【元】{{ title }}
@@ -40,7 +40,7 @@
             </el-button-group>
           </div>
 
-          <div v-show="visible" id="rete" ref="rete" />
+          <div v-show="visible" class="rete" ref="rete" />
         </el-card>
       </el-main>
     </el-container>
@@ -54,6 +54,7 @@ import { getResources } from '@/api/resources'
 import ResourceDialog from '@/components/MrPP/MrPPResourceDialog.vue'
 import { AbilityWorks, AbilityShare } from '@/ability/ability'
 
+import { mapMutations } from 'vuex'
 export default {
   components: {
     ResourceDialog
@@ -107,6 +108,8 @@ export default {
     })
     const response = await getMeta(this.id, 'verse,share')
     this.meta = response.data
+
+    this.breadcrumb(this.meta)
     //alert(JSON.stringify(this.meta))
     if (this.meta.data !== null) {
       await editor.setup(JSON.parse(this.meta.data))
@@ -122,12 +125,63 @@ export default {
       editor.ban()
     }
   },
+
+  created() {
+    this.breadcrumb(null)
+  },
+  destroyed() {
+    this.setBreadcrumbs({
+      list: []
+    })
+  },
   beforeDestroy() {
     if (this.canSave) {
       this.save()
     }
   },
   methods: {
+    ...mapMutations('breadcrumb', ['setBreadcrumbs']),
+    breadcrumb(meta) {
+      if (meta === null) {
+        this.setBreadcrumbs({
+          list: [
+            {
+              path: '/',
+              meta: { title: '元宇宙实景编程平台' }
+            },
+            {
+              path: '/meta-verse/index',
+              meta: { title: '元&宇宙' }
+            }
+          ]
+        })
+      } else {
+        this.setBreadcrumbs({
+          list: [
+            {
+              path: '/',
+              meta: { title: '元宇宙实景编程平台' }
+            },
+            {
+              path: '/meta-verse/index',
+              meta: { title: '元&宇宙' }
+            },
+            {
+              path: '/verse/view?id=' + this.meta.verse.id,
+              meta: { title: '【宇宙】' }
+            },
+            {
+              path: '/verse/rete-verse?id=' + this.meta.verse.id,
+              meta: { title: '宇宙编辑' }
+            },
+            {
+              path: '.',
+              meta: { title: '元编辑' }
+            }
+          ]
+        })
+      }
+    },
     openResources({ callback, type } = { callback: null, type: null }) {
       if (this.canSave) {
         this.resource.callback = callback
@@ -178,6 +232,14 @@ export default {
   width: 140px;
 }
 
+.rete {
+  max-width: 100%;
+  min-height: calc(73vh);
+  max-height: calc(73vh);
+
+  border-style: solid;
+  border-width: 1px;
+}
 select,
 input {
   width: 100%;

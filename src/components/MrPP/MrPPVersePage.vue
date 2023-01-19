@@ -123,7 +123,7 @@ export default {
       postVerse(data).then(response => {
         console.log(response.data.id)
         self.$router.push({
-          path: '/verse/editor',
+          path: '/verse/rete-verse',
           query: { id: response.data.id }
         })
       })

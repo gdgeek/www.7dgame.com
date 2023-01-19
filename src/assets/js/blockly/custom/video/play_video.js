@@ -50,7 +50,7 @@ const block = {
       )
       var checkbox_occupy = block.getFieldValue('occupy') === 'TRUE'
       return (
-        'CS.MrPP.Run.VideoPlay(' +
+        'CS.MLua.Video.Play(' +
         value_video +
         ', ' +
         JSON.stringify(checkbox_occupy) +

@@ -55,7 +55,7 @@ const block = {
         Blockly.Lua.ORDER_ATOMIC
       )
       // TODO: Assemble Lua into code variable.
-      var code = 'CS.MrPP.Run.Lined(' + value_from + ', ' + value_to + ')\n'
+      var code = 'CS.MLua.Helper.Lined(' + value_from + ', ' + value_to + ')\n'
       return code
     }
     return lua

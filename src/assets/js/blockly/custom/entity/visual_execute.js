@@ -58,7 +58,7 @@ const block = {
       )
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MrPP.Run.SetVisual(' + value_entity + ', ' + value_bool + ')\n'
+        'CS.MLua.Point.SetVisual(' + value_entity + ', ' + value_bool + ')\n'
       return code
     }
     return lua

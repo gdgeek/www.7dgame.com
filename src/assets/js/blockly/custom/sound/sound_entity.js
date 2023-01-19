@@ -46,11 +46,7 @@ const block = {
   getLua({ index }) {
     const lua = function (block) {
       var dropdown = block.getFieldValue('Sound')
-      //alert(dropdown_video);
-      // TODO: Assemble Lua into code variable.
-      // var code =
-      //  "CS.MrPP.Lua.Handler('" + index + "', '" + dropdown_sound + "')"
-      // TODO: Change ORDER_NONE to the correct strength.
+
       return [Helper.handler(index, dropdown), Blockly.Lua.ORDER_NONE]
     }
     return lua
