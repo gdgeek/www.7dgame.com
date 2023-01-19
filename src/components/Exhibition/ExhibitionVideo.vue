@@ -1,10 +1,10 @@
 <template>
   <!-- 产品中心 -->
   <section class="section-box">
-    <el-row :gutter="30" style="padding: 5% 10%">
+    <el-row :gutter="30">
       <!-- content部分 -->
-      <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" align="left">
-        <div class="title-box">
+      <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" align="center">
+        <div class="title-box" align="left">
           <div class="medical-title-h3 p-title-m">
             定制开发demo，20000元实景AR展馆体验
           </div>
@@ -21,9 +21,23 @@
         </div>
       </el-col>
       <!-- 视频位置 -->
-      <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+      <!-- <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <div class="medical-video-box">
           <landscape-video :vdsrc="videoSrc" />
+        </div>
+      </el-col> -->
+      <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+        <div class="medical-video-box">
+          <iframe
+            src="//player.bilibili.com/player.html?aid=432949605&bvid=BV1v3411f7Qg&cid=900799370&page=1"
+            width="100%"
+            height="350px"
+            scrolling="no"
+            border="0"
+            frameborder="no"
+            framespacing="0"
+            allowfullscreen="true"
+          />
         </div>
       </el-col>
     </el-row>
@@ -33,15 +47,14 @@
 </template>
 
 <script>
-import LandscapeVideo from '@/components/Medical/LandscapeVideo.vue'
-// import LandscapeVideo from './LandscapeVideo.vue'
+// import LandscapeVideo from '@/components/Medical/LandscapeVideo.vue'
 export default {
   name: 'ExhibitionVideo',
-  components: { LandscapeVideo },
+  // components: { LandscapeVideo },
   data() {
     return {
-      videoSrc:
-        'http://1251022382.vod2.myqcloud.com/3ebf9041vodtransgzp1251022382/6487c9fd5285890809258783935/v.f30.mp4'
+      // videoSrc:
+      //   'http://1251022382.vod2.myqcloud.com/3ebf9041vodtransgzp1251022382/6487c9fd5285890809258783935/v.f30.mp4'
     }
   }
 }
@@ -51,14 +64,19 @@ export default {
 @import '~@/styles/responsive-style.scss';
 @import '~@/styles/publicity-position.scss';
 .section-box {
-  padding: 5% 20px 3%;
+  padding: 6% 5% 60px;
   background-color: #f5f4f3;
 }
 .title-box {
-  margin: 2% 0;
-  max-width: 530px;
+  width: 100%;
+  padding: 2% 30px;
+  max-width: 600px;
 }
-
+.medical-video-box {
+  padding: 2% 30px;
+  max-width: 600px;
+  width: 100%;
+}
 .medical-title-h3 {
   font-size: 32px;
   font-weight: 600;
@@ -80,10 +98,7 @@ export default {
 .videobox {
   height: 400px;
 }
-.medical-video-box {
-  padding-top: 2%;
-  width: 100%;
-}
+
 .button-box {
   padding: 35px 0 15px;
 }
