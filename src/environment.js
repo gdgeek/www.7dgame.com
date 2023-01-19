@@ -14,6 +14,13 @@ function canWeb() {
 function canSetup() {
   return 'local' === process.env.VUE_APP_BASE_MODE
 }
+function mrpp() {
+  return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
+}
+
+function mrcn() {
+  return '4mr.cn' === process.env.VUE_APP_BASE_MODE
+}
 function canManager() {
   return (
     'local' === process.env.VUE_APP_BASE_MODE ||
@@ -45,5 +52,7 @@ module.exports = {
   subtitle,
   canManager,
   useCloud,
-  canDocument
+  canDocument,
+  mrcn,
+  mrpp
 }

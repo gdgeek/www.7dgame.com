@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
 import DocumentList from '@/components/Home/DocumentList.vue'
 export default {
   name: 'HomeCategory',
@@ -17,7 +16,5 @@ export default {
       return parseInt(this.$route.query.id)
     }
   }
-
 }
 </script>
-
