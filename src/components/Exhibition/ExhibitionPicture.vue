@@ -7,31 +7,40 @@
           <div class="exhibition-title-h3 p-title-m">亲自体验元宇宙展馆</div>
           <p class="exhibition-content-small p-title-ss">
             世界的维度正在发生变化。我们引领场馆的的数字可视化，利用元宇宙数字孪生，快速搭建场景
-            实现任何类型的空间数字化——展馆、办公室和酒店到工厂和商店。整个物业生命周期的行业正在实现前所未有的价值。
+            实现任何类型的空间数字化——展馆、办公室和酒店及商场。用技术赋能空间交互，实现前所未有的价值。
           </p>
         </div>
       </el-col>
       <!-- picture部分 -->
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="center">
-        <div style="width: 100%; height: 260px; background-color: #c0b6b7">
-          场景图
+        <div>
+          <img
+            src="/media/bg/exhibition1.jpg"
+            style="width: 100%; border-radius: 5px"
+          />
         </div>
-        <p>内容阐述</p>
+        <div class="img-title p-title-s">满足不同的场所</div>
       </el-col>
       <br />
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="center">
-        <div style="width: 100%; height: 260px; background-color: #c0b6b7">
-          场景图
+        <div>
+          <img
+            src="/media/bg/exhibition2.jpg"
+            style="width: 100%; border-radius: 5px"
+          />
         </div>
-        <p>内容阐述</p>
+        <div class="img-title p-title-s">场景扫描定位</div>
       </el-col>
       <br />
       <!-- 视频位置 -->
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="center">
-        <div style="width: 100%; height: 260px; background-color: #c0b6b7">
-          场景图
+        <div>
+          <img
+            src="/media/bg/exhibition3.jpg"
+            style="width: 100%; border-radius: 5px"
+          />
         </div>
-        <p>内容阐述</p>
+        <div class="img-title p-title-s">个性化展馆布置</div>
       </el-col>
     </el-row>
   </section>
@@ -47,36 +56,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/publicity-position.scss';
 @import '~@/styles/responsive-style.scss';
-// @import '~@/styles/sandtable.scss';
 .title-box {
   max-width: 800px;
 }
-
+.img-box {
+  width: 100%;
+  border-radius: 25px;
+}
+.img-title {
+  padding: 20px 0 40px;
+  font-size: 22px;
+  color: #222222;
+  font-weight: 600;
+}
 .exhibition-title-h3 {
-  font-size: 32px;
+  padding: 20px;
+  font-size: 36px;
   font-weight: 600;
   color: #222222;
 }
-.exhibition-title-small {
-  color: #5a5a5b;
-  // color: #929292;
-  font-weight: lighter;
-  padding: 10px 0 10px;
-  font-size: 16px;
-}
+
 .exhibition-content-small {
   color: #444444;
   font-weight: 600;
   font-size: 18px;
   line-height: 24px;
-}
-.picturebox {
-  background-color: rgb(190, 232, 235);
-  height: 400px;
-}
-.exhibition-picture-box {
-  padding-top: 2%;
-  width: 90%;
+  max-width: 1100px;
 }
 </style>

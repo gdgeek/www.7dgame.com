@@ -2,20 +2,18 @@
   <div class="background-screen-border">
     <!-- 展馆主屏幕 -->
     <exhibition-screen />
-
     <!-- 图片场景介绍 -->
     <exhibition-picture />
     <!-- 视频案例 -->
     <exhibition-video />
     <!-- 实施步骤 -->
     <exhibition-body />
-    <!-- 预留 -->
-
-    <div style="height: 710px; background-color: #222222" />
+    <!-- 技术服务 -->
+    <exhibition-list />
     <!-- 联系我们 -->
-    <medical-relation />
+    <medical-relation :is-black="isBlack" />
     <!-- 合作伙伴板块新通用组件 -->
-    <div style="height: 600px; background-color: #f0f0f0">合作伙伴重构中</div>
+    <exhibition-partner />
   </div>
 </template>
 
@@ -26,6 +24,8 @@ import ExhibitionPicture from '@/components/Exhibition/ExhibitionPicture.vue'
 import ExhibitionVideo from '@/components/Exhibition/ExhibitionVideo.vue'
 import ExhibitionBody from '@/components/Exhibition/ExhibitionBody.vue'
 import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
+import ExhibitionList from '@/components/Exhibition/ExhibitionList.vue'
+import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
 
 export default {
   name: 'Exhibition',
@@ -34,10 +34,15 @@ export default {
     ExhibitionPicture,
     ExhibitionVideo,
     ExhibitionBody,
-    MedicalRelation
+    MedicalRelation,
+    ExhibitionList,
+    ExhibitionPartner
   },
   data() {
-    return {}
+    return {
+      // isBlack -- title color props
+      isBlack: true
+    }
   }
 }
 </script>

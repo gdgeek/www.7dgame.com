@@ -3,18 +3,18 @@
   <section class="section-box">
     <el-row :gutter="30">
       <el-col :span="22" :offset="2">
-        <div class="reletion-title-small">以用户为中心</div>
+        <div class="reletion-title-small">user-centered</div>
         <div :class="[isBlack ? 'reletion-title-black' : 'reletion-title-h1']">
-          <div class="p-title-m">欢迎联系我们</div>
+          <div class="p-title-m">Welcome to contact us.</div>
         </div>
         <!-- <div class="reletion-title-h1 p-title-m">欢迎联系我们</div> -->
       </el-col>
       <el-col :xs="22" :sm="22" :md="10" :lg="10" :xl="10" :offset="2">
-        <div class="reletion-title-h3 p-title-s">公司简介</div>
+        <div class="reletion-title-h3 p-title-s">Company Profile</div>
         <div class="qfe_wrapper">
           <div
             style="
-              line-height: 40px;
+              line-height: 32px;
               letter-spacing: 2px;
               width: 90%;
               margin-bottom: 30px;
@@ -22,8 +22,11 @@
           >
             <span style="color: rgb(102, 102, 102)">
               <span style="font-family: arial; font-size: 16px">
-                上海游七网络科技有限公司，作为国内制作元宇宙AR实景应用最早的高新科技企业，
-                团队项目开发经验丰富，技术方案灵活多样。与未来数字化生态相融合，不断进取。
+                Shanghai Applereality Network Technology Co. LTD. as the
+                earliest high-tech enterprise in the world to produce
+                metauniverse AR reality application, Team project development
+                experience, flexible and diverse technical solutions. And the
+                future digital ecology integration, continuous progress.
               </span>
             </span>
           </div>
@@ -31,7 +34,7 @@
       </el-col>
       <!-- 视频位置 -->
       <el-col :xs="22" :sm="22" :md="10" :lg="10" :xl="10" :offset="2">
-        <div class="reletion-title-h3 p-title-s">联系方式</div>
+        <div class="reletion-title-h3 p-title-s">Contact Information</div>
         <div class="qfe_wrapper">
           <div style="letter-spacing: 3px; line-height: 40px">
             <span style="color: rgb(102, 102, 102); font-size: 16px">
@@ -39,7 +42,7 @@
                 src="/media/icon/relation-icon1.png"
                 style="width: 20px; height: 20px"
               />
-              上海市徐汇区虹漕路25-1号
+              25-1 Hongcao Road, Xuhui District, Shanghai
             </span>
             <span style="font-size: 16px" />
           </div>
@@ -76,7 +79,7 @@
 
 <script>
 export default {
-  name: 'MedicalRelation',
+  name: 'PublicityRelation',
   props: {
     isBlack: {
       type: Boolean,

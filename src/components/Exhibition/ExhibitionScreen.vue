@@ -9,7 +9,13 @@
         <div class="background-box-image">
           <div class="education-phone-box" align="left">
             <p
-              style="width:200px;font-weight: 600; font-size: 22px; color: #f5f4f3；word-wrap:break-word ;"
+              style="
+                width: 200px;
+                font-weight: 600;
+                font-size: 22px;
+                color: #f5f4f3;
+                word-wrap: break-word;
+              "
             >
               {{ infoTitle2 }}
             </p>
@@ -55,8 +61,8 @@ export default {
 
   data() {
     return {
-      infoTitle: '展馆板块',
-      infoTitle2: '改造中',
+      infoTitle: '欢迎创建',
+      infoTitle2: '元宇宙实景展馆',
       infoTel: 15000159790
     }
   },
@@ -75,7 +81,7 @@ export default {
   width: 100%;
   height: 30vw;
   max-height: 500px;
-  background-color: #f8cab0;
+  // background-color: #f8cab0;
   background: url('/media/bg/ex-bg3.jpg') center no-repeat;
   background-size: cover;
   background-size: 100%;

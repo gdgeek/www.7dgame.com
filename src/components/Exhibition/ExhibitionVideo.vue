@@ -5,13 +5,15 @@
       <!-- content部分 -->
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" align="left">
         <div class="title-box">
-          <div class="medical-title-h3 p-title-m">核心应用场景</div>
+          <div class="medical-title-h3 p-title-m">
+            定制开发demo，20000元实景AR展馆体验
+          </div>
 
           <p class="medical-content-small p-title-ss">
-            MrPP是一款面向未来元宇宙数字生态的AR元宇宙实景平台。拥有第三方视角、空间场景定位等多项专利。给用户提供强大的编辑能力，一站式实现用户所需的可视化处理。
+            提供您的绝妙创意，我们将分析您的需求，为您提供解决方案,如需现场进行演示和勘察，我们将派专家实地交流。
           </p>
           <p class="medical-content-small p-title-ss">
-            在元宇宙实景交互这个过程中，它注重于人的感受场景的体验，带给人们多维度的视觉震撼感，让展馆极具吸引力与生命力，大大提升品牌的价值。
+            我们将根据用户实际需要，为您选择的展馆案例提供Demo和报价。当开发完成验收后，您有任何疑问，我们将会派出专业人员进行协助，或实地提供技术指导。
           </p>
           <div align="left" class="button-box">
             <div class="product-button">更多案例</div>
@@ -49,7 +51,7 @@ export default {
 @import '~@/styles/responsive-style.scss';
 @import '~@/styles/publicity-position.scss';
 .section-box {
-  padding: 8% 20px 6%;
+  padding: 5% 20px 3%;
   background-color: #f5f4f3;
 }
 .title-box {
@@ -71,7 +73,7 @@ export default {
 }
 .medical-content-small {
   color: #444850;
-  font-weight: 600;
+  font-weight: lighter;
   font-size: 18px;
   line-height: 24px;
 }

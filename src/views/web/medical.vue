@@ -10,9 +10,8 @@
     <medical-column />
     <!-- 联系我们板块白底色 -->
     <medical-relation />
-    <!-- <relation :is-blue="isBlue" /> -->
     <!-- 合作伙伴板块新通用组件 -->
-    <div style="height: 600px; background-color: #f0f0f0">合作伙伴重构中</div>
+    <exhibition-partner />
   </div>
 </template>
 
@@ -23,6 +22,7 @@ import MedicalVideo from '@/components/Medical/MedicalVideo.vue'
 import MedicalList from '@/components/Medical/MedicalList.vue'
 import MedicalColumn from '@/components/Medical/MedicalColumn.vue'
 import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
+import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
 // import Relation from '@/components/SandTable/Relation.vue'
 // import Partner from '@/components/SandTable/Partner.vue'
 export default {
@@ -32,7 +32,8 @@ export default {
     MedicalVideo,
     MedicalList,
     MedicalColumn,
-    MedicalRelation
+    MedicalRelation,
+    ExhibitionPartner
     // Relation,
     // Partner
   },

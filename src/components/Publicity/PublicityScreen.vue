@@ -8,7 +8,7 @@
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
           <div class="education-phone-box" align="left">
-            <span>欢迎来到</span>
+            <span>{{ infoTitle }}</span>
             <div
               style="
                 width: 200px;
@@ -21,7 +21,6 @@
             >
               {{ infoTitle2 }}
             </div>
-            <span>元宇宙AR实景</span>
           </div>
         </div>
       </el-col>
@@ -29,9 +28,9 @@
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
           <div class="medical-pc-box" align="left">
-            <p class="medical-pc-subtitle">欢迎来到</p>
+            <p class="medical-pc-subtitle">{{ infoTitle }}</p>
             <div class="medical-pc-title">{{ infoTitle2 }}</div>
-            <p class="medical-pc-subtitle">AR元宇宙实景</p>
+            <!-- <p class="medical-pc-subtitle">AR元宇宙实景</p> -->
           </div>
         </div>
       </el-col>
@@ -50,8 +49,8 @@ export default {
 
   data() {
     return {
-      infoTitle: '欢迎来到',
-      infoTitle2: '超级大苹果',
+      infoTitle: 'Welcome to',
+      infoTitle2: 'Applereality',
       infoTel: 15000159790
     }
   },
@@ -91,7 +90,7 @@ export default {
   // color: #32373f;
 }
 .medical-pc-subtitle {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 600;
   color: #32373f;
 }

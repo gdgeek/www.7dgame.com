@@ -5,30 +5,35 @@
       <!-- content部分 -->
       <el-col :span="24">
         <div align="left" style="padding: 30px 0">
-          <div class="exhibition-title-h3 p-title-m">开始部署一个展馆</div>
+          <div class="exhibition-title-h1 p-title-m">开始部署一个场景</div>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="left">
-        <div style="width: 50%; height: 200px; background-color: pink">
-          icon
-        </div>
-        <h4>suntitle</h4>
-        <p>content</p>
+
+      <el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" align="left">
+        <section class="icon-box">
+          <img src="/media/icon/ex-icon1.png" />
+          <div class="icon-title-h3">对展馆场景空间扫描</div>
+          <p class="icon-content">
+            我们有多种设备和扫描方案，根据客户的需要选择。
+          </p>
+        </section>
       </el-col>
       <!-- 视频位置 -->
-      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="left">
-        <div style="width: 50%; height: 200px; background-color: pink">
-          icon
-        </div>
-        <h4>suntitle</h4>
-        <p>content</p>
+      <el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" align="left">
+        <section class="icon-box">
+          <img src="/media/icon/ex-icon2.png" />
+          <div class="icon-title-h3">在平台进行相关编辑</div>
+          <p class="icon-content">自主研发的可视化编辑平台，一站式录入和编辑</p>
+        </section>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" align="left">
-        <div style="width: 50%; height: 200px; background-color: pink">
-          icon
-        </div>
-        <h4>suntitle</h4>
-        <p>content</p>
+      <el-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" align="left">
+        <section class="icon-box">
+          <img src="/media/icon/ex-icon3.png" />
+          <div class="icon-title-h3">使用设备查看效果</div>
+          <p class="icon-content">
+            拥有多设备协同专利，可使用眼镜、手机和Pad进行查看
+          </p>
+        </section>
       </el-col>
     </el-row>
   </section>
@@ -46,34 +51,26 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/responsive-style.scss';
 // @import '~@/styles/sandtable.scss';
-.title-box {
-  max-width: 800px;
-}
 
-.exhibition-title-h3 {
+.exhibition-title-h1 {
   font-size: 32px;
   font-weight: 600;
   color: #222222;
+  margin-bottom: 40px;
 }
-.exhibition-title-small {
-  color: #5a5a5b;
-  // color: #929292;
-  font-weight: lighter;
-  padding: 10px 0 10px;
-  font-size: 16px;
+.icon-box {
+  margin-bottom: 40px;
+  width: 80%;
 }
-.exhibition-content-small {
-  color: #444444;
+.icon-title-h3 {
+  padding: 20px 0 0;
+  font-size: 22px;
   font-weight: 600;
-  font-size: 18px;
+}
+.icon-content {
+  font-size: 14px;
+  font-weight: lighter;
   line-height: 24px;
-}
-.picturebox {
-  background-color: rgb(190, 232, 235);
-  height: 400px;
-}
-.exhibition-picture-box {
-  padding-top: 2%;
-  width: 90%;
+  color: #444444;
 }
 </style>

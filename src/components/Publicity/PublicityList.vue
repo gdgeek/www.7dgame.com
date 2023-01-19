@@ -11,9 +11,11 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <div class="background-text" align="left">
-          <h2>在浪潮中创造未来</h2>
+          <h2>Create the future in waves</h2>
           <p style="font-size: 16px; font-weight: lighter; line-height: 24px">
-            我们在元宇宙数字化的浪潮中脱颖而出。将一心一意，体现品牌影响力、创新力，共同推动相关产业的发展。
+            We are standing out in the tidal wave of metaverse digitization.
+            Will be single-minded, reflect the brand influence, innovation,
+            jointly promote the development of related industries.
           </p>
         </div>
       </el-col>
@@ -35,9 +37,12 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <div class="background-text" align="left">
-          <h2>元宇宙AR实景部署</h2>
+          <h2>Metaverse AR live deployment</h2>
           <p style="font-size: 16px; font-weight: lighter; line-height: 24px">
-            通过AR技术的高端视觉和交互体验，根据各种所需场景和方案进行部署，完成对更多领域的覆盖和支持，迎接不断的发展惊喜。
+            Through high-end visual and interactive experience of AR technology,
+            deployment is carried out according to various required scenarios
+            and schemes to complete the coverage and support of more fields and
+            meet the surprise of continuous development.
           </p>
         </div>
       </el-col>
@@ -92,7 +97,7 @@ export default {
   width: 80%;
   height: 80%;
   border-radius: 5px;
-  background: url('/media/bg/m-list3.jpg') center no-repeat;
+  background: url('/media/bg/exhibition2.jpg') center no-repeat;
   background-size: cover;
 }
 .portal-background-url2 {
