@@ -12,7 +12,7 @@ var MetaRootType = {
     },
     {
       type: 'button',
-      label: '逻辑',
+      label: '赛博',
       title: '逻辑编辑',
       key: 'cyber',
       callback: function (root) {
@@ -25,8 +25,8 @@ var MetaRootType = {
     },
     {
       type: 'button',
-      label: '场景',
-      title: '场景编辑',
+      label: '内容',
+      title: '内容编辑',
       key: 'scene',
       callback: function (root) {
         root.$router.push({

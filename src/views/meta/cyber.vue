@@ -6,7 +6,7 @@
           <div slot="header" class="clearfix">
             <router-link :to="'/meta/editor?id=' + id + '&title=' + title">
               <el-link v-if="meta" :underline="false">
-                【元：{{ title }}】{{ canSave }}
+                【元：{{ title }}】
               </el-link>
             </router-link>
             / 【赛博】
@@ -84,6 +84,24 @@ export default {
   },
   async created() {
     const self = this
+    this.setBreadcrumbs({
+      list: [
+        {
+          path: '/',
+          meta: { title: '元宇宙实景编程平台' }
+        },
+        {
+          path: '/meta-verse/index',
+          meta: { title: '元&宇宙' }
+        },
+
+        {
+          path: '.',
+          meta: { title: '赛博编辑' }
+        }
+      ]
+    })
+
     const response = await getMeta(this.id, 'cyber,event,share')
     self.meta = response.data
     this.setBreadcrumbs({
@@ -93,18 +111,24 @@ export default {
           meta: { title: '元宇宙实景编程平台' }
         },
         {
-          path: path.join(
-            '/meta/editor/',
-            qs.stringify({ id: self.id, title: self.title }, true)
-          ),
-          meta: { title: '【元:' + self.title + '】' }
+          path: '/meta-verse/index',
+          meta: { title: '元&宇宙' }
         },
         {
-          path: path.join(
-            '.',
-            qs.stringify({ id: self.id, title: self.title }, true)
-          ),
-          meta: { title: '【赛博】' }
+          path: '/verse/view?id=' + self.meta.verse_id,
+          meta: { title: '【宇宙】' }
+        },
+        {
+          path: '/verse/rete-verse?id=' + self.meta.verse_id,
+          meta: { title: '宇宙编辑' }
+        },
+        {
+          path: '/meta/rete-meta?id=' + self.meta.id + '&title=' + self.title,
+          meta: { title: '元编辑' }
+        },
+        {
+          path: '.',
+          meta: { title: '赛博' }
         }
       ]
     })

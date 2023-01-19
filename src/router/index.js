@@ -273,7 +273,7 @@ export const constantRoutes = [
           {
             path: 'scene',
             name: 'MetaSceneEditor',
-            meta: { title: '【元】编辑器' },
+            meta: { title: '内容编辑' },
             component: () => import('@/views/meta/scene')
           }
         ]
@@ -328,7 +328,7 @@ export const constantRoutes = [
           {
             path: 'scene',
             name: 'VerseSceneEditor',
-            meta: { title: '场景编辑器' },
+            meta: { title: '场景编辑' },
             component: () => import('@/views/verse/scene')
           }
         ]

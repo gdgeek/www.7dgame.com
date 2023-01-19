@@ -155,7 +155,7 @@ function MetaLoader(editor) {
 		if (data.data !== null) {
 			self.data = data
 
-			alert(JSON.stringify(data))
+			//	alert(JSON.stringify(data))
 			if (typeof self.meta === 'undefined') {
 				self.meta = JSON.parse(data.data)
 			} else {

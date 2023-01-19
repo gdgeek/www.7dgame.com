@@ -64,6 +64,18 @@ export default {
           meta: { title: '元宇宙实景编程平台' }
         },
         {
+          path: '/meta-verse/index',
+          meta: { title: '元&宇宙' }
+        },
+        {
+          path: '/verse/view?id=' + this.id,
+          meta: { title: '【宇宙】' }
+        },
+        {
+          path: '/verse/rete-verse?id=' + this.id,
+          meta: { title: '宇宙编辑' }
+        },
+        {
           path: '.',
           meta: { title: '场景编辑' }
         }
