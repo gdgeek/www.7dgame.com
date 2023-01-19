@@ -12,24 +12,24 @@
       </div>
       <!-- 技术种类 -->
       <div class="deploy-flex-box">
-        <div class="deploy-flex-son">
-          <p>icon</p>
+        <div class="deploy-flex-son" align="center">
+          <img src="/media/icon/education-cion1.png" class="deploy-img" />
           <div>多⼈多设备互动</div>
         </div>
         <div class="deploy-flex-son">
-          <p>icon</p>
+          <img src="/media/icon/education-cion2.png" class="deploy-img" />
           <div>投屏实现</div>
         </div>
         <div class="deploy-flex-son">
-          <p>icon</p>
+          <img src="/media/icon/education-cion3.png" class="deploy-img" />
           <div>同步操作</div>
         </div>
         <div class="deploy-flex-son">
-          <p>icon</p>
+          <img src="/media/icon/education-cion4.png" class="deploy-img" />
           <div>第三⽅视⻆</div>
         </div>
         <div class="deploy-flex-son">
-          <p>icon</p>
+          <img src="/media/icon/education-cion5.png" class="deploy-img" />
           <div>空间定位</div>
         </div>
       </div>
@@ -60,11 +60,18 @@ export default {
   min-height: 280px;
 }
 .deploy-flex-son {
-  border-radius: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+  border-radius: 10px;
   width: 180px;
   height: 180px;
   background-color: #d3edf8;
   margin-bottom: 20px;
+}
+.deploy-img {
+  padding: 24px 36px;
 }
 .deploy-flex-son:hover {
   background-color: #bcdcf8;

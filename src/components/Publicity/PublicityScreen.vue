@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       infoTitle: 'Welcome to',
-      infoTitle2: 'Applereality',
+      infoTitle2: 'Apple Reality',
       infoTel: 15000159790
     }
   },

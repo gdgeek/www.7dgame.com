@@ -22,7 +22,7 @@
           >
             <span style="color: rgb(102, 102, 102)">
               <span style="font-family: arial; font-size: 16px">
-                Shanghai Applereality Network Technology Co. LTD. as the
+                Shanghai Apple Reality Network Technology Co. LTD. as the
                 earliest high-tech enterprise in the world to produce
                 metauniverse AR reality application, Team project development
                 experience, flexible and diverse technical solutions. And the
