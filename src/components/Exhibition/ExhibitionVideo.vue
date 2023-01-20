@@ -16,7 +16,13 @@
             我们将根据用户实际需要，为您选择的展馆案例提供Demo和报价。当开发完成验收后，您有任何疑问，我们将会派出专业人员进行协助，或实地提供技术指导。
           </p>
           <div align="left" class="button-box">
-            <div class="product-button">更多案例</div>
+            <a
+              href="https://space.bilibili.com/20959246/channel/seriesdetail?sid=352585"
+              target="_blank"
+              class="link"
+            >
+              <div class="product-button">更多案例</div>
+            </a>
           </div>
         </div>
       </el-col>
@@ -27,8 +33,20 @@
         </div>
       </el-col> -->
       <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-        <div class="medical-video-box">
-          <iframe
+        <a
+          href="https://space.bilibili.com/20959246/channel/seriesdetail?sid=352585"
+          target="_blank"
+          class="link"
+        >
+          <div class="medical-video-box">
+            <img
+              src="/media/bg/exhibition-play.jpg"
+              style="width: 100%; border-radius: 5px"
+            />
+          </div>
+        </a>
+        <!-- <div>
+           <iframe
             src="//player.bilibili.com/player.html?aid=432949605&bvid=BV1v3411f7Qg&cid=900799370&page=1"
             width="100%"
             height="350px"
@@ -38,7 +56,7 @@
             framespacing="0"
             allowfullscreen="true"
           />
-        </div>
+        </div> -->
       </el-col>
     </el-row>
     <br />
