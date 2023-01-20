@@ -28,7 +28,7 @@ export default {
   data() {
     const src = path.join(
       'three.js/editor',
-      'space-editor.html' + qs.stringify({ id: this.$route.query.id }, true)
+      'verse-editor.html' + qs.stringify({ id: this.$route.query.id }, true)
     )
 
     return {

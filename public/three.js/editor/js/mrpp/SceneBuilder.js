@@ -43,14 +43,14 @@ class SceneBuilder {
 		const rotate = new THREE.Matrix4().makeRotationFromEuler(
 			new THREE.Euler(
 				THREE.Math.degToRad(r.x),
-				THREE.Math.degToRad(-r.y),
+				THREE.Math.degToRad(r.y),
 				THREE.Math.degToRad(r.z),
 				'XYZ'
 			)
 		)
 		const scale = new THREE.Matrix4().makeScale(s.x, s.y, s.z)
 
-		rotate.multiply(scale).setPosition(-p.x, p.y, p.z)
+		rotate.multiply(scale).setPosition(p.x, p.y, p.z)
 		return rotate
 	}
 
@@ -113,6 +113,26 @@ class SceneBuilder {
 		node.children.forEach(item => {
 			this.lockNode(item)
 		})
+	}
+	async addEntity(entity, resources) {
+		let node = editor.objectByUuid(entity.parameters.uuid)
+
+		if (typeof node === 'undefined') {
+			node = new THREE.Object3D()
+			node.name = entity.parameters.name
+			node.uuid = entity.parameters.uuid
+			node.applyMatrix4(this.getMatrix4(entity.parameters.transform))
+			const point = await this.building(entity, resources)
+			if (point !== null) {
+				node.add(point)
+			}
+		}
+
+		for (let i = 0; i < entity.children.entities.length; ++i) {
+			const child = await this.addEntity(entity.children.entities[i], resources)
+			node.add(child)
+		}
+		return node
 	}
 	async building(data, resources) {
 		let node = null

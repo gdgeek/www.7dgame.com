@@ -241,7 +241,7 @@ export default {
             self.$emit('loaded', {
               size: toFixedVector3(size, 5),
               center: toFixedVector3(
-                new Vector3(-center.x, center.y, center.z),
+                new Vector3(center.x, center.y, center.z),
                 5
               )
             })
