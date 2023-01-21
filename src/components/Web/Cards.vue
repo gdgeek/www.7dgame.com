@@ -109,7 +109,7 @@ export default {
             src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm'
           }
         ],
-        poster: 'http://localhost:9528/media/image/mrpp_.png'
+        poster: 'http://localhost:9528/media/image/logo.gif'
       }
     }
   },

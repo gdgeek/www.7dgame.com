@@ -13,7 +13,7 @@ const state = {
     companies: cs,
     version: '20230118.1',
     beian: '沪ICP备15039333号',
-    logo: '/media/image/mrpp_.png'
+    logo: '/media/image/logo.gif'
   }
 }
 

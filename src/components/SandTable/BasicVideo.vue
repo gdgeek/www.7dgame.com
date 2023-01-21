@@ -2,31 +2,35 @@
   <div>
     <!-- 卡片部分 -->
 
-    <el-card shadow="hover" style="width:94%" :body-style="{ padding: videoPadding+'px' }">
+    <el-card
+      shadow="hover"
+      style="width: 94%"
+      :body-style="{ padding: videoPadding + 'px' }"
+    >
       <div>
         <img
           :src="item.image"
           class="image"
           style="width: 100%; position: relative; z-index: 0"
           @click="onSelected(item)"
-        >
+        />
       </div>
       <div style="padding: 14px">
-        <div style="height: 60px;text-align:left">
+        <div style="height: 60px; text-align: left">
           <span>{{ item.title }}</span>
           <div class="bottom clearfix">
             <time class="time">{{ item.describe }}</time>
-            <br>
+            <br />
           </div>
         </div>
-        <br>
+        <br />
         <el-button type="text" class="button" @click="onSelected(item)">
           播放视频
         </el-button>
-        <br>
+        <br />
       </div>
     </el-card>
-    <br>
+    <br />
 
     <!-- 弹出视频页 -->
     <el-dialog
@@ -72,7 +76,6 @@ export default {
   },
   data() {
     return {
-
       video: null,
       width: 65,
       playerOptions: {
@@ -80,7 +83,7 @@ export default {
         muted: true,
         language: 'en',
         autoplay: true,
-        fullscreen: { options: { navigationUI: 'hide' }},
+        fullscreen: { options: { navigationUI: 'hide' } },
         playbackRates: [0.7, 1.0, 1.5, 2.0],
         sources: [
           {
@@ -88,7 +91,7 @@ export default {
             src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm'
           }
         ],
-        poster: 'http://localhost:9528/media/image/mrpp_.png'
+        poster: 'http://localhost:9528/media/image/logo.gif'
       }
     }
   },
@@ -174,5 +177,4 @@ export default {
   padding: 0;
   float: right;
 }
-
 </style>
