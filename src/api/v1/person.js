@@ -1,4 +1,7 @@
 import request from '@/utils/request'
+
+var qs = require('querystringify')
+var path = require('path')
 export function postPerson(data) {
   return request({
     url: 'v1/people',
@@ -22,17 +25,25 @@ export function putPerson(id, data) {
   })
 }
 
-export function getPerson(sort = '-created_at', search = null, page = 0) {
-  let url = 'v1/people?expand=data,roles&sort=' + sort
+export function getPerson(
+  sort = '-created_at',
+  search = null,
+  page = 1,
+  expand = ''
+) {
+  let query = []
+  query['expand'] = expand
+  query['sort'] = sort
 
-  if (search) {
-    url += '&MessageSearch[username]=' + search
+  if (search !== '') {
+    query['UserSearch[username]'] = search
   }
   if (page > 1) {
-    url += '&page=' + page
+    query['page'] = page
   }
+  //alert(path.join('v1', 'people' + qs.stringify(query, true)))
   return request({
-    url,
+    url: path.join('v1', 'people' + qs.stringify(query, true)),
     method: 'get'
   })
 }

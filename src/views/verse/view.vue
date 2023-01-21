@@ -124,7 +124,6 @@ export default {
 
   computed: {
     ...mapState({
-      word: state => state.settings.word,
       tagsMap: state => state.tags.tagsMap
     }),
     canShare() {
@@ -186,7 +185,7 @@ export default {
 
         {
           path: '/meta-verse',
-          meta: { title: '元-宇宙' }
+          meta: { title: '元&宇宙' }
         },
         {
           path: '.',
@@ -200,19 +199,18 @@ export default {
     ...mapActions('tags', {
       refreshTags: 'refreshTags'
     }),
-    refresh() {
+    async refresh() {
       const self = this
-      getVerse(self.id, 'image,verseOpen,author, message').then(res => {
-        self.verse = res.data
-        if (self.message !== null) {
-          self.briefing = self.message
-        } else {
-          self.briefing = {
-            title: '【元宇宙】名称：' + self.verse.name,
-            body: this.info.description
-          }
+      const res = await getVerse(self.id, 'image,verseOpen,author, message')
+      this.verse = res.data
+      if (this.message !== null) {
+        this.briefing = this.message
+      } else {
+        this.briefing = {
+          title: '【元&宇宙】名称：' + this.verse.name,
+          body: this.info.description
         }
-      })
+      }
     },
     deleted: function (verse) {
       const self = this
@@ -262,7 +260,7 @@ export default {
     },
     comeIn() {
       const self = this
-      self.$router.push({ path: '/verse/editor', query: { id: self.id } })
+      self.$router.push({ path: '/verse/rete-verse', query: { id: self.id } })
     }
   }
 }

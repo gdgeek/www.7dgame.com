@@ -68,11 +68,7 @@ export default {
       type: Array
     }
   },
-  computed: {
-    ...mapState({
-      word: state => state.settings.word
-    })
-  },
+  computed: {},
   methods: {
     refresh() {
       const self = this

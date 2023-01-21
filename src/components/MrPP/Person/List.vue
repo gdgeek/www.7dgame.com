@@ -22,17 +22,13 @@
                   {{ getAblity(item.roles) }}
                 </el-descriptions-item>
               </el-descriptions>
-              <el-button
-                v-if="!item.roles.includes('root')"
-                type="text"
-                class="button"
-                @click="deleted(item)"
-              >
+              <el-button type="text" class="button" @click="deleted(item)">
                 删除
               </el-button>
             </div>
           </div>
         </el-card>
+
         <br />
 
         <br />
@@ -57,13 +53,8 @@ export default {
   },
   methods: {
     getUrl(item) {
-      if (
-        !!item &&
-        !!item.data &&
-        !!item.data.avatar &&
-        !!item.data.avatar.url
-      ) {
-        return item.data.avatar.url
+      if (!!item && !!item.avatar && !!item.avatar.url) {
+        return item.avatar.url
       }
 
       return require('@/assets/image/author-boy.png')
@@ -76,6 +67,7 @@ export default {
       } else if (roles.includes('user')) {
         return '用户'
       }
+      return JSON.stringify(roles)
     },
     refresh() {
       const self = this

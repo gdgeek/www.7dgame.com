@@ -10,7 +10,7 @@ export function postMeta(data) {
   })
 }
 
-export function getMeta(id, expand = 'verse,share,event') {
+export function getMeta(id, expand = '') {
   return request({
     url: path.join(
       'v1',

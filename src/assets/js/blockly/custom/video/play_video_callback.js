@@ -81,15 +81,13 @@ const block = {
       )
 
       var checkbox_occupy = block.getFieldValue('occupy') === 'TRUE'
-      //alert(statements_callback)
-      // TODO: Assemble Lua into code variable.
-      // alert(JSON.stringify(checkbox_occupy))
+
       var code =
-        'CS.MrPP.Run.VideoPlay(' +
+        'CS.MLua.Video.Play(' +
         value_video +
         ', ' +
         JSON.stringify(checkbox_occupy) +
-        ',' +
+        ', ' +
         JSON.stringify(statements_callback) +
         ')\n'
       return code

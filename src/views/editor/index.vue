@@ -73,7 +73,6 @@ export default {
               self.isInit = true
               const iframe = document.getElementById('editor')
               const r = await getVerse(this.id)
-
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',

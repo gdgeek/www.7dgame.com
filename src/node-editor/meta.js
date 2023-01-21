@@ -7,6 +7,7 @@ import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
 import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import { Component } from './components/Component'
+import BanPlugin from '@/node-editor/plugins/ban'
 
 import { Build } from '@/node-editor/factory'
 import {
@@ -31,16 +32,29 @@ import {
 
 let editor_ = null
 let engine_ = null
-export const save = async function () {
-  editor_.trigger('process', { status: 'save' })
+
+const save = async function () {
+  await engine_.abort()
+  let ret = null
+  await engine_.process(editor_.toJSON(), null, function (data) {
+    ret = data
+  })
+  return ret
 }
-export const arrange = function () {
+/*
+const save = async function () {
+  editor_.trigger('process', { status: 'save' })
+}*/
+const arrange = function () {
   console.log(editor_.nodes.length)
   if (editor_.nodes.length > 0) {
     editor_.trigger('arrange', editor_.nodes)
   }
 }
-export const create = function (meta) {
+const ban = function () {
+  editor_.use(BanPlugin)
+}
+const create = function (meta) {
   //alert(JSON.stringify(meta))
 
   const data = {
@@ -61,20 +75,16 @@ export const create = function (meta) {
   }
   return setup(data)
 }
-export const setup = function (data) {
-  return new Promise((resolve, reject) => {
-    Build(editor_, data)
-      .then(node => {
-        editor_.view.resize()
-        setTimeout(arrange, 100)
-        resolve(data)
-        // console.error(data)
-      })
-      .catch(e => reject(e))
-  })
+const setup = async function (data) {
+  await Build(editor_, data)
+  setTimeout(() => {
+    arrange()
+    editor_.view.resize()
+    AreaPlugin.zoomAt(editor_)
+  }, 250)
 }
 
-export const initMeta = async function ({ container, root }) {
+const initMeta = async function ({ container, root }) {
   const types = [
     MetaRoot,
     Entity,
@@ -142,19 +152,28 @@ export const initMeta = async function ({ container, root }) {
       if (e.status === 'save') {
         // alert(e.status)
         await engine_.abort()
-        await engine_.process(editor_.toJSON(), null, function (data) {
-          root.$store.dispatch('meta/saveMeta', data).then(response => {
-            // alert(response)
-          })
-        })
+        await root.save()
+        /*
+        await engine_.process(editor_.toJSON(), null, async function (data) {
+         
+        })*/
       }
     }
   })
 
-  editor_.view.resize()
-  AreaPlugin.zoomAt(editor_)
+  //editor_.view.resize()
+  //AreaPlugin.zoomAt(editor_)
   editor_.trigger('process', { status: 'init' })
   // editor_.trigger('save')
 
   // setTimeout(arrange, 100)
+}
+
+export default {
+  initMeta,
+  save,
+  setup,
+  create,
+  arrange,
+  ban
 }

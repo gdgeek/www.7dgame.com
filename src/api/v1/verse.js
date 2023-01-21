@@ -74,7 +74,7 @@ export function getVerses(
   sort = '-created_at',
   search = '',
   page = 0,
-  expand = 'image,author'
+  expand = 'image,author,share'
 ) {
   let query = []
   query['expand'] = expand
@@ -88,7 +88,7 @@ export function getVerses(
   }
 
   return request({
-    url: path.join('v1', 'verses', 'publish' + qs.stringify(query, true)),
+    url: path.join('v1', 'verses' + qs.stringify(query, true)),
     method: 'get'
   })
 }

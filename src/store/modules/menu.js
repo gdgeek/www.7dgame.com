@@ -1,7 +1,6 @@
 import defaultSettings from '@/settings.js'
 
-import environment from '@/environment.js'
-const { word } = defaultSettings
+import env from '@/environment.js'
 
 const state = {
   data: [
@@ -18,7 +17,7 @@ const state = {
       ]
     },
     {
-      label: '元宇宙',
+      label: '元&宇宙',
       url: '/verse/',
       icon: 'adjust',
       items: [
@@ -78,7 +77,7 @@ const state = {
             },
             {
               label: '模型上传(高级)',
-              hidden: !environment.local,
+              hidden: true,
               url: '/polygen/upload-advanced',
               icon: 'upload'
             }
@@ -142,7 +141,7 @@ const state = {
       label: '探索',
       url: '/discovery/',
       icon: 'compass',
-      hidden: environment.local,
+      hidden: !env.canDocument(),
       items: [
         {
           label: '文档',
@@ -166,17 +165,16 @@ const state = {
       ]
     },*/
     {
-      hidden: environment.local,
       label: '交流',
       url: '/community/index',
       icon: 'address-card'
     },
 
     {
-      hidden: !environment.local,
-      label: '管理',
+      hidden: !env.canManager(),
+      label: '用户管理',
       url: '/manager/user',
-      icon: 'address-card'
+      icon: 'users'
     },
 
     {

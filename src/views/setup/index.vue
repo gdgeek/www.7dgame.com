@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import environment from '@/environment.js'
+import env from '@/environment.js'
 
 import { signup } from '@/api/v1/local'
 import { setToken } from '@/utils/auth'
@@ -107,7 +107,7 @@ export default {
         password: null,
         checkPassword: null
       },
-      local: environment.local,
+      local: env.canRegister(),
       step: 0,
       activeName: 'user',
       rules: {

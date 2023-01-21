@@ -48,15 +48,17 @@
             <el-tooltip
               class="item"
               effect="light"
-              :content="item.username"
+              :content="item.user.username"
               placement="top"
             >
-              <span>{{ item.nickname }}</span>
+              <span>{{ item.user.nickname }}</span>
             </el-tooltip>
             <el-button type="text" size="mini" @click="del(item.id)">
               <font-awesome-icon class="icon" icon="times" />
             </el-button>
           </template>
+
+          <span>{{ JSON.parse(item.info).content }}</span>
         </el-descriptions-item>
       </el-descriptions>
       <br />
@@ -71,8 +73,8 @@
 <script>
 import {
   postVerseShare,
-  getVerseShare,
-  delVerseShare
+  getVerseShareList,
+  deleteVerseShare
 } from '@/api/v1/verse-share'
 export default {
   name: 'Share',
@@ -97,38 +99,40 @@ export default {
     this.refresh()
   },
   methods: {
-    refresh() {
-      getVerseShare(this.verseId).then(r => {
+    async refresh() {
+      try {
+        const r = await getVerseShareList(this.verseId)
         this.items = r.data
-        //console.error(r.data)
-      })
+        //alert(JSON.stringify(this.items))
+      } catch (e) {
+        console.error(e.message)
+      }
     },
     open() {
       this.dialogVisible = true
     },
 
-    del(userId) {
+    async del(id) {
       const self = this
-      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(() => {
-          delVerseShare(userId, self.verseId).finally(() => {
-            self.refresh()
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
-          })
+      try {
+        await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
+
+        await deleteVerseShare(id)
+        self.refresh()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
         })
+      } catch (e) {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      }
     },
     resetForm() {
       this.$refs['form'].resetFields()

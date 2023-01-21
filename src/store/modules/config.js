@@ -2,20 +2,20 @@ import cloud from '@/assets/js/file/tencent-cloud.js'
 import server from '@/assets/js/file/server.js'
 import serverAdvanced from '@/assets/js/file/server-advanced.js'
 
-import environment from '@/environment.js'
+import env from '@/environment.js'
 const state = {
   store: (() => {
-    if (environment.local) {
-      return server
-    } else {
+    if (env.useCloud()) {
       return cloud
+    } else {
+      return server
     }
   })(),
   advanced: (() => {
-    if (environment.local) {
-      return serverAdvanced
-    } else {
+    if (env.useCloud()) {
       return cloud
+    } else {
+      return serverAdvanced
     }
   })()
 }

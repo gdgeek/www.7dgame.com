@@ -16,7 +16,7 @@ export default {
 
   methods: {
     loaded(data, result) {
-      getPerson(data.sorted, data.searched, data.current)
+      getPerson(data.sorted, data.searched, data.current, 'roles, avatar')
         .then(response => {
           const pagination = {
             current: parseInt(response.headers['x-pagination-current-page']),
@@ -24,7 +24,7 @@ export default {
             size: parseInt(response.headers['x-pagination-per-page']),
             total: parseInt(response.headers['x-pagination-total-count'])
           }
-          console.error(response.data)
+          // console.error(response.data)
           result({ data: response.data, pagination: pagination })
         })
         .catch(function (error) {

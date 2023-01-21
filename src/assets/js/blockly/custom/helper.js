@@ -1,5 +1,5 @@
 function handler(index, uuid) {
-  return "CS.MrPP.Lua.Handler('" + index + "', '" + uuid + "')"
+  return "CS.MLua.Handler('" + index + "', '" + uuid + "')"
 }
 
 module.exports = {

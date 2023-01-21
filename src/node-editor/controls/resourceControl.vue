@@ -62,7 +62,6 @@ export default {
   },
   mounted() {
     const self = this
-    //const d = this.getData(this.data.key)
 
     const value = this.getData(this.data.key)
     if (typeof value !== 'undefined') {
@@ -71,25 +70,10 @@ export default {
       this.value = this.data.default
     }
     self.reload()
-    /*
-    this.$on('setId', async function (id) {
-      alert(123)
-      self.id = id
-      //alert(id)
-      //let r = await getMetaKnight(id)
-      const value = -1 // r.data.knight_id
-      //alert(JSON.stringify(r.data))
-      if (typeof value !== 'undefined') {
-        this.value = value
-      } else if (typeof this.data.default !== 'undefined') {
-        this.value = this.data.default
-      }
-      self.reload()
-    })*/
   },
   methods: {
     select() {
-      this.root.$store.commit('resourceSetup', {
+      this.root.openResources({
         callback: this.onResource,
         type: this.data.resource
       })

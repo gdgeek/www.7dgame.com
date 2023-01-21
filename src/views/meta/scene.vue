@@ -18,6 +18,7 @@
 var qs = require('querystringify')
 var path = require('path')
 
+import { AbilityWorks, AbilityShare } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import environment from '@/environment.js'
 import { putMeta } from '@/api/v1/meta'
@@ -31,12 +32,17 @@ export default {
     return {
       isInit: false,
       //  data: null,
-      src
+      src,
+      _canSave: null
     }
   },
   computed: {
     id() {
       return parseInt(this.$route.query.id)
+    },
+
+    title() {
+      return this.$route.query.title
     },
     url() {
       const uri =
@@ -48,9 +54,10 @@ export default {
       return uri
     }
   },
+  destroyed() {
+    this.setBreadcrumbs({ list: [] })
+  },
   created() {
-    const self = this
-
     this.setBreadcrumbs({
       list: [
         {
@@ -58,8 +65,13 @@ export default {
           meta: { title: '元宇宙实景编程平台' }
         },
         {
-          path: '//',
-          meta: { title: '元编辑' }
+          path: '/meta-verse/index',
+          meta: { title: '元&宇宙' }
+        },
+
+        {
+          path: '.',
+          meta: { title: '场景编辑' }
         }
       ]
     })
@@ -77,10 +89,13 @@ export default {
               self.isInit = true
               const iframe = document.getElementById('editor')
               const r = await getMeta(this.id)
+              self.breadcrumb(r.data)
+              self._canSave = this.canSave(r.data.author_id, r.data.share)
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
-                data: r.data
+                data: r.data,
+                canSave: self._canSave
               }
               iframe.contentWindow.postMessage(data, '*')
             }
@@ -91,7 +106,56 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
+    breadcrumb(meta) {
+      this.setBreadcrumbs({
+        list: [
+          {
+            path: '/',
+            meta: { title: '元宇宙实景编程平台' }
+          },
+          {
+            path: '/meta-verse/index',
+            meta: { title: '元&宇宙' }
+          },
+          {
+            path: '/verse/view?id=' + meta.verse_id,
+            meta: { title: '【宇宙】' }
+          },
+          {
+            path: '/verse/rete-verse?id=' + meta.verse_id,
+            meta: { title: '宇宙编辑' }
+          },
+          {
+            path: '/meta/rete-meta?id=' + meta.id + '&title=' + this.title,
+            //  path: '/meta/rete-meta?id=' + meta.id,
+            meta: { title: '元编辑' }
+          },
+          {
+            path: '.',
+            meta: { title: '内容编辑' }
+          }
+        ]
+      })
+    },
+    canSave(id, share) {
+      const self = this
+
+      if (self.meta === null) {
+        return false
+      }
+      return (
+        self.$can('update', new AbilityWorks(id)) ||
+        self.$can('share', new AbilityShare(share))
+      )
+    },
     async saveMeta(meta) {
+      if (!this._canSave) {
+        this.$message({
+          type: 'info',
+          message: '没有保存权限!'
+        })
+        return
+      }
       await putMeta(this.id, { data: meta })
       this.$message({
         type: 'success',

@@ -51,7 +51,7 @@ const block = {
       )
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MrPP.Run.PlayAnimation(' +
+        'CS.MLua.PolygenPoint.PlayAnimation(' +
         value_polygen +
         ',' +
         JSON.stringify(text_animation) +

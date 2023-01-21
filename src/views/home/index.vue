@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-tabs v-if="!environment.local" type="border-card" lazy>
+  <div v-if="env.canDocument()">
+    <el-tabs v-if="env.mrpp()" type="border-card" lazy>
       <el-tab-pane label="首页">
         <document :post-id="999" :category="true" />
         <br />
@@ -12,7 +12,20 @@
       <el-tab-pane label="案例教程">
         <document-list :category-id="79" />
       </el-tab-pane>
-      <el-tab-pane label="搞笑视频"></el-tab-pane>
+    </el-tabs>
+
+    <el-tabs v-if="env.mrcn()" type="border-card" lazy>
+      <el-tab-pane label="首页">
+        <document :post-id="999" :category="true" />
+        <br />
+        <document-list :category-id="74" />
+      </el-tab-pane>
+      <el-tab-pane label="相关下载">
+        <document-list :category-id="84" />
+      </el-tab-pane>
+      <el-tab-pane label="案例教程">
+        <document-list :category-id="79" />
+      </el-tab-pane>
     </el-tabs>
 
     <el-tabs v-else type="border-card" lazy>
@@ -37,7 +50,7 @@ export default {
     LocalPage
   },
   computed: {
-    environment() {
+    env() {
       return environment
     },
     ...mapState({

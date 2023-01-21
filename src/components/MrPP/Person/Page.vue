@@ -86,9 +86,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      word: state => state.settings.word
-    }),
     dialogTitle() {
       return ''
     }
@@ -118,7 +115,11 @@ export default {
       const self = this
       self.$emit(
         'loaded',
-        { sorted: self.sorted, searched: self.searched, current: self.current },
+        {
+          sorted: self.sorted,
+          searched: self.searched,
+          current: self.pagination.current
+        },
         val => {
           self.items = val.data
           self.pagination = val.pagination

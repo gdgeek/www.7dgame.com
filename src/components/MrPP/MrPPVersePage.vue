@@ -87,9 +87,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      word: state => state.settings.word
-    }),
     dialogTitle() {
       return ''
     }
@@ -126,7 +123,7 @@ export default {
       postVerse(data).then(response => {
         console.log(response.data.id)
         self.$router.push({
-          path: '/verse/editor',
+          path: '/verse/rete-verse',
           query: { id: response.data.id }
         })
       })
@@ -159,7 +156,11 @@ export default {
       const self = this
       self.$emit(
         'loaded',
-        { sorted: self.sorted, searched: self.searched, current: self.current },
+        {
+          sorted: self.sorted,
+          searched: self.searched,
+          current: self.pagination.current
+        },
         val => {
           self.items = val.data
           self.pagination = val.pagination

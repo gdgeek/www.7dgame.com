@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import environment from '@/environment.js'
-import { mapState } from 'vuex'
 import Horizontal from '@/layout/site/menu/horizontal.vue'
 import Vertical from '@/layout/site/menu/vertical.vue'
 
@@ -29,14 +27,10 @@ export default {
   data() {
     return {
       isMobile: false,
-      openMenu: false,
-      local: environment.local
+      openMenu: false
     }
   },
   computed: {
-    ...mapState({
-      information: state => state.information
-    }),
     menuClass() {
       return this.isMobile ? 'sidebar-container' : ''
     },

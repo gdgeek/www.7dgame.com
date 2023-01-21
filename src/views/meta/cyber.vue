@@ -25,7 +25,7 @@
           </div>
 
           <coding
-            v-if="cyber !== null && meta !== null"
+            v-if="meta !== null"
             :meta="meta"
             ref="blockly"
             :cyber="cyber"
@@ -44,10 +44,9 @@ import Coding from '@/components/Coding.vue'
 import { mapMutations } from 'vuex'
 import { getMeta } from '@/api/v1/meta'
 import { postCyber } from '@/api/v1/cyber'
-
+import { AbilityWorks, AbilityShare } from '@/ability/ability'
 var qs = require('querystringify')
 var path = require('path')
-import { AbilityWorks } from '@/ability/ability'
 export default {
   name: 'Cyber',
   components: {
@@ -69,10 +68,15 @@ export default {
     },
     canSave() {
       const self = this
+
       if (self.meta === null) {
         return false
       }
-      return self.$can('update', new AbilityWorks(self.meta.author_id))
+
+      return (
+        self.$can('update', new AbilityWorks(self.meta.author_id)) ||
+        self.$can('share', new AbilityShare(self.meta.share))
+      )
     }
   },
   destroyed() {
@@ -80,7 +84,25 @@ export default {
   },
   async created() {
     const self = this
-    const response = await getMeta(this.id, 'cyber, event')
+    this.setBreadcrumbs({
+      list: [
+        {
+          path: '/',
+          meta: { title: '元宇宙实景编程平台' }
+        },
+        {
+          path: '/meta-verse/index',
+          meta: { title: '元&宇宙' }
+        },
+
+        {
+          path: '.',
+          meta: { title: '赛博编辑' }
+        }
+      ]
+    })
+
+    const response = await getMeta(this.id, 'cyber,event,share')
     self.meta = response.data
     this.setBreadcrumbs({
       list: [
@@ -89,24 +111,32 @@ export default {
           meta: { title: '元宇宙实景编程平台' }
         },
         {
-          path: path.join(
-            '/meta/editor/',
-            qs.stringify({ id: self.id, title: self.title }, true)
-          ),
-          meta: { title: '【元:' + self.title + '】' }
+          path: '/meta-verse/index',
+          meta: { title: '元&宇宙' }
         },
         {
-          path: path.join(
-            '.',
-            qs.stringify({ id: self.id, title: self.title }, true)
-          ),
-          meta: { title: '【赛博】' }
+          path: '/verse/view?id=' + self.meta.verse_id,
+          meta: { title: '【宇宙】' }
+        },
+        {
+          path: '/verse/rete-verse?id=' + self.meta.verse_id,
+          meta: { title: '宇宙编辑' }
+        },
+        {
+          path: '/meta/rete-meta?id=' + self.meta.id + '&title=' + self.title,
+          meta: { title: '元编辑' }
+        },
+        {
+          path: '.',
+          meta: { title: '赛博' }
         }
       ]
     })
     if (self.meta.cyber === null) {
-      const response = await postCyber({ meta_id: self.meta.id })
-      self.cyber = response.data
+      if (this.canSave) {
+        const response = await postCyber({ meta_id: self.meta.id })
+        self.cyber = response.data
+      }
     } else {
       self.cyber = self.meta.cyber
     }

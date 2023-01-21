@@ -7,30 +7,34 @@
 <script>
 import MrPPVersePage from '@/components/MrPP/MrPPVersePage.vue'
 
-import { getVersesWithShare } from '@/api/v1/verse'
-// import { getVersesOpen } from '@/api/v1/verse-open'
+import { getVerseShares } from '@/api/v1/verse-share'
+//import { getVersesWithShare } from '@/api/v1/verse'
 export default {
   name: 'VerseShare',
   components: {
     MrPPVersePage
   },
   methods: {
-    loaded(data, result) {
-      getVersesWithShare(data.sorted, data.searched, data.current)
-        .then(response => {
-          const pagination = {
-            current: parseInt(response.headers['x-pagination-current-page']),
-            count: parseInt(response.headers['x-pagination-page-count']),
-            size: parseInt(response.headers['x-pagination-per-page']),
-            total: parseInt(response.headers['x-pagination-total-count'])
-          }
-          const items = response.data
+    async loaded(data, result) {
+      try {
+        const response = await getVerseShares(
+          data.sorted,
+          data.searched,
+          data.current,
+          'image,author,share'
+        )
+        const pagination = {
+          current: parseInt(response.headers['x-pagination-current-page']),
+          count: parseInt(response.headers['x-pagination-page-count']),
+          size: parseInt(response.headers['x-pagination-per-page']),
+          total: parseInt(response.headers['x-pagination-total-count'])
+        }
+        const items = response.data
 
-          result({ data: items, pagination: pagination })
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+        result({ data: items, pagination: pagination })
+      } catch (e) {
+        alert(JSON.stringify(e.message))
+      }
     }
   }
 }

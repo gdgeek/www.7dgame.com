@@ -1,52 +1,19 @@
 <template>
   <div class="container">
     <div class="main">
-   
       <!-- box start-->
       <div class="box">
-       
         <el-card shadow="hover" :body-style="{ padding: '15px' }">
           <slot />
         </el-card>
       </div>
       <!-- box end -->
-      
     </div>
   </div>
 </template>
 
 <script>
-
-import environment from '@/environment.js'
-import { mapState } from 'vuex'
-export default {
-  data() {
-    return {
-      local: environment.local,
-      activeNames: []
-    }
-  },
-
-  computed: {
-    ...mapState({
-      settings: state => state.settings,
-      information: state => state.information
-    })
-  },
-  beforeCreate() {
-    document.querySelector('body').classList.add('login-page')
-    this.script = document.createElement('script')
-    this.script.type = 'text/javascript'
-    this.script.src = 'https://p.trellocdn.com/embed.min.js'
-    document.body.appendChild(this.script)
-  },
-  methods: {
-
-    handleChange(val) {
-
-    }
-  }
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>
@@ -58,14 +25,13 @@ $light_gray: #eee;
   color: rgb(28, 160, 212);
 }
 
-
 .container {
   min-height: calc(100% - 125px);
   width: 100%;
   background-color: #d3d6de;
   overflow: hidden;
 
-  background: url('/media/bg/02.jpg')  center no-repeat;
+  background: url('/media/bg/02.jpg') center no-repeat;
   background-size: cover;
   .main {
     position: relative;
@@ -74,7 +40,6 @@ $light_gray: #eee;
     padding: 30px 30px 0;
     margin: 0 auto;
     overflow: hidden;
-
   }
   .box {
     position: relative;

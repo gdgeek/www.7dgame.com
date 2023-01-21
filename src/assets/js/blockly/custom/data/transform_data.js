@@ -58,7 +58,7 @@ const block = {
       )
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MrPP.Run.Transform(' +
+        'CS.MLua.Transform(' +
         value_position +
         ', ' +
         value_scale +

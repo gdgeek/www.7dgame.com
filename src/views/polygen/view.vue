@@ -90,8 +90,7 @@ export default {
   },
   computed: {
     ...mapState({
-      store: state => state.config.store,
-      word: state => state.settings.word
+      store: state => state.config.store
     }),
     tableData() {
       if (this.data !== null && this.prepare) {

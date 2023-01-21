@@ -29,11 +29,11 @@
       <router-link to="/site/signup">
         <el-link type="primary" :underline="false">注册用户</el-link>
       </router-link>
-      <br>
+      <br />
       <router-link to="/site/request-password-reset">
         <el-link type="primary" :underline="false">找回密码</el-link>
       </router-link>
-      <br>
+      <br />
     </div>
   </Site>
 </template>
@@ -76,8 +76,7 @@ export default {
       setToken(data.access_token)
       this.$router.push('/')
     },
-    failed(message) {
-    },
+    failed(message) {},
     submit(formName) {
       const self = this
       this.$refs[formName].validate(valid => {
@@ -87,13 +86,12 @@ export default {
             password: self.form.password
           })
             .then(response => {
-              // alert(1)
               console.log(response)
               if (response.data) {
                 self.succeed(response.data)
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(error)
               self.failed(error)
             })

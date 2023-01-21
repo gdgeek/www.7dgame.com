@@ -1,7 +1,12 @@
 <template>
   <el-form :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" label="名称">
-      <el-tag size="small" @click="changeVerseName()">{{ value.name }}</el-tag>
+      <el-tag size="small" v-if="root.canSave" @click="changeVerseName()">
+        {{ value.name }}
+      </el-tag>
+      <el-tag size="small" v-else>
+        {{ value.name }}
+      </el-tag>
     </el-form-item>
   </el-form>
 </template>
@@ -19,52 +24,49 @@ export default {
     }
   },
   computed: {
-    word() {
-      return this.root.$store.state.settings.word
-    },
     verseName: {
       get() {
-        return this.root.$store.state.verse.data.name
+        return this.root.verse.name
       },
       set(value) {
-        this.root.$store.commit('verse/setVerseName', value)
+        this.root._setVerseName(value)
         this.refresh()
       }
     }
   },
   mounted() {
-    this.value.name = this.root.$store.state.verse.data.name
-    this.value.id = this.root.$store.state.verse.data.id
+    this.value.name = this.root.verse.name
+    this.value.id = this.root.verse.id
     this.refresh()
   },
 
   methods: {
-    changeVerseName() {
-      const id = this.root.$store.state.verse.data.id
+    async changeVerseName() {
+      const id = this.root.verse.id
       const self = this
-      this.$prompt('请输入新的名称', '修改【宇宙】名称', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        closeOnClickModal: false,
-        inputValue: self.value.name
-      })
-        .then(({ value }) => {
-          putVerse(id, { name: value }).then(() => {
-            self.value.name = value
-            this.root.$store.commit('verse/setVerseName', value)
-            this.$message({
-              type: 'success',
-              message: '新的名称是: ' + value
-            })
-            this.refresh()
-          })
+      try {
+        const r = await this.$prompt('请输入新的名称', '修改【宇宙】名称', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          closeOnClickModal: false,
+          inputValue: self.value.name
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          })
+
+        await putVerse(id, { name: r.value })
+        self.value.name = r.value
+        this.root._setVerseName(r.value)
+        this.$message({
+          type: 'success',
+          message: '新的名称是: ' + r.value
         })
+        this.refresh()
+      } catch (e) {
+        console.error(e)
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        })
+      }
     },
     refresh() {
       if (this.data) {

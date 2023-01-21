@@ -85,7 +85,7 @@
 			import { Sidebar } from './js/Sidebar.js'
 			import { Menubar } from './js/Menubar.js'
 			import { Resizer } from './js/Resizer.js'
-			import { SpaceLoader } from './js/mrpp/SpaceLoader.js'
+			import { VerseLoader } from './js/mrpp/VerseLoader.js'
 			import { VRButton } from '../examples/jsm/webxr/VRButton.js'
 
 			window.URL = window.URL || window.webkitURL
@@ -236,7 +236,7 @@
 				} catch (error) {}
 			}
 
-			const loader = new SpaceLoader(editor)
+			const loader = new VerseLoader(editor)
 			window.addEventListener('message', e => {
 				const urlParams = new URLSearchParams(window.location.search)
 				const id = urlParams.get('id')
@@ -244,6 +244,8 @@
 				if (e.data.verify === 'mrpp.com') {
 					switch (e.data.action) {
 						case 'load':
+							loader.load(e.data.data)
+							break
 						case 'reload':
 							loader.load(e.data.data)
 

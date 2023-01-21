@@ -78,7 +78,8 @@ export default {
   },
   methods: {
     select() {
-      this.root.$store.commit('knightCallback', this.onKnight)
+      this.root.openKnight(this.onKnight)
+      // this.root.$store.commit('knightCallback', this.onKnight)
     },
 
     onKnight(data) {
@@ -91,23 +92,30 @@ export default {
       }
       this.reload()
     },
-    reload() {
+    async reload() {
       const self = this
       if (
         this.value !== null &&
         (this.item === null || this.value != this.item.id)
       ) {
-        getKnight(self.value, {
-          expand: 'author,image'
-        }).then(response => {
+        try {
+          const response = await getKnight(self.value, {
+            expand: 'author,image'
+          })
+
           if (response.data !== null) {
             self.item = response.data
           }
-        })
+        } catch (e) {
+          console.error(e)
+        }
       }
     },
     refresh() {
-      putMetaKnight(this.id, { knight_id: this.value })
+      if (this.root.canSave) {
+        putMetaKnight(this.id, { knight_id: this.value })
+      }
+
       this.emitter.trigger('process', { status: 'node' })
     }
   }
