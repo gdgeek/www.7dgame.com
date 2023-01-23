@@ -3,6 +3,7 @@ ENV = 'mrpp.com'
 
 
 # base api
+
 VUE_APP_BASE_API = 'https://api.next.mrpp.com'
 # base web
 VUE_APP_BASE_URL = 'https://app.next.mrpp.com'
