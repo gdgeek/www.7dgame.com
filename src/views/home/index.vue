@@ -28,7 +28,7 @@
       </el-tab-pane>
     </el-tabs>
 
-    <el-tabs v-else type="border-card" lazy>
+    <el-tabs v-if="env.local()" type="border-card" lazy>
       <el-tab-pane :label="information.data.title">
         <local-page />
       </el-tab-pane>
