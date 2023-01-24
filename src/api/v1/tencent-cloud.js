@@ -1,57 +1,23 @@
 import request from '@/utils/request'
-import url from 'url'
+
+var qs = require('querystringify')
+var path = require('path')
 export function token(bucket, region = 'ap-nanjing') {
+  const url = path.join(
+    'v1',
+    'tencent-clouds',
+    'token' + qs.stringify({ bucket, region }, true)
+  )
   return request({
-    url: url.format({
-      pathname: '/v1/tencent-clouds/token',
-      query: {
-        bucket,
-        region
-      }
-    }),
-    method: 'get'
-  })
-}
-/*
-export function getData(token) {
-  return request({
-    url: '/servers/user',
-    method: 'get',
-    params: { token }
-  })
-}
-export function logout() {
-  return request({
-    url: '/servers/logout',
-    method: 'get'
-  })
-}
-export function sts() {
-  return request({
-    url: '/servers/sts',
-    method: 'get'
-  })
-}
-export function token() {
-  return request({
-    url: '/servers/token',
+    url,
     method: 'get'
   })
 }
 
-export function bindEmail(email) {
+export function store() {
+  const url = path.join('v1', 'tencent-clouds', 'store')
   return request({
-    url: '/servers/bind-email',
-    method: 'post',
-    data: { email }
+    url,
+    method: 'get'
   })
 }
-
-export function resetPassword(oldPassword, password) {
-  return request({
-    url: '/servers/reset-password',
-    method: 'post',
-    data: { oldPassword, password }
-  })
-}
-*/

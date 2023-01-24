@@ -3,7 +3,7 @@ import { token } from '@/api/v1/tencent-cloud'
 import { fileMD5, fileOpen } from './base.js'
 import path from 'path'
 
-async function fileHandler(bucket = 'raw-1251022382', region = 'ap-nanjing') {
+async function fileHandler(bucket, region = 'ap-nanjing') {
   return new Promise(async (resolve, reject) => {
     try {
       const cos = new COS({

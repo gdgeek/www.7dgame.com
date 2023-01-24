@@ -1,9 +1,21 @@
 import COS from 'cos-js-sdk-v5'
-import { token } from '@/api/v1/tencent-cloud'
+import { token, store } from '@/api/v1/tencent-cloud'
 import { fileMD5, fileOpen } from './base.js'
 import path from 'path'
 
-async function fileHandler(bucket = 'raw-1251022382', region = 'ap-nanjing') {
+async function storeHandler() {
+  const response = await store()
+  return await fileHandler(
+    response.data.store.bucket,
+    response.data.store.region
+  )
+}
+
+async function rawHandler() {
+  const response = await store()
+  return await fileHandler(response.data.raw.bucket, response.data.raw.region)
+}
+async function fileHandler(bucket, region) {
   return new Promise(async (resolve, reject) => {
     try {
       const cos = new COS({
@@ -187,8 +199,10 @@ export default {
   fileHas,
   fileUrl,
   fileUpload,
-  fileHandler,
+  //fileHandler,
   fileProcess,
   fileDownload,
+  storeHandler,
+  rawHandler,
   getUrl
 }
