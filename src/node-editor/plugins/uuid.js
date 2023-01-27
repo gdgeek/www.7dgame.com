@@ -4,8 +4,9 @@
  * Released under the MIT license.
  */
 import { v4 as uuidv4 } from 'uuid'
-const set = new Set()
+
 function install(editor, options) {
+  const set = new Set()
   editor.on('nodecreate', component => {
     options.forEach((value, index, arr) => {
       if (value.component === component.name) {
