@@ -9,7 +9,13 @@
         <div class="background-box-image">
           <div class="education-phone-box" align="left">
             <p
-              style="width:200px;font-weight: 600; font-size: 22px; color: #32373f；word-wrap:break-word ;"
+              style="
+                width: 200px;
+                font-weight: 600;
+                font-size: 22px;
+                color: #f5f4f3;
+                word-wrap: break-word;
+              "
             >
               {{ infoTitle2 }}
             </p>
@@ -17,7 +23,7 @@
               <a
                 ref="telPhone"
                 :href="'tel' + ':' + infoTel"
-                style="border-bottom: 2px solid #1e82e8; color: #e361a1"
+                style="border-bottom: 2px solid #1e82e8; color: #f5f4f3"
               >
                 点击拨打
                 <i class="el-icon-phone-outline" />
@@ -33,7 +39,7 @@
           <div class="exhibition-pc-box" align="left">
             <div class="exhibition-pc-title">{{ infoTitle }}</div>
             <div class="exhibition-pc-title">{{ infoTitle2 }}</div>
-            <h1 style="font-weight: lighter; margin-top: 8%; color: #00cccc">
+            <h1 style="font-weight: lighter; margin-top: 8%; color: #f5f4f3">
               即刻拨打
               {{ infoTel }}
             </h1>
@@ -55,8 +61,8 @@ export default {
 
   data() {
     return {
-      infoTitle: '展馆板块',
-      infoTitle2: '改造中',
+      infoTitle: '欢迎创建',
+      infoTitle2: '元宇宙实景展馆',
       infoTel: 15000159790
     }
   },
@@ -74,11 +80,11 @@ export default {
   padding: 1px 30px 20px;
   width: 100%;
   height: 30vw;
-  max-height: 600px;
-  background-color: #f8cab0;
-  // background: url('/media/bg/m2-screen.jpg') center no-repeat;
-  // background-size: cover;
-  // background-size: 100%;
+  max-height: 500px;
+  // background-color: #f8cab0;
+  background: url('/media/bg/ex-bg3.jpg') center no-repeat;
+  background-size: cover;
+  background-size: 100%;
 }
 
 .exhibition-phone-box {
@@ -93,6 +99,7 @@ export default {
   font-size: 46px;
   font-weight: 600;
   // color: #00cccc;
-  color: #32373f;
+  color: #f5f4f3;
+  // color: #32373f;
 }
 </style>

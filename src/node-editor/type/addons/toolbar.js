@@ -10,7 +10,7 @@ var ToolbarType = {
     },
     {
       type: 'bool',
-      key: 'destory',
+      key: 'destroy',
       title: '销毁',
       default: false
     }

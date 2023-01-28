@@ -4,7 +4,10 @@
     <el-row :gutter="30">
       <el-col :span="22" :offset="2">
         <div class="reletion-title-small">以用户为中心</div>
-        <div class="reletion-title-h1 p-title-m">欢迎联系我们</div>
+        <div :class="[isBlack ? 'reletion-title-black' : 'reletion-title-h1']">
+          <div class="p-title-m">欢迎联系我们</div>
+        </div>
+        <!-- <div class="reletion-title-h1 p-title-m">欢迎联系我们</div> -->
       </el-col>
       <el-col :xs="22" :sm="22" :md="10" :lg="10" :xl="10" :offset="2">
         <div class="reletion-title-h3 p-title-s">公司简介</div>
@@ -20,7 +23,7 @@
             <span style="color: rgb(102, 102, 102)">
               <span style="font-family: arial; font-size: 16px">
                 上海游七网络科技有限公司，作为国内制作元宇宙AR实景应用最早的高新科技企业，
-                团队项目开发经验丰富，技术方案灵活多样。在开发过程中与客户深入沟通，节约成本，提高交付效率。
+                团队项目开发经验丰富，技术方案灵活多样。与未来数字化生态相融合，不断进取。
               </span>
             </span>
           </div>
@@ -74,6 +77,12 @@
 <script>
 export default {
   name: 'MedicalRelation',
+  props: {
+    isBlack: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {}
   }
@@ -90,6 +99,12 @@ export default {
   font-size: 32px;
   font-weight: 600;
   color: #00cccc;
+  margin-bottom: 65px;
+}
+.reletion-title-black {
+  font-size: 32px;
+  font-weight: 600;
+  color: #222222;
   margin-bottom: 65px;
 }
 .reletion-title-h3 {

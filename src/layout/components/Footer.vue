@@ -5,7 +5,7 @@
         <span v-for="item in information.data.companies" :key="item.name">
           <el-link :href="item.url" target="_blank" :underline="false">
             <i class="el-icon-s-home" />
-            {{ item.name }}
+            {{ item.name }} ({{ information.data.description }})
           </el-link>
         </span>
 

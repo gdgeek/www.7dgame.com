@@ -20,9 +20,20 @@
       </el-col>
       <!-- 视频位置 -->
       <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-        <div class="medical-video-box">
+        <!-- <div class="medical-video-box">
           <landscape-video :vdsrc="videoSrc" />
-        </div>
+        </div> -->
+        <a
+          href="https://space.bilibili.com/20959246/channel/seriesdetail?sid=352585"
+          target="_blank"
+        >
+          <div class="medical-video-box">
+            <img
+              src="/media/bg/medical-play.jpg"
+              style="width: 100%; border-radius: 5px"
+            />
+          </div>
+        </a>
       </el-col>
     </el-row>
     <br />
@@ -31,14 +42,14 @@
 </template>
 
 <script>
-import LandscapeVideo from './LandscapeVideo.vue'
+// import LandscapeVideo from './LandscapeVideo.vue'
 export default {
   name: 'MedicalVideo',
-  components: { LandscapeVideo },
+  // components: { LandscapeVideo },
   data() {
     return {
-      videoSrc:
-        'http://1251022382.vod2.myqcloud.com/3ebf9041vodtransgzp1251022382/6487c9fd5285890809258783935/v.f30.mp4'
+      // videoSrc:
+      //   'http://1251022382.vod2.myqcloud.com/3ebf9041vodtransgzp1251022382/6487c9fd5285890809258783935/v.f30.mp4'
     }
   }
 }

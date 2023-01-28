@@ -536,6 +536,12 @@ export const constantRoutes = [
         path: 'exhibition',
         name: 'WebExhibition',
         component: () => import('@/views/web/exhibition')
+      },
+      {
+        meta: { title: '宣传页' },
+        path: 'publicity',
+        name: 'Publicity',
+        component: () => import('@/views/web/publicity')
       }
     ]
   },

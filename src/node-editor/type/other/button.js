@@ -30,7 +30,14 @@ var ButtonType = {
       title: '参数'
     }
   ],
-  inputs: [],
+  inputs: [
+    {
+      key: 'input',
+      title: '按钮',
+      socket: ButtonSocket,
+      multiConns: true
+    }
+  ],
   outputs: [
     {
       key: 'out',

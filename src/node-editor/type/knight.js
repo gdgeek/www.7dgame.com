@@ -4,7 +4,7 @@ var KnightType = {
   title: 'Knight',
   controls: [
     {
-      type: 'uuid',
+      type: 'string',
       key: 'uuid'
     },
     {

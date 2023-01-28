@@ -218,7 +218,7 @@ export default {
           const md5 = await store.fileMD5(file, function (p) {
             self.progress(p, 0)
           })
-          const handler = await store.fileHandler()
+          const handler = await store.rawHandler()
           let info = null
           let hasJson = await store.fileHas(
             'info',
