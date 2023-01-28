@@ -3,7 +3,8 @@
     <el-tabs v-if="env.mrpp()" type="border-card" lazy>
       <el-tab-pane label="首页">
         <document :post-id="999" :category="true" />
-        <br />
+      </el-tab-pane>
+      <el-tab-pane label="新闻">
         <document-list :category-id="74" />
       </el-tab-pane>
       <el-tab-pane label="相关下载">
@@ -17,7 +18,8 @@
     <el-tabs v-if="env.mrcn()" type="border-card" lazy>
       <el-tab-pane label="首页">
         <document :post-id="999" :category="true" />
-        <br />
+      </el-tab-pane>
+      <el-tab-pane label="新闻">
         <document-list :category-id="74" />
       </el-tab-pane>
       <el-tab-pane label="相关下载">
