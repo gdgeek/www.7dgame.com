@@ -103,7 +103,7 @@
       </el-row>
     </div style="padding: 10px 1% 20px">
     <div align="center" style="padding:2% 0 6%">
-      <div class="product-button" @click="goto('/web/education-product')">
+      <div class="product-button" @click="goto('/web/list-product')">
         价格详情
       </div>
 

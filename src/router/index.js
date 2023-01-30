@@ -520,10 +520,10 @@ export const constantRoutes = [
         component: () => import('@/views/web/education')
       },
       {
-        meta: { title: '教育产品' },
-        path: 'education-product',
-        name: 'EducationProduct',
-        component: () => import('@/views/web/education-product')
+        meta: { title: '产品列表' },
+        path: 'list-product',
+        name: 'ListProduct',
+        component: () => import('@/views/web/list-product')
       },
       {
         meta: { title: '医疗合作' },

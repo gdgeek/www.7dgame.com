@@ -17,7 +17,7 @@
           </p>
         </div>
         <div align="left" class="button-box">
-          <div class="product-button" @click="goto('/web/education-product')">
+          <div class="product-button" @click="goto('/web/list-product')">
             价格详情
           </div>
         </div>
@@ -47,7 +47,7 @@
           </p>
         </div>
         <div align="left" class="button-box">
-          <div class="product-button" @click="goto('/web/education-product')">
+          <div class="product-button" @click="goto('/web/list-product')">
             价格详情
           </div>
         </div>
