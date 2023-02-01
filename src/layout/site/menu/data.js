@@ -28,11 +28,6 @@ if (env.canWeb()) {
       path: '/web/medical',
       name: 'Medical',
       text: '元宇宙医疗'
-    },
-    {
-      path: '/web/download',
-      name: 'Download',
-      text: '相关下载'
     }
   ]
 }
