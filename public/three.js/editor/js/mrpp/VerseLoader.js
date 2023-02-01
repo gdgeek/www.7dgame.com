@@ -92,6 +92,8 @@ function VerseLoader(editor) {
 					context.children.entities[i],
 					resources
 				)
+
+				builder.lockNode(node)
 				root.add(node)
 			}
 		}
