@@ -10,9 +10,24 @@ if (env.canWeb()) {
       text: '网站首页'
     },
     {
+      path: '/web/education',
+      name: 'Education',
+      text: '智能教育'
+    },
+    {
+      path: '/web/exhibition',
+      name: 'Exhibition',
+      text: '全息展馆'
+    },
+    {
       path: '/web/sandtable',
       name: 'SandTable',
-      text: '数字沙盘制作'
+      text: '展会沙盘'
+    },
+    {
+      path: '/web/medical',
+      name: 'Medical',
+      text: '元宇宙医疗'
     },
     {
       path: '/web/download',
