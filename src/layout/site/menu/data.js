@@ -1,8 +1,9 @@
-export const data = []
+export let data = []
 
 import env from '@/environment.js'
+
 if (env.canWeb()) {
-  data.concat([
+  data = [
     {
       path: '/web/index',
       name: 'Index',
@@ -18,7 +19,6 @@ if (env.canWeb()) {
       name: 'Download',
       text: '相关下载'
     }
-  ])
+  ]
 }
-
 export default { data }
