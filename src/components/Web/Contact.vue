@@ -1,23 +1,41 @@
 <template>
   <div class="portal-main-background">
     <div class="content" align="center">
-      <h1 class="text">请即刻联系我们，开展定制业务</h1>
+      <h1 class="text font-text" style="font-weight: 400">
+        请即刻联系我们，开展定制业务
+      </h1>
     </div>
     <div class="content-contact" align="right">
-      <p class="text"><img src="/media/bg/phone-icon.png" align="absmiddle" alt="" height="36px"> 服务电话 15000159790 </p>
-      <p class="text"><img src="/media/bg/wechat-icon.png" align="absmiddle" alt="" height="36px"> 服务微信 15000159790</p>
+      <p class="text font-text">
+        <img
+          src="/media/bg/phone-icon.png"
+          align="absmiddle"
+          alt=""
+          height="36px"
+        />
+        服务电话 15000159790
+      </p>
+      <p class="text font-text">
+        <img
+          src="/media/bg/wechat-icon.png"
+          align="absmiddle"
+          alt=""
+          height="36px"
+        />
+        服务微信 15000159790
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import '@/assets/font/font.css'
 export default {
   name: 'Contact',
 
   data() {
     return {}
   }
-
 }
 </script>
 
@@ -30,16 +48,16 @@ export default {
   // background-size: 100%;
 }
 
-.text{
-  color:whitesmoke
+.text {
+  color: whitesmoke;
 }
-.content{
+.content {
   padding-top: 36px;
 }
-.content-contact{
-  align-items:center;
+.content-contact {
+  align-items: center;
   padding: 150px 112px 0 0;
   font-size: 20px;
-  line-height:20px;
+  line-height: 20px;
 }
 </style>

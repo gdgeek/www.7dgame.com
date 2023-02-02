@@ -15,10 +15,8 @@
 </template>
 
 <script>
-
 export default {
   name: 'MrPPPenkCard'
-
 }
 </script>
 
@@ -26,10 +24,10 @@ export default {
 .penkcardtitle {
   color: #58606a;
 }
-.penkcardtitle div{
+.penkcardtitle div {
   margin: 24px 0 7px 0;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   // background-color: pink;
 }
 </style>

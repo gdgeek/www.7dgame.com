@@ -100,20 +100,18 @@ export default {
 
 .reletion-title-h1 {
   font-size: 32px;
-  font-weight: 600;
   color: #00cccc;
   margin-bottom: 65px;
 }
 .reletion-title-black {
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 400;
   color: #222222;
   margin-bottom: 65px;
 }
 .reletion-title-h3 {
   margin-bottom: 16px;
   font-size: 26px;
-  font-weight: 600;
   color: #32373f;
 }
 .reletion-title-small {

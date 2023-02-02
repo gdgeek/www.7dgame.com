@@ -1,6 +1,6 @@
 <template>
   <!-- 产品中心 -->
-  <section class="section-box">
+  <section class="section-box font-text">
     <el-row :gutter="30" class="p-pc-pfr">
       <!-- content部分 -->
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" align="left">
@@ -25,7 +25,7 @@
           <landscape-video :vdsrc="videoSrc" />
         </div> -->
         <a
-          href="https://space.bilibili.com/20959246/channel/seriesdetail?sid=352585"
+          href="https://www.bilibili.com/video/BV1DR4y1s7nV/?spm_id_from=333.999.0.0"
           target="_blank"
         >
           <div class="medical-video-box">
@@ -69,7 +69,7 @@ export default {
 
 .medical-title-h3 {
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 400;
   color: #00cccc;
 }
 .medical-title-small {
@@ -81,7 +81,7 @@ export default {
 }
 .medical-content-small {
   color: #444850;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px;
   line-height: 24px;
 }

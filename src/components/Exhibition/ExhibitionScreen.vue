@@ -1,22 +1,14 @@
 <template>
   <!-- 巨幕板块 -->
-  <section>
+  <section class="font-text">
     <!-- 模型通用组件占位 -->
     <!-- <demo-screen-show /> -->
     <el-row>
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
-          <div class="education-phone-box" align="left">
-            <p
-              style="
-                width: 200px;
-                font-weight: 600;
-                font-size: 22px;
-                color: #f5f4f3;
-                word-wrap: break-word;
-              "
-            >
+          <div class="education-phone-box font-title" align="left">
+            <p style="font-size: 30px; color: #f5f4f3">
               {{ infoTitle2 }}
             </p>
             <p>
@@ -37,8 +29,8 @@
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
           <div class="exhibition-pc-box" align="left">
-            <div class="exhibition-pc-title">{{ infoTitle }}</div>
-            <div class="exhibition-pc-title">{{ infoTitle2 }}</div>
+            <div class="exhibition-pc-title font-title">{{ infoTitle }}</div>
+            <div class="exhibition-pc-title font-title">{{ infoTitle2 }}</div>
             <h1 style="font-weight: lighter; margin-top: 8%; color: #f5f4f3">
               即刻拨打
               {{ infoTel }}
@@ -77,12 +69,12 @@ export default {
 .background-box-image {
   display: flex;
   align-items: center;
-  padding: 1px 30px 20px;
+  padding: 1px 3% 20px;
   width: 100%;
   height: 30vw;
-  max-height: 500px;
-  // background-color: #f8cab0;
-  background: url('/media/bg/ex-bg3.jpg') center no-repeat;
+  max-height: 650px;
+  // background-color: #c9eaf3;
+  background: url('/media/bg/ex-screen.jpg') center no-repeat;
   background-size: cover;
   background-size: 100%;
 }
@@ -97,7 +89,7 @@ export default {
 .exhibition-pc-title {
   margin-bottom: 2%;
   font-size: 46px;
-  font-weight: 600;
+  font-weight: 400;
   // color: #00cccc;
   color: #f5f4f3;
   // color: #32373f;

@@ -31,10 +31,11 @@
         </p>
       </div>
       <div v-else slot="header" class="clearfix">
-        <span>相关案例</span>
+        <b class="font-text">相关案例</b>
         <el-button
           style="float: right; padding: 3px 0"
           type="text"
+          class="font-text"
           @click="goto('/web/example')"
         >
           更多内容
@@ -61,13 +62,17 @@
             </div>
             <div style="padding: 14px">
               <div style="height: 60px">
-                <span>{{ item.title }}</span>
+                <span class="font-text">{{ item.title }}</span>
                 <div class="bottom clearfix">
-                  <time class="time">{{ item.describe }}</time>
+                  <time class="time font-text">{{ item.describe }}</time>
                   <br />
                 </div>
               </div>
-              <el-button type="text" class="button" @click="onSelected(item)">
+              <el-button
+                type="text"
+                class="button font-text"
+                @click="onSelected(item)"
+              >
                 播放视频
               </el-button>
               <br />
@@ -81,10 +86,13 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import 'video.js/dist/video-js.css'
 import IsMobile from '@/layout/site/mixin/IsMobile'
 import { data } from '@/views/web/data/examples.js'
 import { videoPlayer } from 'vue-video-player'
+
+import '@/assets/font/font.css'
 export default {
   name: 'Giant',
   components: {
@@ -189,6 +197,12 @@ export default {
 .time {
   font-size: 13px;
   color: #999;
+}
+.text {
+  font-family: 'SourceHanSansHWSC-VF';
+}
+.title {
+  font-family: 'SmileySans-Oblique';
 }
 
 .parent {

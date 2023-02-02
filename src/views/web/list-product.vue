@@ -3,7 +3,9 @@
     <!-- 巨幕板块 -->
     <section class="portal-main-background">
       <div align="center">
-        <div class="portal-h1-title title-ph-l">产品中心，选择合适的方案</div>
+        <div class="portal-h1-title title-ph-l font-text">
+          产品中心，选择合适的方案
+        </div>
         <p class="education-gray-title title-ph-s">
           根据您的使用场景，做出最佳选择
         </p>
@@ -152,6 +154,7 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import 'element-ui/lib/theme-chalk/display.css'
 
 import EducationSubscreen from '@/components/Education/EducationSubscreen.vue'
@@ -217,18 +220,18 @@ export default {
 .portal-h1-title {
   margin-bottom: 2%;
   font-size: 50px;
-  font-weight: 600;
+  font-weight: 400;
   color: #32373f;
 }
 .portal-h3-title {
   padding-top: 18px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 28px;
   color: #32373f;
 }
 .portal-h4-title {
   padding-top: 10px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 20px;
   color: #32373f;
 }
@@ -245,7 +248,7 @@ export default {
   color: #8d95a6;
 }
 .education-sub-title {
-  font-weight: 600;
+  font-weight: 400;
   font-size: 20px;
   color: #32373f;
 }

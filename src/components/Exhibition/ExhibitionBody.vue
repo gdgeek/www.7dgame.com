@@ -54,7 +54,7 @@ export default {
 
 .exhibition-title-h1 {
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 400;
   color: #222222;
   margin-bottom: 40px;
 }
@@ -65,7 +65,7 @@ export default {
 .icon-title-h3 {
   padding: 20px 0 0;
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 400;
 }
 .icon-content {
   font-size: 14px;

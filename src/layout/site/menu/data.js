@@ -7,7 +7,7 @@ if (env.canWeb()) {
     {
       path: '/web/index',
       name: 'Index',
-      text: '网站首页'
+      text: '平台入口'
     },
     {
       path: '/web/education',
@@ -28,11 +28,6 @@ if (env.canWeb()) {
       path: '/web/medical',
       name: 'Medical',
       text: '元宇宙医疗'
-    },
-    {
-      path: '/web/download',
-      name: 'Download',
-      text: '相关下载'
     }
   ]
 }

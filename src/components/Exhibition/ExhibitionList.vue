@@ -48,7 +48,7 @@ export default {
 }
 .background-text-title {
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 400;
 }
 .background-img {
   position: relative;
