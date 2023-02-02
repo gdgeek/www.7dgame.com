@@ -10,3 +10,18 @@
   src: url("./My-font/SourceHanSansCN.ttf");
   font-display: swap;
 }
+
+
+/* My-SourceHanSansCN for Content 思源黑*/
+@font-face {
+  font-family: "SourceHanSansHWSC-VF";
+  src: url("./My-font/SourceHanSansHWSC-VF.ttf.woff2");
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: "SmileySans-Oblique";
+  src: url("./My-font/SmileySans-Oblique.ttf.woff2");
+  font-display: swap;
+}

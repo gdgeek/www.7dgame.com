@@ -3,15 +3,18 @@
     <div class="content" align="right">
       <h3 class="text">元宇宙实景编程平台</h3>
       <h1 class="text">让每个人都可以快乐地创造世界</h1>
-      <el-button @click="goto('/site/index')" type="primary">
+      <el-button class="button" @click="goto('/site/index')" type="primary">
         登入平台
       </el-button>
-      <el-button @click="goto('/web/download')">相关下载</el-button>
+      <el-button class="button" @click="goto('/web/download')">
+        相关下载
+      </el-button>
     </div>
   </div>
 </template>
 
 <script>
+import '@/assets/font/font.css'
 export default {
   name: 'Giant',
 
@@ -35,9 +38,14 @@ export default {
   // background-size: 100%;
 }
 
+.button {
+  font-family: 'SourceHanSansHWSC-VF';
+}
 .text {
   color: whitesmoke;
+  font-family: 'SmileySans-Oblique';
 }
+
 .content {
   padding-right: 50px;
   padding-top: 50px;
