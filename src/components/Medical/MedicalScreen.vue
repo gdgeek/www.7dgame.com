@@ -29,9 +29,9 @@
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
           <div class="medical-pc-box" align="left">
-            <div class="medical-pc-title">{{ infoTitle }}</div>
-            <div class="medical-pc-title">{{ infoTitle2 }}</div>
-            <h1 style="font-weight: lighter; margin-top: 8%; color: #00cccc">
+            <div class="medical-pc-title font-title">{{ infoTitle }}</div>
+            <div class="medical-pc-title font-title">{{ infoTitle2 }}</div>
+            <h1 class="font-text" style="font-weight: lighter; margin-top: 8%">
               即刻拨打
               {{ infoTel }}
             </h1>
