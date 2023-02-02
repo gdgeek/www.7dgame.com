@@ -1,8 +1,8 @@
 <template>
   <div class="portal-main-background">
     <div class="content" align="right">
-      <h3 class="text">元宇宙实景编程平台</h3>
-      <h1 class="text">让每个人都可以快乐地创造世界</h1>
+      <h3 class="font-title title">元宇宙实景编程平台</h3>
+      <h1 class="font-title title">让每个人都可以快乐地创造世界</h1>
       <el-button class="button" @click="goto('/site/index')" type="primary">
         登入平台
       </el-button>
@@ -41,9 +41,8 @@ export default {
 .button {
   font-family: 'SourceHanSansHWSC-VF';
 }
-.text {
+.title {
   color: whitesmoke;
-  font-family: 'SmileySans-Oblique';
 }
 
 .content {

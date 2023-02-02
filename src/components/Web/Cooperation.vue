@@ -2,7 +2,7 @@
   <div class="background">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>我们的合作伙伴</span>
+        <span class="font-title">我们的合作伙伴1</span>
         <!-- <el-button style="float: right; padding: 3px 0" type="text">
           更多内容
         </el-button> -->
@@ -15,23 +15,19 @@
         </el-carousel>
       </div>
 
-      <br>
+      <br />
     </el-card>
   </div>
 </template>
 
 <script>
-
+import '@/assets/font/font.css'
 export default {
   name: 'Cooperation',
-  components: {
-  },
+  components: {},
   data() {
-    return {
-
-    }
+    return {}
   }
-
 }
 </script>
 
@@ -45,18 +41,18 @@ export default {
 //   float: right;
 // }
 .el-carousel__item h3 {
-    color: #475669;
-    font-size: 14px;
-    opacity: 0.75;
-    line-height: 200px;
-    margin: 0;
-  }
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+}
 
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
 
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
-  }
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
 </style>

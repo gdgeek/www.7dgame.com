@@ -11,7 +11,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <div class="background-text" align="left">
-          <h2>快速分析了解您的需求</h2>
+          <h2 class="font-title">快速分析了解您的需求!</h2>
           <p style="font-size: 16px; font-weight: lighter; line-height: 24px">
             资深专业人员将对您的需求进行详细了解，发送我们的案例给您参考，为您的绝妙创意提供最适合的解决方案，并全程为项目的实现提供咨询。
           </p>
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import 'element-ui/lib/theme-chalk/display.css'
 export default {
   name: 'MedicalList',
