@@ -7,16 +7,8 @@
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
-          <div class="education-phone-box" align="left">
-            <p
-              style="
-                width: 200px;
-                font-weight: 400;
-                font-size: 22px;
-                color: #f5f4f3;
-                word-wrap: break-word;
-              "
-            >
+          <div class="education-phone-box font-title" align="left">
+            <p style="font-size: 30px; color: #f5f4f3">
               {{ infoTitle2 }}
             </p>
             <p>
@@ -37,8 +29,8 @@
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
           <div class="exhibition-pc-box" align="left">
-            <div class="exhibition-pc-title">{{ infoTitle }}</div>
-            <div class="exhibition-pc-title">{{ infoTitle2 }}</div>
+            <div class="exhibition-pc-title font-title">{{ infoTitle }}</div>
+            <div class="exhibition-pc-title font-title">{{ infoTitle2 }}</div>
             <h1 style="font-weight: lighter; margin-top: 8%; color: #f5f4f3">
               即刻拨打
               {{ infoTel }}

@@ -4,9 +4,11 @@
     <el-row>
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
-        <div class="background-box-image">
+        <div class="background-box-image font-title">
           <div class="section-title" align="center">
-            <h4>{{ infoTitle }}</h4>
+            <p style="font-size: 30px; color: #32373f；">
+              {{ infoTitle }}
+            </p>
             <h4>
               <a
                 ref="telPhone"
@@ -25,8 +27,11 @@
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
           <div align="center">
-            <h1 class="exhibition-pc-title">{{ infoTitle }}</h1>
-            <h1 style="font-weight: lighter; margin-top: 8%; color: #f5f4f3">
+            <h1 class="exhibition-pc-title font-title">{{ infoTitle }}</h1>
+            <h1
+              class="font-text"
+              style="font-weight: lighter; margin-top: 8%; color: #f5f4f3"
+            >
               即刻拨打 {{ infoTel }}
             </h1>
           </div>

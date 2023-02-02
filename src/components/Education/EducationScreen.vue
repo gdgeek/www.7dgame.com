@@ -8,10 +8,8 @@
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
           <div class="education-phone-box font-title" align="left">
-            <p
-              style="width:200px;font-weight: 400; font-size: 18px; color: #32373f；word-wrap:break-word ;"
-            >
-              {{ infoTitle }}{{ infoTitle2 }}
+            <p style=" font-size: 30px; color: #32373f；word-wrap:break-word ;">
+              {{ infoTitle2 }}
             </p>
             <p>
               <a
@@ -59,8 +57,8 @@ export default {
 
   data() {
     return {
-      infoTitle: '为教育打造的',
-      infoTitle2: '元宇宙实景编程平台',
+      infoTitle: '为您私有部署',
+      infoTitle2: '元宇宙数字化教育方案',
       infoTel: 15000159790
     }
   },
