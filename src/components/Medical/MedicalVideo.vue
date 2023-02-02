@@ -25,7 +25,7 @@
           <landscape-video :vdsrc="videoSrc" />
         </div> -->
         <a
-          href="https://space.bilibili.com/20959246/channel/seriesdetail?sid=352585"
+          href="https://www.bilibili.com/video/BV1DR4y1s7nV/?spm_id_from=333.999.0.0"
           target="_blank"
         >
           <div class="medical-video-box">

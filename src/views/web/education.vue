@@ -9,16 +9,16 @@
     <!-- 产品中心 -->
     <education-cloud />
 
-    <!-- 系统子幕图-->
-    <education-subscreen />
-
     <!-- 创新协同体验 -->
     <education-deploy />
 
-    <!-- 联系我们板块 -->
-    <relation :is-blue="isBlue" />
-    <!-- 合作伙伴板块 -->
-    <partner :is-blue="isBlue" />
+    <!-- 系统子幕图-->
+    <education-subscreen />
+
+    <!-- 联系我们 -->
+    <medical-relation />
+    <!-- 合作伙伴板块新通用组件 -->
+    <exhibition-partner />
   </div>
 </template>
 
@@ -30,8 +30,8 @@ import EducationCloud from '@/components/Education/EducationCloud.vue'
 import EducationSolution from '@/components/Education/EducationSolution.vue'
 import EducationDeploy from '@/components/Education/EducationDeploy.vue'
 import EducationSubscreen from '@/components/Education/EducationSubscreen.vue'
-import Relation from '@/components/SandTable/Relation.vue'
-import Partner from '@/components/SandTable/Partner.vue'
+import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
+import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
 export default {
   name: 'Education',
   components: {
@@ -40,19 +40,19 @@ export default {
     EducationSolution,
     EducationDeploy,
     EducationSubscreen,
-    Relation,
-    Partner
+    MedicalRelation,
+    ExhibitionPartner
   },
   data() {
     return {
-      // isBlue -- underline color props
-      isBlue: true
+      // isBlack -- title color props
+      isBlack: true
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '~@/styles/screenstyle.scss';
 @import '~@/styles/sandtable.scss';
+@import '~@/styles/responsive-style.scss';
 </style>

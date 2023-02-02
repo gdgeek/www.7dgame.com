@@ -34,7 +34,7 @@
       </el-col> -->
       <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <a
-          href="https://space.bilibili.com/20959246/channel/seriesdetail?sid=352585"
+          href="https://www.bilibili.com/video/BV1v3411f7Qg/?spm_id_from=333.999.0.0&vd_source=69755f47d8a89ee3b37b00151a7cfeed"
           target="_blank"
           class="link"
         >

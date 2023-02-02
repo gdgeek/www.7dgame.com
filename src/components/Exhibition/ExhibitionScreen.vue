@@ -77,12 +77,12 @@ export default {
 .background-box-image {
   display: flex;
   align-items: center;
-  padding: 1px 30px 20px;
+  padding: 1px 3% 20px;
   width: 100%;
   height: 30vw;
-  max-height: 500px;
-  // background-color: #f8cab0;
-  background: url('/media/bg/ex-bg3.jpg') center no-repeat;
+  max-height: 650px;
+  // background-color: #c9eaf3;
+  background: url('/media/bg/ex-screen.jpg') center no-repeat;
   background-size: cover;
   background-size: 100%;
 }

@@ -90,7 +90,7 @@ export default {
 }
 .education-pc-title {
   margin-bottom: 2%;
-  font-size: 52px;
+  font-size: 46px;
   font-weight: 600;
   color: #32373f;
 }
