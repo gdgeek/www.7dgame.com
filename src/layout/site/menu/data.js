@@ -7,7 +7,7 @@ if (env.canWeb()) {
     {
       path: '/web/index',
       name: 'Index',
-      text: '网站首页'
+      text: '平台入口'
     },
     {
       path: '/web/education',

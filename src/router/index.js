@@ -476,7 +476,7 @@ export const constantRoutes = [
 
     children: [
       {
-        meta: { title: '网站首页' },
+        meta: { title: '平台入口' },
         path: 'index',
         name: 'WebIndex',
         component: () => import('@/views/web/index')

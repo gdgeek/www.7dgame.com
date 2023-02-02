@@ -7,7 +7,7 @@
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
-          <div class="education-phone-box" align="left">
+          <div class="education-phone-box font-title" align="left">
             <p
               style="width:200px;font-weight: 600; font-size: 18px; color: #32373f；word-wrap:break-word ;"
             >
@@ -29,11 +29,14 @@
       </el-col>
       <!-- PC显示 -->
       <el-col :span="24" class="hidden-sm-and-down">
-        <div class="background-box-image">
+        <div class="background-box-image font-title">
           <div class="education-pc-box" align="left">
             <div class="education-pc-title">{{ infoTitle }}</div>
             <div class="education-pc-title">{{ infoTitle2 }}</div>
-            <h1 style="font-weight: lighter; margin-top: 8%; color: #32373f">
+            <h1
+              class="font-text"
+              style="font-weight: lighter; margin-top: 8%; color: #32373f"
+            >
               即刻拨打
               {{ infoTel }}
             </h1>
@@ -45,6 +48,7 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import DemoScreenShow from '@/components/MrPP/MrPPDemo/DemoScreenShow.vue'
 
 export default {
