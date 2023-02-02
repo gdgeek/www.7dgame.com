@@ -9,7 +9,7 @@
         <div class="background-box-image">
           <div class="education-phone-box font-title" align="left">
             <p
-              style="width:200px;font-weight: 600; font-size: 18px; color: #32373f；word-wrap:break-word ;"
+              style="width:200px;font-weight: 400; font-size: 18px; color: #32373f；word-wrap:break-word ;"
             >
               {{ infoTitle }}{{ infoTitle2 }}
             </p>
@@ -95,7 +95,6 @@ export default {
 .education-pc-title {
   margin-bottom: 2%;
   font-size: 46px;
-  font-weight: 600;
   color: #32373f;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <mr-p-p-site>
     <div class="module-head">
-      <h1 class="module-welcome font-title">欢迎!</h1>
-      <p class="module-text font-title">准备好出发了么？</p>
+      <h1 class="module-welcome font-text">欢迎!</h1>
+      <p class="module-text font-text">准备好出发了么？</p>
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
         <el-tab-pane name="login" label="账户密码登录">
           <mr-p-p-login>账户密码登录</mr-p-p-login>

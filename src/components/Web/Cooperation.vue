@@ -2,7 +2,7 @@
   <div class="background">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span class="font-title">我们的合作伙伴1</span>
+        <span class="font-text">我们的合作伙伴</span>
         <!-- <el-button style="float: right; padding: 3px 0" type="text">
           更多内容
         </el-button> -->

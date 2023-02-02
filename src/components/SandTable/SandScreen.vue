@@ -68,7 +68,7 @@ export default {
 .exhibition-pc-title {
   margin-bottom: 2%;
   font-size: 46px;
-  font-weight: 600;
+  font-weight: 400;
   // color: #00cccc;
   color: #f5f4f3;
   // color: #32373f;

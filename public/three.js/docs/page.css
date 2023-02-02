@@ -41,7 +41,7 @@
 @font-face {
 	font-family: 'Inter';
 	font-style: normal;
-	font-weight: 600;
+	font-weight: 400;
 	src: local('Inter-SemiBold'), url("../files/Inter-SemiBold.woff2?v=3.6") format("woff2");
 }
 
@@ -204,7 +204,7 @@ table code {
 }
 
 strong {
-	font-weight: 600;
+	font-weight: 400;
 }
 
 

@@ -1,6 +1,6 @@
 <template>
   <!-- 巨幕板块 -->
-  <section>
+  <section class="font-text">
     <!-- 模型通用组件占位 -->
     <!-- <demo-screen-show /> -->
     <el-row>
@@ -11,7 +11,7 @@
             <p
               style="
                 width: 200px;
-                font-weight: 600;
+                font-weight: 400;
                 font-size: 22px;
                 color: #f5f4f3;
                 word-wrap: break-word;
@@ -97,7 +97,7 @@ export default {
 .exhibition-pc-title {
   margin-bottom: 2%;
   font-size: 46px;
-  font-weight: 600;
+  font-weight: 400;
   // color: #00cccc;
   color: #f5f4f3;
   // color: #32373f;

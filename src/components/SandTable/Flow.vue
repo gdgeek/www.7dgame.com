@@ -1,10 +1,8 @@
 <template>
   <!-- 开发流程板块 -->
-  <section class="sandtable-section">
+  <section class="sandtable-section font-text">
     <div align="center">
-      <h1 style="color: #4183ea" class="section-title-size">
-        项目开发流程
-      </h1>
+      <h1 style="color: #4183ea" class="section-title-size">项目开发流程</h1>
       <p class="section-subtitle-size">
         专注开发效率和用户体验，不断优化流程、提升项目质量
       </p>
@@ -15,14 +13,17 @@
       <el-row :gutter="10">
         <!-- 开发流程图 -->
         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-          <div style="background-color: #f8f8f8; padding: 30px" class="section-radius">
-            <img src="/media/bg/business3.jpg" style="width: 100%">
+          <div
+            style="background-color: #f8f8f8; padding: 30px"
+            class="section-radius"
+          >
+            <img src="/media/bg/business3.jpg" style="width: 100%" />
             <p style="color: #489ddb; font-size: 15px; padding-top: 20px">
               我们拥有超过100个HoloLens
               项目开发的经验,丰富的经验和资源让我们在开发过程中可以避开误区，有效节约成本，优化流程效率，客户满意度更高！
             </p>
           </div>
-          <br>
+          <br />
         </el-col>
         <!-- 开发流程 -->
         <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
@@ -76,16 +77,14 @@ export default {
   data() {
     return {}
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 
 <style lang="scss" scoped>
 @import '~@/styles/screenstyle.scss';
 @import '~@/styles/sandtable.scss';
-.timeline-content{
+.timeline-content {
   background-color: #f8f8f8;
   padding: 20px 20px 10px;
 }

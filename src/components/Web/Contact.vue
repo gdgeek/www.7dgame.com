@@ -1,10 +1,12 @@
 <template>
   <div class="portal-main-background">
     <div class="content" align="center">
-      <h1 class="text font-title">请即刻联系我们，开展定制业务</h1>
+      <h1 class="text font-text" style="font-weight: 400">
+        请即刻联系我们，开展定制业务
+      </h1>
     </div>
     <div class="content-contact" align="right">
-      <p class="text font-title">
+      <p class="text font-text">
         <img
           src="/media/bg/phone-icon.png"
           align="absmiddle"
@@ -13,7 +15,7 @@
         />
         服务电话 15000159790
       </p>
-      <p class="text font-title">
+      <p class="text font-text">
         <img
           src="/media/bg/wechat-icon.png"
           align="absmiddle"

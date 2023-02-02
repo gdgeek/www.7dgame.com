@@ -2,17 +2,14 @@
   <!-- 关于我们板块 -->
   <section class="sandtable-section section-bgc-color">
     <div align="center">
-      <h1 class="section-title-size section-title-dark">关于我们</h1>
+      <h1 class="section-title-size section-title-dark font-text">关于我们</h1>
       <p class="section-subtitle-size">
         国内制作HoloLens数字沙盘最早，项目最多的高新科技企业。
       </p>
       <p class="section-underline-style" />
     </div>
 
-    <div
-      align="center"
-      style="margin: 30px 3% 10px;"
-    >
+    <div align="center" style="margin: 30px 3% 10px">
       <div class="about-content section-radius">
         <p style="font-size: 16px; text-align: left">
           上海游七网络科技有限公司，国内制作HoloLens 数字沙盘最早，项目最多的
@@ -29,33 +26,36 @@
         </p>
       </div>
       <div align="center">
-        <img src="/media/bg/test2.jpg" style="width:100%" class="section-radius">
+        <img
+          src="/media/bg/test2.jpg"
+          style="width: 100%"
+          class="section-radius"
+        />
       </div>
     </div>
 
-    <br>
+    <br />
   </section>
 </template>
 
 <script>
+import '@/assets/font/font.css'
 export default {
   name: 'About',
 
   data() {
     return {}
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 
 <style lang="scss" scoped>
 @import '~@/styles/screenstyle.scss';
 @import '~@/styles/sandtable.scss';
-.about-content{
-  margin-bottom:30px;
-  padding:20px;
+.about-content {
+  margin-bottom: 30px;
+  padding: 20px;
   background-color: #5095ea;
   color: #fff;
 }

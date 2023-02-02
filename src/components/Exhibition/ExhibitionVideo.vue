@@ -5,9 +5,7 @@
       <!-- content部分 -->
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" align="center">
         <div class="title-box" align="left">
-          <div class="medical-title-h3 p-title-m">
-            定制开发demo，20000元实景AR展馆体验
-          </div>
+          <div class="medical-title-h3 p-title-m">定制开发实景AR展馆体验</div>
 
           <p class="medical-content-small p-title-ss">
             提供您的绝妙创意，我们将分析您的需求，为您提供解决方案,如需现场进行演示和勘察，我们将派专家实地交流。
@@ -97,7 +95,7 @@ export default {
 }
 .medical-title-h3 {
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 400;
   color: #222222;
 }
 .medical-title-small {
@@ -124,7 +122,7 @@ export default {
   font-size: 16px;
   line-height: 50px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 400;
   border-radius: 5px;
   color: #fff;
   width: 190px;

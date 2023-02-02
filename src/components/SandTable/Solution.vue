@@ -1,37 +1,37 @@
 <template>
   <div>
-
     <!-- 震撼沙盘板块 -->
     <section class="sandtable-section section-bgc-color">
-      <br>
+      <br />
       <div align="center">
-        <h1 class="section-title-size section-title-dark">虚实结合，震撼数字沙盘解决方案</h1>
-        <p class="section-subtitle-size">
+        <h1 class="section-title-size section-title-dark font-text">
+          虚实结合，震撼数字沙盘解决方案
+        </h1>
+        <p class="section-subtitle-size font-text">
           我们致力于扎根行业、深入场景进行产品设计和创新，为用户构建端到端的沙盘解决方案
         </p>
         <p class="section-underline-style" />
       </div>
       <el-row :gutter="30" class="section-card-padding">
         <el-col
-          v-for="(item, index) in items.slice(0,videoSlice)"
+          v-for="(item, index) in items.slice(0, videoSlice)"
           :key="index"
           align="center"
           :xs="24"
           :sm="12"
           :md="12"
-          :lg="24/videoSlice"
-          :xl="24/videoSlice"
+          :lg="24 / videoSlice"
+          :xl="24 / videoSlice"
         >
           <basic-video :item="item" :video-padding="videoPadding" />
         </el-col>
-
       </el-row>
     </section>
-
   </div>
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import BasicVideo from '@/components/SandTable/BasicVideo'
 import { data } from '@/views/web/data/sandshow.js'
 export default {
@@ -58,5 +58,4 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/screenstyle.scss';
 @import '~@/styles/sandtable.scss';
-
 </style>

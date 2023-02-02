@@ -1,10 +1,10 @@
 <template>
   <!-- 子幕图 -->
-  <section class="background-box">
+  <section class="background-box font-text">
     <el-row>
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
-        <div class="background-box-image">
+        <div class="font-text background-box-image">
           <div class="section-title-dark" align="left">
             <h3>{{ infoTel }}</h3>
             <small style="font-weight: lighter">{{ infoTitle }}</small>
@@ -13,7 +13,7 @@
       </el-col>
       <!-- PC显示 -->
       <el-col :span="24" class="hidden-sm-and-down">
-        <div class="background-box-image">
+        <div class="font-text background-box-image">
           <div class="section-title-dark" align="left" style="padding-left: 3%">
             <h1>{{ infoTel }}</h1>
             <p style="font-weight: lighter">{{ infoTitle }}</p>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 export default {
   name: 'EducationSubscreen',
 

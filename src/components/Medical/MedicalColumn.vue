@@ -1,6 +1,6 @@
 <template>
   <!-- 子幕图 -->
-  <section>
+  <section class="font-text">
     <el-row>
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
@@ -15,7 +15,7 @@
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
           <div class="column-title" align="center">
-            <div style="font-weight: 600; font-size: 36px">{{ infoTel }}</div>
+            <div style="font-weight: 400; font-size: 36px">{{ infoTel }}</div>
             <p style="font-weight: lighter; font-size: 20px">{{ infoTitle }}</p>
           </div>
         </div>
