@@ -1,4 +1,23 @@
+/* My-SmileySans fot Title
+@font-face {
+  font-family: "SmileySans";
+  src: url("./My-font/SmileySans.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "SourceHanSansCN";
+  src: url("./My-font/SourceHanSansCN.ttf");
+  font-display: swap;
+}
 
+
+@font-face {
+  font-family: "SourceHanSansHWSC-VF";
+  src: url("./My-font/SourceHanSansHWSC-VF.otf.woff2");
+  font-display: swap;
+}
+*/
+/* My-SourceHanSansCN for Content 思源黑*/
 @font-face {
   font-family: "SourceHanSansSC-VF";
   src: url("./My-font/SourceHanSansSC-VF.ttf.woff2");
