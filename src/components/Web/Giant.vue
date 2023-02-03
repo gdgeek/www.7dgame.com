@@ -3,7 +3,7 @@
     <div class="content" align="right">
       <span
         class="font-title"
-        style="font-size: 45px; color: whitesmoke; word-wrap: break-word"
+        style="font-size: 40px; color: whitesmoke; word-wrap: break-word"
       >
         元宇宙实景编程平台
       </span>
