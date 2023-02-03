@@ -31,7 +31,7 @@
         </p>
       </div>
       <div v-else slot="header" class="clearfix">
-        <b class="font-text">相关案例</b>
+        <b>相关案例</b>
         <el-button
           style="float: right; padding: 3px 0"
           type="text"
