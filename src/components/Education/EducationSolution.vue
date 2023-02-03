@@ -7,7 +7,7 @@
         <h1 class="section-title-size section-title-dark title-lighter">
           应用场景
         </h1>
-        <p class="section-subtitle-size">强大的技术支持，适用广泛应用场景</p>
+        <h4>强大的技术支持，适用广泛应用场景</h4>
         <p class="section-underline-blue" />
       </div>
       <el-row :gutter="30" class="section-card-padding">

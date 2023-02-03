@@ -1,9 +1,7 @@
 <template>
   <div class="portal-main-background">
     <div class="content" align="center">
-      <h1 class="text font-text" style="font-weight: 400">
-        请即刻联系我们，开展定制业务
-      </h1>
+      <h1 class="text font-text">请即刻联系我们，开展定制业务</h1>
     </div>
     <div class="content-contact" align="right">
       <p class="text font-text">
