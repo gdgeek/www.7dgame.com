@@ -1,6 +1,6 @@
 <template>
   <div class="font-text">
-    <h2 class="login-title">登录账号</h2>
+    <h2>登录账号</h2>
 
     <el-form
       ref="form"

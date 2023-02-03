@@ -26,11 +26,11 @@
       <router-link to="/site/login">
         <el-link type="primary" :underline="false">登录账号</el-link>
       </router-link>
-      <br>
+      <br />
       <router-link to="/site/signup">
         <el-link type="primary" :underline="false">注册用户</el-link>
       </router-link>
-      <br>
+      <br />
     </div>
   </mr-p-p-site>
 </template>
@@ -48,7 +48,6 @@ export default {
   },
   data() {
     return {
-
       form: {
         email: null
       },
@@ -65,9 +64,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([
-      'flashSetup'
-    ]),
+    ...mapMutations(['flashSetup']),
     submit(formName) {
       const self = this
       this.$refs[formName].validate(valid => {
@@ -91,7 +88,7 @@ export default {
           })
           self.$router.push({ path: '/site' })
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error)
         })
     }

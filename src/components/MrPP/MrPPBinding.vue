@@ -1,7 +1,6 @@
 <template>
   <div>
-
-    <h2 class="login-title">登录账号</h2>
+    <h2>登录账号</h2>
 
     <el-form
       ref="form"
@@ -10,10 +9,10 @@
       :model="form"
       label-width="75px"
     >
-      <el-form-item label="用户名" prop="username" style="margin-bottom:26px">
+      <el-form-item label="用户名" prop="username" style="margin-bottom: 26px">
         <el-input v-model="form.username" suffix-icon="el-icon-user" />
       </el-form-item>
-      <el-form-item label="密码" prop="password" style="margin-bottom:26px">
+      <el-form-item label="密码" prop="password" style="margin-bottom: 26px">
         <el-input
           v-model="form.password"
           type="password"
@@ -27,7 +26,6 @@
         </el-button>
       </el-form-item>
     </el-form>
-
   </div>
 </template>
 
@@ -81,7 +79,7 @@ export default {
                 self.succeed(response.data)
               }
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(error)
               self.failed(error)
             })
