@@ -14,7 +14,7 @@
           @sort="sort"
         >
           <el-tag>
-            <b>{{ message }}</b>
+            <b>{{ message }}!!!</b>
           </el-tag>
         </mr-p-p-header>
       </span>
