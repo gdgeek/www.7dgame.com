@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="login-title">微信扫码（登陆/注册）</h2>
+    <h2>微信扫码（登陆/注册）</h2>
     <div
       v-if="active"
       v-loading="expire"
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-
 import { UpdateAbility } from '@/ability/ability'
 import { qrcode, openid } from '@/api/wechats'
 import { setToken } from '@/utils/auth'
@@ -70,7 +69,9 @@ export default {
     load() {
       const self = this
       qrcode().then(response => {
-        self.qrcode = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=' + response.data.qrcode
+        self.qrcode =
+          'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=' +
+          response.data.qrcode
         self.token = response.data.token
         setTimeout(() => {
           self.expire = true
@@ -102,10 +103,9 @@ export default {
             if (typeof response.data.access_token !== 'undefined') {
               setToken(response.data.access_token)
               this.$store.commit('user/setUser', response.data.user)
-           
+
               UpdateAbility(self.$ability, response.data.user.roles)
               this.$router.push('/')
-            
             } else {
               this.$router.push({
                 path: '/site/wechat-signup',
@@ -130,12 +130,10 @@ export default {
 }
 </script>
 <style scoped>
-
 .father {
   position: absolute;
   height: 300px;
   width: 100%;
   background-color: #2aabd2;
 }
-
 </style>
