@@ -7,7 +7,6 @@
         <div class="background-box-image">
           <div class="column-title" align="center">
             <h3>{{ infoTel }}</h3>
-            11
             <p style="font-weight: lighter">{{ infoTitle }}</p>
           </div>
         </div>

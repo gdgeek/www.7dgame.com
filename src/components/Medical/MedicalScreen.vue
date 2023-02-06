@@ -7,15 +7,15 @@
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
-          <div class="education-phone-box font-title" align="left">
-            <p style="font-size: 30px; color: #32373f；">
+          <div class="public-phone-box font-title" align="left">
+            <div style="font-size: 30px; color: #32373f；">
               {{ infoTitle2 }}
-            </p>
+            </div>
             <p>
               <a
                 ref="telPhone"
                 :href="'tel' + ':' + infoTel"
-                style="border-bottom: 2px solid #1e82e8; color: #e361a1"
+                style="border-bottom: 2px solid #1e82e8; color: #32373f"
               >
                 点击拨打
                 <i class="el-icon-phone-outline" />
@@ -28,9 +28,9 @@
       <!-- PC显示 -->
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
-          <div class="medical-pc-box" align="left">
-            <div class="medical-pc-title font-title">{{ infoTitle }}</div>
-            <div class="medical-pc-title font-title">{{ infoTitle2 }}</div>
+          <div class="public-pc-box" align="left">
+            <div class="public-pc-title font-title">{{ infoTitle }}</div>
+            <div class="public-pc-title font-title">{{ infoTitle2 }}</div>
             <h1 class="font-text" style="font-weight: lighter; margin-top: 8%">
               即刻拨打
               {{ infoTel }}
@@ -69,24 +69,24 @@ export default {
 .background-box-image {
   display: flex;
   align-items: center;
-  padding: 1px 30px 20px;
+  padding: 1px 3% 20px;
   width: 100%;
   height: 30vw;
-  max-height: 600px;
+  max-height: 650px;
   // background-color: #c9eaf3;
   background: url('/media/bg/m2-screen.jpg') center no-repeat;
   background-size: cover;
   background-size: 100%;
 }
 
-.medical-phone-box {
+.public-phone-box {
   margin-left: 3%;
-  padding-top: 10px;
+  padding-top: 20px;
 }
-.medical-pc-box {
+.public-pc-box {
   margin-left: 8%;
 }
-.medical-pc-title {
+.public-pc-title {
   margin-bottom: 2%;
   font-size: 46px;
   font-weight: 400;

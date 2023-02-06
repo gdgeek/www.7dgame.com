@@ -1,16 +1,16 @@
 <template>
   <!-- 巨幕板块 -->
-  <section class="font-text">
+  <section>
     <!-- 模型通用组件占位 -->
     <!-- <demo-screen-show /> -->
     <el-row>
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
-          <div class="education-phone-box font-title" align="left">
-            <p style="font-size: 30px; color: #f5f4f3">
+          <div class="public-phone-box font-title" align="left">
+            <div style="font-size: 30px; color: #f5f4f3">
               {{ infoTitle2 }}
-            </p>
+            </div>
             <p>
               <a
                 ref="telPhone"
@@ -28,10 +28,13 @@
       <!-- PC显示 -->
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
-          <div class="exhibition-pc-box" align="left">
-            <div class="exhibition-pc-title font-title">{{ infoTitle }}</div>
-            <div class="exhibition-pc-title font-title">{{ infoTitle2 }}</div>
-            <h1 style="font-weight: lighter; margin-top: 8%; color: #f5f4f3">
+          <div class="public-pc-box" align="left">
+            <div class="public-pc-title font-title">{{ infoTitle }}</div>
+            <div class="public-pc-title font-title">{{ infoTitle2 }}</div>
+            <h1
+              class="font-text"
+              style="font-weight: lighter; margin-top: 8%; color: #f5f4f3"
+            >
               即刻拨打
               {{ infoTel }}
             </h1>
@@ -79,19 +82,18 @@ export default {
   background-size: 100%;
 }
 
-.exhibition-phone-box {
+.public-phone-box {
   margin-left: 3%;
-  padding-top: 10px;
+  padding-top: 20px;
 }
-.exhibition-pc-box {
+.public-pc-box {
   margin-left: 8%;
 }
-.exhibition-pc-title {
+.public-pc-title {
   margin-bottom: 2%;
   font-size: 46px;
   font-weight: 400;
   // color: #00cccc;
   color: #f5f4f3;
-  // color: #32373f;
 }
 </style>
