@@ -5,11 +5,21 @@
         <el-breadcrumb-item v-for="(item, index) in list" :key="item.path">
           <span
             v-if="item.redirect === 'noRedirect' || index == list.length - 1"
-            class="no-redirect"
+            class="no-redirect font-text"
           >
             {{ item.meta.title }}
           </span>
-          <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
+          <a v-else @click.prevent="handleLink(item)">
+            <span
+              class="font-title"
+              v-if="item.meta.title === '元宇宙实景编程平台'"
+            >
+              {{ item.meta.title }}
+            </span>
+            <span class="font-text" v-else>
+              {{ item.meta.title }}
+            </span>
+          </a>
         </el-breadcrumb-item>
       </transition-group>
     </el-breadcrumb>
@@ -17,6 +27,7 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import pathToRegexp from 'path-to-regexp'
 
 import { mapState } from 'vuex'

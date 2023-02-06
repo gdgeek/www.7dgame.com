@@ -1,33 +1,30 @@
 <template>
   <div>
-
     <!-- 震撼沙盘板块 -->
     <section class="sandtable-section section-bgc-gray">
-      <br>
+      <br />
       <div align="center">
-        <h1 class="section-title-size section-title-dark title-lighter">应用场景</h1>
-        <p class="section-subtitle-size">
-          强大的技术支持，适用广泛应用场景
-        </p>
+        <h1 class="section-title-size section-title-dark title-lighter">
+          应用场景
+        </h1>
+        <h4>强大的技术支持，适用广泛应用场景</h4>
         <p class="section-underline-blue" />
       </div>
       <el-row :gutter="30" class="section-card-padding">
         <el-col
-          v-for="(item, index) in items.slice(0,videoSlice)"
+          v-for="(item, index) in items.slice(0, videoSlice)"
           :key="index"
           align="center"
           :xs="24"
           :sm="12"
           :md="12"
-          :lg="24/videoSlice"
-          :xl="24/videoSlice"
+          :lg="24 / videoSlice"
+          :xl="24 / videoSlice"
         >
           <basic-video :item="item" :video-padding="videoPadding" />
         </el-col>
-
       </el-row>
     </section>
-
   </div>
 </template>
 
@@ -60,5 +57,4 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/screenstyle.scss';
 @import '~@/styles/sandtable.scss';
-
 </style>

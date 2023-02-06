@@ -12,7 +12,7 @@
             <div
               style="
                 width: 200px;
-                font-weight: 600;
+                font-weight: 400;
                 font-size: 18px;
                 color: #00cccc;
                 word-wrap: break-word;
@@ -85,13 +85,13 @@ export default {
 .medical-pc-title {
   margin-bottom: 2%;
   font-size: 46px;
-  font-weight: 600;
+  font-weight: 400;
   color: #00cccc;
   // color: #32373f;
 }
 .medical-pc-subtitle {
   font-size: 26px;
-  font-weight: 600;
+  font-weight: 400;
   color: #32373f;
 }
 </style>

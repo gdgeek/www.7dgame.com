@@ -9,7 +9,7 @@
       >
         <nobr>
           <img v-if="logo" :src="logo" class="sidebar-logo" />
-          <h1 v-else class="sidebar-title">
+          <h1 v-else class="sidebar-title font-title">
             {{ information.data.title }}
           </h1>
         </nobr>
@@ -22,7 +22,7 @@
       >
         <nobr>
           <img v-if="logo" :src="logo" class="sidebar-logo" />
-          <h1 class="sidebar-title">
+          <h1 class="sidebar-title font-title">
             {{ information.data.title }}
           </h1>
         </nobr>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import { mapState } from 'vuex'
 export default {
   name: 'SidebarLogo',
@@ -64,14 +65,12 @@ export default {
 }
 
 .sidebar-logo-container {
-  position: relative;
   width: 400px;
   height: 50px;
   line-height: 50px;
-  // text-align: center;
-  overflow: hidden;
+  overflow: auto;
   margin-top: 4px;
-  margin-left: 20px;
+  margin-left: 10px;
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;
@@ -87,10 +86,7 @@ export default {
       display: inline-block;
       margin: 0;
       color: #909399;
-      font-weight: 600;
-      line-height: 50px;
       font-size: 15px;
-      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
       min-width: 180px;
     }

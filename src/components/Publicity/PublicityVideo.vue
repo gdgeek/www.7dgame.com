@@ -45,7 +45,7 @@ export default {
 
 .publicity-title-h3 {
   font-size: 36px;
-  font-weight: 600;
+  font-weight: 400;
   color: #00cccc;
 }
 .publicity-title-small {

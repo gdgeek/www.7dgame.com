@@ -510,10 +510,7 @@ export default {
         const file = blob
 
         const md5 = await store.fileMD5(file)
-        const handler = await store.fileHandler(
-          'store-1251022382',
-          'ap-nanjing'
-        )
+        const handler = await store.storeHandler()
 
         const ret = await store.fileHas(md5, file.extension, handler, 'backup')
 

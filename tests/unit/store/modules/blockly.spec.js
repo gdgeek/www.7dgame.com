@@ -15,7 +15,7 @@ describe('blockly/mutations', () => {
     }
     const meta = {
       id: 0,
-      data: '{"type":"MetaRoot","parameters":{"uuid":"838335d3-53aa-4740-b6da-8535a8551333","name":{"name":"单元1","id":168},"transform":{"position":{"x":0,"y":0,"z":0},"rotate":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}},"active":true},"children":{"entities":[],"addons":[{"type":"Toolbar","parameters":{"uuid":"b5f5ef1f-943e-4893-8f49-6f84935b7f20","destory":false},"children":{"buttons":[{"type":"Button","parameters":{"uuid":"5e062ee7-2f47-4c36-af8c-7fb3c45e1d42","title":"itself","icon":"book","action":"settlers"},"children":{"action":[]}}]}}]}}'
+      data: '{"type":"MetaRoot","parameters":{"uuid":"838335d3-53aa-4740-b6da-8535a8551333","name":{"name":"单元1","id":168},"transform":{"position":{"x":0,"y":0,"z":0},"rotate":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}},"active":true},"children":{"entities":[],"addons":[{"type":"Toolbar","parameters":{"uuid":"b5f5ef1f-943e-4893-8f49-6f84935b7f20","destroy":false},"children":{"buttons":[{"type":"Button","parameters":{"uuid":"5e062ee7-2f47-4c36-af8c-7fb3c45e1d42","title":"itself","icon":"book","action":"settlers"},"children":{"action":[]}}]}}]}}'
     }
     blockly.mutations.addMeta(state, meta)
     expect(state.data.actions.length).toBe(1)
@@ -37,7 +37,7 @@ describe('blockly/mutations', () => {
     }
     const meta = {
       id: 0,
-      data: '{"type":"MetaRoot","parameters":{"uuid":"838335d3-53aa-4740-b6da-8535a8551333","name":{"name":"单元1","id":168},"transform":{"position":{"x":0,"y":0,"z":0},"rotate":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}},"active":true},"children":{"entities":[],"addons":[{"type":"Toolbar","parameters":{"uuid":"b5f5ef1f-943e-4893-8f49-6f84935b7f20","destory":false},"children":{"buttons":[{"type":"Button","parameters":{"uuid":"5e062ee7-2f47-4c36-af8c-7fb3c45e1d42","title":"itself","icon":"book"},"children":{"action":[{"type":"Action","parameters":{"uuid":"95842d23-e491-48a0-a215-d55bd754c567","action":"mysterious","parameter":"test"}}]}}]}}]}}'
+      data: '{"type":"MetaRoot","parameters":{"uuid":"838335d3-53aa-4740-b6da-8535a8551333","name":{"name":"单元1","id":168},"transform":{"position":{"x":0,"y":0,"z":0},"rotate":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}},"active":true},"children":{"entities":[],"addons":[{"type":"Toolbar","parameters":{"uuid":"b5f5ef1f-943e-4893-8f49-6f84935b7f20","destroy":false},"children":{"buttons":[{"type":"Button","parameters":{"uuid":"5e062ee7-2f47-4c36-af8c-7fb3c45e1d42","title":"itself","icon":"book"},"children":{"action":[{"type":"Action","parameters":{"uuid":"95842d23-e491-48a0-a215-d55bd754c567","action":"mysterious","parameter":"test"}}]}}]}}]}}'
     }
     blockly.mutations.addMeta(state, meta)
     expect(state.data.actions.length).toBe(1)

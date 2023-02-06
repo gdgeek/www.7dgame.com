@@ -1,7 +1,6 @@
 <template>
-  <div>
-
-    <h2 class="login-title">登录账号</h2>
+  <div class="font-text">
+    <h2>登录账号</h2>
 
     <el-form
       ref="form"
@@ -10,10 +9,10 @@
       :model="form"
       label-width="75px"
     >
-      <el-form-item label="用户名" prop="username" style="margin-bottom:26px">
+      <el-form-item label="用户名" prop="username" style="margin-bottom: 26px">
         <el-input v-model="form.username" suffix-icon="el-icon-user" />
       </el-form-item>
-      <el-form-item label="密码" prop="password" style="margin-bottom:26px">
+      <el-form-item label="密码" prop="password" style="margin-bottom: 26px">
         <el-input
           v-model="form.password"
           type="password"
@@ -28,12 +27,10 @@
         </el-button>
       </el-form-item>
     </el-form>
-
   </div>
 </template>
 
 <script>
-
 import { UpdateAbility } from '@/ability/ability'
 
 // @ is an alias to /src
@@ -60,7 +57,6 @@ export default {
     }
   },
   methods: {
-
     submit(formName) {
       const self = this
       this.$refs[formName].validate(valid => {
@@ -77,8 +73,8 @@ export default {
                 UpdateAbility(self.$ability, response.data.user.roles)
                 this.$router.push('/')
               }
-            }).catch(e => {
             })
+            .catch(e => {})
         } else {
           return false
         }

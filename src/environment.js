@@ -21,6 +21,10 @@ function mrpp() {
 function mrcn() {
   return '4mr.cn' === process.env.VUE_APP_BASE_MODE
 }
+
+function local() {
+  return 'local' === process.env.VUE_APP_BASE_MODE
+}
 function canManager() {
   return (
     'local' === process.env.VUE_APP_BASE_MODE ||
@@ -54,5 +58,6 @@ module.exports = {
   useCloud,
   canDocument,
   mrcn,
-  mrpp
+  mrpp,
+  local
 }

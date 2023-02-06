@@ -476,7 +476,7 @@ export const constantRoutes = [
 
     children: [
       {
-        meta: { title: '网站首页' },
+        meta: { title: '平台入口' },
         path: 'index',
         name: 'WebIndex',
         component: () => import('@/views/web/index')
@@ -520,10 +520,10 @@ export const constantRoutes = [
         component: () => import('@/views/web/education')
       },
       {
-        meta: { title: '教育产品' },
-        path: 'education-product',
-        name: 'EducationProduct',
-        component: () => import('@/views/web/education-product')
+        meta: { title: '产品列表' },
+        path: 'list-product',
+        name: 'ListProduct',
+        component: () => import('@/views/web/list-product')
       },
       {
         meta: { title: '医疗合作' },

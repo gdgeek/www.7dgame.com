@@ -5,7 +5,9 @@
         <span v-for="item in information.data.companies" :key="item.name">
           <el-link :href="item.url" target="_blank" :underline="false">
             <i class="el-icon-s-home" />
-            {{ item.name }}
+            <span class="font-text">
+              {{ item.name }} ({{ information.data.description }})
+            </span>
           </el-link>
         </span>
 
@@ -17,14 +19,18 @@
             :underline="false"
           >
             <i class="el-icon-s-order" />
-            {{ information.data.beian }}
+            <span class="font-text">
+              {{ information.data.beian }}
+            </span>
           </el-link>
         </span>
         <span v-if="information.data.version">
           |
           <el-link target="_blank" :underline="false">
             <i class="el-icon-info" />
-            {{ information.data.version }}
+            <span class="font-text">
+              {{ information.data.version }}
+            </span>
           </el-link>
         </span>
       </div>
@@ -33,6 +39,7 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import { mapState } from 'vuex'
 
 export default {

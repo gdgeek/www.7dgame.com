@@ -135,7 +135,7 @@ export default {
       const md5 = await store.fileMD5(file, function (p) {
         self.progress(p, 0)
       })
-      const handler = await store.fileHandler('store-1251022382', 'ap-nanjing')
+      const handler = await store.storeHandler()
       const ret = await store.fileHas(md5, file.extension, handler, self.dir)
 
       if (ret !== null) {

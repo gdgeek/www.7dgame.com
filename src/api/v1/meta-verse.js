@@ -100,7 +100,7 @@ export function createVerseFromPolygen(name, resource) {
                         type: 'Toolbar',
                         parameters: {
                           uuid: uuidv4(),
-                          destory: false
+                          destroy: false
                         },
                         children: { buttons: [] }
                       }

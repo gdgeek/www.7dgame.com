@@ -3,6 +3,7 @@ import VueRenderPlugin from 'rete-vue-render-plugin'
 import ConnectionPlugin from 'rete-connection-plugin'
 import AreaPlugin from 'rete-area-plugin'
 
+import UUIDPlugin from '@/node-editor/plugins/uuid'
 import { EventSocket } from '@/node-editor/sockets/sockets'
 import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import AutoArrangePlugin from 'rete-auto-arrange-plugin'
@@ -262,7 +263,7 @@ const initVerse = async function ({ container, verseId, root }) {
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
   editor_.use(ConnectionPlugin)
   editor_.use(VueRenderPlugin)
-  editor_.use(ContextMenuPlugin)
+  editor_.use(ContextMenuPlugin, { nodeItems: { Clone: false } })
   editor_.use(AutoArrangePlugin, { margin: { x: 50, y: 50 }, depth: 110 })
   editor_.use(AreaPlugin)
   editor_.use(LimitPlugin, [{ name: 'Verse', max: 1, min: 1 }])
@@ -284,6 +285,7 @@ const initVerse = async function ({ container, verseId, root }) {
     { component: 'Meta', target: 'title' },
     { component: 'Knight', target: 'title' }
   ])
+
   engine_ = new Rete.Engine('MrPP@0.1.0')
 
   types.forEach(type => {

@@ -1,23 +1,33 @@
 <template>
   <div>
-
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <h3>账号设置</h3>
         <small>账号具体内容的配置和修改</small>
       </div>
       <el-row :gutter="24">
-
         <el-col :xs="16" :sm="16" :md="12" :lg="10" :xl="10">
-
-          <el-form ref="emailForm" :model="emailForm" label-width="100px" style="min-width:300px">
+          <el-form
+            ref="emailForm"
+            :model="emailForm"
+            label-width="100px"
+            style="min-width: 300px"
+          >
             <el-form-item
-              v-if=" typeof(userData.email) === 'undefined' || userData.email === null || !userData.emailBind"
+              v-if="
+                typeof userData.email === 'undefined' ||
+                userData.email === null ||
+                !userData.emailBind
+              "
               label="邮箱"
               prop="email"
               :rules="[
                 { required: true, message: '请输入邮箱', trigger: 'blur' },
-                { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                {
+                  type: 'email',
+                  message: '请输入正确的邮箱地址',
+                  trigger: ['blur', 'change']
+                }
               ]"
             >
               <el-input
@@ -25,12 +35,16 @@
                 autocomplete="off"
                 type="email"
                 placeholder="绑定邮箱"
-              ><el-button
-                v-if="!userData.bindEmail"
-                slot="append"
-                @click="postEmail('emailForm')"
-              ><div v-if=" null === userData.email">绑定</div><div v-else>重新绑定</div></el-button></el-input>
-
+              >
+                <el-button
+                  v-if="!userData.bindEmail"
+                  slot="append"
+                  @click="postEmail('emailForm')"
+                >
+                  <div v-if="null === userData.email">绑定</div>
+                  <div v-else>重新绑定</div>
+                </el-button>
+              </el-input>
             </el-form-item>
 
             <el-form-item
@@ -38,31 +52,54 @@
               v-model="emailForm.email"
               label="邮箱"
               prop="email"
-            ><el-tag> {{ userData.email }}</el-tag>
-
+            >
+              <el-tag>{{ userData.email }}</el-tag>
             </el-form-item>
           </el-form>
         </el-col>
       </el-row>
-      <br>
+      <br />
       <el-row :gutter="24">
         <el-col :xs="16" :sm="16" :md="10" :lg="6" :xl="6">
-          <el-form label-width="100px" style="min-width:300px">
+          <el-form label-width="100px" style="min-width: 300px">
             <el-form-item label="账户密码">
               <el-button-group>
-                <el-button type="warning" @click="dialogPasswordVisible = true">修改密码</el-button>
-                <el-button disabled type="warning" @click="dialogPasswordVisible = true">找回密码</el-button>
+                <el-button type="warning" @click="dialogPasswordVisible = true">
+                  修改密码
+                </el-button>
+                <el-button
+                  disabled
+                  type="warning"
+                  @click="dialogPasswordVisible = true"
+                >
+                  找回密码
+                </el-button>
               </el-button-group>
             </el-form-item>
           </el-form>
         </el-col>
       </el-row>
       <!-- 修改密码弹窗 -->
-      <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" :close-on-click-modal="false" style="min-width:560px" @close="resetForm('passwordForm')">
-        <el-form ref="passwordForm" :model="passwordForm" :rules="passwordRules" label-width="80px">
+      <el-dialog
+        title="修改密码"
+        :visible.sync="dialogPasswordVisible"
+        :close-on-click-modal="false"
+        style="min-width: 560px"
+        @close="resetForm('passwordForm')"
+      >
+        <el-form
+          ref="passwordForm"
+          :model="passwordForm"
+          :rules="passwordRules"
+          label-width="80px"
+        >
           <el-row :gutter="24">
             <el-col :xs="20" :sm="20" :md="14" :lg="14" :xl="14" :offset="4">
-              <el-form-item label="旧的密码" prop="oldPassword" style="margin-bottom:26px">
+              <el-form-item
+                label="旧的密码"
+                prop="oldPassword"
+                style="margin-bottom: 26px"
+              >
                 <el-input
                   v-model="passwordForm.oldPassword"
                   type="password"
@@ -70,7 +107,11 @@
                 />
               </el-form-item>
 
-              <el-form-item label="新的密码" prop="password" style="margin-bottom:26px">
+              <el-form-item
+                label="新的密码"
+                prop="password"
+                style="margin-bottom: 26px"
+              >
                 <el-input
                   v-model="passwordForm.password"
                   type="password"
@@ -78,7 +119,11 @@
                 />
               </el-form-item>
 
-              <el-form-item label="确认密码" prop="checkPassword" style="margin-bottom:26px">
+              <el-form-item
+                label="确认密码"
+                prop="checkPassword"
+                style="margin-bottom: 26px"
+              >
                 <el-input
                   v-model="passwordForm.checkPassword"
                   type="password"
@@ -100,22 +145,17 @@
         </el-form>
       </el-dialog>
       <!-- 修改密码弹窗结束 -->
-
     </el-card>
-
   </div>
 </template>
 
 <script>
-
 import { mapGetters } from 'vuex'
 import { bindEmail, resetPassword } from '@/api/servers'
 export default {
   name: 'Account',
   computed: {
-    ...mapGetters([
-      'userData'
-    ])
+    ...mapGetters(['userData'])
   },
   data() {
     const oldPassword = (rule, value, callback) => {
@@ -187,17 +227,22 @@ export default {
     },
     resetPassword(formName) {
       const self = this
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
-          resetPassword(self.passwordForm.oldPassword, self.passwordForm.password).then((response) => {
-            self.dialogPasswordVisible = false
-            self.$message({
-              message: '密码修改成功',
-              type: 'success'
+          resetPassword(
+            self.passwordForm.oldPassword,
+            self.passwordForm.password
+          )
+            .then(response => {
+              self.dialogPasswordVisible = false
+              self.$message({
+                message: '密码修改成功',
+                type: 'success'
+              })
             })
-          }).catch((message) => {
-            // self.dialogPasswordVisible = false
-          })
+            .catch(message => {
+              // self.dialogPasswordVisible = false
+            })
         } else {
           console.log('error submit!!')
           return false
@@ -206,9 +251,9 @@ export default {
     },
     postEmail(formName) {
       const self = this
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
-          bindEmail(self.emailForm.email).then((response) => {
+          bindEmail(self.emailForm.email).then(response => {
             self.$message({
               message: '请到' + self.emailForm.email + '查收绑定邮件',
               type: 'warning'

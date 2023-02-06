@@ -8,17 +8,20 @@
         to="/"
       >
         <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 v-else class="sidebar-title">{{ information.data.title }}</h1>
+        <h1 v-else class="sidebar-title font-title">
+          {{ information.data.title }}
+        </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <h1 class="sidebar-title">{{ information.data.title }}</h1>
+        <h1 class="sidebar-title font-title">{{ information.data.title }}</h1>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import { mapState } from 'vuex'
 export default {
   name: 'SidebarLogo',
@@ -74,10 +77,10 @@ export default {
       display: inline-block;
       margin: 0;
       color: #fff;
-      font-weight: 600;
+      font-weight: 400;
       line-height: 50px;
       font-size: 14px;
-      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+      // font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }
   }

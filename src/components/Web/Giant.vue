@@ -1,17 +1,40 @@
 <template>
   <div class="portal-main-background">
     <div class="content" align="right">
-      <h3 class="text">元宇宙实景编程平台</h3>
-      <h1 class="text">让每个人都可以快乐地创造世界</h1>
-      <el-button @click="goto('/site/index')" type="primary">
+      <span
+        class="font-title"
+        style="font-size: 40px; color: whitesmoke; word-wrap: break-word"
+      >
+        元宇宙实景编程平台
+      </span>
+      <br />
+
+      <br />
+      <b
+        class="font-title"
+        style="font-size: 25px; color: whitesmoke; word-wrap: break-word"
+      >
+        让每个人都可以快乐地创造世界
+      </b>
+      <br />
+
+      <br />
+      <el-button
+        class="button font-text"
+        @click="goto('/site/index')"
+        type="primary"
+      >
         登入平台
       </el-button>
-      <el-button @click="goto('/web/download')">相关下载</el-button>
+      <el-button class="button font-text" @click="goto('/web/download')">
+        相关下载
+      </el-button>
     </div>
   </div>
 </template>
 
 <script>
+import '@/assets/font/font.css'
 export default {
   name: 'Giant',
 
@@ -35,9 +58,10 @@ export default {
   // background-size: 100%;
 }
 
-.text {
-  color: whitesmoke;
+.button {
+  font-family: 'SourceHanSansHWSC-VF';
 }
+
 .content {
   padding-right: 50px;
   padding-top: 50px;

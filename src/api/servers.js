@@ -1,5 +1,6 @@
 import request from '@/utils/request'
-
+var qs = require('querystringify')
+var path = require('path')
 export function getMenu() {
   return request({
     url: '/servers/menu',
@@ -19,10 +20,20 @@ export function logout() {
     method: 'get'
   })
 }
-export function sts() {
+export function sts(bucket, region) {
   //alert(2)
+  const url = path.join(
+    'servers',
+    'sts' + qs.stringify({ bucket, region }, true)
+  )
   return request({
-    url: '/servers/sts',
+    url,
+    method: 'get'
+  })
+}
+export function store() {
+  return request({
+    url: '/servers/store',
     method: 'get'
   })
 }

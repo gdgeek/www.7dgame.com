@@ -1,15 +1,16 @@
 <template>
   <span>
     <el-row>
-      <el-col :span="3">
+      <el-col :span="4">
         <logo :collapse="false" style="float: left; right: 10px" />
       </el-col>
-      <el-col :span="18">
+      <el-col :span="17">
         <el-menu :router="true" :default-active="$route.path" mode="horizontal">
           <el-menu-item
             v-for="(item, index) in data"
             :key="index"
             :index="item.path"
+            class="font-text"
           >
             {{ item.text }}
           </el-menu-item>
@@ -24,6 +25,7 @@
 </template>
 
 <script>
+import '@/assets/font/font.css'
 import variables from '@/styles/variables.scss'
 import Logo from './logo.vue'
 import Login from './login.vue'

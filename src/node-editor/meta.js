@@ -6,6 +6,7 @@ import AutoArrangePlugin from 'rete-auto-arrange-plugin'
 import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
 import RandomStringPlugin from '@/node-editor/plugins/randomString'
+import UUIDPlugin from '@/node-editor/plugins/uuid'
 import { Component } from './components/Component'
 import BanPlugin from '@/node-editor/plugins/ban'
 
@@ -137,6 +138,18 @@ const initMeta = async function ({ container, root }) {
     { component: 'Button', target: 'action' },
     { component: 'Action', target: 'action' },
     { component: 'Tooltip', target: 'text' }
+  ])
+
+  editor_.use(UUIDPlugin, [
+    { component: 'Polygen', target: 'uuid' },
+    { component: 'Video', target: 'uuid' },
+    { component: 'Picture', target: 'uuid' },
+    { component: 'Sound', target: 'uuid' },
+    { component: 'Text', target: 'uuid' },
+    { component: 'Entity', target: 'uuid' },
+    { component: 'Button', target: 'uuid' },
+    { component: 'Action', target: 'uuid' },
+    { component: 'Tooltip', target: 'uuid' }
   ])
 
   engine_ = new Rete.Engine('MrPP@0.1.0')

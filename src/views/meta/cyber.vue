@@ -4,12 +4,15 @@
       <el-main>
         <el-card v-loading="loading" class="box-card">
           <div slot="header" class="clearfix">
-            <router-link :to="'/meta/editor?id=' + id + '&title=' + title">
+            <router-link
+              v-if="meta"
+              :to="'/meta/rete-meta?id=' + meta.id + '&title=' + title"
+            >
               <el-link v-if="meta" :underline="false">
                 【元：{{ title }}】
               </el-link>
             </router-link>
-            / 【赛博】
+            / 【cyber】
 
             <el-button-group style="float: right">
               <el-button

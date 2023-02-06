@@ -69,18 +69,18 @@ export default {
   padding: 20px 0 40px;
   font-size: 22px;
   color: #222222;
-  font-weight: 600;
+  font-weight: 400;
 }
 .exhibition-title-h3 {
   padding: 20px;
   font-size: 36px;
-  font-weight: 600;
+  font-weight: 400;
   color: #222222;
 }
 
 .exhibition-content-small {
   color: #444444;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px;
   line-height: 24px;
   max-width: 1100px;

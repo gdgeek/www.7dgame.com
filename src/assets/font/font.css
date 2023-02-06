@@ -1,0 +1,74 @@
+/* My-SmileySans fot Title
+@font-face {
+  font-family: "SmileySans";
+  src: url("./My-font/SmileySans.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "SourceHanSansCN";
+  src: url("./My-font/SourceHanSansCN.ttf");
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: "SourceHanSansHWSC-VF";
+  src: url("./My-font/SourceHanSansHWSC-VF.otf.woff2");
+  font-display: swap;
+}
+*/
+/* My-SourceHanSansCN for Content 思源黑*/
+@font-face {
+  font-family: "SourceHanSansSC-VF";
+  src: url("./My-font/SourceHanSansSC-VF.ttf.woff2");
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: "SmileySans-Oblique";
+  src: url("./My-font/SmileySans-Oblique.ttf.woff2");
+  font-display: swap;
+}
+
+div h1{
+  font-family: 'SourceHanSansSC-VF';
+  font-weight: 400;
+  font-size: 36px;
+} 
+div h2{
+  font-family: 'SourceHanSansSC-VF';
+  font-weight: 400;
+  font-size: 26px;
+} 
+
+div h3{
+  font-family: 'SourceHanSansSC-VF';
+  font-weight: 400;
+  font-size: 20px;
+} 
+
+
+div h4{
+  font-family: 'SourceHanSansSC-VF';
+  font-weight: 400;
+  font-size: 16px;
+  font-weight: lighter;
+} 
+div h5{
+  font-family: 'SourceHanSansSC-VF';
+  font-weight: 400;
+  font-size: 16px;
+} 
+.font-title {
+  
+  font-family: 'SmileySans-Oblique';
+  font-weight: 100
+}
+
+
+
+.font-text {
+  font-family: 'SourceHanSansSC-VF';
+  font-weight: 400;
+}

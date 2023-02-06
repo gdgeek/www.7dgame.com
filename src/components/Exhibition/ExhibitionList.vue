@@ -11,7 +11,8 @@
         <div class="background-text" align="left">
           <div class="background-text-title p-title-m">生态与支持</div>
           <p style="font-size: 18px; font-weight: lighter; line-height: 26px">
-            MrPP是一款面向未来元宇宙数字生态的AR元宇宙实景平台。拥有第三方视角、空间场景定位等多项专利。给用户提供强大的编辑能力，一站式实现用户所需的可视化处理。
+            MrPP.com
+            是一款面向未来元宇宙数字生态的AR元宇宙实景平台。拥有第三方视角、空间场景定位等多项专利。给用户提供强大的编辑能力，一站式实现用户所需的可视化处理。
             在元宇宙实景交互这个过程中，它注重于人的感受场景的体验，带给人们多维度的视觉震撼感，让展馆极具吸引力与生命力，大大提升品牌的价值。
           </p>
         </div>
@@ -47,7 +48,7 @@ export default {
 }
 .background-text-title {
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 400;
 }
 .background-img {
   position: relative;

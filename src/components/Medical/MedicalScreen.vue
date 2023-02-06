@@ -7,10 +7,8 @@
       <!-- 手机显示 -->
       <el-col :span="24" class="hidden-md-and-up">
         <div class="background-box-image">
-          <div class="education-phone-box" align="left">
-            <p
-              style="width:200px;font-weight: 600; font-size: 22px; color: #32373f；word-wrap:break-word ;"
-            >
+          <div class="education-phone-box font-title" align="left">
+            <p style="font-size: 30px; color: #32373f；">
               {{ infoTitle2 }}
             </p>
             <p>
@@ -31,9 +29,9 @@
       <el-col :span="24" class="hidden-sm-and-down">
         <div class="background-box-image">
           <div class="medical-pc-box" align="left">
-            <div class="medical-pc-title">{{ infoTitle }}</div>
-            <div class="medical-pc-title">{{ infoTitle2 }}</div>
-            <h1 style="font-weight: lighter; margin-top: 8%; color: #00cccc">
+            <div class="medical-pc-title font-title">{{ infoTitle }}</div>
+            <div class="medical-pc-title font-title">{{ infoTitle2 }}</div>
+            <h1 class="font-text" style="font-weight: lighter; margin-top: 8%">
               即刻拨打
               {{ infoTel }}
             </h1>
@@ -91,7 +89,7 @@ export default {
 .medical-pc-title {
   margin-bottom: 2%;
   font-size: 46px;
-  font-weight: 600;
+  font-weight: 400;
   // color: #00cccc;
   color: #32373f;
 }
