@@ -19,14 +19,10 @@
       <br />
 
       <br />
-      <el-button
-        class="button font-text"
-        @click="goto('/site/index')"
-        type="primary"
-      >
+      <el-button class="font-text" @click="goto('/site/index')" type="primary">
         登入平台
       </el-button>
-      <el-button class="button font-text" @click="goto('/web/download')">
+      <el-button class="font-text" @click="goto('/web/download')">
         相关下载
       </el-button>
     </div>
@@ -56,10 +52,6 @@ export default {
   background: url('/media/bg/hololens.jpg') center no-repeat;
   background-size: cover;
   // background-size: 100%;
-}
-
-.button {
-  font-family: 'SourceHanSansHWSC-VF';
 }
 
 .content {
