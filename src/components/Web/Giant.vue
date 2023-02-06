@@ -10,9 +10,15 @@
       <br />
 
       <br />
+
       <b
-        class="font-title"
-        style="font-size: 25px; color: whitesmoke; word-wrap: break-word"
+        class=""
+        style="
+          font-weight: lighter;
+          font-size: 25px;
+          color: whitesmoke;
+          word-wrap: break-word;
+        "
       >
         让每个人都可以快乐地创造世界
       </b>
