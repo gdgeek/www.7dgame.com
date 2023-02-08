@@ -1,5 +1,5 @@
 <template>
-  <!-- 产品中心 -->
+  <!-- 应用场景组件 -->
   <section class="section-box font-text">
     <el-row :gutter="30" class="p-pc-pfr">
       <!-- content部分 -->
@@ -20,10 +20,8 @@
         </div>
       </el-col>
       <!-- 视频位置 -->
+      <!-- 跳转B站播放视频，带封面 -->
       <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-        <!-- <div class="medical-video-box">
-          <landscape-video :vdsrc="videoSrc" />
-        </div> -->
         <a
           href="https://www.bilibili.com/video/BV1DR4y1s7nV/?spm_id_from=333.999.0.0"
           target="_blank"
@@ -43,15 +41,10 @@
 </template>
 
 <script>
-// import LandscapeVideo from './LandscapeVideo.vue'
 export default {
   name: 'MedicalVideo',
-  // components: { LandscapeVideo },
   data() {
-    return {
-      // videoSrc:
-      //   'http://1251022382.vod2.myqcloud.com/3ebf9041vodtransgzp1251022382/6487c9fd5285890809258783935/v.f30.mp4'
-    }
+    return {}
   }
 }
 </script>

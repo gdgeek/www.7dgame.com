@@ -1,4 +1,5 @@
 <template>
+  <!-- 一个简单的直接引用video公共组件 -->
   <section class="bigbox">
     <div class="background-box-image" />
     <video-player
@@ -15,11 +16,14 @@
 import { videoPlayer } from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 export default {
-  name: 'LandscapeVideo',
+  name: 'SimpleVideo',
   components: { videoPlayer },
+  // 直接引用组件，传入SRC地址即可
   props: {
-    vdsrc: String
-    // vdbg: String
+    vdsrc: {
+      type: String,
+      require: true
+    }
   },
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
+  <!-- 多卡片列表视频播放，公用组件 -->
   <div>
     <!-- 卡片部分 -->
-
     <el-card
       shadow="hover"
       style="width: 94%"
@@ -64,6 +64,7 @@ export default {
   },
 
   mixins: [IsMobile],
+  // 传入item对象，是url、image、title集合
   props: {
     item: {
       type: Object,

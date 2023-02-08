@@ -1,5 +1,5 @@
 <template>
-  <!-- 产品中心 -->
+  <!-- 应用场景组件 -->
   <section class="section-box">
     <el-row :gutter="30">
       <!-- content部分 -->
@@ -25,11 +25,7 @@
         </div>
       </el-col>
       <!-- 视频位置 -->
-      <!-- <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-        <div class="medical-video-box">
-          <landscape-video :vdsrc="videoSrc" />
-        </div>
-      </el-col> -->
+      <!-- 跳转B站播放视频，带封面 -->
       <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <a
           href="https://www.bilibili.com/video/BV1v3411f7Qg/?spm_id_from=333.999.0.0&vd_source=69755f47d8a89ee3b37b00151a7cfeed"
@@ -43,7 +39,16 @@
             />
           </div>
         </a>
-        <!-- <div>
+      </el-col>
+      <!-- 页面直接播放，公用video组件 -->
+      <!-- <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
+        <div class="medical-video-box">
+          <simple-video :vdsrc="videoSrc" />
+        </div>
+      </el-col> -->
+
+      <!-- 页面直接播放B站视频 -->
+      <!-- <el-col align="center" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
            <iframe
             src="//player.bilibili.com/player.html?aid=432949605&bvid=BV1v3411f7Qg&cid=900799370&page=1"
             width="100%"
@@ -54,8 +59,7 @@
             framespacing="0"
             allowfullscreen="true"
           />
-        </div> -->
-      </el-col>
+      </el-col> -->
     </el-row>
     <br />
     <br />
@@ -63,10 +67,10 @@
 </template>
 
 <script>
-// import LandscapeVideo from '@/components/Medical/LandscapeVideo.vue'
+// import SimpleVideo from '@/components/WebPublick/SimpleVideo.vue'
 export default {
   name: 'ExhibitionVideo',
-  // components: { LandscapeVideo },
+  // components: { SimpleVideo },
   data() {
     return {
       // videoSrc:

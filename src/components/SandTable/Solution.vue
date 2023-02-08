@@ -32,7 +32,7 @@
 
 <script>
 import '@/assets/font/font.css'
-import BasicVideo from '@/components/SandTable/BasicVideo'
+import BasicVideo from '@/components/WebPublick/BasicVideo.vue'
 import { data } from '@/views/web/data/sandshow.js'
 export default {
   name: 'Solution',
