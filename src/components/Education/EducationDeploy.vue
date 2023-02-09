@@ -7,7 +7,7 @@
         <h1 class="section-title-size section-title-dark title-lighter">
           创新优势
         </h1>
-        <p class="section-subtitle-size">多种先进科技交互体验，精彩纷呈</p>
+        <p class="f-text-color">多种先进科技交互体验，精彩纷呈</p>
         <p class="section-underline-blue" />
       </div>
       <!-- 技术种类 -->

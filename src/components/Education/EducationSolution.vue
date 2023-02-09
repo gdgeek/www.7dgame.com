@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import BasicVideo from '@/components/SandTable/BasicVideo'
+import BasicVideo from '@/components/WebPublick/BasicVideo.vue'
 import { data } from '@/views/web/data/examples.js'
 // import { data } from '@/views/web/data/sandshow.js'
 

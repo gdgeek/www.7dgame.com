@@ -26,9 +26,15 @@
           <el-input type="textarea" v-model="form.content"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit()">确 认</el-button>
+          <el-button-group :inline="true">
+            <el-button size="mini" type="primary" @click="onSubmit()">
+              确 认
+            </el-button>
 
-          <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button size="mini" @click="dialogVisible = false">
+              取 消
+            </el-button>
+          </el-button-group>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -115,7 +121,7 @@ export default {
     async del(id) {
       const self = this
       try {
-        await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        await this.$confirm('是否确认关闭共享？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

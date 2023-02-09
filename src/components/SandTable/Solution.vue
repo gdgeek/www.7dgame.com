@@ -7,7 +7,7 @@
         <h1 class="section-title-size section-title-dark font-text">
           虚实结合，震撼数字沙盘解决方案
         </h1>
-        <p class="section-subtitle-size font-text">
+        <p class="f-text-color font-text">
           我们致力于扎根行业、深入场景进行产品设计和创新，为用户构建端到端的沙盘解决方案
         </p>
         <p class="section-underline-style" />
@@ -32,7 +32,7 @@
 
 <script>
 import '@/assets/font/font.css'
-import BasicVideo from '@/components/SandTable/BasicVideo'
+import BasicVideo from '@/components/WebPublick/BasicVideo.vue'
 import { data } from '@/views/web/data/sandshow.js'
 export default {
   name: 'Solution',

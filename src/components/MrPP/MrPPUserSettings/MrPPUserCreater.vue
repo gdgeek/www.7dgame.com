@@ -113,11 +113,10 @@ export default {
       creation: null
     }
   },
-  created() {
+  async created() {
     const self = this
-    getUserCreation().then(r => {
-      self.creation = r.data
-    })
+    const r = await getUserCreation()
+    self.creation = r.data
   },
   methods: {
     gotoCreator() {

@@ -12,13 +12,18 @@
       <el-col :xs="22" :sm="22" :md="10" :lg="10" :xl="10" :offset="2">
         <div class="reletion-title-h3 p-title-s font-text">公司简介</div>
         <div class="qfe_wrapper">
-          <div style="line-height: 20px; letter-spacing: 2px; width: 90%">
-            <span style="color: rgb(102, 102, 102)">
-              <span class="font-text">
-                上海游七网络科技有限公司，作为国内制作元宇宙AR实景应用最早的高新科技企业，
-                团队项目开发经验丰富，技术方案灵活多样。与未来数字化生态相融合，不断进取。
-              </span>
-            </span>
+          <div
+            style="
+              line-height: 40px;
+              letter-spacing: 2px;
+              width: 90%;
+              color: rgb(102, 102, 102);
+            "
+          >
+            <div class="font-text">
+              上海游七网络科技有限公司，作为国内制作元宇宙AR实景应用最早的高新科技企业，
+              团队项目开发经验丰富，技术方案灵活多样。与未来数字化生态相融合，不断进取。
+            </div>
           </div>
         </div>
       </el-col>
@@ -26,7 +31,7 @@
       <el-col :xs="22" :sm="22" :md="10" :lg="10" :xl="10" :offset="2">
         <div class="reletion-title-h3 p-title-s font-text">联系方式</div>
         <div class="qfe_wrapper font-text">
-          <div style="letter-spacing: 3px; line-height: 40px">
+          <div style="letter-spacing: 2px; line-height: 40px">
             <span style="color: rgb(102, 102, 102); font-size: 16px">
               <img
                 src="/media/icon/relation-icon1.png"
@@ -36,7 +41,7 @@
             </span>
             <span style="font-size: 16px" />
           </div>
-          <div style="letter-spacing: 3px; line-height: 40px">
+          <div style="letter-spacing: 2px; line-height: 40px">
             <span style="font-size: 16px">
               <span style="color: rgb(102, 102, 102)">
                 <img
