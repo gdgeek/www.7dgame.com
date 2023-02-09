@@ -3,7 +3,7 @@
   <section class="sandtable-section section-bgc-color">
     <div align="center">
       <h1 class="section-title-size section-title-dark font-text">关于我们</h1>
-      <p class="section-subtitle-size">
+      <p class="f-text-color">
         国内制作HoloLens数字沙盘最早，项目最多的高新科技企业。
       </p>
       <p class="section-underline-style" />

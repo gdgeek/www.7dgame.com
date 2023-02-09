@@ -3,7 +3,7 @@
   <section class="sandtable-section font-text">
     <div align="center">
       <h1 style="color: #4183ea" class="section-title-size">项目开发流程</h1>
-      <p class="section-subtitle-size">
+      <p class="f-text-color">
         专注开发效率和用户体验，不断优化流程、提升项目质量
       </p>
       <p class="section-underline-style" />
