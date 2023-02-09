@@ -5,7 +5,7 @@
       <h1 class="section-title-size section-title-dark font-text">
         基于HoloLens2虚实混合数字沙盘绍
       </h1>
-      <p class="section-subtitle-size font-text">
+      <p class="f-text-color font-text">
         全方位覆盖用户展示需求，感知一体沉浸试体验
       </p>
       <p class="section-underline-style" />
