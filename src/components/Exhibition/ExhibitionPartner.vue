@@ -4,7 +4,7 @@
     <div align="center">
       <img
         src="/media/bg/partner2.jpg"
-        style="width: 65%; border-radius: 10px"
+        style="width: 80%; border-radius: 10px"
       />
     </div>
   </section>

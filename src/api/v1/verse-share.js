@@ -3,8 +3,10 @@ import request from '@/utils/request'
 var qs = require('querystringify')
 var path = require('path')
 export function postVerseShare(data) {
+  const url = path.join('v1', 'verse-shares')
+
   return request({
-    url: 'v1/verse-shares',
+    url,
     method: 'post',
     data
   })

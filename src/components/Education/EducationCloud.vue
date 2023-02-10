@@ -6,7 +6,7 @@
       <h1 class="font-text section-title-size section-title-dark title-lighter">
         产品中心
       </h1>
-      <p class="font-text section-subtitle-size">
+      <p class="font-text f-text-color">
         提供demo展示、私有云部署等产品，更方便，更安全
       </p>
       <p class="section-underline-blue" />
@@ -23,7 +23,7 @@
             </div>
             <p
               style="padding-top: 10px; text-align: left"
-              class="section-subtitle-size font-text"
+              class="f-text-color font-text"
             >
               私有云(Private
               Clouds)是为⼀个客户单独使⽤⽽构建的，因⽽提供对数据、安全性和服务质量的最有效控制。该公司拥有基础设施，并可以控制在此基础设施上部署应⽤程序的⽅式。私有云可部署在企业数据中⼼的防⽕墙内，也可以将它们部署在⼀个安全的主机托管场所，私有云的核⼼属性是专有资源。
@@ -44,7 +44,7 @@
               <div>
                 <b class="font-text" style="color: #33353d">本地部署</b>
                 <br />
-                <span class="section-subtitle-size font-text">
+                <span class="f-text-color font-text">
                   本项⽬提提供私有云部署，服务器提供在校内⽹络中的安装配置，让⽤户在安全的内部环境使⽤。所有资源和
                   数据库都部署在本地局域⽹服务器上。所有内容提供 Docker
                   容器⽅便部署。
@@ -62,7 +62,7 @@
               <div>
                 <b class="font-text" style="color: #33353d">资源管理</b>
                 <br />
-                <span class="section-subtitle-size font-text">
+                <span class="f-text-color font-text">
                   后台提供三维模型/图⽚/视频资源的上传查看和相应管理。系统前段管理基于Vue前段引擎。
                 </span>
               </div>
@@ -78,7 +78,7 @@
               <div>
                 <b class="font-text" style="color: #33353d">模型优化</b>
                 <br />
-                <span class="section-subtitle-size">
+                <span class="f-text-color">
                   ⽀持多种三维模型格式，包括FBX，GLB，GLTF，IGES，STL等模型的管理，并在后台提供三维模型必要的压
                   缩优化操作，系统后台⾃动转换图形格式并压缩。
                 </span>
@@ -95,7 +95,7 @@
               <div>
                 <b class="font-text" style="color: #33353d">可视化场景编辑</b>
                 <br />
-                <span class="section-subtitle-size">
+                <span class="f-text-color">
                   后台提供可视化的场景编辑⼯具，可以通过拖拽链接节点来构造新的场景。提供若⼲节点便于场景构建。
                 </span>
               </div>
