@@ -10,7 +10,7 @@
         <!-- <div class="reletion-title-h1 p-title-m">欢迎联系我们</div> -->
       </el-col>
       <el-col :xs="22" :sm="22" :md="10" :lg="10" :xl="10" :offset="2">
-        <div class="reletion-title-h3 p-title-s font-text">公司简介</div>
+        <h2 class="p-title-s font-text">公司简介</h2>
         <div class="qfe_wrapper">
           <div
             style="
@@ -29,7 +29,7 @@
       </el-col>
       <!-- 视频位置 -->
       <el-col :xs="22" :sm="22" :md="10" :lg="10" :xl="10" :offset="2">
-        <div class="reletion-title-h3 p-title-s font-text">联系方式</div>
+        <h2 class="p-title-s font-text">联系方式</h2>
         <div class="qfe_wrapper font-text">
           <div style="letter-spacing: 2px; line-height: 40px">
             <span style="color: rgb(102, 102, 102); font-size: 16px">
@@ -41,7 +41,7 @@
             </span>
             <span style="font-size: 16px" />
           </div>
-          <div style="letter-spacing: 2px; line-height: 40px">
+          <div style="letter-spacing: 1px; line-height: 40px">
             <span style="font-size: 16px">
               <span style="color: rgb(102, 102, 102)">
                 <img
@@ -53,7 +53,7 @@
               </span>
             </span>
           </div>
-          <div style="letter-spacing: 3px; line-height: 40px">
+          <div style="letter-spacing: 2px; line-height: 40px">
             <span style="color: rgb(102, 102, 102)">
               <span style="font-size: 16px">
                 <img
@@ -98,7 +98,7 @@ export default {
   font-size: 32px;
   font-weight: 400;
   color: #00cccc;
-  margin-bottom: 65px;
+  margin-bottom: 35px;
 }
 .reletion-title-black {
   font-size: 32px;

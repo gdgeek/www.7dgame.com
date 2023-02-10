@@ -28,7 +28,7 @@ export default {
       infoTel: 15000159790,
       infoTitle: '为您私有部署',
       infoTitle2: '元宇宙数字化教育方案',
-      titleColor: '#32373f',
+      titleColor: '#1d1d1f',
       titlePosition: 'left',
       bgUrl: '/media/bg/education.jpg'
     }
