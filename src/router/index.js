@@ -473,7 +473,6 @@ export const constantRoutes = [
     component: Web,
     hidden: true,
     redirect: '/web/index',
-
     children: [
       {
         meta: { title: '平台入口' },
@@ -542,6 +541,12 @@ export const constantRoutes = [
         path: 'publicity',
         name: 'Publicity',
         component: () => import('@/views/web/publicity')
+      },
+      {
+        meta: { title: '隐私策略' },
+        path: 'privacy-policy',
+        name: 'Privacy Policy',
+        component: () => import('@/views/web/privacy-policy')
       }
     ]
   },

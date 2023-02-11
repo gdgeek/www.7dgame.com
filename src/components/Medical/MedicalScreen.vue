@@ -26,7 +26,7 @@ export default {
       infoTel: 15000159790,
       infoTitle: '欢迎体验',
       infoTitle2: '元宇宙实景医疗',
-      titleColor: '#32373f',
+      titleColor: '#1d1d1f',
       titlePosition: 'left',
       bgUrl: '/media/bg/m2-screen.jpg'
     }
