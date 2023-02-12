@@ -19,7 +19,7 @@
       <br />
       <el-button
         style="width: 100%"
-        @click="$router.push({ path: '/web/download' })"
+        @click="$router.push({ path: '/site/download' })"
         size="mini"
       >
         下载相关程序

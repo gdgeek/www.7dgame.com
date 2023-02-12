@@ -448,6 +448,12 @@ export const constantRoutes = [
         component: () => import('@/views/site/index')
       },
       {
+        meta: { title: '相关下载' },
+        path: 'download',
+        name: 'WebDownload',
+        component: () => import('@/views/site/download')
+      },
+      {
         path: 'wechat-signup',
         meta: { title: '微信注册/绑定' },
         name: 'SiteSignup',
@@ -480,12 +486,6 @@ export const constantRoutes = [
         name: 'WebIndex',
         component: () => import('@/views/web/index')
         // component: () => import('@/views/portal/index')
-      },
-      {
-        meta: { title: '相关下载' },
-        path: 'download',
-        name: 'WebDownload',
-        component: () => import('@/views/web/download')
       },
       {
         meta: { title: '案例展示' },

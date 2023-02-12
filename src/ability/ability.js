@@ -36,6 +36,7 @@ export function UpdateAbility($ability, roles, userId) {
     '/site',
     '/site/logout',
     '/site/index',
+    '/site/download',
     '/site/wechat-signup',
     '/site/binded-email',
     '/404',
