@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       mrpp: [
-        { label: '首1页', type: 'document', id: 999 },
+        { label: '首页', type: 'document', id: 999 },
         { label: '新闻', type: 'category', id: 74 },
         { label: '相关下载', type: 'category', id: 77 },
         { label: '案例教程', type: 'category', id: 79 }
