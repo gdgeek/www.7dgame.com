@@ -1,13 +1,12 @@
 <template>
   <div class="screen-main-height">
     <el-card class="card">
-      <document-list :category-id="77" :path="'/web/document'" />
+      <document-list :category-id="77" :document_path="'/web/document'" />
     </el-card>
   </div>
 </template>
 
 <script>
-
 import DocumentList from '@/components/Home/DocumentList.vue'
 // @ is an alias to /src
 export default {
@@ -19,8 +18,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.screen-main-height{
-    min-height: calc(100vh - 130px);
+.screen-main-height {
+  min-height: calc(100vh - 130px);
 }
 .card {
   font-size: 14px;
@@ -31,5 +30,4 @@ export default {
   //background-attachment: fixed;
   //background-size: cover;
 }
-
 </style>

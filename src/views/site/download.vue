@@ -1,7 +1,7 @@
 <template>
   <div class="screen-main-height">
     <el-card class="card">
-      <document-list :category-id="77" :path="'/web/document'" />
+      <document-list :category-id="77" :document_path="'/web/document'" />
     </el-card>
   </div>
 </template>
