@@ -1,16 +1,17 @@
 <template>
   <!-- 医疗产品列 -->
-  <div class="background-box font-text">
-    <el-row class="row-box">
+  <div class="background-box">
+    <el-row class="p-pc-pfr">
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-        <div class="background-img">
-          <div
-            class="portal-main-background portal-background-url1 p-positon-auto"
+        <div class="medical-pic-box">
+          <img
+            src="/media/bg/m-list.jpg"
+            style="width: 86%; border-radius: 5px"
           />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-        <div class="background-text" align="left">
+        <div class="background-text content-color" align="left">
           <h2 class="p-title-m">快速分析了解您的需求!</h2>
           <h5>
             资深专业人员将对您的需求进行详细了解，发送我们的案例给您参考，为您的绝妙创意提供最适合的解决方案，并全程为项目的实现提供咨询。
@@ -25,7 +26,7 @@
     </el-row>
     <br />
     <br />
-    <el-row class="row-box">
+    <el-row class="p-pc-pfr">
       <el-col
         :xs="24"
         :sm="24"
@@ -34,12 +35,15 @@
         :xl="12"
         class="hidden-lg-and-up"
       >
-        <div class="background-img">
-          <div class="portal-background-url2 p-positon-auto" />
+        <div class="medical-pic-box">
+          <img
+            src="/media/bg/m-list2.jpg"
+            style="width: 86%; border-radius: 5px"
+          />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-        <div class="background-text" align="left">
+        <div class="background-text content-color" align="left">
           <h2 class="p-title-m">实景医疗AR产品部署</h2>
           <h5>
             我们将为您选择的产品方案进行展示和报价。满足客户的个性化需求。
@@ -60,8 +64,11 @@
         :xl="12"
         class="hidden-md-and-down"
       >
-        <div class="background-img">
-          <div class="portal-background-url2 p-positon-auto" />
+        <div class="medical-pic-box">
+          <img
+            src="/media/bg/m-list2.jpg"
+            style="width: 86%; border-radius: 5px"
+          />
         </div>
       </el-col>
     </el-row>
@@ -92,34 +99,21 @@ export default {
   padding: 5% 0 60px;
   background-color: #f7f6f9;
 }
-.row-box {
-  padding: 0 30px;
+.medical-pic-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
 }
 .background-text {
   padding: 14% 20% 0 12%;
-  // color: #040707;
-  color: #32373f;
+  // color: #1d1d1f;
 }
 .background-img {
   position: relative;
   width: 100%;
   height: 50vw;
   max-height: 500px;
-}
-.portal-background-url1 {
-  width: 80%;
-  height: 80%;
-  border: 0px solid;
-  border-radius: 5px;
-  background: url('/media/bg/m-list.jpg') center no-repeat;
-  background-size: cover;
-}
-.portal-background-url2 {
-  width: 80%;
-  height: 80%;
-  border-radius: 5px;
-  background: url('/media/bg/m-list2.jpg') center no-repeat;
-  background-size: cover;
 }
 .button-box {
   padding: 2% 12% 50px;

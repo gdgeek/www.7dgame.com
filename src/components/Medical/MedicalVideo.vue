@@ -4,10 +4,7 @@
     <el-row :gutter="30" class="p-pc-pfr">
       <!-- content部分 -->
       <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" align="left">
-        <div class="title-box font-text">
-          <!-- <div class="public-h3-title p-title-m medical-color">
-            医疗核心应用场景
-          </div> -->
+        <div class="title-box content-color">
           <h1 class="public-title-margin p-title-m medical-color">
             医疗核心应用场景
           </h1>
