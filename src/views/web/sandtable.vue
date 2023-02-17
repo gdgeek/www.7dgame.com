@@ -1,11 +1,9 @@
 <template>
   <div class="background-screen-border">
     <!-- 巨幕板块 -->
-    <sand-screen />
+    <screen :bg-url="bgUrl" :item="screen" />
     <!-- 震撼沙盘板块 -->
     <solution />
-    <!-- 第三人称视角板块 -->
-    <!-- <thirdman /> -->
     <!-- 介绍板块 -->
     <introduce />
     <!-- 关于我们板块 -->
@@ -22,9 +20,8 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
-import SandScreen from '@/components/SandTable/SandScreen.vue'
+import Screen from '@/components/WebPublick/Screen.vue'
 import Solution from '@/components/SandTable/Solution.vue'
-import Thirdman from '@/components/SandTable/Thirdman.vue'
 import About from '@/components/SandTable/About.vue'
 import Introduce from '@/components/SandTable/Introduce.vue'
 import Flow from '@/components/SandTable/Flow.vue'
@@ -33,14 +30,25 @@ import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
 export default {
   name: 'SandTable',
   components: {
-    SandScreen,
+    Screen,
     Solution,
-    Thirdman,
     About,
     Introduce,
     Flow,
     Relation,
     ExhibitionPartner
+  },
+  data() {
+    return {
+      bgUrl: '/media/bg/sand-screen.jpg',
+      screen: {
+        title: '',
+        title2: '全息数字沙盘制作 震撼来袭',
+        color: '#f5f4f3',
+        tel: '15000159790',
+        align: 'center'
+      }
+    }
   }
 }
 </script>
