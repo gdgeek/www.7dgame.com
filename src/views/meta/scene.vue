@@ -90,6 +90,7 @@ export default {
               const iframe = document.getElementById('editor')
               const r = await getMeta(this.id)
               self.breadcrumb(r.data)
+              alert(JSON.stringify(r.data))
               self._canSave = this.canSave(r.data.author_id, r.data.share)
 
               const data = {
