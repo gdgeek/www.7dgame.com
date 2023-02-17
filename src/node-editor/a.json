@@ -1,0 +1,224 @@
+{
+  "type": "MetaRoot",
+  "parameters": {
+    "uuid": "4965d558-6486-4ce9-ae39-f23bc94eb604"
+  },
+  "children": {
+    "entities": [
+      {
+        "type": "Polygen",
+        "parameters": {
+          "uuid": "ba35ba60-9707-4426-8217-7662cd0a1852",
+          "name": "root",
+          "transform": {
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "rotate": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "scale": {
+              "x": 0.0005,
+              "y": 0.0005,
+              "z": 0.0005
+            }
+          },
+          "active": true,
+          "polygen": 430
+        },
+        "children": {
+          "entities": [
+            {
+              "type": "Polygen",
+              "parameters": {
+                "uuid": "542c2a27-932c-45a6-86d3-b714c6dbe7af",
+                "name": "block1",
+                "transform": {
+                  "position": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "rotate": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                  }
+                },
+                "active": true,
+                "polygen": 429
+              },
+              "children": {
+                "entities": [],
+                "components": [
+                  {
+                    "type": "Tooltip",
+                    "parameters": {
+                      "uuid": "84f63b34-c601-4665-8ca4-03b937ea1152",
+                      "position": {
+                        "x": 49,
+                        "y": 392,
+                        "z": -340
+                      },
+                      "length": "0.25",
+                      "text": "\"神州\"载人飞船"
+                    },
+                    "children": {}
+                  },
+                  {
+                    "type": "Moved",
+                    "parameters": {
+                      "uuid": "1788c947-d08a-4269-9293-b94355da1807",
+                      "magnetic": true,
+                      "scalable": false
+                    },
+                    "children": {}
+                  }
+                ]
+              }
+            },
+            {
+              "type": "Polygen",
+              "parameters": {
+                "uuid": "8532dae8-8b62-4c81-a047-77e5d2d2e222",
+                "name": "excited3",
+                "transform": {
+                  "position": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "rotate": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                  }
+                },
+                "active": true,
+                "polygen": 431
+              },
+              "children": {
+                "entities": [],
+                "components": [
+                  {
+                    "type": "Moved",
+                    "parameters": {
+                      "uuid": "409d7525-51f4-4c42-95c4-cd06e1bf88bc",
+                      "magnetic": true,
+                      "scalable": false
+                    },
+                    "children": {}
+                  }
+                ]
+              }
+            },
+            {
+              "type": "Polygen",
+              "parameters": {
+                "uuid": "0d1f5c20-d929-44cd-a412-c8e036a95979",
+                "name": "moment4",
+                "transform": {
+                  "position": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "rotate": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                  }
+                },
+                "active": true,
+                "polygen": 432
+              },
+              "children": {
+                "entities": [],
+                "components": [
+                  {
+                    "type": "Moved",
+                    "parameters": {
+                      "uuid": "1788c947-d08a-4269-9293-b94355da1807",
+                      "magnetic": true,
+                      "scalable": false
+                    },
+                    "children": {}
+                  },
+                  {
+                    "type": "Tooltip",
+                    "parameters": {
+                      "uuid": "1c489675-5b31-4516-9ff9-5e5da39d9a97",
+                      "position": {
+                        "x": 49,
+                        "y": 392,
+                        "z": 520
+                      },
+                      "length": "0.25",
+                      "text": "\"天舟\"货运飞船"
+                    },
+                    "children": {}
+                  }
+                ]
+              }
+            }
+          ],
+          "components": []
+        }
+      }
+    ],
+    "addons": [
+      {
+        "type": "Toolbar",
+        "parameters": {
+          "uuid": "bd427ebd-84e4-4910-b880-2bffba020c31",
+          "destroy": false
+        },
+        "children": {
+          "buttons": [
+            {
+              "type": "Button",
+              "parameters": {
+                "uuid": "b303b66c-37e1-4869-8229-44753350394c",
+                "title": "bz",
+                "icon": "certificate",
+                "action": "bz",
+                "parameter": ""
+              },
+              "children": {}
+            },
+            {
+              "type": "Button",
+              "parameters": {
+                "uuid": "b1187c27-4307-4377-ad5c-6fa7726af979",
+                "title": "unbz",
+                "icon": "basketball-ball",
+                "action": "unbz",
+                "parameter": ""
+              },
+              "children": {}
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

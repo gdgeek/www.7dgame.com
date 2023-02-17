@@ -1,17 +1,17 @@
 <template>
   <div class="verse-index">
-    <mr-p-p-verse-page @loaded="loaded" :created="true" />
+    <page @loaded="loaded" :created="true" />
   </div>
 </template>
 
 <script>
-import MrPPVersePage from '@/components/MrPP/MrPPVersePage.vue'
+import Page from '@/components/MrPP/MrPPVersePage.vue'
 
 import { getVerses } from '@/api/v1/verse'
 export default {
   name: 'VerseIndex',
   components: {
-    MrPPVersePage
+    Page
   },
 
   methods: {

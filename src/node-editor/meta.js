@@ -149,7 +149,8 @@ const initMeta = async function ({ container, root }) {
     { component: 'Entity', target: 'uuid' },
     { component: 'Button', target: 'uuid' },
     { component: 'Action', target: 'uuid' },
-    { component: 'Tooltip', target: 'uuid' }
+    { component: 'Tooltip', target: 'uuid' },
+    { component: 'Moved', target: 'uuid' }
   ])
 
   engine_ = new Rete.Engine('MrPP@0.1.0')

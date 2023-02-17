@@ -78,7 +78,7 @@ export default {
         case 'audio':
           return '选择相应音频'
         case 'polygen':
-          return '选择相应模型'
+          return '选择相应模型2'
         case 'picture':
           return '选择相应图片'
       }

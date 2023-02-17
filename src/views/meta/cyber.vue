@@ -6,7 +6,12 @@
           <div slot="header" class="clearfix">
             <router-link
               v-if="meta"
-              :to="'/meta/rete-meta?id=' + meta.id + '&title=' + title"
+              :to="
+                '/meta/rete-meta?id=' +
+                meta.id +
+                '&title=' +
+                encodeURIComponent(title)
+              "
             >
               <el-link v-if="meta" :underline="false">
                 【元：{{ title }}】
@@ -126,7 +131,11 @@ export default {
           meta: { title: '宇宙编辑' }
         },
         {
-          path: '/meta/rete-meta?id=' + self.meta.id + '&title=' + self.title,
+          path:
+            '/meta/rete-meta?id=' +
+            self.meta.id +
+            '&title=' +
+            encodeURIComponent(self.title),
           meta: { title: '元编辑' }
         },
         {

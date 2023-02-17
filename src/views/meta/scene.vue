@@ -31,7 +31,7 @@ export default {
 
     return {
       isInit: false,
-      //  data: null,
+      meta: null,
       src,
       _canSave: null
     }
@@ -91,6 +91,7 @@ export default {
               const r = await getMeta(this.id)
               self.breadcrumb(r.data)
               self._canSave = this.canSave(r.data.author_id, r.data.share)
+
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
@@ -126,8 +127,11 @@ export default {
             meta: { title: '宇宙编辑' }
           },
           {
-            path: '/meta/rete-meta?id=' + meta.id + '&title=' + this.title,
-            //  path: '/meta/rete-meta?id=' + meta.id,
+            path:
+              '/meta/rete-meta?id=' +
+              meta.id +
+              '&title=' +
+              encodeURIComponent(this.title),
             meta: { title: '元编辑' }
           },
           {
@@ -156,6 +160,7 @@ export default {
         })
         return
       }
+
       await putMeta(this.id, { data: meta })
       this.$message({
         type: 'success',
