@@ -57,43 +57,6 @@
             </waterfall-item>
           </waterfall>
         </el-tab-pane>
-        <el-tab-pane label="绑定资源">
-          <waterfall :options="{}" v-if="items !== null" ref="waterfall">
-            <waterfall-item
-              v-for="(item, index) in items"
-              :key="index"
-              style="width: 230px"
-            >
-              <el-card style="width: 220px" class="box-card">
-                <div slot="header">
-                  <el-card shadow="hover" :body-style="{ padding: '0px' }">
-                    <span slot="header" class="mrpp-title">
-                      <b class="card-title" nowrap>{{ title(item) }}</b>
-                    </span>
-                    <img
-                      v-if="item.image"
-                      style="width: 100%; height: 180px"
-                      fit="contain"
-                      :src="item.image.url"
-                      lazy
-                    />
-
-                    <div style="width: 100%; text-align: center">
-                      {{ item.created_at }}
-                    </div>
-                  </el-card>
-                </div>
-                <div class="clearfix">
-                  <el-button type="primary" size="mini" @click="selected(item)">
-                    选择
-                  </el-button>
-                </div>
-                <div class="bottom clearfix" />
-              </el-card>
-              <br />
-            </waterfall-item>
-          </waterfall>
-        </el-tab-pane>
       </el-tabs>
 
       <span slot="footer" class="dialog-footer">
