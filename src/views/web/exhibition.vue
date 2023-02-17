@@ -1,7 +1,7 @@
 <template>
   <div class="background-screen-border">
     <!-- 展馆主屏幕 -->
-    <exhibition-screen />
+    <screen :bg-url="bgUrl" :item="screen" />
     <!-- 图片场景介绍 -->
     <exhibition-picture />
     <!-- 视频案例 -->
@@ -19,7 +19,7 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
-import ExhibitionScreen from '@/components/Exhibition/ExhibitionScreen.vue'
+import Screen from '@/components/WebPublick/Screen.vue'
 import ExhibitionPicture from '@/components/Exhibition/ExhibitionPicture.vue'
 import ExhibitionVideo from '@/components/Exhibition/ExhibitionVideo.vue'
 import ExhibitionBody from '@/components/Exhibition/ExhibitionBody.vue'
@@ -30,7 +30,7 @@ import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
 export default {
   name: 'Exhibition',
   components: {
-    ExhibitionScreen,
+    Screen,
     ExhibitionPicture,
     ExhibitionVideo,
     ExhibitionBody,
@@ -40,7 +40,14 @@ export default {
   },
   data() {
     return {
-      // isBlack -- title color props
+      bgUrl: '/media/bg/ex-screen.jpg',
+      screen: {
+        title: '欢迎创建',
+        title2: '元宇宙实景展馆',
+        color: '#f5f4f3',
+        tel: '15000159790',
+        align: 'left'
+      },
       isBlack: true
     }
   }

@@ -1,7 +1,9 @@
 <template>
   <div class="background-screen-border">
     <!-- 巨幕板块 -->
-    <education-screen />
+    <demo-screen-show />
+
+    <screen :bg-url="bgUrl" :item="screen" />
 
     <!-- 应用场景 -->
     <education-solution />
@@ -24,8 +26,8 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
-
-import EducationScreen from '@/components/Education/EducationScreen.vue'
+import DemoScreenShow from '@/components/MrPP/MrPPDemo/DemoScreenShow.vue'
+import Screen from '@/components/WebPublick/Screen.vue'
 import EducationCloud from '@/components/Education/EducationCloud.vue'
 import EducationSolution from '@/components/Education/EducationSolution.vue'
 import EducationDeploy from '@/components/Education/EducationDeploy.vue'
@@ -35,7 +37,8 @@ import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
 export default {
   name: 'Education',
   components: {
-    EducationScreen,
+    DemoScreenShow,
+    Screen,
     EducationCloud,
     EducationSolution,
     EducationDeploy,
@@ -45,8 +48,14 @@ export default {
   },
   data() {
     return {
-      // isBlack -- title color props
-      isBlack: true
+      bgUrl: '/media/bg/education.jpg',
+      screen: {
+        title: '为您私有部署',
+        title2: '元宇宙数字化教育方案',
+        color: '#1d1d1f',
+        tel: '15000159790',
+        align: 'left'
+      }
     }
   }
 }
