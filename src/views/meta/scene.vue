@@ -31,7 +31,7 @@ export default {
 
     return {
       isInit: false,
-      meta: null,
+      // meta: null,
       src,
       _canSave: null
     }
@@ -90,7 +90,7 @@ export default {
               const iframe = document.getElementById('editor')
               const r = await getMeta(this.id)
               self.breadcrumb(r.data)
-              alert(JSON.stringify(r.data))
+
               self._canSave = this.canSave(r.data.author_id, r.data.share)
 
               const data = {
@@ -145,9 +145,6 @@ export default {
     canSave(id, share) {
       const self = this
 
-      if (self.meta === null) {
-        return false
-      }
       return (
         self.$can('update', new AbilityWorks(id)) ||
         self.$can('share', new AbilityShare(share))

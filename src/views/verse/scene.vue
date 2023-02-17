@@ -116,14 +116,14 @@ export default {
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
     canSave(id, share) {
-      const self = this
+      //const self = this
 
-      if (self.meta === null) {
+      /* if (self.meta === null) {
         return false
-      }
+      }*/
       return (
-        self.$can('update', new AbilityWorks(id)) ||
-        self.$can('share', new AbilityShare(share))
+        this.$can('update', new AbilityWorks(id)) ||
+        this.$can('share', new AbilityShare(share))
       )
     },
     async saveVerse(verse) {
