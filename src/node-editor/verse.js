@@ -82,7 +82,7 @@ const save = async function () {
   })
   return ret
 }
-
+/*
 const create = async function (verse) {
   const data = {
     type: 'Verse',
@@ -91,8 +91,10 @@ const create = async function (verse) {
       metas: []
     }
   }
-  return await setup(data)
-}
+
+  await setup(data)
+  return await save()
+}*/
 const setup = async function (data) {
   await Build(editor_, data)
   setTimeout(() => {
@@ -308,12 +310,13 @@ export default {
   ban,
   initVerse,
   setup,
-  create,
+  // create,
   arrange,
   save,
   saveEvent,
   addEvent,
   addLinked,
   removeLinked,
-  loadEvent
+  loadEvent,
+  addMeta
 }

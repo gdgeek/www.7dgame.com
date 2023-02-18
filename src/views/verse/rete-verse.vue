@@ -60,6 +60,9 @@ import { mapMutations } from 'vuex'
 import { getVerse } from '@/api/v1/verse'
 import { getKnights } from '@/api/v1/knight'
 import { getSpaces } from '@/api/v1/space'
+
+var randomWords = require('random-words')
+import { v4 as uuidv4 } from 'uuid'
 import ResourceDialog from '@/components/MrPP/MrPPResourceDialog.vue'
 import { AbilityWorks, AbilityShare } from '@/ability/ability'
 import {
@@ -99,19 +102,30 @@ export default {
     const response = await getVerse(this.id)
 
     this.verse = response.data
-
-    let data = null
-
-    if (this.verse.data !== null) {
-      data = JSON.parse(this.verse.data)
-      await editor.setup(data)
-      await this.setSlots(data)
-    } else {
-      data = editor.create({
-        name: this.verse.name,
-        id: this.verse.id
+    if (this.verse.data == null) {
+      this.verse.data = JSON.stringify({
+        type: 'Verse',
+        parameters: {
+          uuid: uuidv4(),
+          space: {
+            id: -1,
+            occlusion: false
+          }
+        },
+        children: {
+          metas: []
+        }
       })
     }
+    const data = JSON.parse(this.verse.data)
+
+    data.children.metas = this.supplyMetas(
+      data.children.metas,
+      this.verse.metas
+    )
+
+    await editor.setup(data)
+    await this.setSlots(data)
     if (!this.canSave) {
       editor.ban()
     }
@@ -157,6 +171,50 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
+    supplyMetas(children, metas) {
+      // let ret = []
+      let ret = children.filter(function (item) {
+        if (
+          metas.find(m => {
+            return m.id == item.parameters.id
+          })
+        ) {
+          return true
+        }
+        return false
+      })
+
+      const supply = metas.filter(function (item) {
+        if (
+          children.find(m => {
+            return m.parameters.id == item.id
+          })
+        ) {
+          return false
+        }
+
+        return true
+      })
+
+      supply.forEach(item => {
+        ret.push({
+          type: 'Meta',
+          parameters: {
+            uuid: uuidv4(),
+            id: item.id,
+            title: randomWords(),
+            transform: {
+              position: { x: 0, y: 0, z: 0 },
+              rotate: { x: 0, y: 0, z: 0 },
+              scale: { x: 1, y: 1, z: 1 }
+            }
+          }
+        })
+      })
+
+      console.error(ret.length)
+      return ret
+    },
     getSpaces(data, callback) {
       getSpaces(data.sorted, data.searched, data.current).then(response =>
         callback(response)

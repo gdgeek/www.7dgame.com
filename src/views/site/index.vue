@@ -3,7 +3,7 @@
     <div class="module-head font-text">
       <h1 class="module-welcome">欢迎!</h1>
       <h4>准备好出发了么？</h4>
-
+      <br />
       <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
         <el-tab-pane name="login" label="账户密码登录">
           <login>账户密码登录</login>
