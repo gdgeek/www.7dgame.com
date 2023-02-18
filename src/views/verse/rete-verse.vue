@@ -99,7 +99,7 @@ export default {
       verseId: this.id,
       root: this
     })
-    const response = await getVerse(this.id)
+    const response = await getVerse(this.id, 'metas,metaKnights,share')
 
     this.verse = response.data
     if (this.verse.data == null) {
@@ -118,10 +118,10 @@ export default {
       })
     }
     const data = JSON.parse(this.verse.data)
-
     data.children.metas = this.supplyMetas(
       data.children.metas,
-      this.verse.metas
+      this.verse.metas,
+      this.verse.metaKnights
     )
 
     await editor.setup(data)
@@ -171,32 +171,40 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-    supplyMetas(children, metas) {
-      // let ret = []
-      let ret = children.filter(function (item) {
+    supplyMetas(children, metas, metaKnights) {
+      const mRet = children.filter(function (item) {
         if (
           metas.find(m => {
-            return m.id == item.parameters.id
+            return item.type === 'Meta' && m.id === item.parameters.id
           })
         ) {
           return true
         }
         return false
       })
-
-      const supply = metas.filter(function (item) {
+      const kRet = children.filter(function (item) {
+        if (
+          metaKnights.find(m => {
+            return item.type === 'Knight' && m.id === item.parameters.id
+          })
+        ) {
+          return true
+        }
+        return false
+      })
+      const ret = [...mRet, ...kRet]
+      const mSupply = metas.filter(function (item) {
         if (
           children.find(m => {
-            return m.parameters.id == item.id
+            return m.type === 'Meta' && m.parameters.id == item.id
           })
         ) {
           return false
         }
-
         return true
       })
 
-      supply.forEach(item => {
+      mSupply.forEach(item => {
         ret.push({
           type: 'Meta',
           parameters: {
@@ -212,7 +220,33 @@ export default {
         })
       })
 
-      console.error(ret.length)
+      const kSupply = metaKnights.filter(function (item) {
+        if (
+          children.find(m => {
+            return m.type === 'Knight' && m.parameters.id == item.id
+          })
+        ) {
+          return false
+        }
+        return true
+      })
+
+      kSupply.forEach(item => {
+        ret.push({
+          type: 'Knight',
+          parameters: {
+            uuid: uuidv4(),
+            id: item.id,
+            title: randomWords(),
+            transform: {
+              position: { x: 0, y: 0, z: 0 },
+              rotate: { x: 0, y: 0, z: 0 },
+              scale: { x: 1, y: 1, z: 1 }
+            }
+          }
+        })
+      })
+
       return ret
     },
     getSpaces(data, callback) {

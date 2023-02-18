@@ -4,7 +4,7 @@ var KnightType = {
   title: 'Knight',
   controls: [
     {
-      type: 'string',
+      type: 'uuid',
       key: 'uuid'
     },
     {
@@ -32,13 +32,6 @@ var KnightType = {
       key: 'transform',
       readonly: false
     }
-    /*
-    {
-      type: 'bool',
-      key: 'active',
-      title: '激活',
-      readonly: false
-    }*/
   ],
   inputs: null,
   outputs: [
