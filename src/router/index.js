@@ -506,6 +506,12 @@ export const constantRoutes = [
         component: () => import('@/views/web/document')
       },
       {
+        meta: { title: '文档分类' },
+        path: 'category',
+        name: 'WebCategory',
+        component: () => import('@/views/web/category')
+      },
+      {
         meta: { title: '沙盘制作' },
         path: 'sandTable',
         name: 'WebSandTable',

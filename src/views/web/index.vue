@@ -3,16 +3,17 @@
     <giant />
 
     <el-card class="box-card">
-      <!-- <book
-        document_path="/web/document"
-        :items="book"
-        category_path="/web/category"
-      />-->
+      <!-- -->
     </el-card>
     <cards />
     <business-list :items="list" />
     <contact />
     <Partner />
+    <book
+      document_path="/web/document"
+      :items="book"
+      category_path="/web/category"
+    />
   </div>
 </template>
 
