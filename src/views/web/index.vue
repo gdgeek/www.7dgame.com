@@ -3,7 +3,11 @@
     <giant />
 
     <el-card class="box-card">
-      <book document_path="/web/document" category_path="/web/category" />
+      <!-- <book
+        document_path="/web/document"
+        :items="book"
+        category_path="/web/category"
+      />-->
     </el-card>
     <cards />
     <business-list :items="list" />
@@ -20,7 +24,6 @@ import Contact from '@/components/Web/Contact'
 import Partner from '@/components/Web/Partner'
 import Cooperation from '@/components/Web/Cooperation'
 import Carousel from '@/components/Web/Carousel'
-
 import Book from '@/components/Book.vue'
 export default {
   name: 'WebIndex',
@@ -36,6 +39,10 @@ export default {
   },
   data() {
     return {
+      book: [
+        { label: '新闻', type: 'category', id: 74 },
+        { label: '案例教程', type: 'category', id: 79 }
+      ],
       list: [
         {
           title: '快速分析了解您的需求',

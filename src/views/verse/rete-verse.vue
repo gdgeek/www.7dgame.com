@@ -285,9 +285,9 @@ export default {
         resolve()
       })
     },
-    async create(data) {
+    /*async create(data) {
       return await editor.create(data)
-    },
+    },*/
     async arrange() {
       await editor.removeLinked()
       editor.arrange()
