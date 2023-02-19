@@ -24,7 +24,6 @@ export function getMetas(
   sort = '-created_at',
   search = '',
   page = 0,
-
   expand = 'image,author'
 ) {
   let query = []

@@ -107,15 +107,10 @@ export default {
     Card,
     MrPPHeader
   },
-  props: {
-    type: {
-      type: String,
-      default: 'polygen'
-    }
-  },
   data() {
     return {
       activeName: 'binding',
+      type: 'polygen',
       binding: {
         items: null,
         sorted: '-created_at',
@@ -151,9 +146,10 @@ export default {
       }
       return 'title'
     },
-    open() {
+    async open(type) {
+      this.type = type
       this.dialogVisible = true
-      this.refresh()
+      await this.refresh()
     },
     close() {
       this.dialogVisible = false

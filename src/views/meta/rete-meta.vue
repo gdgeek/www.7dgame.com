@@ -4,7 +4,6 @@
       @selected="selectResources"
       @cancel="openResources()"
       ref="dialog"
-      :type="resource.type"
     />
     <el-container>
       <el-main>
@@ -61,8 +60,8 @@ export default {
   data() {
     return {
       resource: {
-        callback: null,
-        type: null
+        callback: null
+        // type: null
       },
       loading: false,
       id: parseInt(this.$route.query.id),
@@ -71,19 +70,6 @@ export default {
     }
   },
   computed: {
-    resourceMessage() {
-      switch (this.resource.type) {
-        case 'video':
-          return '选择相应视频'
-        case 'audio':
-          return '选择相应音频'
-        case 'polygen':
-          return '选择相应模型'
-        case 'picture':
-          return '选择相应图片'
-      }
-      return '选择相应资源'
-    },
     title() {
       return this.$route.query.title
     },
@@ -184,10 +170,9 @@ export default {
     openResources({ callback, type } = { callback: null, type: null }) {
       if (this.canSave) {
         this.resource.callback = callback
-        this.resource.type = type
 
         if (callback !== null) {
-          this.$refs.dialog.open()
+          this.$refs.dialog.open(type)
         }
       }
     },

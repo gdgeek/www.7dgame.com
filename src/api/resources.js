@@ -91,8 +91,10 @@ export function getResources(
     query['page'] = page
   }
 
+  const url = path.join('resources' + qs.stringify(query, true))
+  alert(url)
   return request({
-    url: path.join('resources' + qs.stringify(query, true)),
+    url,
     method: 'get'
   })
 }
