@@ -31,10 +31,7 @@
           </el-menu-item>
         </el-menu>
       </el-scrollbar>
-
-      1
     </div>
-    2
   </div>
 </template>
 

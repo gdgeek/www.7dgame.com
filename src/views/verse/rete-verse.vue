@@ -1,17 +1,14 @@
 <template>
   <div>
-    <resource-dialog
+    <knight-dialog
       @selected="knightSelect"
       @cancel="openKnight(null)"
-      @getDatas="getKnights"
-      message="选择相应骑士"
       ref="knightDialog"
     />
-    <resource-dialog
+
+    <space-dialog
       @selected="spaceSelect"
       @cancel="openSpace(null)"
-      @getDatas="getSpaces"
-      message="选择相应空间"
       ref="spaceDialog"
     />
     <event-dialog
@@ -41,7 +38,7 @@
               </el-button>
             </el-button-group>
           </div>
-          <div v-show="visible" class="rete" ref="rete" />
+          <div class="rete" ref="rete" />
         </el-card>
       </el-main>
     </el-container>
@@ -58,12 +55,11 @@ import {
 } from '@/api/v1/meta-event'
 import { mapMutations } from 'vuex'
 import { getVerse } from '@/api/v1/verse'
-import { getKnights } from '@/api/v1/knight'
-import { getSpaces } from '@/api/v1/space'
 
 var randomWords = require('random-words')
 import { v4 as uuidv4 } from 'uuid'
-import ResourceDialog from '@/components/MrPP/MrPPResourceDialog.vue'
+import SpaceDialog from '@/components/MrPP/SpaceDialog.vue'
+import KnightDialog from '@/components/MrPP/KnightDialog.vue'
 import { AbilityWorks, AbilityShare } from '@/ability/ability'
 import {
   getVerseEventByVerseId,
@@ -75,7 +71,9 @@ import EventDialog from '@/components/Rete/EventDialog.vue'
 export default {
   components: {
     EventDialog,
-    ResourceDialog
+
+    SpaceDialog,
+    KnightDialog
   },
 
   data() {
@@ -85,7 +83,6 @@ export default {
       space: { callback: null },
       id: parseInt(this.$route.query.id),
       verse: null,
-      visible: true,
       event: {
         target: null,
         map: new Map()
@@ -249,11 +246,6 @@ export default {
 
       return ret
     },
-    getSpaces(data, callback) {
-      getSpaces(data.sorted, data.searched, data.current).then(response =>
-        callback(response)
-      )
-    },
     openSpace(callback) {
       if (this.canSave) {
         this.space.callback = callback
@@ -266,12 +258,6 @@ export default {
       if (this.space.callback !== null) {
         this.space.callback(data)
       }
-    },
-
-    getKnights(data, callback) {
-      getKnights(data.sorted, data.searched, data.current).then(response => {
-        callback(response)
-      })
     },
     openKnight(callback) {
       if (this.canSave) {

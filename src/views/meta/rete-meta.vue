@@ -3,9 +3,8 @@
     <resource-dialog
       @selected="selectResources"
       @cancel="openResources()"
-      @getDatas="resources"
       ref="dialog"
-      :message="resourceMessage"
+      :type="resource.type"
     />
     <el-container>
       <el-main>
@@ -50,8 +49,8 @@
 <script>
 import editor from '@/node-editor/meta'
 import { getMeta, putMeta } from '@/api/v1/meta'
-import { getResources } from '@/api/resources'
-import ResourceDialog from '@/components/MrPP/MrPPResourceDialog.vue'
+
+import ResourceDialog from '@/components/MrPP/ResourceDialog.vue'
 import { AbilityWorks, AbilityShare } from '@/ability/ability'
 
 import { mapMutations } from 'vuex'
@@ -79,7 +78,7 @@ export default {
         case 'audio':
           return '选择相应音频'
         case 'polygen':
-          return '选择相应模型1'
+          return '选择相应模型'
         case 'picture':
           return '选择相应图片'
       }
@@ -198,14 +197,6 @@ export default {
       }
     },
 
-    resources(data, callback) {
-      getResources(
-        this.resource.type,
-        data.sorted,
-        data.searched,
-        data.current
-      ).then(response => callback(response))
-    },
     async save() {
       if (this.canSave) {
         const data = await editor.save()

@@ -15,49 +15,46 @@
           @sort="sort"
         >
           <el-tag>
-            <b>{{ message }}</b>
+            <b>选择相应空间</b>
           </el-tag>
         </mr-p-p-header>
       </span>
-      <el-tabs type="border-card" @tab-click="handleClick">
-        <el-tab-pane label="我的资源">
-          <waterfall :options="{}" v-if="items !== null">
-            <waterfall-item
-              v-for="(item, index) in items"
-              :key="index"
-              style="width: 230px"
-            >
-              <el-card style="width: 220px" class="box-card">
-                <div slot="header">
-                  <el-card shadow="hover" :body-style="{ padding: '0px' }">
-                    <span slot="header" class="mrpp-title">
-                      <b class="card-title" nowrap>{{ title(item) }}</b>
-                    </span>
-                    <img
-                      v-if="item.image"
-                      style="width: 100%; height: 180px"
-                      fit="contain"
-                      :src="item.image.url"
-                      lazy
-                    />
 
-                    <div style="width: 100%; text-align: center">
-                      {{ item.created_at }}
-                    </div>
-                  </el-card>
+      <waterfall :options="{}" v-if="items !== null">
+        <waterfall-item
+          v-for="(item, index) in items"
+          :key="index"
+          style="width: 230px"
+        >
+          <el-card style="width: 220px" class="box-card">
+            <div slot="header">
+              <el-card shadow="hover" :body-style="{ padding: '0px' }">
+                <span slot="header" class="mrpp-title">
+                  <b class="card-title" nowrap>{{ title(item) }}</b>
+                </span>
+                <img
+                  v-if="item.image"
+                  style="width: 100%; height: 180px"
+                  fit="contain"
+                  :src="item.image.url"
+                  lazy
+                />
+
+                <div style="width: 100%; text-align: center">
+                  {{ item.created_at }}
                 </div>
-                <div class="clearfix">
-                  <el-button type="primary" size="mini" @click="selected(item)">
-                    选择
-                  </el-button>
-                </div>
-                <div class="bottom clearfix" />
               </el-card>
-              <br />
-            </waterfall-item>
-          </waterfall>
-        </el-tab-pane>
-      </el-tabs>
+            </div>
+            <div class="clearfix">
+              <el-button type="primary" size="mini" @click="selected(item)">
+                选择
+              </el-button>
+            </div>
+            <div class="bottom clearfix" />
+          </el-card>
+          <br />
+        </waterfall-item>
+      </waterfall>
 
       <span slot="footer" class="dialog-footer">
         <el-row :gutter="0">
@@ -89,21 +86,16 @@
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 
+import { getSpaces } from '@/api/v1/space'
 import Card from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
-  name: 'ResourceDialog',
+  name: 'SpaceDialog',
   components: {
     Waterfall,
     WaterfallItem,
     Card,
     MrPPHeader
-  },
-  props: {
-    message: {
-      type: String,
-      default: '选择相应空间'
-    }
   },
   data() {
     return {
@@ -117,8 +109,8 @@ export default {
 
   methods: {
     handleClick(tab, event) {
-      var myEvent = new Event('resize')
-      window.dispatchEvent(myEvent)
+      this.items = null
+      this.refresh()
     },
     title(item) {
       if (item.title !== undefined) {
@@ -160,30 +152,22 @@ export default {
       // console.log(this.pagination.current)
     },
     async refresh() {
-      const self = this
-      this.$emit(
-        'getDatas',
-        {
-          sorted: self.sorted,
-          searched: self.searched,
-          current: self.pagination.current
-        },
-        response => {
-          console.log(response.headers)
-          self.pagination = {
-            current: parseInt(response.headers['x-pagination-current-page']),
-            count: parseInt(response.headers['x-pagination-page-count']),
-            size: parseInt(response.headers['x-pagination-per-page']),
-            total: parseInt(response.headers['x-pagination-total-count'])
-          }
-          //alert(response.data)
-          console.error(response)
-
-          if (response.data) {
-            this.items = response.data
-          }
-        }
+      const response = await getSpaces(
+        this.sorted,
+        this.searched,
+        this.pagination.current
       )
+      console.log(response.headers)
+      this.pagination = {
+        current: parseInt(response.headers['x-pagination-current-page']),
+        count: parseInt(response.headers['x-pagination-page-count']),
+        size: parseInt(response.headers['x-pagination-per-page']),
+        total: parseInt(response.headers['x-pagination-total-count'])
+      }
+
+      if (response.data) {
+        this.items = response.data
+      }
     }
   }
 }
