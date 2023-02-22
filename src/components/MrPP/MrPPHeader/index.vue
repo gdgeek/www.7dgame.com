@@ -106,13 +106,13 @@ export default {
   methods: {
     search() {
       this.$emit('search', this.input)
+      this.input = ''
     },
     sort(value) {
       this.$emit('sort', (value === this.sorted ? '-' : '') + value)
     },
     keyDown(e) {
       if (e.keyCode === 13) {
-        // 用户点击了enter触发
         this.search()
       }
     }

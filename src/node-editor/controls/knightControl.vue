@@ -78,8 +78,7 @@ export default {
   },
   methods: {
     select() {
-      this.root.openKnight(this.onKnight)
-      // this.root.$store.commit('knightCallback', this.onKnight)
+      this.root.openKnight({ value: this.value, callback: this.onKnight })
     },
 
     onKnight(data) {

@@ -108,7 +108,7 @@ export default {
       })
     },
     select() {
-      this.root.openSpace(this.onSpace) //$store.commit('spaceCallback', this.onSpace)
+      this.root.openSpace({ value: this.value, callback: this.onSpace }) //$store.commit('spaceCallback', this.onSpace)
     },
 
     onSpace(data) {

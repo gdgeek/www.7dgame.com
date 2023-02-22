@@ -49,7 +49,7 @@ module.exports = {
   api: process.env.VUE_APP_BASE_API.replace('[ip]', document.domain),
   url: process.env.VUE_APP_BASE_URL.replace('[ip]', document.domain),
   doc: process.env.VUE_APP_DOC_API,
-  version: 2,
+  version: 3,
   canRegister,
   canWeb,
   canSetup,

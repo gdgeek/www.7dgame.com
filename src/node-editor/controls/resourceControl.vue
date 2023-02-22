@@ -74,6 +74,7 @@ export default {
   methods: {
     select() {
       this.root.openResources({
+        value: this.value,
         callback: this.onResource,
         type: this.data.resource
       })

@@ -4,9 +4,10 @@ var qs = require('querystringify')
 var path = require('path')
 function postResources(data) {
   data.uuid = uuidv4()
-  console.error(data)
+
+  const url = path.join('resources')
   return request({
-    url: '/resources',
+    url,
     method: 'post',
     data
   })
@@ -32,8 +33,9 @@ export function postAudio(data) {
 }
 
 function deleteResources(id) {
+  const url = path.join('resources', id.toString())
   return request({
-    url: '/resources/' + id,
+    url,
     method: 'delete'
   })
 }
@@ -52,8 +54,9 @@ export function deleteAudio(id) {
 }
 
 function putResources(id, resource) {
+  const url = path.join('resources', id.toString())
   return request({
-    url: '/resources/' + id,
+    url,
     method: 'put',
     data: resource
   })
@@ -92,7 +95,6 @@ export function getResources(
   }
 
   const url = path.join('resources' + qs.stringify(query, true))
-  alert(url)
   return request({
     url,
     method: 'get'

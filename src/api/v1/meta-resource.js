@@ -11,33 +11,48 @@ export function postMetaResource(data) {
     data: data
   })
 }
-
+/*
 export function getMetaResource(id) {
-  const url = path.join('v1', 'meta-resources', id.toString())
+  let query = []
+  query['type'] = type
+
+  const url = path.join(
+    'v1',
+    'meta-resources',
+    id.toString() + qs.stringify(query, true)
+  )
   return request({
     url,
     method: 'get'
   })
-}
-export function getMetaResource(
+}*/
+export function getMetaResources(
+  meta_id,
+  type,
   sort = '-created_at',
   search = '',
   page = 0,
   expand = ''
 ) {
   let query = []
-  query['expand'] = expand
+
+  query['type'] = type
+  query['meta_id'] = meta_id
   query['sort'] = sort
+  query['expand'] = expand
 
   if (search !== '') {
-    query['MetaResourceSearch[name]'] = search
+    query['ResourceSearch[name]'] = search
   }
   if (page > 1) {
     query['page'] = page
   }
 
-  const url = path.join('v1', 'meta-resources' + qs.stringify(query, true))
-
+  const url = path.join(
+    'v1',
+    'meta-resources',
+    'resources' + qs.stringify(query, true)
+  )
   return request({
     url,
     method: 'get'

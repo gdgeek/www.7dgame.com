@@ -2,13 +2,13 @@
   <div>
     <knight-dialog
       @selected="knightSelect"
-      @cancel="openKnight(null)"
+      @cancel="clearKnight()"
       ref="knightDialog"
     />
 
     <space-dialog
       @selected="spaceSelect"
-      @cancel="openSpace(null)"
+      @cancel="clearSpace()"
       ref="spaceDialog"
     />
     <event-dialog
@@ -246,11 +246,14 @@ export default {
 
       return ret
     },
-    openSpace(callback) {
+    clearSpace() {
+      this.space.callback = null
+    },
+    openSpace({ value, callback }) {
       if (this.canSave) {
         this.space.callback = callback
         if (this.space.callback) {
-          this.$refs.spaceDialog.open()
+          this.$refs.spaceDialog.open(value, this.id)
         }
       }
     },
@@ -259,13 +262,17 @@ export default {
         this.space.callback(data)
       }
     },
-    openKnight(callback) {
+    openKnight({ value, callback }) {
       if (this.canSave) {
         this.knight.callback = callback
         if (this.knight.callback) {
-          this.$refs.knightDialog.open()
+          this.$refs.knightDialog.open(value, this.id)
         }
       }
+    },
+
+    clearKnight() {
+      this.knight.callback = null
     },
     knightSelect(data) {
       if (this.knight.callback !== null) {

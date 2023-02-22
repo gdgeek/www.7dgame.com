@@ -167,12 +167,14 @@ export default {
         })
       }
     },
-    openResources({ callback, type } = { callback: null, type: null }) {
+    openResources(
+      { value, callback, type } = { value: null, callback: null, type: null }
+    ) {
       if (this.canSave) {
         this.resource.callback = callback
 
         if (callback !== null) {
-          this.$refs.dialog.open(type)
+          this.$refs.dialog.open(value, this.id, type)
         }
       }
     },
