@@ -8,25 +8,47 @@
       :show-close="false"
     >
       <span slot="title" class="dialog-footer">
+        <el-tabs
+          v-model="activeName"
+          type="card"
+          class="demo-tabs"
+          @tab-click="handleClick"
+        >
+          <el-tab-pane label="绑定资源" name="binding"></el-tab-pane>
+          <el-tab-pane label="我的资源" name="owner"></el-tab-pane>
+        </el-tabs>
         <mr-p-p-header
-          :sorted="sorted"
-          :searched="searched"
+          :sorted="active.sorted"
+          :searched="active.searched"
           @search="search"
           @sort="sort"
         >
           <el-tag>
-            <b>选择相应Knight</b>
+            <b>选择资源</b>
           </el-tag>
         </mr-p-p-header>
+        <el-divider content-position="left">
+          <el-tag
+            size="mini"
+            closable
+            @close="clearSearched()"
+            v-if="active.searched !== ''"
+          >
+            {{ active.searched }}
+          </el-tag>
+        </el-divider>
       </span>
-
-      <waterfall :options="{}" v-if="items !== null">
+      <waterfall :options="{}" v-if="active !== null && active.items !== null">
         <waterfall-item
-          v-for="(item, index) in items"
+          v-for="(item, index) in active.items"
           :key="index"
           style="width: 230px"
         >
-          <el-card style="width: 220px" class="box-card">
+          <el-card
+            v-if="activeName === 'owner'"
+            style="width: 220px"
+            class="box-card"
+          >
             <div slot="header">
               <el-card shadow="hover" :body-style="{ padding: '0px' }">
                 <span slot="header" class="mrpp-title">
@@ -46,24 +68,77 @@
               </el-card>
             </div>
             <div class="clearfix">
-              <el-button type="primary" size="mini" @click="selected(item)">
-                选择
+              <el-button-group v-if="item.id === value">
+                <el-button type="warning" size="mini" @click="doEmpty()">
+                  取消选择
+                </el-button>
+              </el-button-group>
+              <el-button-group v-else-if="isBinding(item)">
+                <el-button type="primary" size="mini" @click="doSelect(item)">
+                  选择
+                </el-button>
+                <el-button type="primary" size="mini" @click="doUnbind(item)">
+                  取消绑定
+                </el-button>
+              </el-button-group>
+              <el-button v-else size="mini" @click="doBinding(item)">
+                绑定
               </el-button>
             </div>
             <div class="bottom clearfix" />
           </el-card>
+          <el-card v-else style="width: 220px" class="box-card">
+            <div slot="header">
+              <el-card shadow="hover" :body-style="{ padding: '0px' }">
+                <span slot="header" class="mrpp-title">
+                  <b class="card-title" nowrap>{{ title(item) }}</b>
+                </span>
+                <img
+                  v-if="item.image"
+                  style="width: 100%; height: 180px"
+                  fit="contain"
+                  :src="item.image.url"
+                  lazy
+                />
+
+                <div style="width: 100%; text-align: center">
+                  {{ item.created_at }}
+                </div>
+              </el-card>
+            </div>
+            <div class="clearfix">
+              <el-button-group v-if="value === null || item.id !== value">
+                <el-button type="primary" size="mini" @click="doSelect(item)">
+                  选择
+                </el-button>
+                <el-button type="primary" size="mini" @click="doUnbind(item)">
+                  取消绑定
+                </el-button>
+              </el-button-group>
+              <el-button-group v-else>
+                <el-button type="warning" size="mini" @click="doEmpty()">
+                  取消选择
+                </el-button>
+              </el-button-group>
+            </div>
+            <div class="bottom clearfix" />
+          </el-card>
+
           <br />
         </waterfall-item>
       </waterfall>
+      <template v-else>
+        <el-skeleton />
+      </template>
 
       <span slot="footer" class="dialog-footer">
         <el-row :gutter="0">
           <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16">
             <el-pagination
-              :current-page="pagination.current"
-              :page-count="pagination.count"
-              :page-size="pagination.size"
-              :total="pagination.total"
+              :current-page="active.pagination.current"
+              :page-count="active.pagination.count"
+              :page-size="active.pagination.size"
+              :total="active.pagination.total"
               layout="prev, pager, next, jumper"
               background
               @current-change="handleCurrentChange"
@@ -87,29 +162,59 @@
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 
 import { getKnights } from '@/api/v1/knight'
-import Card from '@/components/MrPP/MrPPCard'
+import {
+  getVerseKnights,
+  postVerseKnight,
+  deleteVerseKnight
+} from '@/api/v1/verse-knight'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
   name: 'KnightDialog',
   components: {
     Waterfall,
     WaterfallItem,
-    Card,
     MrPPHeader
   },
   data() {
     return {
-      dialogVisible: false,
-      items: null,
-      sorted: '-created_at',
-      searched: '',
-      pagination: { current: 1, count: 1, size: 20, total: 20 }
+      activeName: 'binding',
+
+      verse_id: -1,
+      value: null,
+      binding: {
+        items: null,
+        sorted: '-created_at',
+        searched: '',
+        pagination: { current: 1, count: 1, size: 20, total: 20 }
+      },
+      owner: {
+        items: null,
+        sorted: '-created_at',
+        searched: '',
+        pagination: { current: 1, count: 1, size: 20, total: 20 }
+      },
+      dialogVisible: false
     }
   },
-
+  computed: {
+    active() {
+      if (this.activeName === 'binding') {
+        return this.binding
+      }
+      return this.owner
+    }
+  },
   methods: {
+    isBinding(item) {
+      for (let i = 0; i < item.verseKnights.length; ++i) {
+        if (item.verseKnights[i].verse_id === this.verse_id) {
+          return true
+        }
+      }
+
+      return false
+    },
     handleClick(tab, event) {
-      this.items = null
       this.refresh()
     },
     title(item) {
@@ -122,23 +227,139 @@ export default {
       }
       return 'title'
     },
-    open() {
+    async open(value, verse_id) {
+      this.binding = {
+        items: null,
+        sorted: '-created_at',
+        searched: '',
+        pagination: { current: 1, count: 1, size: 20, total: 20 }
+      }
+      this.owner = {
+        items: null,
+        sorted: '-created_at',
+        searched: '',
+        pagination: { current: 1, count: 1, size: 20, total: 20 }
+      }
+
+      this.verse_id = verse_id
+      this.value = value
+
+      this.refreshOwner()
+      this.refreshBinding().then(() => {
+        if (this.binding.items !== null && this.binding.items.length !== 0) {
+          this.activeName = 'binding'
+        } else {
+          this.activeName = 'owner'
+        }
+      })
       this.dialogVisible = true
-      this.refresh()
+    },
+    async refreshOwner() {
+      const response = await getKnights(
+        this.owner.sorted,
+        this.owner.searched,
+        this.owner.pagination.current,
+        'image,verseKnights'
+      )
+
+      this.owner.items = response.data
+    },
+    async refreshBinding() {
+      const response = await getVerseKnights(
+        this.verse_id,
+        this.binding.sorted,
+        this.binding.searched,
+        this.binding.pagination.current,
+        'image,author,verseKnights'
+      )
+      this.binding.items = response.data
     },
     close() {
       this.dialogVisible = false
-      //   this.refresh()
     },
     sort: function (value) {
-      this.sorted = value
+      this.active.sorted = value
       this.refresh()
     },
     search: function (value) {
-      this.searched = value
+      this.active.searched = value
       this.refresh()
     },
+    clearSearched() {
+      this.active.searched = ''
+      this.refresh()
+    },
+    doSelect(data) {
+      this.$emit('selected', data)
+      this.dialogVisible = false
+    },
+    doEmpty() {
+      this.$emit('selected', null)
+      this.value = null
+    },
+    async doUnbind(data) {
+      try {
+        await this.$confirm('是否接触资源绑定?', '解绑资源', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
 
+        for (let i = 0; i < data.verseKnights.length; ++i) {
+          if (data.verseKnights[i].verse_id == this.verse_id) {
+            await deleteVerseKnight(data.verseKnights[i].id)
+            break
+          }
+        }
+        await this.refresh()
+        this.$message({
+          type: 'success',
+          message: '解绑成功!'
+        })
+      } catch (e) {
+        console.error(e)
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      }
+    },
+    async doBinding(data) {
+      try {
+        await this.$confirm('是否将资源绑定到场景?', '绑定资源', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+
+        const response = await postVerseKnight({
+          verse_id: this.verse_id,
+          knight_id: data.id
+        })
+        this.refresh()
+        this.$message({
+          type: 'success',
+          message: '绑定成功!'
+        })
+
+        await this.$confirm('是否直接确认设置资源?', '确认资源', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        this.selected(data)
+        this.$message({
+          type: 'success',
+          message: '设置成功!'
+        })
+      } catch (e) {
+        console.error(e)
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      }
+    },
     selected(data = null) {
       this.$emit('selected', data)
       this.dialogVisible = false
@@ -147,26 +368,18 @@ export default {
       this.$emit('cancel')
     },
     handleCurrentChange: function (page) {
-      this.pagination.current = page
+      this.active.pagination.current = page
       this.refresh()
-      // console.log(this.pagination.current)
     },
     async refresh() {
-      const response = await getKnights(
-        this.sorted,
-        this.searched,
-        this.pagination.current
-      )
-      console.log(response.headers)
-      this.pagination = {
-        current: parseInt(response.headers['x-pagination-current-page']),
-        count: parseInt(response.headers['x-pagination-page-count']),
-        size: parseInt(response.headers['x-pagination-per-page']),
-        total: parseInt(response.headers['x-pagination-total-count'])
-      }
-
-      if (response.data) {
-        this.items = response.data
+      if (this.activeName === 'binding') {
+        await this.refreshBinding()
+        if (this.binding.items === null || this.binding.items.length === 0) {
+          await this.refreshOwner()
+          this.activeName = 'owner'
+        }
+      } else {
+        await this.refreshOwner()
       }
     }
   }

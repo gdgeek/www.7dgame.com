@@ -376,9 +376,13 @@ export default {
     },
     async refresh() {
       if (this.activeName === 'binding') {
-        this.refreshBinding()
+        await this.refreshBinding()
+        if (this.binding.items === null || this.binding.items.length === 0) {
+          await this.refreshOwner()
+          this.activeName = 'owner'
+        }
       } else {
-        this.refreshOwner()
+        await this.refreshOwner()
       }
     }
   }
