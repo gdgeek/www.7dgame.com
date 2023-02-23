@@ -13,7 +13,7 @@
     <!-- 联系我们 -->
     <medical-relation :is-black="isBlack" />
     <!-- 合作伙伴板块新通用组件 -->
-    <exhibition-partner />
+    <partner />
   </div>
 </template>
 
@@ -25,7 +25,7 @@ import ExhibitionVideo from '@/components/Exhibition/ExhibitionVideo.vue'
 import ExhibitionBody from '@/components/Exhibition/ExhibitionBody.vue'
 import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
 import ExhibitionList from '@/components/Exhibition/ExhibitionList.vue'
-import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
+import Partner from '@/components/WebPublick/Partner.vue'
 
 export default {
   name: 'Exhibition',
@@ -36,7 +36,7 @@ export default {
     ExhibitionBody,
     MedicalRelation,
     ExhibitionList,
-    ExhibitionPartner
+    Partner
   },
   data() {
     return {

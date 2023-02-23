@@ -20,7 +20,7 @@
     <!-- 联系我们 -->
     <medical-relation />
     <!-- 合作伙伴板块新通用组件 -->
-    <exhibition-partner />
+    <partner />
   </div>
 </template>
 
@@ -33,7 +33,7 @@ import EducationSolution from '@/components/Education/EducationSolution.vue'
 import EducationDeploy from '@/components/Education/EducationDeploy.vue'
 import EducationSubscreen from '@/components/Education/EducationSubscreen.vue'
 import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
-import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
+import Partner from '@/components/WebPublick/Partner.vue'
 export default {
   name: 'Education',
   components: {
@@ -44,7 +44,7 @@ export default {
     EducationDeploy,
     EducationSubscreen,
     MedicalRelation,
-    ExhibitionPartner
+    Partner
   },
   data() {
     return {

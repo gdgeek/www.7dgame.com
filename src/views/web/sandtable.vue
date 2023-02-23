@@ -14,7 +14,7 @@
     <!-- 联系我们板块 -->
     <relation />
     <!-- 合作伙伴板块新通用组件 -->
-    <exhibition-partner />
+    <partner />
   </div>
 </template>
 
@@ -26,7 +26,7 @@ import About from '@/components/SandTable/About.vue'
 import Introduce from '@/components/SandTable/Introduce.vue'
 import Flow from '@/components/SandTable/Flow.vue'
 import Relation from '@/components/SandTable/Relation.vue'
-import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
+import Partner from '@/components/WebPublick/Partner.vue'
 export default {
   name: 'SandTable',
   components: {
@@ -36,7 +36,7 @@ export default {
     Introduce,
     Flow,
     Relation,
-    ExhibitionPartner
+    Partner
   },
   data() {
     return {

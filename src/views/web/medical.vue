@@ -11,7 +11,7 @@
     <!-- 联系我们板块白底色 -->
     <medical-relation />
     <!-- 合作伙伴板块新通用组件 -->
-    <exhibition-partner />
+    <partner />
   </div>
 </template>
 
@@ -22,7 +22,7 @@ import MedicalVideo from '@/components/Medical/MedicalVideo.vue'
 import PublickList from '@/components/WebPublick/PublickList.vue'
 import MedicalColumn from '@/components/Medical/MedicalColumn.vue'
 import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
-import ExhibitionPartner from '@/components/Exhibition/ExhibitionPartner.vue'
+import Partner from '@/components/WebPublick/Partner.vue'
 export default {
   name: 'Medical',
   components: {
@@ -31,7 +31,7 @@ export default {
     PublickList,
     MedicalColumn,
     MedicalRelation,
-    ExhibitionPartner
+    Partner
   },
   data() {
     return {
