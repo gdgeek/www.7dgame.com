@@ -14,8 +14,8 @@
           class="demo-tabs"
           @tab-click="handleClick"
         >
-          <el-tab-pane label="绑定资源" name="binding"></el-tab-pane>
-          <el-tab-pane label="我的资源" name="owner"></el-tab-pane>
+          <el-tab-pane label="绑定资源!" name="binding"></el-tab-pane>
+          <el-tab-pane label="我的资源!" name="owner"></el-tab-pane>
         </el-tabs>
         <mr-p-p-header
           :sorted="active.sorted"
