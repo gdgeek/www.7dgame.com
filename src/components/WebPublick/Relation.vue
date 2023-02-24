@@ -50,7 +50,7 @@
 <script>
 import '@/assets/font/font.css'
 export default {
-  name: 'MedicalRelation',
+  name: 'Relation',
   props: {
     isBlack: {
       type: Boolean,

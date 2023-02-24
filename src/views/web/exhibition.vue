@@ -11,7 +11,7 @@
     <!-- 技术服务 -->
     <exhibition-list />
     <!-- 联系我们 -->
-    <medical-relation :is-black="isBlack" />
+    <relation :is-black="isBlack" />
     <!-- 合作伙伴板块新通用组件 -->
     <partner />
   </div>
@@ -23,7 +23,7 @@ import Screen from '@/components/WebPublick/Screen.vue'
 import ExhibitionPicture from '@/components/Exhibition/ExhibitionPicture.vue'
 import ExhibitionVideo from '@/components/Exhibition/ExhibitionVideo.vue'
 import ExhibitionBody from '@/components/Exhibition/ExhibitionBody.vue'
-import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
+import Relation from '@/components/WebPublick/Relation.vue'
 import ExhibitionList from '@/components/Exhibition/ExhibitionList.vue'
 import Partner from '@/components/WebPublick/Partner.vue'
 
@@ -34,7 +34,7 @@ export default {
     ExhibitionPicture,
     ExhibitionVideo,
     ExhibitionBody,
-    MedicalRelation,
+    Relation,
     ExhibitionList,
     Partner
   },

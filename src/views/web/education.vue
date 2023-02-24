@@ -18,7 +18,7 @@
     <education-subscreen />
 
     <!-- 联系我们 -->
-    <medical-relation />
+    <relation />
     <!-- 合作伙伴板块新通用组件 -->
     <partner />
   </div>
@@ -32,7 +32,7 @@ import EducationCloud from '@/components/Education/EducationCloud.vue'
 import EducationSolution from '@/components/Education/EducationSolution.vue'
 import EducationDeploy from '@/components/Education/EducationDeploy.vue'
 import EducationSubscreen from '@/components/Education/EducationSubscreen.vue'
-import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
+import Relation from '@/components/WebPublick/Relation.vue'
 import Partner from '@/components/WebPublick/Partner.vue'
 export default {
   name: 'Education',
@@ -43,7 +43,7 @@ export default {
     EducationSolution,
     EducationDeploy,
     EducationSubscreen,
-    MedicalRelation,
+    Relation,
     Partner
   },
   data() {

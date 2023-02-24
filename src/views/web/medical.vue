@@ -9,7 +9,7 @@
     <!-- 系统子幕图绿底色-->
     <medical-column />
     <!-- 联系我们板块白底色 -->
-    <medical-relation />
+    <relation />
     <!-- 合作伙伴板块新通用组件 -->
     <partner />
   </div>
@@ -21,7 +21,7 @@ import Screen from '@/components/WebPublick/Screen.vue'
 import MedicalVideo from '@/components/Medical/MedicalVideo.vue'
 import PublickList from '@/components/WebPublick/PublickList.vue'
 import MedicalColumn from '@/components/Medical/MedicalColumn.vue'
-import MedicalRelation from '@/components/Medical/MedicalRelation.vue'
+import Relation from '@/components/WebPublick/Relation.vue'
 import Partner from '@/components/WebPublick/Partner.vue'
 export default {
   name: 'Medical',
@@ -30,7 +30,7 @@ export default {
     MedicalVideo,
     PublickList,
     MedicalColumn,
-    MedicalRelation,
+    Relation,
     Partner
   },
   data() {
