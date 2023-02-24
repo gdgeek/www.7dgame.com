@@ -2,10 +2,10 @@
   <div>
     <el-dialog
       :visible.sync="dialogVisible"
-      @close="cancel()"
       width="95%"
       height="100px"
       :show-close="false"
+      @close="cancel()"
     >
       <span slot="title" class="dialog-footer">
         <el-tabs
@@ -14,8 +14,8 @@
           class="demo-tabs"
           @tab-click="handleClick"
         >
-          <el-tab-pane label="绑定资源" name="binding"></el-tab-pane>
-          <el-tab-pane label="我的资源" name="owner"></el-tab-pane>
+          <el-tab-pane label="绑定资源" name="binding" />
+          <el-tab-pane label="我的资源" name="owner" />
         </el-tabs>
         <mr-p-p-header
           :sorted="active.sorted"
@@ -29,16 +29,16 @@
         </mr-p-p-header>
         <el-divider content-position="left">
           <el-tag
+            v-if="active.searched !== ''"
             size="mini"
             closable
             @close="clearSearched()"
-            v-if="active.searched !== ''"
           >
             {{ active.searched }}
           </el-tag>
         </el-divider>
       </span>
-      <waterfall :options="{}" v-if="active !== null && active.items !== null">
+      <waterfall v-if="active !== null && active.items !== null" :options="{}">
         <waterfall-item
           v-for="(item, index) in active.items"
           :key="index"
@@ -142,7 +142,7 @@
               layout="prev, pager, next, jumper"
               background
               @current-change="handleCurrentChange"
-            ></el-pagination>
+            />
           </el-col>
           <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
             <el-button-group>
@@ -302,7 +302,7 @@ export default {
     },
     async doUnbind(data) {
       try {
-        await this.$confirm('是否接触资源绑定?', '解绑资源', {
+        await this.$confirm('是否解除资源绑定?', '解绑资源', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
