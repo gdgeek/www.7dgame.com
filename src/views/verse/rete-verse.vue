@@ -93,7 +93,7 @@ export default {
   async mounted() {
     editor.initVerse({
       container: this.$refs.rete,
-      verseId: this.id,
+      verse_id: this.id,
       root: this
     })
     const response = await getVerse(this.id, 'metas,metaKnights,share')

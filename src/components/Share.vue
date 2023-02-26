@@ -102,14 +102,16 @@
               placement="top"
             >
               <div>
+                <i class="el-icon-edit" v-if="item.editable === 1"></i>
+                <i class="el-icon-view" v-else></i>
                 {{ item.user.nickname }}
               </div>
             </el-tooltip>
           </template>
           <div>
-            {{ JSON.parse(item.info).content }}{{ item.editable }}
+            {{ JSON.parse(item.info).content }}
             <el-divider size="mini" content-position="right">
-              <el-button-group size="mini" v-if="verse.editable">
+              <el-button-group size="mini" v-if="saveable">
                 <el-button size="mini" @click="setup(item)">
                   <i class="header-icon el-icon-edit"></i>
                 </el-button>
@@ -124,7 +126,7 @@
 
       <br />
       <el-button
-        v-if="verse.editable"
+        v-if="saveable"
         style="width: 100%"
         @click="open()"
         type="primary"
@@ -138,10 +140,12 @@
 </template>
 
 <script>
+import { AbilityEditable } from '@/ability/ability'
 import {
   postVerseShare,
-  getVerseShareList,
-  deleteVerseShare
+  getVerseShares,
+  deleteVerseShare,
+  putVerseShare
 } from '@/api/v1/verse-share'
 export default {
   name: 'Share',
@@ -165,6 +169,7 @@ export default {
       },
       put: {
         visible: false,
+        id: -1,
         form: {
           username: '',
           content: null,
@@ -181,12 +186,18 @@ export default {
   computed: {
     verseId() {
       return this.verse.id
+    },
+    saveable() {
+      if (this.verse === null) {
+        return false
+      }
+      return this.$can('editable', new AbilityEditable(this.verse.editable))
     }
   },
   methods: {
     async refresh() {
       try {
-        const r = await getVerseShareList(this.verseId)
+        const r = await getVerseShares(this.verseId)
 
         this.items = r.data
       } catch (e) {
@@ -198,8 +209,10 @@ export default {
     },
     async setup(item) {
       this.put.form.username = item.user.nickname
+      this.put.id = item.id
       this.put.form.content = JSON.parse(item.info).content
-      this.put.form.editable = item.user.editable
+
+      this.put.form.editable = item.editable === 1
       this.put.visible = true
     },
     async del(id) {
@@ -229,27 +242,28 @@ export default {
     },
     async onPut() {
       const self = this
-      this.$refs['put'].validate(valid => {
+      this.$refs['put'].validate(async valid => {
         if (valid) {
-          putVerseShare({
-            username: self.put.form.username,
-            verse_id: self.verseId,
-            editable: self.put.form.editable ? 1 : 0,
-            info: JSON.stringify({ content: self.post.form.content })
-          }).finally(() => {
-            self.refresh()
-            self.post.visible = false
-          })
+          try {
+            const r = await putVerseShare(self.put.id, {
+              username: self.put.form.username,
+              verse_id: self.verseId,
+              editable: self.put.form.editable ? 1 : 0,
+              info: JSON.stringify({ content: self.put.form.content })
+            })
+          } catch (e) {}
+          self.refresh()
+          self.put.visible = false
         } else {
           console.log('error submit!!')
-          self.post.visible = false
+          self.put.visible = false
           return false
         }
       })
     },
     onPost() {
       const self = this
-      this.$refs['form'].validate(valid => {
+      this.$refs['post'].validate(valid => {
         if (valid) {
           postVerseShare({
             username: self.post.form.username,

@@ -52,6 +52,7 @@ export function deleteKnight(id) {
     method: 'delete'
   })
 }
+/*
 export function putKnight(id, data) {
   return request({
     url: path.join('/v1/knights', id.toString()),
@@ -59,3 +60,4 @@ export function putKnight(id, data) {
     data
   })
 }
+*/

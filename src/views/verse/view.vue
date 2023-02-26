@@ -7,7 +7,7 @@
       <el-col :sm="16">
         <el-card v-if="verse" class="box-card">
           <div slot="header">
-            <i class="el-icon-edit" v-if="true"></i>
+            <i class="el-icon-edit" v-if="saveable"></i>
             <i class="el-icon-view" v-else></i>
             <b id="title">【宇宙】名称：</b>
             <span>{{ verse.name }}</span>
@@ -36,7 +36,7 @@
             size="mini"
             @click="comeIn()"
           >
-            <div v-if="verse.editable">
+            <div v-if="saveable">
               <font-awesome-icon icon="edit" />
               &nbsp;编辑【宇宙】
             </div>
@@ -98,7 +98,7 @@
             &nbsp;关闭【宇宙】
           </el-button>
         </el-card>
-        <share v-if="verse != null && verse.editable" :verse="verse" />
+        <share v-if="saveable" :verse="verse" />
 
         <br />
       </el-col>
@@ -134,14 +134,12 @@ export default {
     ...mapState({
       tagsMap: state => state.tags.tagsMap
     }),
-    canShare() {
-      const self = this
-
-      if (self.verse === null) {
+    saveable() {
+      if (this.verse === null) {
         return false
       }
 
-      return self.$can('update', new AbilityWorks(self.verse.author_id))
+      return this.$can('update', new AbilityWorks(this.verse.author_id))
     },
     id() {
       return parseInt(this.$route.query.id)

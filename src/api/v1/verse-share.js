@@ -3,8 +3,8 @@ import request from '@/utils/request'
 var qs = require('querystringify')
 var path = require('path')
 
-export function putVerseShare(data) {
-  const url = path.join('v1', 'verse-shares')
+export function putVerseShare(id, data) {
+  const url = path.join('v1', 'verse-shares', id.toString())
 
   return request({
     url,
@@ -15,7 +15,6 @@ export function putVerseShare(data) {
 
 export function postVerseShare(data) {
   const url = path.join('v1', 'verse-shares')
-
   return request({
     url,
     method: 'post',
@@ -23,7 +22,7 @@ export function postVerseShare(data) {
   })
 }
 
-export function getVerseShares(
+export function getVerseShareVerses(
   sort = '-created_at',
   search = '',
   page = 0,
@@ -41,19 +40,15 @@ export function getVerseShares(
   }
 
   return request({
-    url: path.join('v1', 'verse-shares' + qs.stringify(query, true)),
+    url: path.join('v1', 'verse-shares', 'verses' + qs.stringify(query, true)),
     method: 'get'
   })
 }
 
-export function getVerseShareList(verseId) {
+export function getVerseShares(verseId) {
   let query = []
   query['verse_id'] = verseId
-  const url = path.join(
-    'v1',
-    'verse-shares',
-    'list' + qs.stringify(query, true)
-  )
+  const url = path.join('v1', 'verse-shares' + qs.stringify(query, true))
   return request({
     url,
     method: 'get'

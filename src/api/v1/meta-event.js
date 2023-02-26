@@ -18,7 +18,10 @@ export function getMetaEvent(id) {
 }
 export function getMetaEventByMetaId(metaId) {
   return request({
-    url: path.join('v1', 'meta-events' + qs.stringify({ metaId }, true)),
+    url: path.join(
+      'v1',
+      'meta-events' + qs.stringify({ meta_id: metaId }, true)
+    ),
     method: 'get'
   })
 }

@@ -20,7 +20,10 @@ export function getVerseEvent(id) {
 }
 export function getVerseEventByVerseId(verseId) {
   return request({
-    url: path.join('v1', 'verse-events' + qs.stringify({ verseId }, true)),
+    url: path.join(
+      'v1',
+      'verse-events' + qs.stringify({ verse_id: verseId }, true)
+    ),
     method: 'get'
   })
 }
