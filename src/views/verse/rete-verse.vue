@@ -60,7 +60,7 @@ var randomWords = require('random-words')
 import { v4 as uuidv4 } from 'uuid'
 import SpaceDialog from '@/components/MrPP/SpaceDialog.vue'
 import KnightDialog from '@/components/MrPP/KnightDialog.vue'
-import { AbilityWorks } from '@/ability/ability'
+import { AbilityEditable } from '@/ability/ability'
 import {
   getVerseEventByVerseId,
   putVerseEvent,
@@ -160,7 +160,7 @@ export default {
       if (this.verse === null) {
         return false
       }
-      return this.$can('editable', new AbilityWorks(this.verse.editable))
+      return this.$can('editable', new AbilityEditable(this.verse.editable))
     }
   },
   methods: {
