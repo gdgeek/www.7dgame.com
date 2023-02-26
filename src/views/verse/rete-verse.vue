@@ -123,7 +123,7 @@ export default {
 
     await editor.setup(data)
     await this.setSlots(data)
-    if (!this.editable) {
+    if (!this.saveable) {
       editor.ban()
     }
   },
@@ -247,7 +247,7 @@ export default {
       this.space.callback = null
     },
     openSpace({ value, callback }) {
-      if (this.editable) {
+      if (this.saveable) {
         this.space.callback = callback
         if (this.space.callback) {
           this.$refs.spaceDialog.open(value, this.id)
@@ -260,7 +260,7 @@ export default {
       }
     },
     openKnight({ value, callback }) {
-      if (this.editable) {
+      if (this.saveable) {
         this.knight.callback = callback
         if (this.knight.callback) {
           this.$refs.knightDialog.open(value, this.id)
@@ -281,7 +281,7 @@ export default {
     },
 
     async _doEvent(id) {
-      if (this.editable) {
+      if (this.saveable) {
         if (this.event.map.has(id)) {
           this.event.target = this.event.map.get(id)
         } else {
@@ -299,7 +299,7 @@ export default {
         if (response.data.length !== 0) {
           return response.data[0]
         } else {
-          if (this.editable) {
+          if (this.saveable) {
             const post = await postVerseEvent({
               verse_id: id,
               data: JSON.stringify({})
@@ -318,7 +318,7 @@ export default {
         if (response.data.length !== 0) {
           return response.data[0]
         } else {
-          if (this.editable) {
+          if (this.saveable) {
             const post = await postMetaEvent({
               meta_id,
               data: JSON.stringify({ input: [], output: [] })
@@ -331,7 +331,7 @@ export default {
       }
     },
     async postEvent({ input, output }) {
-      if (this.editable && this.event.target) {
+      if (this.saveable && this.event.target) {
         const response = await putMetaEvent(this.event.target.id, {
           data: JSON.stringify({ input, output })
         })
@@ -414,7 +414,7 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.editable) {
+    if (this.saveable) {
       this.save()
     }
   }
