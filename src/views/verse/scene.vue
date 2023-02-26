@@ -18,7 +18,7 @@
 var qs = require('querystringify')
 var path = require('path')
 
-import { AbilityWorks, AbilityShare } from '@/ability/ability'
+import { AbilityWorks } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import environment from '@/environment.js'
 import { putVerse } from '@/api/v1/verse'
@@ -36,7 +36,7 @@ export default {
       editor: null,
       data: null,
       src,
-      _canSave: null
+      saveable: null
     }
   },
   computed: {
@@ -96,15 +96,18 @@ export default {
               self.isInit = true
               const iframe = document.getElementById('editor')
               const r = await getVerse(this.id)
-              // console.error(r.data)
+              const verse = r.data
 
-              this._canSave = this.canSave(r.data.author_id, r.data.share)
+              this.saveable = this.$can(
+                'editable',
+                new AbilityWorks(verse.editable)
+              )
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
                 id: this.id,
-                data: r.data,
-                canSave: this.canSave(r.data.author_id, r.data.share)
+                data: verse,
+                saveable: this.saveable
               }
               iframe.contentWindow.postMessage(data, '*')
             }
@@ -115,19 +118,9 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-    canSave(id, share) {
-      //const self = this
 
-      /* if (self.meta === null) {
-        return false
-      }*/
-      return (
-        this.$can('update', new AbilityWorks(id)) ||
-        this.$can('share', new AbilityShare(share))
-      )
-    },
     async saveVerse(verse) {
-      if (!this._canSave) {
+      if (!this.saveable) {
         this.$message({
           type: 'info',
           message: '没有保存权限!'

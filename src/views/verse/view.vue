@@ -7,6 +7,8 @@
       <el-col :sm="16">
         <el-card v-if="verse" class="box-card">
           <div slot="header">
+            <i class="el-icon-edit" v-if="true"></i>
+            <i class="el-icon-view" v-else></i>
             <b id="title">【宇宙】名称：</b>
             <span>{{ verse.name }}</span>
           </div>
@@ -34,8 +36,14 @@
             size="mini"
             @click="comeIn()"
           >
-            <font-awesome-icon icon="edit" />
-            &nbsp;编辑【宇宙】
+            <div v-if="verse.editable">
+              <font-awesome-icon icon="edit" />
+              &nbsp;编辑【宇宙】
+            </div>
+            <div v-else>
+              <font-awesome-icon icon="eye" />
+              &nbsp;查看【宇宙】
+            </div>
           </el-button>
           <br />
         </el-card>
@@ -90,7 +98,7 @@
             &nbsp;关闭【宇宙】
           </el-button>
         </el-card>
-        <share v-if="canShare" :verseId="verse.id" />
+        <share v-if="verse != null && verse.editable" :verse="verse" />
 
         <br />
       </el-col>
@@ -201,7 +209,10 @@ export default {
     }),
     async refresh() {
       const self = this
-      const res = await getVerse(self.id, 'image,verseOpen,author, message')
+      const res = await getVerse(
+        self.id,
+        'image,verseOpen,verseShare,author, message'
+      )
       this.verse = res.data
       if (this.message !== null) {
         this.briefing = this.message

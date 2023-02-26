@@ -15,7 +15,7 @@ function install(editor, options) {
 
     if (id !== -1) {
       try {
-        if (options.root.canSave) {
+        if (options.root.saveable) {
           await deleteMeta(id)
           console.log('delete ok' + id)
         }
@@ -39,7 +39,7 @@ function install(editor, options) {
 
     let id = component.data['id']
 
-    if (typeof id === 'undefined' && options.root.canSave) {
+    if (typeof id === 'undefined' && options.root.saveable) {
       const uuid = uuidv4()
       const response = await postMeta({
         verse_id: options.verseId,

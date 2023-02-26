@@ -160,36 +160,35 @@ export default {
     progress(percentage) {
       this.percentage = percentage
     },
-    createVerse: function () {
+    createVerse: async function () {
       const self = this
-      this.$prompt('用此模型创建【宇宙】', '提示', {
+      await this.$prompt('用此模型创建【宇宙】', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputValue: self.data.name,
         inputErrorMessage: '请填写相应名称'
       })
-        .then(({ value }) => {
+
+        .then(async ({ value }) => {
           self.loading = true
-          createVerseFromPolygen(value, this.data)
-            .then(data => {
-              self.loading = false
+          try {
+            const data = await createVerseFromPolygen(value, self.data)
 
-              this.$message({
-                type: 'success',
-                message: '你创建了新的场景: ' + value
-              })
-              setTimeout(() => {
-                this.$router.push('/meta-verse/index')
-              }, 300)
+            this.$message({
+              type: 'success',
+              message: '你创建了新的场景: ' + value
             })
-            .catch(error => {
-              self.loading = false
+            setTimeout(() => {
+              this.$router.push('/meta-verse/index')
+            }, 300)
+          } catch (error) {
+            this.$message({
+              type: 'error',
+              message: '创建失败: ' + error
+            })
+          }
 
-              this.$message({
-                type: 'error',
-                message: '创建失败: ' + error
-              })
-            })
+          self.loading = false
         })
         .catch(() => {
           this.$message({

@@ -1,7 +1,7 @@
 <template>
   <el-form :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" label="名称">
-      <el-tag size="small" v-if="root.canSave" @click="changeVerseName()">
+      <el-tag size="small" v-if="root.saveable" @click="changeVerseName()">
         {{ value.name }}
       </el-tag>
       <el-tag size="small" v-else>

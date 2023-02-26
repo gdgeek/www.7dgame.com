@@ -17,7 +17,7 @@ function install(editor, options) {
 
     if (id > 0) {
       try {
-        if (options.root.canSave) {
+        if (options.root.saveable) {
           await deleteMetaKnight(id)
           console.log('delete ok' + id)
         }
@@ -37,7 +37,7 @@ function install(editor, options) {
     const uuid = uuidv4()
     let id = component.data['id']
 
-    if (typeof id === 'undefined' && options.root.canSave) {
+    if (typeof id === 'undefined' && options.root.saveable) {
       const response = await postMetaKnight({
         verse_id: options.verseId,
         uuid

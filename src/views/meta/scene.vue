@@ -18,7 +18,7 @@
 var qs = require('querystringify')
 var path = require('path')
 
-import { AbilityWorks, AbilityShare } from '@/ability/ability'
+import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import environment from '@/environment.js'
 import { putMeta } from '@/api/v1/meta'
@@ -32,8 +32,7 @@ export default {
     return {
       isInit: false,
       // meta: null,
-      src,
-      _canSave: null
+      src
     }
   },
   computed: {
@@ -52,6 +51,12 @@ export default {
           this.id + qs.stringify({ expand: 'datas,resources,space' }, true)
         )
       return uri
+    },
+    saveable() {
+      if (this.meta === null) {
+        return false
+      }
+      return this.$can('editable', new AbilityEditable(this.meta.editable))
     }
   },
   destroyed() {
@@ -91,13 +96,11 @@ export default {
               const r = await getMeta(this.id)
               self.breadcrumb(r.data)
 
-              self._canSave = this.canSave(r.data.author_id, r.data.share)
-
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
                 data: r.data,
-                canSave: self._canSave
+                saveable: self.saveable
               }
               iframe.contentWindow.postMessage(data, '*')
             }
@@ -142,16 +145,9 @@ export default {
         ]
       })
     },
-    canSave(id, share) {
-      const self = this
 
-      return (
-        self.$can('update', new AbilityWorks(id)) ||
-        self.$can('share', new AbilityShare(share))
-      )
-    },
     async saveMeta(meta) {
-      if (!this._canSave) {
+      if (!this.saveable) {
         this.$message({
           type: 'info',
           message: '没有保存权限!'

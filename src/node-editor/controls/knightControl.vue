@@ -111,7 +111,7 @@ export default {
       }
     },
     refresh() {
-      if (this.root.canSave) {
+      if (this.root.saveable) {
         putMetaKnight(this.id, { knight_id: this.value })
       }
 

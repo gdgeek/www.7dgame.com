@@ -6,9 +6,21 @@ export class AbilityRouter {
     this.path = path
   }
 }
+/*
 export class AbilityShare {
   constructor(share) {
     this.share = share
+  }
+}
+*/
+export class AbilityEditable {
+  constructor(editable) {
+    this.editable = editable
+  }
+}
+export class AbilityViewable {
+  constructor(viewable) {
+    this.viewable = viewable
   }
 }
 export class AbilityWorks {
@@ -58,7 +70,9 @@ export function UpdateAbility($ability, roles, userId) {
   if (
     roles.find(role => role === 'root' || role === 'manager' || role === 'user')
   ) {
-    can(['share'], AbilityShare.name, { share: true })
+    can(['editable'], AbilityEditable.name, { editable: true })
+    can(['viewable'], AbilityViewable.name, { viewable: true })
+    //can(['share'], AbilityShare.name, { share: true })
     can(['update', 'delete'], AbilityWorks.name, { id: userId })
     can(['delete'], AbilityMessage.name, { id: userId, managed: 0 })
     can(['update'], AbilityMessage.name, { id: userId })
@@ -89,7 +103,9 @@ export function UpdateAbility($ability, roles, userId) {
 
     if (roles.find(role => role === 'root' || role === 'manager')) {
       can(['manager'])
-      can(['share'], AbilityShare.name)
+      //  can(['share'], AbilityShare.name)
+      can(['editable'], AbilityEditable.name)
+      can(['viewable'], AbilityViewable.name)
       can(['update', 'delete'], AbilityWorks.name)
       can(['delete'], AbilityMessage.name, { managed: 0 })
       can(['update'], AbilityMessage.name)

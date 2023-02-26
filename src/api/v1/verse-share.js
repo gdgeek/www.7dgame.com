@@ -2,6 +2,17 @@ import request from '@/utils/request'
 
 var qs = require('querystringify')
 var path = require('path')
+
+export function putVerseShare(data) {
+  const url = path.join('v1', 'verse-shares')
+
+  return request({
+    url,
+    method: 'put',
+    data
+  })
+}
+
 export function postVerseShare(data) {
   const url = path.join('v1', 'verse-shares')
 
@@ -36,8 +47,15 @@ export function getVerseShares(
 }
 
 export function getVerseShareList(verseId) {
+  let query = []
+  query['verse_id'] = verseId
+  const url = path.join(
+    'v1',
+    'verse-shares',
+    'list' + qs.stringify(query, true)
+  )
   return request({
-    url: 'v1/verse-shares/list?verse_id=' + verseId,
+    url,
     method: 'get'
   })
 }

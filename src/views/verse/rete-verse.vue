@@ -28,7 +28,7 @@
                 整理
               </el-button>
               <el-button
-                v-if="canSave"
+                v-if="saveable"
                 type="primary"
                 size="mini"
                 @click="save()"
@@ -60,7 +60,7 @@ var randomWords = require('random-words')
 import { v4 as uuidv4 } from 'uuid'
 import SpaceDialog from '@/components/MrPP/SpaceDialog.vue'
 import KnightDialog from '@/components/MrPP/KnightDialog.vue'
-import { AbilityWorks, AbilityShare } from '@/ability/ability'
+import { AbilityWorks } from '@/ability/ability'
 import {
   getVerseEventByVerseId,
   putVerseEvent,
@@ -123,7 +123,7 @@ export default {
 
     await editor.setup(data)
     await this.setSlots(data)
-    if (!this.canSave) {
+    if (!this.editable) {
       editor.ban()
     }
   },
@@ -156,14 +156,11 @@ export default {
     })
   },
   computed: {
-    canSave() {
+    saveable() {
       if (this.verse === null) {
         return false
       }
-      return (
-        this.$can('update', new AbilityWorks(this.verse.author_id)) ||
-        this.$can('share', new AbilityShare(this.verse.share))
-      )
+      return this.$can('editable', new AbilityWorks(this.verse.editable))
     }
   },
   methods: {
@@ -250,7 +247,7 @@ export default {
       this.space.callback = null
     },
     openSpace({ value, callback }) {
-      if (this.canSave) {
+      if (this.editable) {
         this.space.callback = callback
         if (this.space.callback) {
           this.$refs.spaceDialog.open(value, this.id)
@@ -263,7 +260,7 @@ export default {
       }
     },
     openKnight({ value, callback }) {
-      if (this.canSave) {
+      if (this.editable) {
         this.knight.callback = callback
         if (this.knight.callback) {
           this.$refs.knightDialog.open(value, this.id)
@@ -284,7 +281,7 @@ export default {
     },
 
     async _doEvent(id) {
-      if (this.canSave) {
+      if (this.editable) {
         if (this.event.map.has(id)) {
           this.event.target = this.event.map.get(id)
         } else {
@@ -302,7 +299,7 @@ export default {
         if (response.data.length !== 0) {
           return response.data[0]
         } else {
-          if (this.canSave) {
+          if (this.editable) {
             const post = await postVerseEvent({
               verse_id: id,
               data: JSON.stringify({})
@@ -321,7 +318,7 @@ export default {
         if (response.data.length !== 0) {
           return response.data[0]
         } else {
-          if (this.canSave) {
+          if (this.editable) {
             const post = await postMetaEvent({
               meta_id,
               data: JSON.stringify({ input: [], output: [] })
@@ -334,7 +331,7 @@ export default {
       }
     },
     async postEvent({ input, output }) {
-      if (this.canSave && this.event.target) {
+      if (this.editable && this.event.target) {
         const response = await putMetaEvent(this.event.target.id, {
           data: JSON.stringify({ input, output })
         })
@@ -355,7 +352,7 @@ export default {
       const self = this
       const verse_id = this.id
       return new Promise(async function (resolve, reject) {
-        if (self.canSave) {
+        if (self.editable) {
           const list = await editor.saveEvent()
 
           const linked = await self.getVerseEvent(verse_id)
@@ -417,7 +414,7 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.canSave) {
+    if (this.editable) {
       this.save()
     }
   }

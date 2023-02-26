@@ -27,7 +27,7 @@
               </el-button>
               -->
               <el-button
-                v-if="canSave"
+                v-if="saveable"
                 type="primary"
                 size="mini"
                 @click="save()"
@@ -50,7 +50,7 @@ import editor from '@/node-editor/meta'
 import { getMeta, putMeta } from '@/api/v1/meta'
 
 import ResourceDialog from '@/components/MrPP/ResourceDialog.vue'
-import { AbilityWorks, AbilityShare } from '@/ability/ability'
+import { AbilityEditable } from '@/ability/ability'
 
 import { mapMutations } from 'vuex'
 export default {
@@ -73,16 +73,12 @@ export default {
     title() {
       return this.$route.query.title
     },
-    canSave() {
-      const self = this
-
-      if (self.meta === null) {
+    saveable() {
+      if (this.meta === null) {
         return false
       }
-      return (
-        self.$can('update', new AbilityWorks(self.meta.author_id)) ||
-        self.$can('share', new AbilityShare(self.meta.share))
-      )
+
+      return this.$can('editable', new AbilityEditable(this.meta.editable))
     }
   },
 
@@ -106,7 +102,7 @@ export default {
       await this.save()
     }
     this.loading = false
-    if (!this.canSave) {
+    if (!this.saveable) {
       editor.ban()
     }
   },
@@ -120,7 +116,7 @@ export default {
     })
   },
   beforeDestroy() {
-    if (this.canSave) {
+    if (this.saveable) {
       this.save()
     }
   },
@@ -170,7 +166,7 @@ export default {
     openResources(
       { value, callback, type } = { value: null, callback: null, type: null }
     ) {
-      if (this.canSave) {
+      if (this.saveable) {
         this.resource.callback = callback
 
         if (callback !== null) {
@@ -185,7 +181,7 @@ export default {
     },
 
     async save() {
-      if (this.canSave) {
+      if (this.saveable) {
         const data = await editor.save()
         await putMeta(this.id, {
           data
