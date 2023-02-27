@@ -101,10 +101,15 @@
               :content="item.user.username"
               placement="top"
             >
-              <div>
+              <div v-if="item.user.nickname !== ''">
                 <i class="el-icon-edit" v-if="item.editable === 1"></i>
                 <i class="el-icon-view" v-else></i>
                 {{ item.user.nickname }}
+              </div>
+              <div v-else>
+                <i class="el-icon-edit" v-if="item.editable === 1"></i>
+                <i class="el-icon-view" v-else></i>
+                {{ item.user.username }}
               </div>
             </el-tooltip>
           </template>
@@ -208,7 +213,7 @@ export default {
       this.post.visible = true
     },
     async setup(item) {
-      this.put.form.username = item.user.nickname
+      this.put.form.username = item.user.username
       this.put.id = item.id
       this.put.form.content = JSON.parse(item.info).content
 
