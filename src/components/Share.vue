@@ -101,14 +101,18 @@
               :content="item.user.username"
               placement="top"
             >
-              <div v-if="item.user.nickname !== ''">
+              <div
+                v-if="item.user.nickname !== '' && item.user.nickname !== null"
+              >
                 <i class="el-icon-edit" v-if="item.editable === 1"></i>
                 <i class="el-icon-view" v-else></i>
+
                 {{ item.user.nickname }}
               </div>
               <div v-else>
                 <i class="el-icon-edit" v-if="item.editable === 1"></i>
                 <i class="el-icon-view" v-else></i>
+
                 {{ item.user.username }}
               </div>
             </el-tooltip>
