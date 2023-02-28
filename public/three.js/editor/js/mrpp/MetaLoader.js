@@ -59,17 +59,7 @@ function MetaLoader(editor) {
 	}
 
 	this.loadDatas = async function () {
-		/*let root = editor.objectByUuid(self.meta.parameters.uuid)
-
-		if (typeof root === 'undefined') {
-			root = new THREE.Object3D()
-			root.name = 'Root'
-			root.uuid = self.meta.parameters.uuid
-			root.type = 'Group'
-			root.locked = true
-		}
-*/
-		let resources = new Map()
+		const resources = new Map()
 		self.data.resources.forEach(r => {
 			resources.set(r.id, r)
 		})
@@ -82,7 +72,6 @@ function MetaLoader(editor) {
 				)
 
 				editor.addObject(node)
-				//root.add(node)
 			}
 		}
 	}

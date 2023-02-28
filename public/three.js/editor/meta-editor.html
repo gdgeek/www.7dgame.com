@@ -244,6 +244,7 @@
 				if (e.data.verify === 'mrpp.com') {
 					switch (e.data.action) {
 						case 'load':
+							//	alert(JSON.stringify(e.data.data))
 							loader.load(e.data.data)
 
 							break
@@ -257,8 +258,8 @@
 
 			const data = {
 				from: 'mrpp-editor',
-				action: 'ready',
-				verse: JSON.stringify(self.verse)
+				action: 'ready'
+				//	verse: JSON.stringify(self.verse)
 			}
 
 			window.parent.postMessage(data, '*')

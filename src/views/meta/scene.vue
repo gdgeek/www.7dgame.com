@@ -94,12 +94,13 @@ export default {
               self.isInit = true
               const iframe = document.getElementById('editor')
               const r = await getMeta(this.id)
-              self.breadcrumb(r.data)
-
+              self.meta = r.data
+              self.breadcrumb(self.meta)
+              // alert(JSON.stringify(self.meta))
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
-                data: r.data,
+                data: self.meta,
                 saveable: self.saveable
               }
               iframe.contentWindow.postMessage(data, '*')
