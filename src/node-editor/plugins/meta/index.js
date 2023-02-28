@@ -41,12 +41,13 @@ function install(editor, options) {
 
     if (typeof id === 'undefined' && options.root.saveable) {
       const uuid = uuidv4()
-      const response = await postMeta({
-        verse_id: options.verseId,
-        uuid: uuid
-      })
-      const data = response.data
-      id = data.id
+      const data = {
+        verse_id: options.root.id,
+        uuid
+      }
+      const response = await postMeta(data)
+      const meta = response.data
+      id = meta.id
       component.controls.get('id').setValue(id)
 
       component.controls.get('uuid').setValue(uuid)

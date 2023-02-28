@@ -45,6 +45,7 @@ service.interceptors.response.use(
     return response
   },
   error => {
+    console.error(error)
     if (
       (typeof error.response === 'undefined' &&
         error.message === 'Network Error') ||

@@ -29,7 +29,6 @@ router.beforeEach(async (to, from, next) => {
   } else {
     document.title = `${store.state.information.data.title}`
   }
-
   if (env.canSetup() && !to.path.includes('setup')) {
     const result = await ready()
     if (!result.data.result) {

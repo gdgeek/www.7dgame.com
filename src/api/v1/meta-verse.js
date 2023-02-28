@@ -25,6 +25,7 @@ async function initMeta(verse, resource) {
     verse_id: verse.id,
     image_id: resource.image_id
   }
+  alert(JSON.stringify(data))
   const response = await postMeta(data)
   return response.data
 }

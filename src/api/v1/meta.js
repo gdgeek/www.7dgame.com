@@ -3,6 +3,7 @@ import request from '@/utils/request'
 var qs = require('querystringify')
 var path = require('path')
 export function postMeta(data) {
+  alert(JSON.stringify(data))
   return request({
     url: path.join('v1', 'metas'),
     method: 'post',

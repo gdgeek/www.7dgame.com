@@ -39,7 +39,7 @@ function install(editor, options) {
 
     if (typeof id === 'undefined' && options.root.saveable) {
       const response = await postMetaKnight({
-        verse_id: options.verseId,
+        verse_id: options.root.id,
         uuid
       })
       const data = response.data
