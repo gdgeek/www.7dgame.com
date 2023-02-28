@@ -352,7 +352,7 @@ export default {
       const self = this
       const verse_id = this.id
       return new Promise(async function (resolve, reject) {
-        if (self.editable) {
+        if (self.saveable) {
           const list = await editor.saveEvent()
 
           const linked = await self.getVerseEvent(verse_id)

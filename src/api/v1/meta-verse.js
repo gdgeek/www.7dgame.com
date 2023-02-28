@@ -14,7 +14,7 @@ async function initVerse(name, resource) {
     name,
     info: JSON.stringify(json),
     image_id: resource.image_id,
-    version: 2
+    version: 3
   }
   const response = await postVerse(data)
   return response.data
