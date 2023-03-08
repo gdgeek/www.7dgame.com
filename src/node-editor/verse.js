@@ -225,7 +225,6 @@ const addLinked = async function ({ node, linked }) {
       const output = n.outputs.get(item.uuid)
 
       item.connections.forEach(c => {
-        // alert(JSON.stringify(c))
         const node2 = getNodeByUUID({ uuid: c.node })
         const input = node2.inputs.get(c.uuid)
         editor_.connect(output, input)

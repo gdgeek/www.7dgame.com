@@ -17,7 +17,6 @@ function fileHandler() {
               const data = response.data
               const credentials = data && data.Credentials
               if (!data || !credentials) {
-                //alert(111)
                 reject('credentials invalid')
               }
               console.error(credentials)

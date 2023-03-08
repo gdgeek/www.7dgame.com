@@ -14,7 +14,6 @@ export class Component extends Rete.Component {
       this.type_.controls !== null
     ) {
       this.type_.controls.forEach(ctrl => {
-        // alert(JSON.stringify(ctrl))
         node.addControl(
           new Control(this.editor, { data: ctrl, root: this.root_, node: self })
         )
@@ -91,9 +90,7 @@ export class Component extends Rete.Component {
             data.parameters[input.control.key] = node.data[input.control.key]
           }
         } else {
-          //   alert(input.key)
           items.forEach(item => {
-            //alert(item)
             data.children[input.key].push(item)
           })
         }
@@ -112,8 +109,5 @@ export class Component extends Rete.Component {
       console.log(JSON.stringify(data))
       callback(JSON.stringify(data))
     }
-
-    // alert(5)
-    // outputs['num'] = node.data.num
   }
 }

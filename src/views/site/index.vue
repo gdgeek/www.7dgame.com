@@ -21,8 +21,13 @@
         style="width: 100%"
         @click="$router.push({ path: '/site/download' })"
         size="mini"
+        v-if="!env.local()"
       >
         下载相关程序
+      </el-button>
+
+      <el-button style="width: 100%" @click="backend()" size="mini" v-else>
+        进入管理后台
       </el-button>
     </div>
   </site>
@@ -56,6 +61,9 @@ export default {
     }
   },
   methods: {
+    backend() {
+      window.open(this.env.url, '_blank')
+    },
     handleClick(tab, event) {
       console.log(this.activeName)
     }

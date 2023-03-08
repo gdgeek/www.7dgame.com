@@ -8,7 +8,6 @@ export function postVerseCyber(data) {
 }
 
 export function getVerseCyber(id) {
-  //alert(id)
   return request({
     url: 'v1/verse-cybers/' + id,
     method: 'get'

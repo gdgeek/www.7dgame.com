@@ -18,7 +18,6 @@ async function fileHandler(bucket, region = 'ap-nanjing') {
             if (!data || !credentials) {
               reject('credentials invalid')
             }
-            //  alert(data.StartTime)
             callback({
               TmpSecretId: credentials.TmpSecretId,
               TmpSecretKey: credentials.TmpSecretKey,
@@ -95,7 +94,6 @@ async function fileDownload(md5, extension, progress, handler, dir = '') {
         }
       })
       console.error(data)
-      //alert(data.Body)
       resolve(data.Body)
     } catch (err) {
       reject(err)
@@ -104,7 +102,6 @@ async function fileDownload(md5, extension, progress, handler, dir = '') {
 }
 async function fileUpload(md5, extension, file, progress, handler, dir = '') {
   const filename = path.join(dir, md5 + extension)
-  //alert(filename)
   return new Promise(async (resolve, reject) => {
     try {
       // 分片上传文件

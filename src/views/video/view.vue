@@ -59,7 +59,8 @@
 </template>
 <script>
 import { getVideo, putVideo, deleteVideo } from '@/api/resources'
-import { postFile } from '@/api/files'
+
+import { postFile } from '@/api/v1/files'
 import { printVector2 } from '@/assets/js/helper'
 import { mapState } from 'vuex'
 

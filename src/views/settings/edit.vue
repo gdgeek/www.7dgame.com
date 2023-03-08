@@ -211,25 +211,49 @@
         <div slot="footer" class="dialog-footer">
           <el-button-group style="float: left">
             <!--   <el-button type="primary" plain @click="clearImgHandle">清除图片</el-button> -->
-            <el-button type="primary" plain @click="rotateLeftHandle">
+            <el-button
+              size="mini"
+              type="primary"
+              plain
+              @click="rotateLeftHandle"
+            >
               左旋转
             </el-button>
-            <el-button type="primary" plain @click="rotateRightHandle">
+            <el-button
+              size="mini"
+              type="primary"
+              plain
+              @click="rotateRightHandle"
+            >
               右旋转
             </el-button>
-            <el-button type="primary" plain @click="changeScaleHandle(1)">
+            <el-button
+              size="mini"
+              type="primary"
+              plain
+              @click="changeScaleHandle(1)"
+            >
               放大
             </el-button>
-            <el-button type="primary" plain @click="changeScaleHandle(-1)">
+            <el-button
+              size="mini"
+              type="primary"
+              plain
+              @click="changeScaleHandle(-1)"
+            >
               缩小
-            </el-button>
-            <el-button type="primary" plain @click="downloadHandle('blob')">
-              下载
             </el-button>
           </el-button-group>
           <el-button-group>
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" :loading="loading" @click="finish">
+            <el-button size="mini" @click="dialogVisible = false">
+              取 消
+            </el-button>
+            <el-button
+              size="mini"
+              type="primary"
+              :loading="loading"
+              @click="finish"
+            >
               确认
             </el-button>
           </el-button-group>
@@ -245,7 +269,7 @@ import { mapGetters } from 'vuex'
 import { putUserData } from '@/api/v1/user'
 import { regionDataPlus, CodeToText } from 'element-china-area-data'
 
-import { postFile } from '@/api/files'
+import { postFile } from '@/api/v1/files'
 
 import { mapState } from 'vuex'
 

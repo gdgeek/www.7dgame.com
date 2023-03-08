@@ -56,8 +56,6 @@ const ban = function () {
   editor_.use(BanPlugin)
 }
 const create = function (meta) {
-  //alert(JSON.stringify(meta))
-
   const data = {
     type: 'MetaRoot',
     parameters: {
@@ -164,7 +162,6 @@ const initMeta = async function ({ container, root }) {
   editor_.on('process', async e => {
     if (typeof e === 'object' && typeof e.status === 'string') {
       if (e.status === 'save') {
-        // alert(e.status)
         await engine_.abort()
         await root.save()
         /*

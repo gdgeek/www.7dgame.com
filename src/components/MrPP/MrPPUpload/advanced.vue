@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { postFile } from '@/api/files'
+import { postFile } from '@/api/v1/files'
 import { mapState } from 'vuex'
 
 export default {

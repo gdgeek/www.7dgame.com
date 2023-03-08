@@ -25,11 +25,12 @@
 <script>
 import path from 'path'
 
-import { postFile } from '@/api/files'
+import { postFile } from '@/api/v1/files'
 import { postSpace } from '@/api/v1/space'
 
-import cloud from '@/assets/js/file/tencent-cloud.js'
+//import cloud from '@/assets/js/file/tencent-cloud.js'
 
+import { mapState } from 'vuex'
 export default {
   name: 'MrPPUpload',
   props: {
@@ -86,6 +87,11 @@ export default {
       isdisabled: false
     }
   },
+  computed: {
+    ...mapState({
+      store: state => state.config.store
+    })
+  },
   methods: {
     step(idx) {
       const item = this.data[idx]
@@ -99,17 +105,17 @@ export default {
       } else {
         this.data[idx].status = ''
       }
-
       this.data[idx].percentage = Math.round(Math.min(p, 1) * 100)
     },
     async postFile(info, data, name, handler) {
+      const store = this.store
       return new Promise(async function (resolve, reject) {
         try {
           const file = await postFile({
             md5: data.md5,
             key: data.md5 + data.ext,
             filename: name,
-            url: cloud.getUrl(info, data, handler)
+            url: store.getUrl(info, data, handler)
           })
           resolve(file.data)
         } catch (err) {
@@ -170,8 +176,10 @@ export default {
       const self = this
       return new Promise(async function (resolve, reject) {
         try {
-          const store = cloud
+          const store = self.store
           let has = await store.fileHas(md5, file.extension, handler, 'upload')
+
+          alert(2)
           if (has === null) {
             const r = await store.fileUpload(
               md5,
@@ -183,6 +191,8 @@ export default {
               handler,
               'upload'
             )
+
+            alert(3)
           }
           self.progress(1, 1)
 
@@ -211,14 +221,16 @@ export default {
       const self = this
       return new Promise(async function (resolve, reject) {
         try {
-          const store = cloud
+          const store = self.store
           const file = await store.fileOpen(self.fileType)
 
           self.isdisabled = false
           const md5 = await store.fileMD5(file, function (p) {
             self.progress(p, 0)
           })
+
           const handler = await store.rawHandler()
+
           let info = null
           let hasJson = await store.fileHas(
             'info',
@@ -226,6 +238,7 @@ export default {
             handler,
             path.join('release', md5)
           )
+
           if (hasJson !== null) {
             let json = await store.fileDownload(
               'info',
@@ -247,7 +260,6 @@ export default {
           if (info === null) {
             info = await self.upload(md5, file, handler)
           }
-
           if (info.status !== 'success') {
             throw 'Info File Not Success'
           }
@@ -268,7 +280,6 @@ export default {
           })
           resolve()
         } catch (err) {
-          //    alert(err)
           reject(err)
         }
       })

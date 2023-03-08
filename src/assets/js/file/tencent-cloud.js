@@ -199,7 +199,6 @@ export default {
   fileHas,
   fileUrl,
   fileUpload,
-  //fileHandler,
   fileProcess,
   fileDownload,
   storeHandler,

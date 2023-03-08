@@ -132,7 +132,6 @@ export default {
       })
     },
     async light() {
-      // alert(12222)
       /*
       const light = {
         metadata: {
