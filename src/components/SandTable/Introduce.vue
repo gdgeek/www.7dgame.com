@@ -10,12 +10,12 @@
     <el-row>
       <el-col :span="24" class="hidden-md-and-up">
         <div align="center">
-          <img src="/media/bg/2326.jpg" style="width: 100%" />
+          <img src="/media/bg/sand2326.jpg" style="width: 100%" />
         </div>
       </el-col>
       <el-col :span="24" class="hidden-sm-and-down">
         <div align="center">
-          <img src="/media/bg/2325.jpg" style="width: 90%" />
+          <img src="/media/bg/sand2325.jpg" style="width: 90%" />
         </div>
       </el-col>
     </el-row>

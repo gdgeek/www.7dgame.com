@@ -15,7 +15,7 @@
         <h2 class="p-title-s content-color">公司简介</h2>
         <div class="reletion-box font-text content-color">
           <div style="width: 90%" class="content-box">
-            上海游七网络科技有限公司，作为国内制作元宇宙AR实景应用最早的高新科技企业，
+            上海游七网络科技有限公司，作为国内制作元宇宙AR实景应用起步早的高新科技企业，
             团队项目开发经验丰富，技术方案灵活多样。与未来数字化生态相融合，不断进取。
           </div>
         </div>
