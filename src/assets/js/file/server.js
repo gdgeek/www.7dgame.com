@@ -2,36 +2,30 @@ import { fileMD5, fileOpen } from './base.js'
 
 import environment from '@/environment.js'
 import axios from 'axios'
-import { getToken } from '@/utils/auth.js'
 import { uploadFile } from '@/api/v1/upload'
-import request from '@/utils/request'
-import { effectScope } from 'vue-demi'
 var qs = require('querystringify')
 var path = require('path')
-const configure = { path: '/store/files/', api: '/v1/uploads/file' }
 
-function fileUrl(md5, extension, handler = null) {
+function fileUrl(md5, extension, handler = null, dir = '') {
   const filename = md5 + extension
-  return environment.api + configure.path + filename
+
+  const url =
+    environment.api + '/' + path.join('storage', handler.bucket, dir, filename)
+
+  return url
 }
 
-function fileHas(md5, extension, handler = null) {
-  const filename = md5 + extension
+function fileHas(md5, extension, handler = null, dir = '') {
+  //const filename = md5 + extension
+
   return new Promise((resolve, reject) => {
     axios
-      .head(fileUrl(filename, handler))
+      .head(fileUrl(md5, extension, handler, dir))
       .then(function (response) {
-        resolve(filename)
+        resolve({ md5, extension })
       })
       .catch(function (error) {
-        if (
-          typeof error.response !== 'undefined' &&
-          error.response.status === 404
-        ) {
-          resolve(null)
-        } else {
-          resolve({ md5, extension })
-        }
+        resolve(null)
       })
   })
 }
@@ -41,9 +35,9 @@ async function storeHandler() {
 async function rawHandler() {
   return await fileHandler('raw')
 }
-function fileHandler(path) {
+function fileHandler(bucket) {
   return new Promise((resolve, reject) => {
-    resolve({ path })
+    resolve({ bucket })
   })
 }
 
@@ -63,8 +57,9 @@ function fileUpdateImpl(md5, extension, file, progress, handler, dir, skip) {
     data.append('block_size', blockSize)
     data.append('upload_size', nextSize)
     data.append('size', file.size)
-    alert(handler.path)
-    alert(dir)
+    data.append('directory', dir)
+    data.append('bucket', handler.bucket)
+
     try {
       const response = await uploadFile(data)
       if (file.size <= nextSize) {

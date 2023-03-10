@@ -104,8 +104,8 @@ export default {
     },
 
     async saveFile(md5, extension, file, handler) {
-      // return
       const self = this
+
       return new Promise(async function (resolve, reject) {
         try {
           const data = {
@@ -122,6 +122,7 @@ export default {
           self.$emit('saveResource', data.filename, response.data.id, () => {
             self.progress(2, 1)
           })
+
           resolve()
         } catch (err) {
           reject(err)
