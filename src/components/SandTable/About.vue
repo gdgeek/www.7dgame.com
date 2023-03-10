@@ -3,7 +3,7 @@
   <section class="sandtable-section section-bgc-color">
     <div align="center">
       <h1 class="p-title-m">关于我们</h1>
-      <h4>国内制作HoloLens数字沙盘最早，项目最多的高新科技企业。</h4>
+      <h4>国内制作HoloLens数字沙盘起步早，项目经验丰富的高新科技企业。</h4>
       <p class="section-underline-style" />
     </div>
 
@@ -11,7 +11,7 @@
       <div class="about-content section-radius">
         <h5>
           上海游七网络科技有限公司，国内制作HoloLens
-          数字沙盘最早，项目最多的高新科技企业。
+          数字沙盘起步早，项目经验丰富的高新科技企业。
           在多年的积累下，我司数字沙盘项目技术成熟，操作流程熟练，质量高度保证
           。可以做到质量高、低成本、效果好、开发速度快，客户满意度高。
         </h5>
