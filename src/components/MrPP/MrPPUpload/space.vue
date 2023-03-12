@@ -24,15 +24,17 @@
 
 <script>
 import path from 'path'
-
 import { postFile } from '@/api/v1/files'
 import { postSpace } from '@/api/v1/space'
 
+import env from '@/environment.js'
 //import cloud from '@/assets/js/file/tencent-cloud.js'
 
 import { mapState } from 'vuex'
+
 export default {
   name: 'MrPPUpload',
+
   props: {
     fileType: {
       type: String,
@@ -107,15 +109,14 @@ export default {
       }
       this.data[idx].percentage = Math.round(Math.min(p, 1) * 100)
     },
-    async postFile(info, data, name, handler) {
-      const store = this.store
+    async postFile(data, name) {
       return new Promise(async function (resolve, reject) {
         try {
           const file = await postFile({
             md5: data.md5,
             key: data.md5 + data.ext,
             filename: name,
-            url: store.getUrl(info, data, handler)
+            url: data.url
           })
           resolve(file.data)
         } catch (err) {
@@ -123,13 +124,19 @@ export default {
         }
       })
     },
+    filterInfo(data) {
+      data.authoring_glb.url = env.replaceIP(data.authoring_glb.url)
+      data.occlusion_glb.url = env.replaceIP(data.occlusion_glb.url)
+      data.dat.url = env.replaceIP(data.dat.url)
+      data.navmesh.url = env.replaceIP(data.navmesh.url)
+      return data
+    },
     async save(info, progress, handler) {
       const self = this
       console.error(info)
       return new Promise(async function (resolve, reject) {
         try {
           const authoring_glb_data = await self.postFile(
-            info,
             info.authoring_glb,
             info.name + '_authoring.glb',
             handler
@@ -137,7 +144,6 @@ export default {
           progress(0.25)
 
           const occlusion_glb_data = await self.postFile(
-            info,
             info.occlusion_glb,
             info.name + '_occlusion.glb',
             handler
@@ -145,15 +151,12 @@ export default {
 
           progress(0.5)
 
-          //const navmesh_data = await postFile(info, info.navmesh, handler)
           const dat_data = await self.postFile(
-            info,
             info.dat,
             info.name + '_dat.dat',
             handler
           )
           progress(0.75)
-
           const data = {
             title: info.name,
             name: info.name,
@@ -178,10 +181,8 @@ export default {
         try {
           const store = self.store
           let has = await store.fileHas(md5, file.extension, handler, 'upload')
-
-          alert(2)
           if (has === null) {
-            const r = await store.fileUpload(
+            await store.fileUpload(
               md5,
               file.extension,
               file,
@@ -191,12 +192,9 @@ export default {
               handler,
               'upload'
             )
-
-            alert(3)
           }
           self.progress(1, 1)
-
-          const json = await store.fileProcess(
+          const data = await store.fileProcess(
             'info',
             '.json',
             function (p) {
@@ -207,11 +205,11 @@ export default {
             60000
           )
 
-          if (json === null) {
+          if (data === null) {
             throw 'No Info File'
           }
-          const info = JSON.parse(json)
-          resolve(info)
+
+          resolve(data)
         } catch (err) {
           reject(err)
         }
@@ -231,48 +229,31 @@ export default {
 
           const handler = await store.rawHandler()
 
-          let info = null
-          let hasJson = await store.fileHas(
+          let data = await store.fileDownload(
             'info',
             '.json',
+            function (p) {},
             handler,
             path.join('release', md5)
           )
-
-          if (hasJson !== null) {
-            let json = await store.fileDownload(
-              'info',
-              '.json',
-              function (p) {
-                self.progress(p, 1)
-              },
-              handler,
-              path.join('release', md5)
-            )
-            if (json === null) {
-              throw 'No Info File'
-            } else {
-              info = JSON.parse(json)
-              self.progress(1, 1)
-              self.progress(1, 2)
-            }
+          if (data !== null) {
+            self.progress(1, 1)
+            self.progress(1, 2)
+          } else {
+            data = await self.upload(md5, file, handler)
           }
-          if (info === null) {
-            info = await self.upload(md5, file, handler)
-          }
-          if (info.status !== 'success') {
+          data = self.filterInfo(data)
+          if (data.status !== 'success') {
             throw 'Info File Not Success'
           }
           const response = await self.save(
-            info,
+            data,
             function (p) {
               self.progress(p, 3)
             },
             handler
           )
-          if (response.data === null) {
-            throw 'No Space!'
-          }
+
           self.progress(1, 3)
           self.$router.push({
             path: '/space/view',

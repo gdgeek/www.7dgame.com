@@ -1,6 +1,6 @@
 import COS from 'cos-js-sdk-v5'
 import { token, store } from '@/api/v1/tencent-cloud'
-import { fileMD5, fileOpen } from './base.js'
+import { fileMD5, fileOpen, sleep } from './base.js'
 import path from 'path'
 
 async function storeHandler() {
@@ -50,13 +50,6 @@ async function fileHandler(bucket, region) {
   })
 }
 
-async function sleep(time) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(null)
-    }, time)
-  })
-}
 async function fileProcess(
   md5,
   extension,
@@ -77,7 +70,7 @@ async function fileProcess(
 
           await sleep(500)
         } else {
-          const file = await fileDownload(
+          const data = await fileDownload(
             md5,
             extension,
             function (p) {
@@ -87,8 +80,8 @@ async function fileProcess(
             dir
           )
           progress(1)
-          console.error(file)
-          resolve(file)
+          console.error(data)
+          resolve(data)
           break
         }
       } while (Date.now() < start + time)
@@ -98,10 +91,9 @@ async function fileProcess(
     }
   })
 }
-async function fileDownload(md5, extension, progress, handler, dir = '') {
-  // const filename = md5 + extension
+async function fileDownload(name, extension, progress, handler, dir = '') {
   console.error(handler)
-  const filename = path.join(dir, md5 + extension)
+  const filename = path.join(dir, name + extension)
   return new Promise(async (resolve, reject) => {
     try {
       //下载文件
@@ -115,7 +107,7 @@ async function fileDownload(md5, extension, progress, handler, dir = '') {
         }
       })
       console.error(data)
-      resolve(data.Body)
+      resolve(JSON.parse(data.Body))
     } catch (err) {
       reject(err)
     }

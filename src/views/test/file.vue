@@ -15,7 +15,7 @@ export default {
   },
   computed: {
     ...mapState({
-      store: state => state.config.advanced
+      store: state => state.config.store
     })
   },
   methods: {

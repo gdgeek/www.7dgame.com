@@ -31,6 +31,14 @@ function canManager() {
     '4mr.cn' === process.env.VUE_APP_BASE_MODE
   )
 }
+function getUrl() {
+  const reg = /^([^:]+)/g
+  const ret = reg.exec(window.location.host)
+  if (ret !== null) {
+    return ret[1]
+  }
+  return null
+}
 function subtitle() {
   switch (process.env.VUE_APP_BASE_MODE) {
     case '4mr.cn':
@@ -42,12 +50,15 @@ function subtitle() {
   }
   return '公测版本'
 }
+function replaceIP(input) {
+  return input.replace('[ip]', getUrl())
+}
 module.exports = {
   local: process.env.VUE_APP_LOCAL ? true : false,
   mode: process.env.VUE_APP_BASE_MODE,
-  ip: document.domain,
-  api: process.env.VUE_APP_BASE_API.replace('[ip]', document.domain),
-  url: process.env.VUE_APP_BASE_URL.replace('[ip]', document.domain),
+  ip: getUrl(),
+  api: replaceIP(process.env.VUE_APP_BASE_API),
+  url: replaceIP(process.env.VUE_APP_BASE_URL),
   doc: process.env.VUE_APP_DOC_API,
   version: 3,
   canRegister,
@@ -59,5 +70,6 @@ module.exports = {
   canDocument,
   mrcn,
   mrpp,
-  local
+  local,
+  replaceIP
 }

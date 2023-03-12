@@ -74,13 +74,13 @@ const state = {
               label: '模型上传',
               url: '/polygen/upload',
               icon: 'upload'
-            },
+            } /*,
             {
               label: '模型上传(高级)',
               hidden: true,
               url: '/polygen/upload-advanced',
               icon: 'upload'
-            }
+            }*/
           ]
         },
         {

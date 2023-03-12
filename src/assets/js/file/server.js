@@ -1,28 +1,26 @@
-import { fileMD5, fileOpen } from './base.js'
+import { fileMD5, fileOpen, sleep } from './base.js'
 
-import environment from '@/environment.js'
+import env from '@/environment.js'
 import axios from 'axios'
 import { uploadFile } from '@/api/v1/upload'
 var qs = require('querystringify')
 var path = require('path')
 
-function fileUrl(md5, extension, handler = null, dir = '') {
-  const filename = md5 + extension
+function fileUrl(name, extension, handler = null, dir = '') {
+  const filename = name + extension
 
   const url =
-    environment.api + '/' + path.join('storage', handler.bucket, dir, filename)
+    env.api + '/' + path.join('storage', handler.bucket, dir, filename)
 
   return url
 }
 
-function fileHas(md5, extension, handler = null, dir = '') {
-  //const filename = md5 + extension
-
+function fileHas(name, extension, handler = null, dir = '') {
   return new Promise((resolve, reject) => {
     axios
-      .head(fileUrl(md5, extension, handler, dir))
+      .head(fileUrl(name, extension, handler, dir))
       .then(function (response) {
-        resolve({ md5, extension })
+        resolve({ name, extension })
       })
       .catch(function (error) {
         resolve(null)
@@ -101,15 +99,14 @@ function getUrl(info, file, handler) {
   return url
 }
 
-async function fileDownload(md5, extension, progress, handler, dir = '') {
-  // const filename = md5 + extension
-  console.error(handler)
-  const filename = path.join(dir, md5 + extension)
+async function fileDownload(name, extension, progress, handler, dir = '') {
   return new Promise(async (resolve, reject) => {
     try {
-      resolve(filename)
+      const url = fileUrl(name, extension, handler, dir)
+      const response = await axios.get(url)
+      resolve(response.data)
     } catch (err) {
-      reject(err)
+      resolve(null)
     }
   })
 }

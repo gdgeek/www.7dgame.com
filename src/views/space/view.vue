@@ -58,7 +58,6 @@ import { getSpace, putSpace, deleteSpace } from '@/api/v1/space'
 //import { createVerseFromPolygen } from '@/api/v1/meta-verse'
 
 import { postFile } from '@/api/v1/files'
-//import { printVector3 } from '@/assets/js/helper'
 import { mapState } from 'vuex'
 import Three from '@/components/Three.vue'
 

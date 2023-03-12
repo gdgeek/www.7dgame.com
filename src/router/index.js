@@ -155,13 +155,13 @@ export const constantRoutes = [
             name: 'PolygenUpload',
             meta: { title: '模型上传' },
             component: () => import('@/views/polygen/upload')
-          },
+          } /*
           {
             path: 'upload-advanced',
             name: 'PolygenUploadAdvanced',
             meta: { title: '模型上传(高级)' },
             component: () => import('@/views/polygen/upload-advanced')
-          },
+          },*/,
           {
             path: 'view',
             name: 'PolygenView',

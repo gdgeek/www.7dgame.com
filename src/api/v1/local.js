@@ -1,4 +1,6 @@
 import request from '@/utils/request'
+var qs = require('querystringify')
+var path = require('path')
 
 export function information() {
   return request({

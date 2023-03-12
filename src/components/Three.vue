@@ -216,7 +216,7 @@ export default {
         dracoLoader.setDecoderPath('/three.js/examples/js/libs/draco/')
         const gltf = new GLTFLoader()
         gltf.setDRACOLoader(dracoLoader)
-        //loader.preload()
+
         gltf.load(
           self.file.url,
           // called when the resource is loaded
