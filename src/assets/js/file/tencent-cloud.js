@@ -173,14 +173,14 @@ async function fileHas(md5, extension, handler, dir = '') {
   const filename = path.join(dir, md5 + extension)
   return new Promise(async (resolve, reject) => {
     try {
-      const data = await handler.cos.headObject({
+      await handler.cos.headObject({
         Bucket: handler.bucket,
         Region: handler.region,
         Key: filename
       })
-      resolve({ md5, extension })
+      resolve(true)
     } catch (err) {
-      resolve(null)
+      resolve(false)
     }
   })
 }

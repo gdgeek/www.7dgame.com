@@ -308,14 +308,14 @@ export default {
 
       const handler = await store.storeHandler()
 
-      const ret = await store.fileHas(
+      const has = await store.fileHas(
         md5,
         file.extension,
         handler,
         'screenshot/polygen'
       )
-      if (ret !== null) {
-        self.saveFile(ret.md5, ret.extension, info, file, handler)
+      if (has) {
+        self.saveFile(md5, file.extension, info, file, handler)
       } else {
         const r = store.fileUpload(
           md5,

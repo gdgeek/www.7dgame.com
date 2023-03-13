@@ -72,7 +72,7 @@ export function UpdateAbility($ability, roles, userId) {
   ) {
     can(['editable'], AbilityEditable.name, { editable: true })
     can(['viewable'], AbilityViewable.name, { viewable: true })
-    //can(['share'], AbilityShare.name, { share: true })
+
     can(['update', 'delete'], AbilityWorks.name, { id: userId })
     can(['delete'], AbilityMessage.name, { id: userId, managed: 0 })
     can(['update'], AbilityMessage.name, { id: userId })
@@ -101,20 +101,21 @@ export function UpdateAbility($ability, roles, userId) {
       /^\/audio[\/]/
     ])
 
-    if (roles.find(role => role === 'root' || role === 'manager')) {
+    if (
+      roles.find(
+        role => role === 'root' || role === 'admin' || role === 'manager'
+      )
+    ) {
       can(['manager'])
-      //  can(['share'], AbilityShare.name)
       can(['editable'], AbilityEditable.name)
       can(['viewable'], AbilityViewable.name)
       can(['update', 'delete'], AbilityWorks.name)
       can(['delete'], AbilityMessage.name, { managed: 0 })
       can(['update'], AbilityMessage.name)
-
       menu = menu.concat(['/verse-share/open', /^\/trades[\/]/])
-
+      menu = menu.concat([/^\/manager[\/]/])
       if (roles.find(role => role === 'root')) {
         can(['root'])
-        menu = menu.concat([/^\/manager[\/]/])
       }
     }
   }

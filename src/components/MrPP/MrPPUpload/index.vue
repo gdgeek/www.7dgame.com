@@ -108,6 +108,7 @@ export default {
 
       return new Promise(async function (resolve, reject) {
         try {
+          alert(md5)
           const data = {
             filename: file.name,
             md5,
@@ -139,10 +140,10 @@ export default {
         self.progress(p, 0)
       })
       const handler = await store.storeHandler()
-      const ret = await store.fileHas(md5, file.extension, handler, self.dir)
+      const has = await store.fileHas(md5, file.extension, handler, self.dir)
 
-      if (ret !== null) {
-        await self.saveFile(ret.md5, ret.extension, file, handler)
+      if (has) {
+        await self.saveFile(md5, file.extension, file, handler)
       } else {
         await store.fileUpload(
           md5,

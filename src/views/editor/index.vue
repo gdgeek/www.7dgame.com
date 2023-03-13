@@ -17,7 +17,7 @@
 <script>
 var qs = require('querystringify')
 var path = require('path')
-import environment from '@/environment.js'
+import env from '@/environment.js'
 import { putVerse } from '@/api/v1/verse'
 import { getVerse } from '@/api/e1/verse'
 export default {
@@ -38,16 +38,17 @@ export default {
   computed: {
     id() {
       return parseInt(this.$route.query.id)
-    },
+    }
+    /*,
     url() {
       const uri =
-        environment.api +
+        env.api +
         path.join(
           '/v1/verses/',
           this.id + qs.stringify({ expand: 'datas,resources,space' }, true)
         )
       return uri
-    }
+    }*/
   },
   created() {
     const self = this

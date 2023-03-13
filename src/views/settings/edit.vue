@@ -493,35 +493,26 @@ export default {
       // let cropAxis = [data.axis.x1, data.axis.y1, data.axis.x2, data.axis.y2]
       // console.log(cropAxis)
     },
-    saveAvatar(md5, extension, file, handler) {
-      const self = this
+    async saveAvatar(md5, extension, file, handler) {
       const data = {
         md5,
         key: md5 + extension,
         filename: file.name,
-        url: self.store.fileUrl(md5, extension, handler, 'backup')
+        url: this.store.fileUrl(md5, extension, handler, 'backup')
+      }
+      try {
+        const post = await postFile(data)
+        const put = putUserData({ avatar_id: post.data.id })
+        this.refreshUserdata(put.data)
+        this.$message({
+          message: '修改头像成功',
+          type: 'success'
+        })
+      } catch (err) {
+        console.log(err)
       }
 
-      postFile(data)
-        .then(response => {
-          putUserData({ avatar_id: response.data.id })
-            .then(response => {
-              self.refreshUserdata(response.data)
-              this.$message({
-                message: '修改头像成功',
-                type: 'success'
-              })
-              this.loading = false
-            })
-            .catch(err => {
-              this.loading = false
-              console.log(err)
-            })
-        })
-        .catch(err => {
-          this.loading = false
-          console.log(err)
-        })
+      this.loading = false
     },
     async finish() {
       const self = this
@@ -536,10 +527,10 @@ export default {
         const md5 = await store.fileMD5(file)
         const handler = await store.storeHandler()
 
-        const ret = await store.fileHas(md5, file.extension, handler, 'backup')
+        const has = await store.fileHas(md5, file.extension, handler, 'backup')
 
-        if (ret !== null) {
-          self.saveAvatar(ret.md5, ret.extension, file, handler)
+        if (has) {
+          self.saveAvatar(md5, file.extension, file, handler)
         } else {
           const r = await store.fileUpload(
             md5,

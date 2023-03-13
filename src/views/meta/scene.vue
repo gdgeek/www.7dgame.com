@@ -20,7 +20,7 @@ var path = require('path')
 
 import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
-import environment from '@/environment.js'
+import env from '@/environment.js'
 import { putMeta } from '@/api/v1/meta'
 import { getMeta } from '@/api/e1/meta'
 
@@ -43,15 +43,15 @@ export default {
     title() {
       return this.$route.query.title
     },
-    url() {
+    /*url() {
       const uri =
-        environment.api +
+        env.api +
         path.join(
           '/v1/verses/',
           this.id + qs.stringify({ expand: 'datas,resources,space' }, true)
         )
       return uri
-    },
+    },*/
     saveable() {
       if (this.meta === null) {
         return false

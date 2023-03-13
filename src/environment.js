@@ -31,7 +31,7 @@ function canManager() {
     '4mr.cn' === process.env.VUE_APP_BASE_MODE
   )
 }
-function getUrl() {
+function getIP() {
   const reg = /^([^:]+)/g
   const ret = reg.exec(window.location.host)
   if (ret !== null) {
@@ -51,14 +51,13 @@ function subtitle() {
   return '公测版本'
 }
 function replaceIP(input) {
-  return input.replace('[ip]', getUrl())
+  return input.replace('[ip]', getIP())
 }
 module.exports = {
   local: process.env.VUE_APP_LOCAL ? true : false,
   mode: process.env.VUE_APP_BASE_MODE,
-  ip: getUrl(),
-  api: replaceIP(process.env.VUE_APP_BASE_API),
-  url: replaceIP(process.env.VUE_APP_BASE_URL),
+  ip: getIP(),
+  api: process.env.VUE_APP_BASE_API,
   doc: process.env.VUE_APP_DOC_API,
   version: 3,
   canRegister,

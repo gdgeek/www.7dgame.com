@@ -177,14 +177,14 @@ export default {
         const file = blob
         const md5 = await store.fileMD5(file)
         const handler = await store.storeHandler()
-        const ret = await store.fileHas(
+        const has = await store.fileHas(
           md5,
           file.extension,
           handler,
           'screenshot/video'
         )
-        if (ret !== null) {
-          self.save(ret.md5, ret.extension, info, file, handler)
+        if (has) {
+          self.save(md5, file.extension, info, file, handler)
         } else {
           const r = await store.fileUpload(
             md5,

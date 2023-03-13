@@ -109,7 +109,7 @@ export default {
       }
       this.data[idx].percentage = Math.round(Math.min(p, 1) * 100)
     },
-    async postFile(data, name) {
+    async addFile(data, name) {
       return new Promise(async function (resolve, reject) {
         try {
           const file = await postFile({
@@ -125,10 +125,10 @@ export default {
       })
     },
     filterInfo(data) {
-      data.authoring_glb.url = env.replaceIP(data.authoring_glb.url)
-      data.occlusion_glb.url = env.replaceIP(data.occlusion_glb.url)
-      data.dat.url = env.replaceIP(data.dat.url)
-      data.navmesh.url = env.replaceIP(data.navmesh.url)
+      // data.authoring_glb.url = env.replaceIP(data.authoring_glb.url)
+      // data.occlusion_glb.url = env.replaceIP(data.occlusion_glb.url)
+      //data.dat.url = env.replaceIP(data.dat.url)
+      // /data.navmesh.url = env.replaceIP(data.navmesh.url)
       return data
     },
     async save(info, progress, handler) {
@@ -136,14 +136,14 @@ export default {
       console.error(info)
       return new Promise(async function (resolve, reject) {
         try {
-          const authoring_glb_data = await self.postFile(
+          const authoring_glb_data = await self.addFile(
             info.authoring_glb,
             info.name + '_authoring.glb',
             handler
           )
           progress(0.25)
 
-          const occlusion_glb_data = await self.postFile(
+          const occlusion_glb_data = await self.addFile(
             info.occlusion_glb,
             info.name + '_occlusion.glb',
             handler
@@ -151,7 +151,7 @@ export default {
 
           progress(0.5)
 
-          const dat_data = await self.postFile(
+          const dat_data = await self.addFile(
             info.dat,
             info.name + '_dat.dat',
             handler
@@ -180,8 +180,13 @@ export default {
       return new Promise(async function (resolve, reject) {
         try {
           const store = self.store
-          let has = await store.fileHas(md5, file.extension, handler, 'upload')
-          if (has === null) {
+          const has = await store.fileHas(
+            md5,
+            file.extension,
+            handler,
+            'upload'
+          )
+          if (has) {
             await store.fileUpload(
               md5,
               file.extension,

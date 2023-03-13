@@ -18,12 +18,12 @@ function fileUrl(name, extension, handler = null, dir = '') {
 function fileHas(name, extension, handler = null, dir = '') {
   return new Promise((resolve, reject) => {
     axios
-      .head(fileUrl(name, extension, handler, dir))
+      .head(env.replaceIP(fileUrl(name, extension, handler, dir)))
       .then(function (response) {
-        resolve({ name, extension })
+        resolve(true)
       })
       .catch(function (error) {
-        resolve(null)
+        resolve(false)
       })
   })
 }
@@ -103,7 +103,7 @@ async function fileDownload(name, extension, progress, handler, dir = '') {
   return new Promise(async (resolve, reject) => {
     try {
       const url = fileUrl(name, extension, handler, dir)
-      const response = await axios.get(url)
+      const response = await axios.get(env.replaceIP(url))
       resolve(response.data)
     } catch (err) {
       resolve(null)
