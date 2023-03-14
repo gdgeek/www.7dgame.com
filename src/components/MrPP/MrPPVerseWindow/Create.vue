@@ -41,6 +41,7 @@
 <script>
 import MrPPCropper from '@/components/MrPP/MrPPCropper.vue'
 
+import env from '@/environment.js'
 export default {
   name: 'MrPPVerseWindowCreate',
 
@@ -56,6 +57,14 @@ export default {
     dialogSubmit: {
       type: String,
       default: '确定'
+    }
+  },
+  computed: {
+    url() {
+      if (imageUrl !== null) {
+        return env.replaceIP(this.imageUrl)
+      }
+      return null
     }
   },
   data: function () {
