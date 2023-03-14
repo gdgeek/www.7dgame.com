@@ -108,7 +108,6 @@ export default {
 
       return new Promise(async function (resolve, reject) {
         try {
-          alert(md5)
           const data = {
             filename: file.name,
             md5,
