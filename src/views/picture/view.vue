@@ -161,10 +161,10 @@ export default {
         const response2 = await putPicture(self.data.id, picture)
 
         self.data.image_id = response2.data.image_id
-        self.data.info = response.data.info
+        self.data.info = response2.data.info
         self.expire = false
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
 

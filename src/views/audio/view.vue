@@ -181,7 +181,7 @@ export default {
         self.data.info = response2.data.info
         self.expire = false
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
     dealWith: function () {
