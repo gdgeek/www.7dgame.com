@@ -220,18 +220,16 @@ export default {
           })
         })
     },
-    delete: function (id) {
-      const self = this
-      console.log(self.api + '/resources/' + id + '?type=polygen')
+    delete: async function (id) {
+      console.log(this.api + '/resources/' + id + '?type=polygen')
+      try {
+        await deletePolygen(id)
 
-      deletePolygen(id)
-        .then(response => {
-          self.$router.push({ path: '/polygen/index' })
-        })
-        .catch(function (error) {
-          console.log(error)
-          self.failed(JSON.parse(error.message))
-        })
+        this.$router.push({ path: '/polygen/index' })
+      } catch (err) {
+        console.error(err)
+        this.failed(JSON.parse(err.message))
+      }
     },
     namedWindow: function () {
       const self = this
@@ -255,31 +253,28 @@ export default {
           })
         })
     },
-    named: function (id, name) {
-      const self = this
+    named: async function (id, name) {
       const polygen = { name }
       console.log(polygen)
-      putPolygen(id, polygen)
-        .then(response => {
-          self.data.name = response.data.name
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      try {
+        const response = await putPolygen(id, polygen)
+        this.data.name = response.data.name
+      } catch (err) {
+        console.error(err)
+      }
     },
-    updatePolygen(imageId, info) {
-      const self = this
+    updatePolygen: async function (imageId, info) {
       const polygen = { image_id: imageId, info: JSON.stringify(info) }
-      putPolygen(this.data.id, polygen).then(response => {
-        console.log(response.data)
-        this.data.image_id = response.data.image_id
-        this.data.info = response.data.info
-        console.log(this.dataInfo)
-        console.log(self.meshCenter)
-        self.expire = false
-      })
+
+      const response = await putPolygen(this.data.id, polygen)
+      console.log(response.data)
+      this.data.image_id = response.data.image_id
+      this.data.info = response.data.info
+      console.log(this.dataInfo)
+      console.log(this.meshCenter)
+      this.expire = false
     },
-    async saveFile(md5, extension, info, file, handler) {
+    saveFile: async function (md5, extension, info, file, handler) {
       const data = {
         md5,
         key: md5 + extension,
@@ -290,7 +285,7 @@ export default {
       const response = await postFile(data)
       this.updatePolygen(response.data.id, info)
     },
-    async loaded(info) {
+    loaded: async function (info) {
       const self = this
       const store = this.store
       if (self.prepare) {
@@ -325,7 +320,7 @@ export default {
       await self.saveFile(md5, file.extension, info, file, handler)
     },
 
-    screenshot() {
+    screenshot: function () {
       return this.$refs.three.screenshot()
     }
   }

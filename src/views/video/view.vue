@@ -243,18 +243,16 @@ export default {
           })
         })
     },
-    delete: function (id) {
-      const self = this
-      console.log(self.api + '/resources/' + id + '?type=video')
+    delete: async function (id) {
+      console.log(this.api + '/resources/' + id + '?type=video')
+      try {
+        await deleteVideo(id)
 
-      deleteVideo(id)
-        .then(response => {
-          self.$router.push({ path: '/video/index' })
-        })
-        .catch(function (error) {
-          console.log(error)
-          self.failed(JSON.parse(error.message))
-        })
+        this.$router.push({ path: '/video/index' })
+      } catch (err) {
+        console.error(err)
+        this.failed(JSON.parse(err.message))
+      }
     },
     namedWindow: function () {
       const self = this
@@ -278,17 +276,15 @@ export default {
           })
         })
     },
-    named: function (id, name) {
-      const self = this
+    named: async function (id, name) {
       const video = { name }
       console.log(video)
-      putVideo(id, video)
-        .then(response => {
-          self.data.name = response.data.name
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      try {
+        const response = await putVideo(id, video)
+        this.data.name = response.data.name
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 }

@@ -245,18 +245,16 @@ export default {
           })
         })
     },
-    delete: function (id) {
-      const self = this
-      console.log(self.api + '/resources/' + id + '?type=picture')
+    delete: async function (id) {
+      console.log(this.api + '/resources/' + id + '?type=picture')
 
-      deletePicture(id)
-        .then(response => {
-          self.$router.push({ path: '/picture/index' })
-        })
-        .catch(function (error) {
-          console.log(error)
-          self.failed(JSON.parse(error.message))
-        })
+      try {
+        await deletePicture(id)
+        this.$router.push({ path: '/picture/index' })
+      } catch (err) {
+        console.error(err)
+        this.failed(JSON.parse(err.message))
+      }
     },
     namedWindow: function () {
       const self = this
@@ -280,17 +278,16 @@ export default {
           })
         })
     },
-    named: function (id, name) {
-      const self = this
+    named: async function (id, name) {
       const picture = { name }
       console.log(picture)
-      putPicture(id, picture)
-        .then(response => {
-          self.data.name = response.data.name
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      try {
+        const response = await putPicture(id, picture)
+        this.data.name = response.data.name
+      } catch (err) {
+        console.error(err)
+      }
+      console.log(picture)
     }
   }
 }

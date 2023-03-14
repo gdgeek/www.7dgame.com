@@ -266,18 +266,16 @@ export default {
           })
         })
     },
-    delete: function (id) {
+    delete: async function (id) {
       const self = this
       console.log(self.api + '/resources/' + id + '?type=audio')
-
-      deleteAudio(id)
-        .then(response => {
-          self.$router.push({ path: '/audio/index' })
-        })
-        .catch(function (error) {
-          console.log(error)
-          self.failed(JSON.parse(error.message))
-        })
+      try {
+        await deleteAudio(id)
+        this.$router.push({ path: '/audio/index' })
+      } catch (err) {
+        console.error(err)
+        this.failed(JSON.parse(err.message))
+      }
     },
     namedWindow: function () {
       const self = this
@@ -301,17 +299,15 @@ export default {
           })
         })
     },
-    named: function (id, name) {
-      const self = this
+    named: async function (id, name) {
       const audio = { name }
       console.log(audio)
-      putAudio(id, audio)
-        .then(response => {
-          self.data.name = response.data.name
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      try {
+        const response = await putAudio(id, audio)
+        this.data.name = response.data.name
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 }
