@@ -143,7 +143,6 @@ export default {
             username: self.form.username,
             password: self.form.password
           })
-          alert(JSON.stringify(response.data.access_token))
           setToken(response.data.access_token)
           self.$router.push('/')
         } else {

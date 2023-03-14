@@ -65,9 +65,8 @@ async function fileProcess(
         console.log(handler)
         const has = await fileHas(md5, extension, handler, dir)
 
-        if (has === null) {
+        if (!has) {
           progress((Date.now() - start) / (2 * time))
-
           await sleep(500)
         } else {
           const data = await fileDownload(
@@ -82,9 +81,12 @@ async function fileProcess(
           progress(1)
           console.error(data)
           resolve(data)
-          break
+          return
         }
       } while (Date.now() < start + time)
+
+      alert('处理超时！')
+
       throw 'overtime!'
     } catch (err) {
       reject(err)
@@ -94,6 +96,7 @@ async function fileProcess(
 async function fileDownload(name, extension, progress, handler, dir = '') {
   console.error(handler)
   const filename = path.join(dir, name + extension)
+
   return new Promise(async (resolve, reject) => {
     try {
       //下载文件
@@ -115,7 +118,7 @@ async function fileDownload(name, extension, progress, handler, dir = '') {
 }
 async function fileUpload(md5, extension, file, progress, handler, dir = '') {
   const filename = path.join(dir, md5 + extension)
-  //alert(filename)
+
   return new Promise(async (resolve, reject) => {
     try {
       // 分片上传文件

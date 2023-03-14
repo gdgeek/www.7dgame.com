@@ -27,13 +27,13 @@ import path from 'path'
 import { postFile } from '@/api/v1/files'
 import { postSpace } from '@/api/v1/space'
 
-import env from '@/environment.js'
+//import env from '@/environment.js'
 //import cloud from '@/assets/js/file/tencent-cloud.js'
 
 import { mapState } from 'vuex'
 
 export default {
-  name: 'MrPPUpload',
+  name: 'SpaceUpload',
 
   props: {
     fileType: {
@@ -186,7 +186,7 @@ export default {
             handler,
             'upload'
           )
-          if (has) {
+          if (!has) {
             await store.fileUpload(
               md5,
               file.extension,
@@ -233,15 +233,22 @@ export default {
           })
 
           const handler = await store.rawHandler()
-
-          let data = await store.fileDownload(
+          const has = await store.fileHas(
             'info',
             '.json',
-            function (p) {},
             handler,
             path.join('release', md5)
           )
-          if (data !== null) {
+          let data = null
+
+          if (has) {
+            data = await store.fileDownload(
+              'info',
+              '.json',
+              function (p) {},
+              handler,
+              path.join('release', md5)
+            )
             self.progress(1, 1)
             self.progress(1, 2)
           } else {

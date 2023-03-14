@@ -139,8 +139,8 @@ async function fileProcess(
             handler,
             dir
           )
+          aler(1)
           progress(1)
-          console.error(file)
           resolve(file)
           break
         }
