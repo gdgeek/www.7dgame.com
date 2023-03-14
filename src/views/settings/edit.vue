@@ -502,7 +502,7 @@ export default {
       }
       try {
         const post = await postFile(data)
-        const put = putUserData({ avatar_id: post.data.id })
+        const put = await putUserData({ avatar_id: post.data.id })
         this.refreshUserdata(put.data)
         this.$message({
           message: '修改头像成功',
@@ -529,10 +529,8 @@ export default {
 
         const has = await store.fileHas(md5, file.extension, handler, 'backup')
 
-        if (has) {
-          self.saveAvatar(md5, file.extension, file, handler)
-        } else {
-          const r = await store.fileUpload(
+        if (!has) {
+          await store.fileUpload(
             md5,
             file.extension,
             file,
@@ -540,8 +538,8 @@ export default {
             handler,
             'backup'
           )
-          self.saveAvatar(md5, file.extension, file, handler)
         }
+        await self.saveAvatar(md5, file.extension, file, handler)
 
         this.dialogVisible = false
         this.loading = true

@@ -147,7 +147,7 @@ export default {
         }, image_type)
       })
     },
-    save(md5, extension, info, file, handler) {
+    async save(md5, extension, info, file, handler) {
       const self = this
       const data = {
         md5,
@@ -155,23 +155,17 @@ export default {
         filename: file.name,
         url: self.store.fileUrl(md5, extension, handler, 'screenshot/picture')
       }
+      try {
+        const response1 = await postFile(data)
+        const picture = { image_id: response1.data.id, info }
+        const response2 = await putPicture(self.data.id, picture)
 
-      postFile(data)
-        .then(response => {
-          const picture = { image_id: response.data.id, info }
-          putPicture(self.data.id, picture)
-            .then(response => {
-              self.data.image_id = response.data.image_id
-              self.data.info = response.data.info
-              self.expire = false
-            })
-            .catch(err => {
-              console.log(err)
-            })
-        })
-        .catch(err => {
-          console.log(err)
-        })
+        self.data.image_id = response2.data.image_id
+        self.data.info = response.data.info
+        self.expire = false
+      } catch (e) {
+        console.log(e)
+      }
     },
 
     async setup(size, image) {
@@ -202,10 +196,8 @@ export default {
         handler,
         'screenshot/picture'
       )
-      if (has) {
-        self.save(md5, file.extension, info, file, handler)
-      } else {
-        const r = await store.fileUpload(
+      if (!has) {
+        await store.fileUpload(
           md5,
           file.extension,
           file,
@@ -213,8 +205,8 @@ export default {
           handler,
           'screenshot/picture'
         )
-        self.save(md5, file.extension, info, file, handler)
       }
+      await self.save(md5, file.extension, info, file, handler)
     },
     dealWith: async function () {
       const self = this

@@ -269,10 +269,8 @@ export default {
               handler,
               'screenshot/space'
             )
-            if (has) {
-              await self.saveFile(md5, file.extension, info, file, handler)
-            } else {
-              const r = store.fileUpload(
+            if (!has) {
+              await store.fileUpload(
                 md5,
                 file.extension,
                 file,
@@ -280,8 +278,9 @@ export default {
                 handler,
                 'screenshot/space'
               )
-              await self.saveFile(md5, file.extension, info, file, handler)
             }
+
+            await self.saveFile(md5, file.extension, info, file, handler)
           }
         } catch (err) {
           reject(err)

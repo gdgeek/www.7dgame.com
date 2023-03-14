@@ -141,9 +141,7 @@ export default {
       const handler = await store.storeHandler()
       const has = await store.fileHas(md5, file.extension, handler, self.dir)
 
-      if (has) {
-        await self.saveFile(md5, file.extension, file, handler)
-      } else {
+      if (!has) {
         await store.fileUpload(
           md5,
           file.extension,
@@ -154,8 +152,9 @@ export default {
           handler,
           self.dir
         )
-        await self.saveFile(md5, file.extension, file, handler)
       }
+
+      await self.saveFile(md5, file.extension, file, handler)
     }
   }
 }

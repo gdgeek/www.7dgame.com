@@ -163,7 +163,7 @@ export default {
       this.isPlay = false
       console.log('结束播放', this.isPlay)
     },
-    save(md5, extension, info, file, handler) {
+    async save(md5, extension, info, file, handler) {
       const self = this
       const data = {
         md5,
@@ -171,22 +171,18 @@ export default {
         filename: file.name,
         url: self.store.fileUrl(md5, extension, handler, 'screenshot/audio')
       }
-      postFile(data)
-        .then(response => {
-          const audio = { image_id: response.data.id, info }
-          putAudio(self.data.id, audio)
-            .then(response => {
-              self.data.image_id = response.data.image_id
-              self.data.info = response.data.info
-              self.expire = false
-            })
-            .catch(err => {
-              console.log(err)
-            })
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      try {
+        const response1 = await postFile(data)
+
+        const audio = { image_id: response1.data.id, info }
+        const response2 = await putAudio(self.data.id, audio)
+
+        self.data.image_id = response2.data.image_id
+        self.data.info = response2.data.info
+        self.expire = false
+      } catch (e) {
+        console.log(e)
+      }
     },
     dealWith: function () {
       const self = this
@@ -234,10 +230,8 @@ export default {
           handler,
           'screenshot/audio'
         )
-        if (has) {
-          self.save(md5, file.extension, info, file, handler)
-        } else {
-          const r = await store.fileUpload(
+        if (!has) {
+          await store.fileUpload(
             md5,
             file.extension,
             file,
@@ -245,27 +239,10 @@ export default {
             handler,
             'screenshot/audio'
           )
-          self.save(md5, file.extension, info, file, handler)
         }
+        await self.save(md5, file.extension, info, file, handler)
       }
     },
-    // init: function () {
-    //   const audio = document.getElementById('audio')
-    //   const source = document.getElementById('src')
-
-    //   // 获取新的音频
-    //   const new_audio = document.getElementById('new_audio')
-    //   new_audio.src = source.src + '?t=' + new Date()
-    //   new_audio.crossOrigin = 'anonymous'
-    //   new_audio.currentTime = 0.000001
-    //   audio.addEventListener(
-    //     'timeupdate',
-    //     function () {
-    //       new_audio.currentTime = audio.currentTime
-    //     },
-    //     false
-    //   )
-    // },
 
     deleteWindow: function () {
       const self = this

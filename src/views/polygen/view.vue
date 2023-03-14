@@ -279,19 +279,16 @@ export default {
         self.expire = false
       })
     },
-    saveFile(md5, extension, info, file, handler) {
-      const self = this
+    async saveFile(md5, extension, info, file, handler) {
       const data = {
         md5,
         key: md5 + extension,
         filename: file.name,
-        url: self.store.fileUrl(md5, extension, handler, 'screenshot/polygen')
+        url: this.store.fileUrl(md5, extension, handler, 'screenshot/polygen')
       }
 
-      postFile(data).then(response => {
-        // self.expire = false
-        self.updatePolygen(response.data.id, info)
-      })
+      const response = await postFile(data)
+      this.updatePolygen(response.data.id, info)
     },
     async loaded(info) {
       const self = this
@@ -314,10 +311,8 @@ export default {
         handler,
         'screenshot/polygen'
       )
-      if (has) {
-        self.saveFile(md5, file.extension, info, file, handler)
-      } else {
-        const r = store.fileUpload(
+      if (!has) {
+        await store.fileUpload(
           md5,
           file.extension,
           file,
@@ -325,8 +320,9 @@ export default {
           handler,
           'screenshot/polygen'
         )
-        self.saveFile(md5, file.extension, info, file, handler)
       }
+
+      await self.saveFile(md5, file.extension, info, file, handler)
     },
 
     screenshot() {

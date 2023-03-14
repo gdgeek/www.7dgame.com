@@ -237,10 +237,8 @@ export default {
 
         const handler = await store.storeHandler()
         const has = await store.fileHas(md5, file.extension, handler, 'backup')
-        if (has) {
-          self.saveFile(md5, file.extension, file, handler)
-        } else {
-          const r = await store.fileUpload(
+        if (!has) {
+          await store.fileUpload(
             md5,
             file.extension,
             file,
@@ -248,8 +246,9 @@ export default {
             handler,
             'backup'
           )
-          self.saveFile(md5, file.extension, file, handler)
         }
+
+        await self.saveFile(md5, file.extension, file, handler)
 
         this.dialogVisible = false
         this.loading = true
