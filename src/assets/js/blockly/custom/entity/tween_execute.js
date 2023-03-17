@@ -65,9 +65,11 @@ const block = {
         'transform',
         Blockly.Lua.ORDER_ATOMIC
       )
+
+      //var code = 'CS.MLua.Point.Unexploded(' + value_entity + ')\n'
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MLua.Helper.Tween(' +
+        'CS.MLua.Point.Tween(' +
         value_entity +
         ', ' +
         number_time +

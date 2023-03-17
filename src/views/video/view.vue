@@ -210,15 +210,14 @@ export default {
       )
     },
     dealWith: function () {
-      const self = this
-      if (!self.prepare) {
+      if (!this.prepare) {
         const video = document.getElementById('video')
         // 获取新的视频
         const new_video = document.getElementById('new_video')
         const size = { x: video.videoWidth, y: video.videoHeight }
-        self.setup(new_video, size)
+        this.setup(new_video, size)
       } else {
-        self.expire = false
+        this.expire = false
       }
     },
     deleteWindow: function () {
