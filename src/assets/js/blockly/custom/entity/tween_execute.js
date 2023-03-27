@@ -11,7 +11,7 @@ const block = {
   getBlockJson({}) {
     const json = {
       type: data.name,
-      message0: '实体 %1 经过 %2 移动到 %3 %4',
+      message0: '实体 %1 经过 %2 秒移动到 %3 %4 同步 %5 独占 %6',
       args0: [
         {
           type: 'input_value',
@@ -32,6 +32,16 @@ const block = {
           type: 'input_value',
           name: 'transform',
           check: 'Transform'
+        },
+        {
+          type: 'field_checkbox',
+          name: 'sync',
+          checked: true
+        },
+        {
+          type: 'field_checkbox',
+          name: 'occupy',
+          checked: true
         }
       ],
       inputsInline: true,
@@ -54,29 +64,28 @@ const block = {
   },
   getLua({}) {
     const lua = function (block) {
-      var value_entity = Blockly.Lua.valueToCode(
+      var entity = Blockly.Lua.valueToCode(
         block,
         'entity',
         Blockly.Lua.ORDER_ATOMIC
       )
-      var number_time = block.getFieldValue('time')
-      var value_transform = Blockly.Lua.valueToCode(
+      var time = block.getFieldValue('time')
+      var transform = Blockly.Lua.valueToCode(
         block,
         'transform',
         Blockly.Lua.ORDER_ATOMIC
       )
 
-      //var code = 'CS.MLua.Point.Unexploded(' + value_entity + ')\n'
-      // TODO: Assemble Lua into code variable.
-      var code =
-        'CS.MLua.Point.Tween(' +
-        value_entity +
-        ', ' +
-        number_time +
-        ', ' +
-        value_transform +
-        ')\n'
-      return code
+      var sync = block.getFieldValue('sync') === 'TRUE'
+      var occupy = block.getFieldValue('sync') === 'TRUE'
+
+      var parameter =
+        entity + ', ' + time + ', ' + transform + ', ' + JSON.stringify(occupy)
+      if (sync) {
+        return 'point.sync_tween(' + parameter + ')\n'
+      } else {
+        return 'point.tween(' + parameter + ')\n'
+      }
     }
     return lua
   },

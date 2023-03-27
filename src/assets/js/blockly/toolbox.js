@@ -12,6 +12,7 @@ import { PolygenCategory } from '@/assets/js/blockly/custom/polygen'
 import { DataCategory } from '@/assets/js/blockly/custom/data'
 import { TriggerCategory } from '@/assets/js/blockly/custom/trigger'
 import { ExecuteCategory } from '@/assets/js/blockly/custom/execute'
+import { HelperCategory } from '@/assets/js/blockly/custom/helper/index'
 import { PictureCategory } from '@/assets/js/blockly/custom/picture'
 import { VideoCategory } from '@/assets/js/blockly/custom/video'
 import { SoundCategory } from '@/assets/js/blockly/custom/sound'
@@ -54,6 +55,7 @@ export default {
     TextCategory,
     VideoCategory,
     SoundCategory,
+    HelperCategory,
     sep,
 
     Variable,

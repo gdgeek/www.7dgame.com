@@ -57,8 +57,7 @@ const block = {
         Blockly.Lua.ORDER_ATOMIC
       )
       // TODO: Assemble Lua into code variable.
-      var code =
-        'CS.MLua.Point.SetVisual(' + value_entity + ', ' + value_bool + ')\n'
+      var code = 'point.set_visual(' + value_entity + ', ' + value_bool + ')\n'
       return code
     }
     return lua

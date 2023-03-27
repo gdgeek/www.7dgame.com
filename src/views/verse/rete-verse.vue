@@ -23,10 +23,6 @@
             【宇宙】{{ verse.name }}
 
             <el-button-group style="float: right">
-              <el-button type="primary" size="mini" @click="arrange()">
-                <font-awesome-icon icon="project-diagram" />
-                整理
-              </el-button>
               <el-button
                 v-if="saveable"
                 type="primary"
@@ -35,6 +31,10 @@
               >
                 <font-awesome-icon icon="save" />
                 保存
+              </el-button>
+              <el-button v-else type="primary" size="mini" @click="arrange()">
+                <font-awesome-icon icon="project-diagram" />
+                整理
               </el-button>
             </el-button-group>
           </div>
@@ -351,25 +351,22 @@ export default {
     async save() {
       const self = this
       const verse_id = this.id
-      return new Promise(async function (resolve, reject) {
-        if (self.saveable) {
-          const list = await editor.saveEvent()
 
-          const linked = await self.getVerseEvent(verse_id)
-          await putVerseEvent(linked.id, { data: JSON.stringify(list) })
-          await editor.removeLinked()
-          const data = await editor.save()
-          await putVerse(verse_id, {
-            data
-          })
-          await self.addLinked()
-        }
-        resolve()
-      })
+      if (self.saveable) {
+        const list = await editor.saveEvent()
+
+        const linked = await self.getVerseEvent(verse_id)
+        await putVerseEvent(linked.id, { data: JSON.stringify(list) })
+        await editor.removeLinked()
+        const data = await editor.save()
+        await putVerse(verse_id, {
+          data
+        })
+        editor.arrange()
+        await self.addLinked()
+      }
     },
-    /*async create(data) {
-      return await editor.create(data)
-    },*/
+
     async arrange() {
       await editor.removeLinked()
       editor.arrange()

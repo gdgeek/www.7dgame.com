@@ -16,16 +16,6 @@
             </router-link>
             / 【元】{{ title }}
             <el-button-group style="float: right">
-              <el-button type="primary" size="mini" @click="arrange()">
-                <font-awesome-icon icon="project-diagram" />
-                整理
-              </el-button>
-              <!--
-              <el-button type="primary" size="mini" @click="editor()">
-                <font-awesome-icon icon="edit" />
-                编辑器（测试）
-              </el-button>
-              -->
               <el-button
                 v-if="saveable"
                 type="primary"
@@ -34,6 +24,10 @@
               >
                 <font-awesome-icon icon="save" />
                 保存
+              </el-button>
+              <el-button v-else type="primary" size="mini" @click="arrange()">
+                <font-awesome-icon icon="project-diagram" />
+                整理
               </el-button>
             </el-button-group>
           </div>
@@ -186,10 +180,11 @@ export default {
         await putMeta(this.id, {
           data
         })
+        editor.arrange()
       }
     },
     async arrange() {
-      await editor.arrange()
+      editor.arrange()
     }
   }
 }

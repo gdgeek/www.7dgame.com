@@ -48,7 +48,7 @@ const block = {
 
       // TODO: Assemble Lua into code variable.
       var code =
-        'CS.MLua.Helper.OutputEvent("' + index + '", "' + output_event + '")\n'
+        'helper.output_event("' + index + '", "' + output_event + '")\n'
 
       return code
     }

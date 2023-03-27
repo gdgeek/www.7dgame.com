@@ -47,7 +47,6 @@ const save = async function () {
   editor_.trigger('process', { status: 'save' })
 }*/
 const arrange = function () {
-  console.log(editor_.nodes.length)
   if (editor_.nodes.length > 0) {
     editor_.trigger('arrange', editor_.nodes)
   }

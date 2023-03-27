@@ -1,5 +1,5 @@
 function handler(index, uuid) {
-  return "CS.MLua.Handler('" + index + "', '" + uuid + "')"
+  return "helper.handler('" + index + "', '" + uuid + "')"
 }
 
 module.exports = {
