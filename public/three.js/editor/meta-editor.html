@@ -238,9 +238,6 @@
 
 			const loader = new MetaLoader(editor)
 			window.addEventListener('message', e => {
-				//	const urlParams = new URLSearchParams(window.location.search)
-				//	const id = urlParams.get('id')
-
 				if (e.data.verify === 'mrpp.com') {
 					switch (e.data.action) {
 						case 'load':

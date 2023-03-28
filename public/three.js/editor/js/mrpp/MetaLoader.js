@@ -43,7 +43,6 @@ function MetaLoader(editor) {
 				self.saveEntity(self.meta.children.entities[i])
 			}
 		}
-		//alert(JSON.stringify(self.meta))
 
 		window.URL = window.URL || window.webkitURL
 		window.BlobBuilder =

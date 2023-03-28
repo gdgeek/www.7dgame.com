@@ -31,7 +31,7 @@ export default {
 
     return {
       isInit: false,
-      // meta: null,
+      meta: null,
       src
     }
   },
@@ -43,15 +43,7 @@ export default {
     title() {
       return this.$route.query.title
     },
-    /*url() {
-      const uri =
-        env.api +
-        path.join(
-          '/v1/verses/',
-          this.id + qs.stringify({ expand: 'datas,resources,space' }, true)
-        )
-      return uri
-    },*/
+
     saveable() {
       if (this.meta === null) {
         return false
@@ -63,6 +55,7 @@ export default {
     this.setBreadcrumbs({ list: [] })
   },
   created() {
+    window.addEventListener('message', this.handleMessage)
     this.setBreadcrumbs({
       list: [
         {
@@ -81,9 +74,12 @@ export default {
       ]
     })
   },
-  mounted() {
-    const self = this
-    window.addEventListener('message', async e => {
+  beforeDestroy() {
+    window.removeEventListener('message', this.handleMessage)
+  },
+  methods: {
+    async handleMessage(e) {
+      const self = this
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
           case 'save-meta':
@@ -108,9 +104,7 @@ export default {
             break
         }
       }
-    })
-  },
-  methods: {
+    },
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
     breadcrumb(meta) {
       this.setBreadcrumbs({
@@ -146,7 +140,6 @@ export default {
         ]
       })
     },
-
     async saveMeta(meta) {
       if (!this.saveable) {
         this.$message({

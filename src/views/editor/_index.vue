@@ -92,7 +92,7 @@ export default {
       await putVerse(this.id, { data: verse }).then(response => {
         this.$message({
           type: 'success',
-          message: '保存成功!'
+          message: '保存成功!!'
         })
       })
       const r = await getVerse(this.id)
