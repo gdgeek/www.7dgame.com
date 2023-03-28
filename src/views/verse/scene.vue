@@ -47,8 +47,6 @@ export default {
       if (this.verse === null) {
         return false
       }
-      alert('==')
-      console.error(this.verse)
       return this.$can('editable', new AbilityEditable(this.verse.editable))
     }
   },
@@ -103,7 +101,6 @@ export default {
               const r = await getVerse(this.id)
               self.verse = r.data
 
-              alert(self.verse.editable)
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',
