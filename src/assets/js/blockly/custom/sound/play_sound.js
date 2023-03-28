@@ -60,9 +60,9 @@ const block = {
       var parameter = sound + ', ' + JSON.stringify(occupy)
 
       if (sync) {
-        return 'sound.sync_play(' + parameter + ')\n'
+        return '_G.sound.sync_play(' + parameter + ')\n'
       } else {
-        return 'sound.play(' + parameter + ')\n'
+        return '_G.sound.play(' + parameter + ')\n'
       }
     }
     return lua

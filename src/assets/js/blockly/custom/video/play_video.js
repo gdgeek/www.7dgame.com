@@ -59,9 +59,9 @@ const block = {
       var parameter = video + ', ' + JSON.stringify(occupy)
 
       if (sync) {
-        return 'video.sync_play(' + parameter + ')\n'
+        return '_G.video.sync_play(' + parameter + ')\n'
       } else {
-        return 'video.play(' + parameter + ')\n'
+        return '_G.video.play(' + parameter + ')\n'
       }
     }
     return lua

@@ -46,12 +46,7 @@ const block = {
       var value = block.getFieldValue('value')
       var text = Blockly.Lua.valueToCode(block, 'text', Blockly.Lua.ORDER_NONE)
       // TODO: Assemble Lua into code variable.
-      var code =
-        'CS.MLua.TextPoint.SetText(' +
-        text +
-        ',' +
-        JSON.stringify(value) +
-        ')\n'
+      var code = 'text.set_text(' + text + ',' + JSON.stringify(value) + ')\n'
       return code
     }
     return lua

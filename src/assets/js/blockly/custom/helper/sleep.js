@@ -43,7 +43,7 @@ const block = {
   getLua({}) {
     const lua = function (block) {
       var time = block.getFieldValue('time')
-      return 'helper.sync_sleep(' + time + ')\n'
+      return '_G.helper.sync_sleep(' + time + ')\n'
     }
     return lua
   },

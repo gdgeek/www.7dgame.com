@@ -82,9 +82,9 @@ const block = {
       var parameter =
         entity + ', ' + time + ', ' + transform + ', ' + JSON.stringify(occupy)
       if (sync) {
-        return 'point.sync_tween(' + parameter + ')\n'
+        return '_G.point.sync_tween(' + parameter + ')\n'
       } else {
-        return 'point.tween(' + parameter + ')\n'
+        return '_G.point.tween(' + parameter + ')\n'
       }
     }
     return lua

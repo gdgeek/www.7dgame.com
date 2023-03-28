@@ -48,7 +48,7 @@ const block = {
 
       // TODO: Assemble Lua into code variable.
       var code =
-        'helper.output_event("' + index + '", "' + output_event + '")\n'
+        '_G.helper.output_event("' + index + '", "' + output_event + '")\n'
 
       return code
     }

@@ -51,7 +51,7 @@ const block = {
       )
       // TODO: Assemble Lua into code variable.
       var code =
-        'polygen.play_animation(' +
+        '_G.polygen.play_animation(' +
         value_polygen +
         ',' +
         JSON.stringify(text_animation) +
