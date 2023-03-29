@@ -9,6 +9,7 @@
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
     "build:4mr.cn": "vue-cli-service build --mode 4mr.cn",
+    "build:7dgame.com": "vue-cli-service build --mode 7dgame.com",
     "build:local": "vue-cli-service build --mode local",
     "build:mrpp.com": "vue-cli-service build --mode mrpp.com",
     "dev": "vue-cli-service serve",

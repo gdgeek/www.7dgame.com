@@ -19,7 +19,10 @@ function mrpp() {
 }
 
 function mrcn() {
-  return '4mr.cn' === process.env.VUE_APP_BASE_MODE
+  return (
+    '4mr.cn' === process.env.VUE_APP_BASE_MODE ||
+    '7dgame.com' === process.env.VUE_APP_BASE_MODE
+  )
 }
 
 function local() {
@@ -28,7 +31,8 @@ function local() {
 function canManager() {
   return (
     'local' === process.env.VUE_APP_BASE_MODE ||
-    '4mr.cn' === process.env.VUE_APP_BASE_MODE
+    '4mr.cn' === process.env.VUE_APP_BASE_MODE ||
+    '7dgame.com' === process.env.VUE_APP_BASE_MODE
   )
 }
 function getIP() {
@@ -43,6 +47,8 @@ function subtitle() {
   switch (process.env.VUE_APP_BASE_MODE) {
     case '4mr.cn':
       return '内部版本'
+    case '7dgame.com':
+      return '元气弹版本'
     case 'local':
       return '私有部署版本'
     case 'local':
