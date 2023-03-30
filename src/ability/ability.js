@@ -6,13 +6,7 @@ export class AbilityRouter {
     this.path = path
   }
 }
-/*
-export class AbilityShare {
-  constructor(share) {
-    this.share = share
-  }
-}
-*/
+
 export class AbilityEditable {
   constructor(editable) {
     this.editable = editable
@@ -26,6 +20,7 @@ export class AbilityViewable {
 export class AbilityWorks {
   constructor(id) {
     this.id = id
+    //
   }
 }
 
