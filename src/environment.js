@@ -43,6 +43,7 @@ function getIP() {
   }
   return null
 }
+alert(process.env.VUE_APP_BASE_API)
 function subtitle() {
   switch (process.env.VUE_APP_BASE_MODE) {
     case '4mr.cn':
