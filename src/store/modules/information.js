@@ -11,7 +11,7 @@ const state = {
     title: '元宇宙实景编程平台',
     description: env.subtitle(),
     companies: companies(),
-    version: '20230202.1',
+    version: '20230331.1',
     beian: '沪ICP备15039333号',
     logo: '/media/image/logo.gif'
   }
