@@ -44,6 +44,28 @@ export const constantRoutes = [
 
     children: [
       {
+        path: 'knight',
+        name: 'Knight',
+        meta: { title: '骑士' },
+        redirect: '/knight/index',
+        component: Empty,
+        children: [
+          {
+            path: 'index',
+            name: 'KnightIndex',
+            meta: { title: '骑士列表' },
+            component: () => import('@/views/knight/index')
+          },
+          {
+            path: 'edit',
+            name: 'KnightEdit',
+            meta: { title: '骑士编辑' },
+            component: () => import('@/views/knight/edit')
+          }
+        ]
+      },
+
+      {
         meta: { title: '个人中心' },
         path: 'home',
         name: 'Home',
@@ -155,13 +177,7 @@ export const constantRoutes = [
             name: 'PolygenUpload',
             meta: { title: '模型上传' },
             component: () => import('@/views/polygen/upload')
-          } /*
-          {
-            path: 'upload-advanced',
-            name: 'PolygenUploadAdvanced',
-            meta: { title: '模型上传(高级)' },
-            component: () => import('@/views/polygen/upload-advanced')
-          },*/,
+          },
           {
             path: 'view',
             name: 'PolygenView',
@@ -278,7 +294,6 @@ export const constantRoutes = [
           }
         ]
       },
-
       {
         path: 'meta-verse',
         name: 'MetaVerse',

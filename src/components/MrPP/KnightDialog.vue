@@ -24,7 +24,7 @@
           @sort="sort"
         >
           <el-tag>
-            <b>选择资源</b>
+            <b>选择资源{{ ban }}</b>
           </el-tag>
         </mr-p-p-header>
         <el-divider content-position="left">
@@ -196,6 +196,12 @@ export default {
       dialogVisible: false
     }
   },
+  props: {
+    ban: {
+      type: Array,
+      default: []
+    }
+  },
   computed: {
     active() {
       if (this.activeName === 'binding') {
@@ -270,7 +276,7 @@ export default {
         this.binding.sorted,
         this.binding.searched,
         this.binding.pagination.current,
-        'image,author,verseKnights'
+        'image, author,verseKnights'
       )
       this.binding.items = response.data
     },
@@ -290,12 +296,17 @@ export default {
       this.refresh()
     },
     doSelect(data) {
-      this.$emit('selected', data)
-      this.dialogVisible = false
+      if (data !== null && this.ban.includes(data.id)) {
+        alert('本资源已经到绑定最大数目')
+      } else {
+        this.$emit('selected', data)
+        this.dialogVisible = false
+      }
     },
     doEmpty() {
       this.$emit('selected', null)
       this.value = null
+      this.dialogVisible = false
     },
     async doUnbind(data) {
       try {

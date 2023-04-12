@@ -62,7 +62,6 @@ import VerseList from '@/components/MrPP/MrPPVerseList'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 import Create from '@/components/MrPP/MrPPVerseWindow/Create.vue'
 
-import { mapState } from 'vuex'
 export default {
   name: 'VerseEditor',
   components: {

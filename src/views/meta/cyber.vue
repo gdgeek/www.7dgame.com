@@ -97,7 +97,6 @@ export default {
           path: '/meta-verse/index',
           meta: { title: '元&宇宙' }
         },
-
         {
           path: '.',
           meta: { title: '赛博编辑' }

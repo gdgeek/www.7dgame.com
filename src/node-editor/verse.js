@@ -256,6 +256,26 @@ const addEvent = async function (uuid, event) {
     editor_.selected.clear()
   }
 }
+const banKnight = function () {
+  const nodes = editor_.nodes.filter(n => {
+    if (n.name.toLowerCase() === 'knight') {
+      return true
+    }
+    return false
+  })
+  var ret = []
+  nodes.forEach(n => {
+    const item = n.controls.get('knight').vueContext.item
+    if (item !== null) {
+      const id = item.id
+      if (!ret.includes(id)) {
+        ret.push(id)
+      }
+    }
+  })
+
+  return ret
+}
 const ban = function () {
   editor_.use(BanPlugin)
 }
@@ -309,6 +329,7 @@ export default {
   ban,
   initVerse,
   setup,
+  banKnight,
   // create,
   arrange,
   save,

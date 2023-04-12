@@ -60,6 +60,7 @@
     "vue-demi": "^0.12.1",
     "vue-hljs": "^2.0.0",
     "vue-iframes": "^0.0.19",
+    "vue-json-ui-editor": "^1.0.0",
     "vue-router": "3.0.6",
     "vue-video-player": "^5.0.2",
     "vue-waterfall": "^1.0.6",

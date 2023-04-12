@@ -14,21 +14,18 @@ export function postVerseKnight(data) {
 
 export function getVerseKnights(
   verse_id,
-  type,
   sort = '-created_at',
   search = '',
   page = 0,
   expand = ''
 ) {
   let query = []
-
-  query['type'] = type
+  query['expand'] = expand
   query['verse_id'] = verse_id
   query['sort'] = sort
-  query['expand'] = expand
 
   if (search !== '') {
-    query['KnightSearch[name]'] = search
+    query['KnightSearch[title]'] = search
   }
   if (page > 1) {
     query['page'] = page

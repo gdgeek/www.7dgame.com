@@ -3,9 +3,10 @@
     <knight-dialog
       @selected="knightSelect"
       @cancel="clearKnight()"
+      :ban="banKnight"
       ref="knightDialog"
     />
-
+    <knight-setup-dialog ref="knightSetup" />
     <space-dialog
       @selected="spaceSelect"
       @cancel="clearSpace()"
@@ -60,6 +61,8 @@ var randomWords = require('random-words')
 import { v4 as uuidv4 } from 'uuid'
 import SpaceDialog from '@/components/MrPP/SpaceDialog.vue'
 import KnightDialog from '@/components/MrPP/KnightDialog.vue'
+import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
+
 import { AbilityEditable } from '@/ability/ability'
 import {
   getVerseEventByVerseId,
@@ -71,13 +74,14 @@ import EventDialog from '@/components/Rete/EventDialog.vue'
 export default {
   components: {
     EventDialog,
-
+    KnightSetupDialog,
     SpaceDialog,
     KnightDialog
   },
 
   data() {
     return {
+      banKnight: [],
       loading: false,
       knight: { callback: null },
       space: { callback: null },
@@ -259,8 +263,15 @@ export default {
         this.space.callback(data)
       }
     },
+    setupKnight(data) {
+      if (this.saveable) {
+        this.$refs.knightSetup.open(data)
+      }
+    },
     openKnight({ value, callback }) {
       if (this.saveable) {
+        this.banKnight = editor.banKnight()
+
         this.knight.callback = callback
         if (this.knight.callback) {
           this.$refs.knightDialog.open(value, this.id)
