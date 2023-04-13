@@ -25,14 +25,28 @@
           </div>
         </el-card>
         <br />
-        <JsonEditorVue
-          v-model="value"
-          v-bind="{
-            /* 局部 props & attrs */
-          }"
-        />
+        <el-form ref="item" v-if="item" :model="item" label-width="80px">
+          <el-form-item label="骑士名称">
+            <el-input v-model="item.title"></el-input>
+          </el-form-item>
+          <el-form-item label="图片">
+            <el-input v-model="item.image_id"></el-input>
+          </el-form-item>
+          <el-form-item label="模型">
+            <el-input v-model="item.mesh_id"></el-input>
+          </el-form-item>
+
+          <el-form-item label="数据">
+            <el-input type="textarea" v-model="item.data"></el-input>
+          </el-form-item>
+          <el-form-item label="信息">
+            <el-input type="textarea" v-model="item.info"></el-input>
+          </el-form-item>
+        </el-form>
+       
+        </el-form>
         <el-card v-if="item !== null" class="box-card">
-          <el-button style="width: 100%" type="primary" size="mini">
+          <el-button style="width: 100%" @click="onSubmit" type="primary" size="mini">
             保存
           </el-button>
           <br />
@@ -58,29 +72,40 @@
 </template>
 
 <script>
-import { getKnight } from '@/api/v1/knight'
-import JsonEditorVue from 'json-editor-vue'
+import { getKnight, putKnight } from '@/api/v1/knight'
 export default {
   data() {
     return {
-      item: null
+      item: null,
+     
     }
   },
-  components: {
-    JsonEditorVue
-  },
+  components: {},
   computed: {
     id() {
       return parseInt(this.$route.query.id)
     }
   },
-  async mounted() {
-    const response = await getKnight(this.id, { expand: 'image,author' })
-
-    this.item = response.data
-    console.log(this.item)
-    // alert(this.item)
+   mounted() {
+   
+   this.refresh()
   },
-  methods: {}
+  methods: {
+    async refresh() { 
+      const response = await getKnight(this.id, { expand: 'image,author' })
+
+      this.item = response.data
+    },
+    onSubmit() {
+      const self = this
+      putKnight(self.id, self.item).then(response => {
+        self.$message({
+          message: '保存成功',
+          type: 'success'
+        })
+        this.refresh()
+      })
+    }
+  }
 }
 </script>

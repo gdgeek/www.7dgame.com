@@ -92,7 +92,6 @@ export default {
               const r = await getMeta(this.id)
               self.meta = r.data
               self.breadcrumb(self.meta)
-              // alert(JSON.stringify(self.meta))
               const data = {
                 verify: 'mrpp.com',
                 action: 'load',

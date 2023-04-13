@@ -16,18 +16,7 @@ const state = {
         }
       ]
     },
-    {
-      label: '骑士',
-      url: '/knight/',
-      icon: 'star',
-      items: [
-        {
-          label: '列表',
-          url: '/knight/index',
-          icon: 'list'
-        }
-      ]
-    },
+
     {
       label: '元&宇宙',
       url: '/verse/',
@@ -46,6 +35,18 @@ const state = {
         {
           label: '朋友分享',
           url: '/meta-verse/share',
+          icon: 'list'
+        }
+      ]
+    },
+    {
+      label: '骑士',
+      url: '/knight/',
+      icon: 'star',
+      items: [
+        {
+          label: '列表',
+          url: '/knight/index',
           icon: 'list'
         }
       ]

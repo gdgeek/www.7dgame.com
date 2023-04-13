@@ -70,7 +70,6 @@ export default {
     const self = this
 
     this.$on('setId', async function (id) {
-      alert(id)
       self.id = id
       let r = await getMetaKnight(id)
       const value = r.data.knight_id

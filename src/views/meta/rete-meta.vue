@@ -85,7 +85,6 @@ export default {
     this.meta = response.data
 
     this.breadcrumb(this.meta)
-    //alert(JSON.stringify(this.meta))
     if (this.meta.data !== null) {
       await editor.setup(JSON.parse(this.meta.data))
     } else {
