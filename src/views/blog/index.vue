@@ -1,14 +1,13 @@
 <template>
   <div class="background-screen-border">
     <el-card class="box-card">
+      <book
+        document_path="/blog/document"
+        :items="book"
+        category_path="/blog/category"
+      />
       <!-- -->
     </el-card>
-
-    <book
-      document_path="/blog/document"
-      :items="book"
-      category_path="/blog/category"
-    />
   </div>
 </template>
 

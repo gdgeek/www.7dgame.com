@@ -47,6 +47,10 @@ function getIP() {
   }
   return null
 }
+
+function title() {
+  return '元宇宙实景编程平台！'
+}
 function subtitle() {
   switch (process.env.VUE_APP_BASE_MODE) {
     case '4mr.cn':
@@ -75,6 +79,7 @@ module.exports = {
   canBlog,
   canSetup,
   subtitle,
+  title,
   canManager,
   useCloud,
   canDocument,
