@@ -102,6 +102,7 @@ const SCHEMA = {
         title: 'Please enter your full name'
       }
     },
+
     sub: {
       title: 'SubTitle',
       description: 'SubDescription',
@@ -149,7 +150,17 @@ const SCHEMA = {
         title: 'Please select your list subscription'
       }
     },
-    lists2: {
+    testa: {
+      type: 'array',
+      title: 'List222aa2',
+      items: {
+        type: 'string',
+        title: 'Sub2Title'
+      },
+      minItems: 1,
+      maxItems: 10
+    },
+    listssss2: {
       type: 'array',
       title: 'List2',
       anyOf: [

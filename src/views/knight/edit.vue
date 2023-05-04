@@ -43,10 +43,14 @@
             <el-input type="textarea" v-model="item.info"></el-input>
           </el-form-item>
         </el-form>
-       
-        </el-form>
+
         <el-card v-if="item !== null" class="box-card">
-          <el-button style="width: 100%" @click="onSubmit" type="primary" size="mini">
+          <el-button
+            style="width: 100%"
+            @click="onSubmit"
+            type="primary"
+            size="mini"
+          >
             保存
           </el-button>
           <br />
@@ -76,8 +80,7 @@ import { getKnight, putKnight } from '@/api/v1/knight'
 export default {
   data() {
     return {
-      item: null,
-     
+      item: null
     }
   },
   components: {},
@@ -86,12 +89,11 @@ export default {
       return parseInt(this.$route.query.id)
     }
   },
-   mounted() {
-   
-   this.refresh()
+  mounted() {
+    this.refresh()
   },
   methods: {
-    async refresh() { 
+    async refresh() {
       const response = await getKnight(this.id, { expand: 'image,author' })
 
       this.item = response.data

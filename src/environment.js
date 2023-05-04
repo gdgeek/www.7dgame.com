@@ -11,6 +11,10 @@ function canDocument() {
 function canWeb() {
   return 'mrpp.com' === process.env.VUE_APP_BASE_MODE
 }
+
+function canBlog() {
+  return '7dgame.com' === process.env.VUE_APP_BASE_MODE
+}
 function canSetup() {
   return 'local' === process.env.VUE_APP_BASE_MODE
 }
@@ -68,6 +72,7 @@ module.exports = {
   version: 3,
   canRegister,
   canWeb,
+  canBlog,
   canSetup,
   subtitle,
   canManager,

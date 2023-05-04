@@ -44,6 +44,8 @@ router.beforeEach(async (to, from, next) => {
   } else {
     if (env.canWeb()) {
       next(`/web`)
+    } else if (env.canBlog()) {
+      next(`/blog`)
     } else {
       next(`/site`)
     }

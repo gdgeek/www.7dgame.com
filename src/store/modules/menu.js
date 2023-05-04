@@ -163,20 +163,7 @@ const state = {
         }
       ]
     },
-    /*
-    {
-      label: '充值',
-      url: '/trades/',
-      icon: 'dollar-sign',
-      hidden: environment.local,
-      items: [
-        {
-          label: '付款',
-          url: '/trades/pay',
-          icon: 'dollar-sign'
-        }
-      ]
-    },*/
+
     {
       label: '交流',
       url: '/community/index',

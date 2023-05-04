@@ -53,6 +53,9 @@ export function UpdateAbility($ability, roles, userId) {
   if (env.canWeb()) {
     router.push(/^\/web[\/]/)
   }
+  if (env.canBlog()) {
+    router.push(/^\/blog[\/]/)
+  }
 
   if (env.canSetup()) {
     router.push(/^\/setup[\/]/)

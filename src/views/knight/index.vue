@@ -122,8 +122,8 @@ export default {
             if (!value) {
               return '骑士名称不能为空'
             }
-            if (value.length < 3) {
-              return '骑士名称不能小于3个字符'
+            if (value.length < 2) {
+              return '骑士名称不能小于2个字符'
             }
             if (value.length > 20) {
               return '骑士名称不能大于20个字符'

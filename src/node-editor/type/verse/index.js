@@ -17,6 +17,11 @@ var VerseType = {
     {
       type: 'space',
       key: 'space'
+    },
+    {
+      type: 'json',
+      key: 'process',
+      schema: {}
     }
   ],
 

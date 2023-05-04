@@ -488,7 +488,33 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: '/blog',
+    component: Web,
+    hidden: true,
+    redirect: '/blog/index',
+    children: [
+      {
+        meta: { title: '开发博客' },
+        path: 'index',
+        name: 'BlogIndex',
+        component: () => import('@/views/blog/index')
+        // component: () => import('@/views/portal/index')
+      },
+      {
+        meta: { title: '开发博客文章' },
+        path: 'document',
+        name: 'BlogDocument',
+        component: () => import('@/views/blog/document')
+      },
+      {
+        meta: { title: '开发博客分类' },
+        path: 'category',
+        name: 'BlogCategory',
+        component: () => import('@/views/blog/category')
+      }
+    ]
+  },
   {
     path: '/web',
     component: Web,
