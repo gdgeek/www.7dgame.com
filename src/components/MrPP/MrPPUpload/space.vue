@@ -125,51 +125,66 @@ export default {
       })
     },
     filterInfo(data) {
-      // data.authoring_glb.url = env.replaceIP(data.authoring_glb.url)
-      // data.occlusion_glb.url = env.replaceIP(data.occlusion_glb.url)
-      //data.dat.url = env.replaceIP(data.dat.url)
-      // /data.navmesh.url = env.replaceIP(data.navmesh.url)
       return data
     },
     async save(info, progress, handler) {
       const self = this
+
       console.error(info)
       return new Promise(async function (resolve, reject) {
         try {
-          const authoring_glb_data = await self.addFile(
-            info.authoring_glb,
-            info.name + '_authoring.glb',
-            handler
-          )
-          progress(0.25)
-
           const occlusion_glb_data = await self.addFile(
             info.occlusion_glb,
             info.name + '_occlusion.glb',
             handler
           )
 
-          progress(0.5)
+          progress(0.25)
 
           const dat_data = await self.addFile(
             info.dat,
             info.name + '_dat.dat',
             handler
           )
-          progress(0.75)
-          const data = {
-            title: info.name,
-            name: info.name,
-            sample_id: occlusion_glb_data.id,
-            mesh_id: authoring_glb_data.id,
-            dat_id: dat_data.id,
-            info: JSON.stringify(info)
+          progress(0.5)
+
+          if (
+            info.authoring_glb !== 'undefined' &&
+            info.authoring_glb !== undefined
+          ) {
+            const authoring_glb_data = await self.addFile(
+              info.authoring_glb,
+              info.name + '_authoring.glb',
+              handler
+            )
+            progress(0.75)
+            const data = {
+              title: info.name,
+              name: info.name,
+              sample_id: occlusion_glb_data.id,
+              mesh_id: authoring_glb_data.id,
+              dat_id: dat_data.id,
+              info: JSON.stringify(info)
+            }
+
+            const space = await postSpace(data)
+            progress(1)
+            resolve(space)
+          } else {
+            progress(0.75)
+            const data = {
+              title: info.name,
+              name: info.name,
+              sample_id: occlusion_glb_data.id,
+              mesh_id: occlusion_glb_data.id,
+              dat_id: dat_data.id,
+              info: JSON.stringify(info)
+            }
+
+            const space = await postSpace(data)
+            progress(1)
+            resolve(space)
           }
-
-          const space = await postSpace(data)
-
-          progress(1)
-          resolve(space)
         } catch (err) {
           reject(err)
         }
