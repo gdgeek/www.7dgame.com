@@ -13,6 +13,7 @@ class SceneBuilder {
 		return new Promise((resolve, reject) => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
 			const dracoLoader = new DRACOLoader()
+			//dracoLoader.setDecoderPath( '/three.js/editor/draco/' );
 			dracoLoader.setDecoderPath('./draco/')
 			loader.setDRACOLoader(dracoLoader)
 			const self = this
