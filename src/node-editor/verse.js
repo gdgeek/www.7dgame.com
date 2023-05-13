@@ -3,7 +3,7 @@ import VueRenderPlugin from 'rete-vue-render-plugin'
 import ConnectionPlugin from 'rete-connection-plugin'
 import AreaPlugin from 'rete-area-plugin'
 
-import UUIDPlugin from '@/node-editor/plugins/uuid'
+//import UUIDPlugin from '@/node-editor/plugins/uuid'
 import { EventSocket } from '@/node-editor/sockets/sockets'
 import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import AutoArrangePlugin from 'rete-auto-arrange-plugin'
@@ -82,19 +82,7 @@ const save = async function () {
   })
   return ret
 }
-/*
-const create = async function (verse) {
-  const data = {
-    type: 'Verse',
-    parameters: { verse },
-    children: {
-      metas: []
-    }
-  }
 
-  await setup(data)
-  return await save()
-}*/
 const setup = async function (data) {
   await Build(editor_, data)
   setTimeout(() => {
@@ -330,7 +318,6 @@ export default {
   initVerse,
   setup,
   banKnight,
-  // create,
   arrange,
   save,
   saveEvent,

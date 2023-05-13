@@ -17,9 +17,12 @@ var VerseType = {
     {
       type: 'space',
       key: 'space'
+    },
+    {
+      type: 'story',
+      key: 'story'
     }
   ],
-
   inputs: [
     {
       key: 'metas',

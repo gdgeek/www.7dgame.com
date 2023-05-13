@@ -2,6 +2,7 @@ import Rete from 'rete'
 
 var NumSocket = new Rete.Socket('Number')
 var MetaSocket = new Rete.Socket('Meta')
+var AbilitySocket = new Rete.Socket('Ability')
 var EventSocket = new Rete.Socket('Event')
 var EntitySocket = new Rete.Socket('Entity')
 var AddonSocket = new Rete.Socket('Addon')
@@ -17,5 +18,6 @@ export {
   AddonSocket,
   ComponentSocket,
   ActionSocket,
-  EventSocket
+  EventSocket,
+  AbilitySocket
 }

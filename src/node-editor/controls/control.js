@@ -17,6 +17,7 @@ import UUIDControl from './uuidControl.vue'
 import CodeControl from './codeControl.vue'
 import ButtonControl from './buttonControl.vue'
 import SpaceControl from './spaceControl.vue'
+import StoryControl from './storyControl.vue'
 import EventControl from './eventControl.vue'
 
 export class Control extends Rete.Control {
@@ -58,7 +59,9 @@ export class Control extends Rete.Control {
       case 'bool':
         this.component = BoolControl
         break
-
+      case 'story':
+        this.component = StoryControl
+        break
       case 'space':
         this.component = SpaceControl
         break

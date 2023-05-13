@@ -16,14 +16,6 @@ export default {
     }
   },
   computed: {
-    test: {
-      get() {
-        return this.value_
-      },
-      set(value) {
-        alert(value)
-      }
-    },
     value: {
       get() {
         return this.value_
