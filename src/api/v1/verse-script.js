@@ -19,7 +19,21 @@ export function putVerseScript(id, data) {
     data
   })
 }
-/**/
+export function getVerseScript(id, expand = '') {
+  let query = []
+
+  query['expand'] = expand
+  const url = path.join(
+    'v1',
+    'verse-scripts',
+    id.toString() + qs.stringify(query, true)
+  )
+
+  return request({
+    url,
+    method: 'get'
+  })
+}
 export function getVerseScripts(verse_id, expand = '') {
   let query = []
 

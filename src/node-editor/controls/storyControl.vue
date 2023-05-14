@@ -92,7 +92,7 @@ export default {
   methods: {
     async enterScript(item) {
       this.root.$router.push({
-        path: '/blockly-verse',
+        path: '/verse/verse-script',
         query: {
           id: item.id
         }

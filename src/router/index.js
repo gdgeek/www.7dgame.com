@@ -282,8 +282,8 @@ export const constantRoutes = [
           },
           {
             path: 'cyber',
-            name: 'VerseCyber',
-            meta: { title: '逻辑' },
+            name: 'MetaCyber',
+            meta: { title: '元逻辑' },
             component: () => import('@/views/meta/cyber')
           },
           {
@@ -333,6 +333,13 @@ export const constantRoutes = [
             name: 'VerseView',
             meta: { title: '【宇宙】' },
             component: () => import('@/views/verse/view')
+          },
+
+          {
+            path: 'verse-script',
+            name: 'VerseScript',
+            meta: { title: '脚本' },
+            component: () => import('@/views/verse/verse-script')
           },
           {
             path: 'rete-verse',

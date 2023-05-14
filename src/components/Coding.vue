@@ -27,8 +27,6 @@ import { putCyber } from '@/api/v1/cyber'
 
 import 'blockly/lua'
 
-// import hljs from 'highlight.js/lib/common'
-// import hljsVuePlugin from '@highlightjs/vue-plugin'
 export default {
   name: 'Coding',
   props: {
@@ -49,9 +47,7 @@ export default {
       require: true
     }
   },
-  /* components: {
-    highlightjs: hljsVuePlugin.component
-  },*/
+
   data() {
     return {
       workspace: null,
