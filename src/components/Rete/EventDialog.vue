@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      v-if="target !== null"
+      v-if="node !== null"
       :title="'事件管理窗口'"
       :visible.sync="visible"
       width="80%"
@@ -75,7 +75,11 @@
 import { v4 as uuidv4 } from 'uuid'
 export default {
   props: {
-    target: {
+    meta_id: {
+      type: Number,
+      default: -1
+    },
+    node: {
       type: Object,
       default: null
     }
@@ -99,12 +103,17 @@ export default {
 
   methods: {
     open() {
-      const self = this
       this.$nextTick(function () {
-        const data = JSON.parse(self.target.data)
-        self.input.list = data.input
-        self.output.list = data.output
+        console.error(this.node)
+        this.input.list = []
 
+        this.node.inputs.forEach(element => {
+          this.input.list.push(element)
+        })
+        this.output.list = []
+        this.node.outputs.forEach(element => {
+          this.output.list.push(element)
+        })
         this.visible = true
       })
     },
@@ -150,8 +159,10 @@ export default {
     },
     enter() {
       this.$emit('postEvent', {
-        input: this.input.list,
-        output: this.output.list
+        node: this.node,
+        inputs: this.input.list,
+        outputs: this.output.list,
+        meta_id: this.meta_id
       })
     },
     handleClose(done) {

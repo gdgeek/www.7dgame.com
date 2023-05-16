@@ -18,6 +18,8 @@ function install(editor, options) {
         if (options.root.saveable) {
           await deleteMeta(id)
           console.log('delete ok' + id)
+
+          options.root._deleteMeta(id)
         }
       } catch (e) {
         console.error(e)
@@ -45,11 +47,12 @@ function install(editor, options) {
         verse_id: options.root.id,
         uuid
       }
+
       const response = await postMeta(data)
       const meta = response.data
+      options.root._addMeta(meta)
       id = meta.id
       component.controls.get('id').setValue(id)
-
       component.controls.get('uuid').setValue(uuid)
     }
     if (typeof id !== 'undefined') {

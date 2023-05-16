@@ -3,7 +3,6 @@ import VueRenderPlugin from 'rete-vue-render-plugin'
 import ConnectionPlugin from 'rete-connection-plugin'
 import AreaPlugin from 'rete-area-plugin'
 
-//import UUIDPlugin from '@/node-editor/plugins/uuid'
 import { EventSocket } from '@/node-editor/sockets/sockets'
 import RandomStringPlugin from '@/node-editor/plugins/randomString'
 import AutoArrangePlugin from 'rete-auto-arrange-plugin'
@@ -93,14 +92,15 @@ const setup = async function (data) {
 }
 const loadEvent = async function (id, oldValue, newValue) {
   const node = getNodeByID({ id })
+
   if (!node) {
     return
   }
 
   const oldSolts = oldValue
 
-  const iRemove = oldSolts.input.filter(n1 => {
-    const f = newValue.input.find(n2 => {
+  const iRemove = oldSolts.inputs.filter(n1 => {
+    const f = newValue.inputs.find(n2 => {
       return n2.uuid === n1.uuid
     })
     if (typeof f === 'undefined') {
@@ -108,8 +108,9 @@ const loadEvent = async function (id, oldValue, newValue) {
     }
     return false
   })
-  const iAdd = newValue.input.filter(n1 => {
-    const f = oldSolts.input.find(n2 => {
+
+  const iAdd = newValue.inputs.filter(n1 => {
+    const f = oldSolts.inputs.find(n2 => {
       return n2.uuid === n1.uuid
     })
     if (typeof f === 'undefined') {
@@ -127,14 +128,15 @@ const loadEvent = async function (id, oldValue, newValue) {
       node.removeInput(remove)
     }
   })
+
   iAdd.forEach(i => {
     node.addInput(
       new Rete.Input(i.uuid, '[' + i.title + ']', EventSocket, 'multiConns')
     )
   })
 
-  const oRemove = oldSolts.output.filter(n1 => {
-    const f = newValue.output.find(n2 => {
+  const oRemove = oldSolts.outputs.filter(n1 => {
+    const f = newValue.outputs.find(n2 => {
       return n2.uuid === n1.uuid
     })
     if (typeof f === 'undefined') {
@@ -142,8 +144,9 @@ const loadEvent = async function (id, oldValue, newValue) {
     }
     return false
   })
-  const oAdd = newValue.output.filter(n1 => {
-    const f = oldSolts.output.find(n2 => {
+
+  const oAdd = newValue.outputs.filter(n1 => {
+    const f = oldSolts.outputs.find(n2 => {
       return n2.uuid === n1.uuid
     })
     if (typeof f === 'undefined') {
@@ -162,6 +165,7 @@ const loadEvent = async function (id, oldValue, newValue) {
       node.removeOutput(remove)
     }
   })
+
   oAdd.forEach(i => {
     node.addOutput(
       new Rete.Output(i.uuid, '[' + i.title + ']', EventSocket, 'multiConns')
@@ -220,7 +224,33 @@ const addLinked = async function ({ node, linked }) {
     })
   }
 }
+const addMetaEvent = async function (meta, data) {
+  const node = editor_.nodes.find(n => {
+    if (
+      n.name.toLowerCase() === 'meta' &&
+      n.data.uuid === data.parameters.uuid
+    ) {
+      return true
+    }
+    return false
+  })
+  if (node) {
+    meta.event_node.outputs.forEach(o => {
+      node.addOutput(
+        new Rete.Output(o.uuid, '[' + o.title + ']', EventSocket, 'multiConns')
+      )
+    })
+    meta.event_node.inputs.forEach(i => {
+      node.addInput(
+        new Rete.Input(i.uuid, '[' + i.title + ']', EventSocket, 'multiConns')
+      )
+    })
+    editor_.selectNode(node)
+    editor_.selected.clear()
+  }
+} /*
 const addEvent = async function (uuid, event) {
+ 
   const node = editor_.nodes.find(n => {
     if (n.name.toLowerCase() === 'meta' && n.data.uuid === uuid) {
       return true
@@ -243,7 +273,7 @@ const addEvent = async function (uuid, event) {
     editor_.selectNode(node)
     editor_.selected.clear()
   }
-}
+}*/
 const banKnight = function () {
   const nodes = editor_.nodes.filter(n => {
     if (n.name.toLowerCase() === 'knight') {
@@ -276,7 +306,7 @@ const initVerse = async function ({ container, verseId, root }) {
   editor_.use(AutoArrangePlugin, { margin: { x: 50, y: 50 }, depth: 110 })
   editor_.use(AreaPlugin)
   editor_.use(LimitPlugin, [{ name: 'Verse', max: 1, min: 1 }])
-  //alert(root)
+
   editor_.use(MetaPlugin, { verseId, root })
   editor_.use(KnightPlugin, { verseId, root })
 
@@ -321,7 +351,8 @@ export default {
   arrange,
   save,
   saveEvent,
-  addEvent,
+  addMetaEvent,
+  //addEvent,
   addLinked,
   removeLinked,
   loadEvent,

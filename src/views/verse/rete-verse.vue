@@ -13,7 +13,8 @@
       ref="spaceDialog"
     />
     <event-dialog
-      :target="event.target"
+      :node="event.node"
+      :meta_id="event.meta_id"
       @postEvent="postEvent"
       ref="dialog"
     ></event-dialog>
@@ -48,12 +49,9 @@
 
 <script>
 import editor from '@/node-editor/verse'
+import manager from '@/assets/js/event-manager'
 import { putVerse } from '@/api/v1/verse'
-import {
-  getMetaEventByMetaId,
-  putMetaEvent,
-  postMetaEvent
-} from '@/api/v1/meta-event'
+
 import { mapMutations } from 'vuex'
 import { getVerse } from '@/api/v1/verse'
 
@@ -88,8 +86,8 @@ export default {
       id: parseInt(this.$route.query.id),
       verse: null,
       event: {
-        target: null,
-        map: new Map()
+        node: null,
+        meta_id: -1
       }
     }
   },
@@ -100,7 +98,7 @@ export default {
       verse_id: this.id,
       root: this
     })
-    const response = await getVerse(this.id, 'metas,metaKnights,share')
+    const response = await getVerse(this.id, 'metas, metaKnights,share')
 
     this.verse = response.data
     if (this.verse.data == null) {
@@ -119,13 +117,16 @@ export default {
       })
     }
     const data = JSON.parse(this.verse.data)
+
     data.children.metas = this.supplyMetas(
       data.children.metas,
       this.verse.metas,
       this.verse.metaKnights
     )
 
+    //初始化数据
     await editor.setup(data)
+    //设置槽位
     await this.setSlots(data)
     if (!this.saveable) {
       editor.ban()
@@ -290,16 +291,34 @@ export default {
     _setVerseName(name) {
       this.verse.name = name
     },
-
+    _addMeta(meta) {
+      this.verse.metas.push(meta)
+    },
+    _deleteMeta(meta_id) {
+      const index = this.verse.metas.findIndex(item => {
+        if (item.id === meta_id) {
+          return true
+        }
+        return false
+      })
+      if (index !== -1) {
+        this.verse.metas.splice(index, 1)
+      }
+    },
     async _doEvent(id) {
       if (this.saveable) {
-        if (this.event.map.has(id)) {
-          this.event.target = this.event.map.get(id)
-        } else {
-          this.event.target = await this.getMetaEvent(id)
-          this.event.map.set(id, this.event.target)
+        const meta = this.verse.metas.find(item => {
+          if (item.id === id) {
+            return true
+          }
+          return false
+        })
+        if (meta) {
+          this.event.node = meta.event_node
+          this.event.meta_id = meta.id
+
+          this.$refs.dialog.open()
         }
-        this.$refs.dialog.open()
       }
     },
 
@@ -322,39 +341,13 @@ export default {
         console.error(e)
       }
     },
-    async getMetaEvent(meta_id) {
-      try {
-        const response = await getMetaEventByMetaId(meta_id)
-
-        if (response.data.length !== 0) {
-          return response.data[0]
-        } else {
-          if (this.saveable) {
-            const post = await postMetaEvent({
-              meta_id,
-              data: JSON.stringify({ input: [], output: [] })
-            })
-            return post.data
-          }
-        }
-      } catch (e) {
-        console.error(e)
-      }
-    },
-    async postEvent({ input, output }) {
-      if (this.saveable && this.event.target) {
-        const response = await putMetaEvent(this.event.target.id, {
-          data: JSON.stringify({ input, output })
+    async postEvent({ meta_id, node, inputs, outputs }) {
+      if (this.saveable) {
+        await editor.loadEvent(meta_id, node, {
+          inputs,
+          outputs
         })
-        const data = response.data
-        if (this.event.map.has(data.meta_id)) {
-          const item = this.event.map.get(data.meta_id)
-          editor.loadEvent(data.meta_id, JSON.parse(item.data), {
-            input,
-            output
-          })
-          this.event.map.set(data.meta_id, data)
-        }
+        this.node = await manager.rebuild(node, inputs, outputs)
       }
       this.$refs.dialog.close()
     },
@@ -403,18 +396,19 @@ export default {
     },
     async setSlots(data) {
       for (let i = 0; i < data.children.metas.length; ++i) {
-        const item = data.children.metas[i]
-        if (item.type.toLowerCase() == 'meta') {
-          const event = await this.getMetaEvent(item.parameters.id)
-          if (event) {
-            this.event.map.set(item.parameters.id, event)
+        const node = data.children.metas[i]
+        if (node.type.toLowerCase() == 'meta') {
+          const meta = this.verse.metas.find(item => {
+            if (item.id === node.parameters.id) {
+              return true
+            }
+            return false
+          })
+          await editor.addMetaEvent(meta, node)
 
-            await editor.addEvent(item.parameters.uuid, event)
-
-            this.$nextTick(function () {
-              editor.arrange()
-            })
-          }
+          this.$nextTick(function () {
+            editor.arrange()
+          })
         }
       }
       await this.addLinked()

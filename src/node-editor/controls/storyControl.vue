@@ -1,7 +1,6 @@
 <template>
   <el-form :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" label="故事">
-      {{ content }}
       <el-switch
         v-model="content.switch"
         active-color="#13ce66"
