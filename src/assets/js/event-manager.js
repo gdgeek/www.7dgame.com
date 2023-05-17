@@ -1,5 +1,6 @@
 import { postEventInput, deleteEventInput } from '@/api/v1/event-input'
 import { postEventOutput, deleteEventOutput } from '@/api/v1/event-output'
+import { postEventLink, deleteEventLink } from '@/api/v1/event-link'
 
 async function rebuild(node, inputs, outputs) {
   const ret = node
@@ -61,4 +62,162 @@ async function rebuild(node, inputs, outputs) {
   ret.outputs = outputs
   return ret
 }
-export default { rebuild }
+
+function filter(verse, map, list) {
+  const oldValue = []
+  const newValue = []
+  verse.links.forEach(item => {
+    oldValue.push({
+      id: item.id,
+      input: item.event_input_id,
+      output: item.event_output_id
+    })
+  })
+
+  list.forEach(item => {
+    if (map.iMap.has(item.input.uuid) && map.oMap.has(item.output.uuid)) {
+      const i = map.iMap.get(item.input.uuid)
+      const o = map.oMap.get(item.output.uuid)
+      newValue.push({ input: i.id, output: o.id })
+    }
+  })
+
+  const ret = {
+    addList: [],
+    removeList: []
+  }
+  ret.addList = Array.from(newValue).filter(item => {
+    const same = Array.from(oldValue).find(item2 => {
+      if (item.input === item2.input && item.output === item2.output) {
+        return true
+      }
+      return false
+    })
+    if (same) {
+      return false
+    }
+    return true
+  })
+
+  ret.removeList = Array.from(oldValue).filter(item => {
+    const same = Array.from(newValue).find(item2 => {
+      if (item.input === item2.input && item.output === item2.output) {
+        return true
+      }
+      return false
+    })
+    if (same) {
+      return false
+    }
+    return true
+  })
+
+  return ret
+}
+function getLinked(data, linked, map) {
+  if (!data) {
+    data = {
+      uuid: map.oMap.get(linked.event_output_id).output.uuid,
+      connections: []
+    }
+  }
+  const item = map.iMap.get(linked.event_input_id)
+  data.connections.push({
+    node: item.node,
+    uuid: item.input.uuid
+  })
+  return data
+}
+async function loadLinked(verse) {
+  const map = getIOMapById(verse)
+
+  const lMap = new Map()
+  verse.links.forEach(item => {
+    lMap.set(
+      item.event_output_id,
+      getLinked(lMap.get(item.event_output_id), item, map)
+    )
+  })
+  const ret = []
+  verse.metas.forEach(meta => {
+    const nd = {
+      node: meta.uuid,
+      linked: []
+    }
+    meta.event_node.outputs.forEach(output => {
+      if (lMap.has(output.id)) {
+        nd.linked.push(lMap.get(output.id))
+      }
+    })
+    if (nd.linked.length !== 0) {
+      ret.push(nd)
+    }
+  })
+  console.error(ret)
+  return ret
+}
+
+function getIOMapById(verse) {
+  const iMap = new Map()
+  const oMap = new Map()
+  verse.metas.forEach(meta => {
+    meta.event_node.inputs.forEach(input => {
+      iMap.set(input.id, { node: meta.uuid, input })
+    })
+
+    meta.event_node.outputs.forEach(output => {
+      oMap.set(output.id, { node: meta.uuid, output })
+    })
+  })
+  return { iMap, oMap }
+}
+function getIOMapByUuid(verse) {
+  const iMap = new Map()
+  const oMap = new Map()
+  verse.metas.forEach(meta => {
+    meta.event_node.inputs.forEach(input => {
+      iMap.set(input.uuid, input)
+    })
+
+    meta.event_node.outputs.forEach(output => {
+      oMap.set(output.uuid, output)
+    })
+  })
+  return { iMap, oMap }
+}
+async function saveLinked(verse, list) {
+  const map = getIOMapByUuid(verse)
+
+  const links = []
+  for (var i = 0; i < list.length; i++) {
+    const item = list[i]
+    for (var j = 0; j < item.linked.length; j++) {
+      const item2 = item.linked[j]
+      for (var k = 0; k < item2.connections.length; k++) {
+        const item3 = item2.connections[k]
+
+        if (map.iMap.has(item3.uuid) && map.oMap.has(item2.uuid)) {
+          const input = map.iMap.get(item3.uuid)
+          const output = map.oMap.get(item2.uuid)
+          links.push({ input, output })
+        }
+      }
+    }
+  }
+  const oo = filter(verse, map, links)
+
+  oo.addList.forEach(async item => {
+    const response = await postEventLink({
+      verse_id: verse.id,
+      event_input_id: item.input,
+      event_output_id: item.output
+    })
+    verse.links.push(response.data)
+  })
+
+  oo.removeList.forEach(async item => {
+    await deleteEventLink(item.id)
+    verse.links = verse.links.filter(item2 => item2.id !== item.id)
+  })
+}
+export default { rebuild, saveLinked, loadLinked }

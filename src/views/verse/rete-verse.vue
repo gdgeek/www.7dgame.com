@@ -62,13 +62,15 @@ import KnightDialog from '@/components/MrPP/KnightDialog.vue'
 import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
 
 import { AbilityEditable } from '@/ability/ability'
-import {
-  getVerseEventByVerseId,
-  putVerseEvent,
-  postVerseEvent
-} from '@/api/v1/verse-event'
-import EventDialog from '@/components/Rete/EventDialog.vue'
 
+import EventDialog from '@/components/Rete/EventDialog.vue'
+async function sleep(time) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(null)
+    }, time)
+  })
+}
 export default {
   components: {
     EventDialog,
@@ -126,8 +128,8 @@ export default {
 
     //初始化数据
     await editor.setup(data)
-    //设置槽位
     await this.setSlots(data)
+    await this.arrange()
     if (!this.saveable) {
       editor.ban()
     }
@@ -322,25 +324,6 @@ export default {
       }
     },
 
-    ///////////event
-    async getVerseEvent(id) {
-      try {
-        const response = await getVerseEventByVerseId(id)
-        if (response.data.length !== 0) {
-          return response.data[0]
-        } else {
-          if (this.saveable) {
-            const post = await postVerseEvent({
-              verse_id: id,
-              data: JSON.stringify({})
-            })
-            return post.data
-          }
-        }
-      } catch (e) {
-        console.error(e)
-      }
-    },
     async postEvent({ meta_id, node, inputs, outputs }) {
       if (this.saveable) {
         await editor.loadEvent(meta_id, node, {
@@ -358,23 +341,25 @@ export default {
 
       if (self.saveable) {
         const list = await editor.saveEvent()
-
-        const linked = await self.getVerseEvent(verse_id)
-        await putVerseEvent(linked.id, { data: JSON.stringify(list) })
+        await manager.saveLinked(this.verse, list)
         await editor.removeLinked()
         const data = await editor.save()
         await putVerse(verse_id, {
           data
         })
-        editor.arrange()
-        await self.addLinked()
+        await this.arrange()
       }
     },
 
     async arrange() {
       await editor.removeLinked()
-      editor.arrange()
-      await this.addLinked()
+      await editor.arrange()
+      await sleep(300)
+      const data = await manager.loadLinked(this.verse)
+      for (let i = 0; i < data.length; ++i) {
+        const item = data[i]
+        await editor.addLinked(item)
+      }
     },
     async setup(json) {
       const data = JSON.parse(json)
@@ -383,17 +368,7 @@ export default {
       this.setSlots(data)
       return data
     },
-    async addLinked() {
-      const linked = await this.getVerseEvent(this.id)
-      if (linked && linked.data) {
-        const parse = JSON.parse(linked.data)
-        if (parse instanceof Array) {
-          parse.forEach(async item => {
-            await editor.addLinked(item)
-          })
-        }
-      }
-    },
+
     async setSlots(data) {
       for (let i = 0; i < data.children.metas.length; ++i) {
         const node = data.children.metas[i]
@@ -405,13 +380,8 @@ export default {
             return false
           })
           await editor.addMetaEvent(meta, node)
-
-          this.$nextTick(function () {
-            editor.arrange()
-          })
         }
       }
-      await this.addLinked()
     }
   },
 

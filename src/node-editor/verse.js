@@ -20,6 +20,7 @@ let editor_ = null
 let engine_ = null
 const arrange = function () {
   editor_.trigger('arrange', editor_.nodes)
+  console.error('arrange')
 }
 let outMeta_ = 0
 const addMeta = function (meta) {
@@ -30,6 +31,7 @@ const addMeta = function (meta) {
     outMeta_++
   })
 }
+
 const saveEvent = async function () {
   const list = editor_.nodes.filter(node => {
     if (node.name.toLowerCase() === 'meta') {
@@ -38,11 +40,13 @@ const saveEvent = async function () {
     return false
   })
   let ret = []
+
   list.forEach(node => {
     let nd = {
       node: node.data.uuid,
       linked: []
     }
+
     node.outputs.forEach((output, key) => {
       if (
         output.socket.name.toLowerCase() === 'event' &&
@@ -66,10 +70,10 @@ const saveEvent = async function () {
           co.uuid = item.input
         })
       }
-      if (nd.linked.length !== 0) {
-        ret.push(nd)
-      }
     })
+    if (nd.linked.length !== 0) {
+      ret.push(nd)
+    }
   })
   return ret
 }
@@ -351,6 +355,7 @@ export default {
   arrange,
   save,
   saveEvent,
+
   addMetaEvent,
   //addEvent,
   addLinked,
