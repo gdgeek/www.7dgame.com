@@ -21,7 +21,7 @@
             word-wrap: break-word;
           "
         >
-          积极参与到苹果AR项目开发中来
+          积极参与到苹果AR开发中
         </b>
         <br />
 
