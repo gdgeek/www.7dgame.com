@@ -18,6 +18,14 @@
       />
       <!-- -->
     </el-card>
+    <br />
+    <el-card class="box-card">
+      <el-alert
+        title="我们做了7年HoloLens项目，今日开始专心Apple AR。"
+        type="error"
+      ></el-alert>
+      <cards />
+    </el-card>
   </div>
 </template>
 
@@ -25,12 +33,12 @@
 import AppleReality from '@/components/Web/AppleReality'
 import Book from '@/components/Book.vue'
 
-import BusinessList from '@/components/Web/BusinessList.vue'
+import Cards from '@/components/Web/Cards'
 
 export default {
   name: 'WebIndex',
   components: {
-    BusinessList,
+    Cards,
     AppleReality,
     Book
   },
