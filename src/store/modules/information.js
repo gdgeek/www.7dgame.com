@@ -8,7 +8,7 @@ function companies() {
 
 const state = {
   data: {
-    title: '元宇宙实景编程平台',
+    title: env.title(),
     description: env.subtitle(),
     companies: companies(),
     version: '20230412.1',

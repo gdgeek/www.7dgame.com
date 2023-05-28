@@ -307,7 +307,7 @@ export default {
         this.verse.metas.splice(index, 1)
       }
     },
-    async _doEvent(id) {
+    async _doMetaEvent(id) {
       if (this.saveable) {
         const meta = this.verse.metas.find(item => {
           if (item.id === id) {

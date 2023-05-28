@@ -57,6 +57,7 @@ import {
   putVerseScript
 } from '@/api/v1/verse-script'
 
+import { v4 as uuidv4 } from 'uuid'
 export default {
   props: ['data', 'root', 'emitter', 'getData', 'putData'],
 
@@ -136,7 +137,8 @@ export default {
         })
         const response = await postVerseScript({
           verse_id: this.id,
-          title: input.value
+          title: input.value,
+          uuid: uuidv4()
         })
 
         await this.refresh()

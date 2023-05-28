@@ -94,7 +94,7 @@ import { videoPlayer } from 'vue-video-player'
 
 import '@/assets/font/font.css'
 export default {
-  name: 'Giant',
+  name: 'Cards',
   components: {
     videoPlayer
   },

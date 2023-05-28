@@ -51,7 +51,7 @@ export default {
   methods: {
     open() {
       const self = this
-      this.root._doEvent(self.metaId)
+      this.root._doMetaEvent(self.metaId)
     },
 
     click() {

@@ -3,7 +3,7 @@
     <el-container>
       <el-main>
         <el-card v-loading="loading" class="box-card">
-          <div v-if="script" slot="header" class="clearfix">
+          <div v-if="script && verse" slot="header" class="clearfix">
             {{ verse.name }} / {{ script.title }} / 【脚本】
 
             <el-button-group style="float: right">
@@ -19,9 +19,10 @@
             </el-button-group>
           </div>
           <blockly-script
-            v-if="script !== null"
+            v-if="script !== null && verse !== null"
             ref="blockly"
             :blockly="script.blockly"
+            :resource="resource"
             :id="id"
             @submit="submit"
           />
@@ -37,8 +38,8 @@ import { mapMutations } from 'vuex'
 import { getVerseScript, putVerseScript } from '@/api/v1/verse-script'
 
 import { AbilityEditable } from '@/ability/ability'
-var qs = require('querystringify')
-var path = require('path')
+
+import { getVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseScript',
 
@@ -49,14 +50,30 @@ export default {
     return {
       loading: false,
       script: null,
-      verse: null
+      verse: null,
+      metas: new Map()
     }
   },
   computed: {
     id() {
       return parseInt(this.$route.query.id)
     },
+    resource() {
+      const inputs = []
 
+      this.verse.metas.forEach(meta => {
+        meta.event_node.inputs.forEach(input => {
+          inputs.push({
+            title: this.metas.get(meta.id) + ':' + input.title,
+            index: meta.uuid,
+            uuid: input.uuid
+          })
+        })
+      }) /**/
+      return {
+        events: inputs
+      }
+    },
     saveable() {
       if (this.script === null) {
         return false
@@ -85,11 +102,19 @@ export default {
         }
       ]
     })
-    const response = await getVerseScript(this.id, 'verse')
+    const response = await getVerseScript(this.id)
+
     this.script = response.data
-    this.verse = this.script.verse
     this.loading = false
-    console.error(this.script)
+
+    const verseResponse = await getVerse(this.script.verse_id)
+
+    this.verse = verseResponse.data
+    console.log(this.verse.data)
+    const data = JSON.parse(this.verse.data)
+    data.children.metas.forEach(meta => {
+      this.metas.set(meta.parameters.id, meta.parameters.title)
+    })
 
     this.setBreadcrumbs({
       list: [

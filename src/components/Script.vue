@@ -21,8 +21,8 @@
 
 <script>
 import Blockly from 'blockly'
-import toolbox from '@/assets/js/blockly/verse-toolbox'
-//import { AddBlocks } from '@/assets/js/blockly/blocks'
+import toolbox from '@/assets/js/blockly/verse/toolbox'
+import { AddBlocks } from '@/assets/js/blockly/verse/blocks'
 //import { putCyber } from '@/api/v1/cyber'
 
 import 'blockly/lua'
@@ -37,6 +37,10 @@ export default {
     id: {
       type: Number,
       require: true
+    },
+    resource: {
+      type: Object,
+      require: true
     }
   },
 
@@ -49,14 +53,9 @@ export default {
   },
 
   mounted() {
-    /*
-    if (this.meta.data) {
-      AddBlocks({
-        index: self.index,
-        resource: self.getResource(this.meta)
-      })
-    }
-*/
+    AddBlocks({
+      resource: this.resource
+    })
     this.workspace = Blockly.inject('blocklyDiv', {
       media: 'resource/blockly/media/',
       toolbox: toolbox,
@@ -101,11 +100,6 @@ export default {
 
     async save() {
       const data = Blockly.serialization.workspaces.save(this.workspace)
-      /* const data = Blockly.serialization.workspaces.save(this.workspace)
-      if (this.blockly === JSON.stringify(data)) {
-        alert('!!!')
-        return
-      }*/
 
       try {
         const script =

@@ -49,6 +49,10 @@ function getIP() {
 }
 
 function title() {
+  switch (process.env.VUE_APP_BASE_MODE) {
+    case '7dgame.com':
+      return '苹果AR元气项目'
+  }
   return '元宇宙实景编程平台！'
 }
 function subtitle() {
@@ -56,7 +60,7 @@ function subtitle() {
     case '4mr.cn':
       return '内部版本'
     case '7dgame.com':
-      return '元气弹版本'
+      return 'Apple Reality Spirit'
     case 'local':
       return '私有部署版本'
     case 'local':
