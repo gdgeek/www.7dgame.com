@@ -32,13 +32,15 @@
             href="https://www.bilibili.com/video/BV1Rg4y1u72s/"
             class="phone-boder"
           >
-            相关视频
+            给提姆库克先生的一封感谢信
           </a>
         </el-button>
+        <br />
+        <br />
 
         <el-button class="font-text">
           <a ref="telPhone" href="tel:15000159790" class="phone-boder">
-            索取域名(如果您是苹果官方)
+            索取域名 (如果您是苹果官方)
           </a>
         </el-button>
       </div>
