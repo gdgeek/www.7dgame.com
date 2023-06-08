@@ -1,0 +1,3124 @@
+1
+00:00:10,666 --> 00:00:14,066
+hi I'm Jim an engineer on the Reality Kit team
+
+2
+00:00:14,500 --> 00:00:16,100
+today my colleague Christopher
+
+3
+00:00:16,100 --> 00:00:17,400
+from the AR Kit team will
+
+4
+00:00:17,400 --> 00:00:19,166
+join me in guiding you through
+
+5
+00:00:19,200 --> 00:00:19,800
+how to get
+
+6
+00:00:19,800 --> 00:00:22,133
+started with building apps for special computing
+
+7
+00:00:22,300 --> 00:00:23,300
+let's dive in
+
+8
+00:00:23,900 --> 00:00:24,933
+we are excited
+
+9
+00:00:24,933 --> 00:00:27,699
+about a new platform for spatial computing
+
+10
+00:00:28,300 --> 00:00:29,466
+this platform
+
+11
+00:00:29,466 --> 00:00:32,866
+is built on familiar foundations for people to use
+
+12
+00:00:33,000 --> 00:00:34,966
+and for you to develop apps on
+
+13
+00:00:35,700 --> 00:00:38,666
+it opens up new and exciting possibilities
+
+14
+00:00:38,800 --> 00:00:41,366
+to blend real and virtual content
+
+15
+00:00:41,766 --> 00:00:44,066
+as well as using natural input
+
+16
+00:00:44,066 --> 00:00:45,533
+to interact with your app
+
+17
+00:00:46,300 --> 00:00:49,066
+and the whole system has been designed to protect
+
+18
+00:00:49,066 --> 00:00:50,133
+people's privacy
+
+19
+00:00:50,533 --> 00:00:51,966
+giving you the peace of mind
+
+20
+00:00:51,966 --> 00:00:54,199
+to focus on your apps experience
+
+21
+00:00:55,366 --> 00:00:57,766
+let's talk a bit about the fundamentals
+
+22
+00:00:57,766 --> 00:00:59,733
+to build up our vocabulary
+
+23
+00:00:59,800 --> 00:01:01,933
+and concepts of spatial computing
+
+24
+00:01:03,000 --> 00:01:05,600
+after that we'll go over the different ways to get
+
+25
+00:01:05,600 --> 00:01:06,766
+started with your app
+
+26
+00:01:07,866 --> 00:01:09,966
+then my colleague Christopher
+
+27
+00:01:09,966 --> 00:01:12,266
+will walk us through how to build your app
+
+28
+00:01:12,266 --> 00:01:15,599
+diving deeper into the details of special computing
+
+29
+00:01:16,566 --> 00:01:19,466
+now let's take a look at some of the fundamentals
+
+30
+00:01:19,966 --> 00:01:20,766
+first
+
+31
+00:01:20,800 --> 00:01:24,733
+let's cover what both familiar and new UI concepts
+
+32
+00:01:24,766 --> 00:01:26,666
+mean in spatial computing
+
+33
+00:01:27,533 --> 00:01:31,066
+by default apps launch into the shared space
+
+34
+00:01:31,600 --> 00:01:34,000
+this is where apps exist side by side
+
+35
+00:01:34,066 --> 00:01:36,566
+much like multiple apps on a Macdus space
+
+36
+00:01:37,200 --> 00:01:39,533
+people remain connected to their surroundings through
+
+37
+00:01:39,533 --> 00:01:40,333
+pass through
+
+38
+00:01:41,200 --> 00:01:44,100
+each app can have one or more windows
+
+39
+00:01:44,300 --> 00:01:47,366
+these are swift UI scenes that can be resized
+
+40
+00:01:47,366 --> 00:01:48,399
+and reflowed
+
+41
+00:01:48,500 --> 00:01:51,200
+like you would expect of a normal Mac OS window
+
+42
+00:01:51,866 --> 00:01:54,566
+they can contain traditional views and controls
+
+43
+00:01:54,566 --> 00:01:56,666
+as well as 3D content
+
+44
+00:01:56,800 --> 00:02:00,366
+allowing you to mix a match 2D and 3D
+
+45
+00:02:01,500 --> 00:02:02,966
+people can reposition a window
+
+46
+00:02:02,966 --> 00:02:04,733
+to the liking in the current space
+
+47
+00:02:04,733 --> 00:02:06,533
+just as one might expect
+
+48
+00:02:07,400 --> 00:02:10,666
+volumes allow an app to display 3D content
+
+49
+00:02:10,666 --> 00:02:12,066
+in a defined bounce
+
+50
+00:02:12,133 --> 00:02:14,199
+sharing the space with other apps
+
+51
+00:02:14,700 --> 00:02:17,333
+volumes are great for showcasing 3D content
+
+52
+00:02:17,333 --> 00:02:18,599
+for example Chessport
+
+53
+00:02:19,766 --> 00:02:21,999
+people can reposition volumes in space
+
+54
+00:02:22,000 --> 00:02:24,100
+and they can be viewed from different angles
+
+55
+00:02:25,200 --> 00:02:27,366
+volumes are swift UI scenes
+
+56
+00:02:27,366 --> 00:02:30,366
+allowing you to do layout in familiar ways
+
+57
+00:02:30,500 --> 00:02:32,966
+and they use the power of real ticket
+
+58
+00:02:32,966 --> 00:02:34,899
+to display your 3D content
+
+59
+00:02:36,466 --> 00:02:39,099
+sometimes you might want to have more control
+
+60
+00:02:39,100 --> 00:02:41,333
+of the level of motion in your app
+
+61
+00:02:42,100 --> 00:02:45,900
+maybe to focus while watching a video or to play a game
+
+62
+00:02:47,166 --> 00:02:50,166
+you can do this by opening a dedicated full space
+
+63
+00:02:50,333 --> 00:02:51,999
+where your apps Windows
+
+64
+00:02:52,000 --> 00:02:54,366
+Volumes and 3d objects are the
+
+65
+00:02:54,366 --> 00:02:56,199
+only one appearing across the view
+
+66
+00:02:57,333 --> 00:02:58,399
+in a full space
+
+67
+00:02:58,400 --> 00:03:02,100
+you can also take advantage of AR kits APIs
+
+68
+00:03:02,133 --> 00:03:05,899
+for example in addition to system provided gestures
+
+69
+00:03:06,100 --> 00:03:09,333
+you can get more detailed skeletal hand tracking
+
+70
+00:03:09,500 --> 00:03:12,100
+to really incorporate the structure of people's
+
+71
+00:03:12,100 --> 00:03:14,000
+hands into your experience
+
+72
+00:03:15,133 --> 00:03:18,366
+your app can use a full space in different ways
+
+73
+00:03:18,600 --> 00:03:19,900
+you can use pass through
+
+74
+00:03:19,933 --> 00:03:22,066
+to ground content in the real world
+
+75
+00:03:22,166 --> 00:03:24,733
+and keep people connected with their surroundings
+
+76
+00:03:25,200 --> 00:03:27,133
+and when you play spatial audio
+
+77
+00:03:27,200 --> 00:03:29,666
+and render 3D through Reality Kit
+
+78
+00:03:29,766 --> 00:03:32,066
+you will automatically take advantage
+
+79
+00:03:32,066 --> 00:03:35,133
+of the fact that the device will continually update
+
+80
+00:03:35,133 --> 00:03:35,933
+understanding
+
+81
+00:03:35,933 --> 00:03:38,699
+of the room to blend visuals and sound
+
+82
+00:03:38,733 --> 00:03:40,166
+into people surroundings
+
+83
+00:03:40,466 --> 00:03:42,799
+making them feel that these virtual audios
+
+84
+00:03:42,800 --> 00:03:44,533
+really belong in their room
+
+85
+00:03:45,166 --> 00:03:48,866
+you can also choose to render to fully immersive space
+
+86
+00:03:49,000 --> 00:03:51,166
+to fill up the entire field of view
+
+87
+00:03:51,800 --> 00:03:54,266
+this allows your app flexibility
+
+88
+00:03:54,266 --> 00:03:56,966
+to deliver on creative intent of your app
+
+89
+00:03:57,166 --> 00:04:00,466
+by customizing the lining of virtual objects
+
+90
+00:04:00,533 --> 00:04:03,999
+as well as the ability to choose audio characteristics
+
+91
+00:04:05,166 --> 00:04:06,666
+these are the foundational
+
+92
+00:04:06,666 --> 00:04:08,366
+elements of spatial computing
+
+93
+00:04:08,600 --> 00:04:11,066
+Windows Volumes and spaces
+
+94
+00:04:11,500 --> 00:04:13,966
+they give you a flexible tool set to build
+
+95
+00:04:13,966 --> 00:04:16,099
+apps that can span the continuum
+
+96
+00:04:16,100 --> 00:04:17,100
+of immersion
+
+97
+00:04:17,533 --> 00:04:20,166
+Christopher will talk more about this later
+
+98
+00:04:21,100 --> 00:04:22,300
+now that we introduce
+
+99
+00:04:22,300 --> 00:04:24,933
+the foundational elements of spatial computing
+
+100
+00:04:25,366 --> 00:04:28,466
+let's explore the ways we can interact with Windows
+
+101
+00:04:28,466 --> 00:04:29,933
+volumes and spaces
+
+102
+00:04:30,733 --> 00:04:32,066
+on this platform
+
+103
+00:04:32,066 --> 00:04:34,099
+we can interact with apps by simply
+
+104
+00:04:34,100 --> 00:04:35,933
+using our eyes and our hands
+
+105
+00:04:36,500 --> 00:04:38,966
+people can for example interact with a button
+
+106
+00:04:39,000 --> 00:04:40,266
+by looking at it
+
+107
+00:04:40,466 --> 00:04:43,133
+and tapping the fingers together to select
+
+108
+00:04:44,266 --> 00:04:45,499
+people can also reach out
+
+109
+00:04:45,500 --> 00:04:48,766
+and physically touch the same button in 3D space
+
+110
+00:04:49,766 --> 00:04:52,199
+for both these kinds of interactions
+
+111
+00:04:52,366 --> 00:04:55,333
+there is a variety of gestures that are possible
+
+112
+00:04:55,566 --> 00:05:00,199
+like taps long presses drags rotations
+
+113
+00:05:00,533 --> 00:05:02,566
+zooms and a lot more
+
+114
+00:05:02,900 --> 00:05:06,366
+the system detects these automatically and generates
+
+115
+00:05:06,366 --> 00:05:08,733
+touch events for your app to respond to
+
+116
+00:05:09,600 --> 00:05:12,666
+gestures are integrated well with Swift UI
+
+117
+00:05:12,766 --> 00:05:16,399
+the same gesture API works seamlessly with Reality Kit
+
+118
+00:05:16,400 --> 00:05:17,266
+entities
+
+119
+00:05:17,900 --> 00:05:20,533
+this allows people to easily interact
+
+120
+00:05:20,800 --> 00:05:23,266
+directly with your 3D scene elements
+
+121
+00:05:23,766 --> 00:05:27,499
+for example this could be useful to place a flag
+
+122
+00:05:27,533 --> 00:05:29,566
+directly onto this 3d model
+
+123
+00:05:29,900 --> 00:05:32,366
+or imagine controlling a virtual zipper
+
+124
+00:05:32,366 --> 00:05:32,599
+or
+
+125
+00:05:32,600 --> 00:05:35,133
+perhaps you want to interact and pick up virtual chess
+
+126
+00:05:35,133 --> 00:05:38,466
+pieces now if you want to do a game of bowling
+
+127
+00:05:38,466 --> 00:05:41,399
+or transform people's hands into a virtual club
+
+128
+00:05:41,733 --> 00:05:45,199
+you can do this through air kit skeletal hand tracking
+
+129
+00:05:45,500 --> 00:05:47,666
+here we can see an example how you can stack
+
+130
+00:05:47,666 --> 00:05:49,933
+cubes on the table using taps
+
+131
+00:05:50,500 --> 00:05:53,600
+and then smashing them onto the table with your hands
+
+132
+00:05:54,266 --> 00:05:55,733
+this is a powerful way
+
+133
+00:05:55,866 --> 00:05:58,266
+that you can bring app specific hands input
+
+134
+00:05:58,400 --> 00:05:59,333
+into the experience
+
+135
+00:06:00,166 --> 00:06:03,899
+and finally the system automatically brings input
+
+136
+00:06:03,900 --> 00:06:05,500
+from wireless keyboards
+
+137
+00:06:05,500 --> 00:06:06,500
+trackpads
+
+138
+00:06:06,500 --> 00:06:09,400
+and accessibility hardware right into your app
+
+139
+00:06:09,933 --> 00:06:11,566
+and the Game Controller Framework
+
+140
+00:06:11,566 --> 00:06:13,766
+lets you add support for wireless game
+
+141
+00:06:13,766 --> 00:06:14,899
+controllers as well
+
+142
+00:06:15,666 --> 00:06:16,733
+collaborating
+
+143
+00:06:16,733 --> 00:06:17,733
+exploring things
+
+144
+00:06:17,733 --> 00:06:20,733
+together is a fundamental part of special computing
+
+145
+00:06:21,300 --> 00:06:24,400
+we do this through Shareplay and the Group Activities
+
+146
+00:06:24,400 --> 00:06:25,200
+Framework
+
+147
+00:06:26,000 --> 00:06:28,666
+on this platform Asa macos
+
+148
+00:06:28,966 --> 00:06:30,799
+people can share any window
+
+149
+00:06:30,800 --> 00:06:32,500
+like this quick look experience
+
+150
+00:06:32,800 --> 00:06:35,533
+when people share a quick look 3d model
+
+151
+00:06:35,566 --> 00:06:37,299
+we sync the orientation
+
+152
+00:06:37,300 --> 00:06:40,266
+scale and animations between participants
+
+153
+00:06:40,266 --> 00:06:41,299
+making it easy to
+
+154
+00:06:41,300 --> 00:06:44,066
+collaborate while being in different locations
+
+155
+00:06:45,400 --> 00:06:46,800
+when people are collaborating
+
+156
+00:06:46,800 --> 00:06:49,066
+on something that is shown in their space
+
+157
+00:06:49,333 --> 00:06:51,299
+and that they physically point that
+
+158
+00:06:51,300 --> 00:06:54,400
+it is important that everyone in the shareplay session
+
+159
+00:06:54,533 --> 00:06:55,999
+had the same experience
+
+160
+00:06:56,466 --> 00:06:58,899
+this enables natural references
+
+161
+00:06:58,900 --> 00:07:01,133
+such as gestering to an object
+
+162
+00:07:01,266 --> 00:07:03,333
+and reinforces the feeling of being
+
+163
+00:07:03,333 --> 00:07:04,499
+physically together
+
+164
+00:07:05,500 --> 00:07:09,500
+we've added the concept of shared context to the system
+
+165
+00:07:09,866 --> 00:07:12,966
+the system manages this shared context for you
+
+166
+00:07:13,300 --> 00:07:13,800
+helping
+
+167
+00:07:13,800 --> 00:07:16,866
+make sure that participants in a Shareplay session
+
+168
+00:07:17,000 --> 00:07:19,733
+can all experience content in the same way
+
+169
+00:07:20,533 --> 00:07:21,399
+you can use
+
+170
+00:07:21,400 --> 00:07:24,333
+spatial persona templates to further customize
+
+171
+00:07:24,333 --> 00:07:26,399
+how people experience your content
+
+172
+00:07:27,500 --> 00:07:28,533
+to learn more
+
+173
+00:07:28,566 --> 00:07:30,299
+watch our sessions about
+
+174
+00:07:30,366 --> 00:07:34,133
+designing and building spatial shareplay experiences
+
+175
+00:07:34,133 --> 00:07:35,199
+for this platform
+
+176
+00:07:35,900 --> 00:07:38,933
+give me that the device has a lot of intimate knowledge
+
+177
+00:07:38,933 --> 00:07:40,766
+of the surroundings and people
+
+178
+00:07:41,166 --> 00:07:44,266
+we put a lot of architecture in place to protect
+
+179
+00:07:44,266 --> 00:07:45,266
+people's privacy
+
+180
+00:07:45,333 --> 00:07:46,599
+let's dive into that
+
+181
+00:07:47,600 --> 00:07:48,733
+privacy is a core
+
+182
+00:07:48,733 --> 00:07:51,199
+principle for guiding the design of this platform
+
+183
+00:07:51,500 --> 00:07:53,966
+we'll make it easy for you as a developer
+
+184
+00:07:54,100 --> 00:07:57,066
+to leverage APIs to take advantage of the
+
+185
+00:07:57,066 --> 00:07:58,299
+many capabilities
+
+186
+00:07:58,300 --> 00:07:59,266
+of the device
+
+187
+00:07:59,933 --> 00:08:03,399
+instead of allowing apps acts data from the sensors
+
+188
+00:08:03,566 --> 00:08:04,366
+directly
+
+189
+00:08:04,500 --> 00:08:07,866
+the system does that for you and provides apps with
+
+190
+00:08:07,900 --> 00:08:09,766
+events and visual cues
+
+191
+00:08:10,400 --> 00:08:13,466
+for example the system knows the eye position
+
+192
+00:08:13,466 --> 00:08:16,399
+and gestures of someone is hands in 3d space
+
+193
+00:08:16,600 --> 00:08:18,866
+and delivers that as touch events
+
+194
+00:08:19,666 --> 00:08:22,066
+also the system will render a hover effect
+
+195
+00:08:22,066 --> 00:08:24,466
+on a view when it's a focus of tension
+
+196
+00:08:24,600 --> 00:08:26,133
+but does not communicate
+
+197
+00:08:26,133 --> 00:08:28,066
+to the app where the person is looking
+
+198
+00:08:29,200 --> 00:08:30,533
+for many situations
+
+199
+00:08:30,533 --> 00:08:31,733
+the system provided
+
+200
+00:08:31,733 --> 00:08:34,266
+behaviors are sufficient for your app to respond
+
+201
+00:08:34,266 --> 00:08:35,366
+to interactions
+
+202
+00:08:35,900 --> 00:08:37,333
+in cases where you actually
+
+203
+00:08:37,333 --> 00:08:40,266
+do need access to more sensitive information
+
+204
+00:08:40,366 --> 00:08:41,999
+the system will ask the people
+
+205
+00:08:42,000 --> 00:08:43,566
+for their permission first
+
+206
+00:08:44,600 --> 00:08:45,533
+an example
+
+207
+00:08:45,533 --> 00:08:48,566
+would be asking user permission to access scene
+
+208
+00:08:48,566 --> 00:08:49,266
+understanding
+
+209
+00:08:49,266 --> 00:08:51,333
+to detect walls and furniture
+
+210
+00:08:51,600 --> 00:08:53,966
+or access to skeletal hand tracking
+
+211
+00:08:53,966 --> 00:08:56,533
+to bring custom interactions into your app
+
+212
+00:08:57,800 --> 00:08:59,900
+now that we've seen some of the capabilities
+
+213
+00:08:59,900 --> 00:09:01,100
+available for apps
+
+214
+00:09:01,166 --> 00:09:02,699
+let's move on to exploring
+
+215
+00:09:02,700 --> 00:09:04,700
+how we are developing those apps
+
+216
+00:09:06,133 --> 00:09:07,666
+everything starts with X Code
+
+217
+00:09:07,933 --> 00:09:10,566
+Apple's integrated development environment
+
+218
+00:09:11,200 --> 00:09:12,866
+X Code offers a complete
+
+219
+00:09:12,866 --> 00:09:14,933
+set of tools for developing apps
+
+220
+00:09:14,933 --> 00:09:17,466
+including project management support
+
+221
+00:09:17,733 --> 00:09:19,533
+visual editors for your UI
+
+222
+00:09:19,766 --> 00:09:23,366
+debugging tools assimilator and much more
+
+223
+00:09:24,066 --> 00:09:25,499
+and most importantly
+
+224
+00:09:25,666 --> 00:09:27,999
+X Code also comes with a platformesticate
+
+225
+00:09:28,333 --> 00:09:31,566
+which provides the complete set of frameworks and APIs
+
+226
+00:09:31,600 --> 00:09:33,500
+you'll use for developing your app
+
+227
+00:09:34,300 --> 00:09:36,700
+if your source file contains a Swift UI
+
+228
+00:09:36,700 --> 00:09:37,866
+preview provider
+
+229
+00:09:38,100 --> 00:09:41,566
+the preview canvas will automatically open up in X code
+
+230
+00:09:42,133 --> 00:09:45,533
+the preview canvas has been extended to support 3D
+
+231
+00:09:45,666 --> 00:09:47,266
+allowing you to visualize
+
+232
+00:09:47,266 --> 00:09:49,099
+real ticket code for your scene
+
+233
+00:09:49,200 --> 00:09:51,733
+including animations and custom code
+
+234
+00:09:52,733 --> 00:09:55,333
+this enables shorter iteration times
+
+235
+00:09:55,366 --> 00:09:57,566
+finding the right look and feel for your app
+
+236
+00:09:57,566 --> 00:09:59,333
+as you edit live code
+
+237
+00:09:59,333 --> 00:10:02,566
+and see the results of changes and tweaks directly
+
+238
+00:10:03,333 --> 00:10:05,533
+let's experiment a little bit here with
+
+239
+00:10:05,533 --> 00:10:06,566
+how the satellite
+
+240
+00:10:06,566 --> 00:10:08,366
+looks orbiting the earth
+
+241
+00:10:08,566 --> 00:10:10,066
+changing the orbital speed
+
+242
+00:10:10,066 --> 00:10:11,499
+and the size of the satellite
+
+243
+00:10:12,200 --> 00:10:14,733
+notice the preview reflects the code changes
+
+244
+00:10:14,733 --> 00:10:16,966
+making it easy to see the results
+
+245
+00:10:16,966 --> 00:10:19,199
+a quick experimentation in the code
+
+246
+00:10:20,666 --> 00:10:21,766
+X Code Previews
+
+247
+00:10:22,000 --> 00:10:23,466
+also has an object mode
+
+248
+00:10:23,466 --> 00:10:26,533
+that allows for quick previews of 3D layouts
+
+249
+00:10:26,933 --> 00:10:30,199
+for example seeing if your layout fits inside the
+
+250
+00:10:30,200 --> 00:10:31,200
+bounds of the view
+
+251
+00:10:31,766 --> 00:10:33,266
+this is great for building
+
+252
+00:10:33,266 --> 00:10:36,666
+tightly integrated scenes with both traditional UI
+
+253
+00:10:36,800 --> 00:10:38,566
+and new 3D visuals
+
+254
+00:10:40,066 --> 00:10:41,166
+X Code Preview
+
+255
+00:10:41,166 --> 00:10:44,299
+gives you a fantastic way to get the layout right
+
+256
+00:10:44,533 --> 00:10:45,866
+before you run your app
+
+257
+00:10:46,400 --> 00:10:48,500
+the simulator is a great way of
+
+258
+00:10:48,500 --> 00:10:50,500
+testing interactivity with your app
+
+259
+00:10:50,866 --> 00:10:51,866
+you can move
+
+260
+00:10:51,866 --> 00:10:54,966
+and look around in the scene using a keyboard
+
+261
+00:10:55,066 --> 00:10:57,533
+mouse or compatible game controller
+
+262
+00:10:58,066 --> 00:11:00,066
+and it's easy to interact with your app
+
+263
+00:11:00,066 --> 00:11:02,566
+by using simulated system gestures
+
+264
+00:11:03,333 --> 00:11:05,166
+the simulator comes with three
+
+265
+00:11:05,200 --> 00:11:06,900
+different simulated scenes
+
+266
+00:11:07,166 --> 00:11:09,699
+each with the day and night lighting
+
+267
+00:11:10,200 --> 00:11:12,566
+this makes it easy to see your app under
+
+268
+00:11:12,566 --> 00:11:13,599
+different conditions
+
+269
+00:11:14,200 --> 00:11:17,366
+the simulator is a great way to run and debung most
+
+270
+00:11:17,366 --> 00:11:20,499
+apps and to quickly iterate during development
+
+271
+00:11:20,500 --> 00:11:22,733
+with a very predictable environment
+
+272
+00:11:24,000 --> 00:11:25,300
+we've also extended
+
+273
+00:11:25,300 --> 00:11:28,866
+excode to support a number of runtime visualizations
+
+274
+00:11:28,866 --> 00:11:30,266
+while you are debugging
+
+275
+00:11:30,366 --> 00:11:32,099
+to help you quickly understand
+
+276
+00:11:32,100 --> 00:11:34,933
+and track down bugs by simply looking at the scene
+
+277
+00:11:35,866 --> 00:11:37,933
+here we have plane estimation visible
+
+278
+00:11:37,933 --> 00:11:40,566
+including semantic meaning of those planes
+
+279
+00:11:40,700 --> 00:11:42,366
+and the collision shapes in the scene
+
+280
+00:11:42,933 --> 00:11:44,366
+it's easy to toggle
+
+281
+00:11:44,366 --> 00:11:46,866
+visualizations you would like to focus on from
+
+282
+00:11:46,866 --> 00:11:47,566
+the debugger and
+
+283
+00:11:47,566 --> 00:11:50,966
+X code these visualizations were great
+
+284
+00:11:50,966 --> 00:11:53,366
+both in its simulator and in the device
+
+285
+00:11:54,166 --> 00:11:55,199
+when it becomes time
+
+286
+00:11:55,200 --> 00:11:57,166
+to polish your application's performance
+
+287
+00:11:57,166 --> 00:11:58,266
+and responsiness
+
+288
+00:11:58,266 --> 00:12:00,666
+we've got familiar tools like Instruments
+
+289
+00:12:01,533 --> 00:12:03,899
+Instruments is a powerful performance
+
+290
+00:12:03,900 --> 00:12:05,466
+analysis tool included with
+
+291
+00:12:05,466 --> 00:12:08,466
+X Code you can use instruments to provide you with
+
+292
+00:12:08,466 --> 00:12:10,733
+actionable insights of your running app
+
+293
+00:12:11,966 --> 00:12:13,533
+and for spatial computing
+
+294
+00:12:13,566 --> 00:12:16,533
+instruments 15 includes a new template
+
+295
+00:12:16,766 --> 00:12:18,066
+real Ticket Trace
+
+296
+00:12:18,400 --> 00:12:20,933
+providing even more and deeper insights
+
+297
+00:12:20,933 --> 00:12:22,866
+into new behaviors on the platform
+
+298
+00:12:24,266 --> 00:12:25,099
+the royalty get
+
+299
+00:12:25,100 --> 00:12:26,166
+trace template
+
+300
+00:12:26,166 --> 00:12:29,299
+has new instruments allowing developers to understand
+
+301
+00:12:29,300 --> 00:12:30,966
+GPU CPU
+
+302
+00:12:31,200 --> 00:12:33,500
+and system power impact of their app
+
+303
+00:12:33,666 --> 00:12:36,133
+and identify performance hotspots
+
+304
+00:12:36,666 --> 00:12:39,933
+you can easily observe and understand frame bottlenecks
+
+305
+00:12:39,966 --> 00:12:42,599
+and trace them back to vital metrics like
+
+306
+00:12:42,600 --> 00:12:44,200
+total triangle submitted
+
+307
+00:12:44,300 --> 00:12:47,300
+or number of reality kit entity simulated
+
+308
+00:12:48,066 --> 00:12:49,599
+this lets you quickly find
+
+309
+00:12:49,600 --> 00:12:52,066
+and address potential performance issues
+
+310
+00:12:53,366 --> 00:12:54,666
+for more details
+
+311
+00:12:54,733 --> 00:12:57,733
+check out the session Meat Reality Trace
+
+312
+00:12:59,966 --> 00:13:01,766
+we've also introduced a new
+
+313
+00:13:01,766 --> 00:13:04,566
+developer tool called Reality Composer Pro
+
+314
+00:13:05,200 --> 00:13:07,700
+it allows you to preview and prepare
+
+315
+00:13:07,700 --> 00:13:09,566
+3D content for your apps
+
+316
+00:13:10,000 --> 00:13:11,600
+Reactive Composer Pro
+
+317
+00:13:11,700 --> 00:13:13,500
+helps you get an overview of
+
+318
+00:13:13,500 --> 00:13:15,866
+all your assets and how they fit
+
+319
+00:13:15,866 --> 00:13:16,933
+together in your scene
+
+320
+00:13:18,166 --> 00:13:21,066
+a new feature that we're added to realticate
+
+321
+00:13:21,066 --> 00:13:22,133
+is particles
+
+322
+00:13:22,200 --> 00:13:25,200
+and you can use a workflow in Reality Composer Pro
+
+323
+00:13:25,200 --> 00:13:26,900
+to author and preview them
+
+324
+00:13:27,700 --> 00:13:30,966
+adding particles into your scene provides movement
+
+325
+00:13:31,000 --> 00:13:33,366
+life and endless possibilities
+
+326
+00:13:33,733 --> 00:13:35,733
+clouds rain and sparks
+
+327
+00:13:35,733 --> 00:13:37,999
+are just a few effects that you can build in a
+
+328
+00:13:38,000 --> 00:13:39,166
+short amount of time
+
+329
+00:13:40,266 --> 00:13:41,333
+adding audio
+
+330
+00:13:41,366 --> 00:13:44,499
+into your scenes and associate them with objects
+
+331
+00:13:44,500 --> 00:13:48,266
+is a breeze you can also spatially preview audio
+
+332
+00:13:48,266 --> 00:13:50,299
+which takes into account the shape
+
+333
+00:13:50,300 --> 00:13:52,500
+and context of your entire scene
+
+334
+00:13:53,766 --> 00:13:56,899
+most virtual objects will use reality kits
+
+335
+00:13:56,900 --> 00:13:58,533
+physically based material
+
+336
+00:13:58,700 --> 00:14:02,066
+to represent the variety of real world materials
+
+337
+00:14:02,700 --> 00:14:05,800
+reality kits use a sensor data to feed real world
+
+338
+00:14:05,800 --> 00:14:06,933
+lining information
+
+339
+00:14:07,133 --> 00:14:08,466
+into these materials
+
+340
+00:14:08,700 --> 00:14:10,800
+grounding them in people surroundings
+
+341
+00:14:11,766 --> 00:14:12,566
+real ticket
+
+342
+00:14:12,733 --> 00:14:15,466
+also has a couple of additional standard materials
+
+343
+00:14:15,533 --> 00:14:17,066
+available for your app
+
+344
+00:14:17,133 --> 00:14:19,399
+to use in common scenarios
+
+345
+00:14:20,566 --> 00:14:23,266
+for those times when you have a very specific need
+
+346
+00:14:23,366 --> 00:14:25,766
+perhaps to convey a creative intent
+
+347
+00:14:26,100 --> 00:14:29,733
+you can auto custom materials in reality Composer Pro
+
+348
+00:14:29,866 --> 00:14:32,133
+with an open standard Material X
+
+349
+00:14:32,933 --> 00:14:35,899
+you can do this through an easy to use note graph
+
+350
+00:14:36,133 --> 00:14:37,666
+without touching any code
+
+351
+00:14:37,733 --> 00:14:40,899
+and quickly preview them directly in the viewport
+
+352
+00:14:42,133 --> 00:14:44,399
+you can learn more about this in the session
+
+353
+00:14:44,400 --> 00:14:45,933
+Explore Materials
+
+354
+00:14:45,933 --> 00:14:47,499
+in Reality Composer Pro
+
+355
+00:14:48,733 --> 00:14:51,199
+when you're feeling good about your 3D content
+
+356
+00:14:51,400 --> 00:14:54,266
+you can send your scenes to your device
+
+357
+00:14:54,900 --> 00:14:57,366
+and test your content directly
+
+358
+00:14:57,466 --> 00:14:59,566
+this is great for iteration times
+
+359
+00:14:59,733 --> 00:15:01,733
+since you don't even have to build an app
+
+360
+00:15:02,200 --> 00:15:03,266
+to learn more
+
+361
+00:15:03,266 --> 00:15:06,499
+watch the session Meet Reality Composer Pro
+
+362
+00:15:07,966 --> 00:15:10,766
+another option that is available is Unity
+
+363
+00:15:11,566 --> 00:15:14,899
+Unity is bringing the ability for you to write apps for
+
+364
+00:15:14,900 --> 00:15:16,000
+spatial computing
+
+365
+00:15:16,000 --> 00:15:17,766
+with familiar workflows
+
+366
+00:15:17,866 --> 00:15:19,866
+and without any plugins required
+
+367
+00:15:20,333 --> 00:15:23,133
+you can bring your existing content over to power
+
+368
+00:15:23,133 --> 00:15:25,333
+new immersive experiences
+
+369
+00:15:25,966 --> 00:15:26,999
+to learn more
+
+370
+00:15:27,100 --> 00:15:29,700
+watch these sessions covering how to write
+
+371
+00:15:29,700 --> 00:15:31,566
+immersive apps with unity
+
+372
+00:15:32,766 --> 00:15:33,533
+now that we
+
+373
+00:15:33,533 --> 00:15:36,066
+understand some of the fundamental concepts and
+
+374
+00:15:36,066 --> 00:15:37,566
+tools available to us
+
+375
+00:15:37,666 --> 00:15:40,133
+let's see how we can start building apps
+
+376
+00:15:40,800 --> 00:15:42,666
+there are two ways to get started
+
+377
+00:15:43,133 --> 00:15:44,733
+either you design a brand new
+
+378
+00:15:44,733 --> 00:15:46,733
+app from the ground up to be spatial
+
+379
+00:15:47,300 --> 00:15:49,333
+or perhaps you have an existing app
+
+380
+00:15:49,333 --> 00:15:52,299
+that you want to bring into this new spatial platform
+
+381
+00:15:52,900 --> 00:15:55,066
+let's explore how we build a new app
+
+382
+00:15:56,533 --> 00:15:58,699
+designing an application from the ground up
+
+383
+00:15:58,700 --> 00:16:02,133
+to be spatial helps you to quickly embrace the new
+
+384
+00:16:02,133 --> 00:16:03,533
+unique capabilities
+
+385
+00:16:03,600 --> 00:16:04,900
+of spatial computing
+
+386
+00:16:05,400 --> 00:16:07,200
+to get started you can use
+
+387
+00:16:07,333 --> 00:16:09,599
+new app template for this platform
+
+388
+00:16:10,566 --> 00:16:13,666
+the app template has two new important options
+
+389
+00:16:13,800 --> 00:16:14,600
+first
+
+390
+00:16:14,666 --> 00:16:17,566
+you can choose your initial scene type to be either a
+
+391
+00:16:17,566 --> 00:16:19,133
+window or a volume
+
+392
+00:16:19,766 --> 00:16:22,533
+this generates the initial starting code for you
+
+393
+00:16:22,600 --> 00:16:25,200
+and it's easy to add additional scenes later
+
+394
+00:16:25,666 --> 00:16:26,899
+the second option
+
+395
+00:16:26,900 --> 00:16:29,366
+lets you add an entry point for an immersive
+
+396
+00:16:29,366 --> 00:16:30,533
+space to your app
+
+397
+00:16:30,933 --> 00:16:34,366
+by default your app will launch into this shared space
+
+398
+00:16:35,100 --> 00:16:38,566
+if you select immersive scene type to space
+
+399
+00:16:38,800 --> 00:16:41,333
+a second scene will be added to app
+
+400
+00:16:41,366 --> 00:16:43,299
+along with an example button
+
+401
+00:16:43,333 --> 00:16:46,133
+showing how to launch into this full space
+
+402
+00:16:47,200 --> 00:16:49,100
+and when you finish the assistant
+
+403
+00:16:49,266 --> 00:16:52,799
+you're presented with initial working app in Swift UI
+
+404
+00:16:52,900 --> 00:16:56,766
+that shows familiar buttons mixed in with 3D object
+
+405
+00:16:56,800 --> 00:16:58,300
+rendered with Reality Kit
+
+406
+00:16:59,500 --> 00:17:01,966
+to learn more watch the session
+
+407
+00:17:02,066 --> 00:17:04,166
+develop your first immersive app
+
+408
+00:17:05,466 --> 00:17:07,766
+we're also publishing code samples
+
+409
+00:17:07,766 --> 00:17:09,799
+each one of them illustrating
+
+410
+00:17:09,966 --> 00:17:12,766
+different topics to quickly get you up to speed
+
+411
+00:17:13,566 --> 00:17:16,766
+Destination Video shows you how to build a shared
+
+412
+00:17:16,766 --> 00:17:18,899
+immersive playback experience
+
+413
+00:17:19,133 --> 00:17:22,466
+that incorporates 3D video and spatial audio
+
+414
+00:17:23,500 --> 00:17:26,900
+Happy Beam is an example how you can create a game
+
+415
+00:17:26,900 --> 00:17:29,333
+that leverages an immersive space
+
+416
+00:17:29,566 --> 00:17:31,899
+including custom hand gestures
+
+417
+00:17:31,933 --> 00:17:33,899
+to create a fun game with friends
+
+418
+00:17:34,300 --> 00:17:35,500
+and Hello World
+
+419
+00:17:35,500 --> 00:17:37,300
+shows how to transition
+
+420
+00:17:37,333 --> 00:17:40,366
+between different visual modes with the 3D globe
+
+421
+00:17:40,933 --> 00:17:43,366
+Christopher will talk more in detail
+
+422
+00:17:43,366 --> 00:17:45,066
+about Hello World later
+
+423
+00:17:45,933 --> 00:17:48,533
+building and designing your app from the ground up
+
+424
+00:17:48,533 --> 00:17:49,533
+on this platform
+
+425
+00:17:49,533 --> 00:17:51,999
+offers opportunities to easily embrace
+
+426
+00:17:52,000 --> 00:17:53,766
+special computing concepts
+
+427
+00:17:54,133 --> 00:17:55,999
+however some of you might have
+
+428
+00:17:56,000 --> 00:17:57,866
+existing apps that you want to bring to
+
+429
+00:17:57,866 --> 00:17:58,799
+special computing
+
+430
+00:17:59,966 --> 00:18:04,666
+from the start iPad and iPhone apps look and feel great
+
+431
+00:18:05,066 --> 00:18:07,166
+if your app supports iPad
+
+432
+00:18:07,300 --> 00:18:10,366
+that variant will be preferred over iPhone
+
+433
+00:18:10,733 --> 00:18:13,266
+though iPhone only apps are fully supported
+
+434
+00:18:13,900 --> 00:18:15,566
+let's take a look at the recipes
+
+435
+00:18:15,566 --> 00:18:17,333
+apps shown here in the simulator
+
+436
+00:18:18,000 --> 00:18:21,066
+while this platform has its own darker style
+
+437
+00:18:21,133 --> 00:18:24,699
+iPad and iPhone apps retain a light mode style
+
+438
+00:18:25,733 --> 00:18:28,966
+windows can scale to allow ease of use
+
+439
+00:18:30,066 --> 00:18:34,099
+and rotations for apps are handled allowing you to see
+
+440
+00:18:34,166 --> 00:18:35,366
+different layouts
+
+441
+00:18:37,800 --> 00:18:40,666
+to find out more watch the session
+
+442
+00:18:40,666 --> 00:18:44,599
+run your iPad and iPhone apps in the shared space
+
+443
+00:18:44,933 --> 00:18:48,199
+to learn more about the systems built in behaviors
+
+444
+00:18:48,400 --> 00:18:51,800
+functional differences and how to test with a simulator
+
+445
+00:18:53,166 --> 00:18:56,933
+however running an existing iPad or iPhone app is
+
+446
+00:18:56,933 --> 00:18:57,966
+just the beginning
+
+447
+00:18:58,400 --> 00:19:01,500
+it's easy to add a destination in your
+
+448
+00:19:01,500 --> 00:19:04,533
+X code project for this platform with just a click
+
+449
+00:19:05,366 --> 00:19:09,133
+and after that we can simply select that target device
+
+450
+00:19:09,133 --> 00:19:10,966
+recompile and run
+
+451
+00:19:20,466 --> 00:19:21,866
+once you recompile
+
+452
+00:19:22,200 --> 00:19:26,133
+you get native spacing sicing and relay out
+
+453
+00:19:26,900 --> 00:19:30,800
+your windows and materials will all automatically move
+
+454
+00:19:30,800 --> 00:19:32,600
+to the platform's look and feel
+
+455
+00:19:32,933 --> 00:19:36,066
+ensuring legibility in any light condition
+
+456
+00:19:36,766 --> 00:19:37,499
+and your app
+
+457
+00:19:37,500 --> 00:19:40,200
+can take advantage of building capabilities
+
+458
+00:19:40,200 --> 00:19:42,600
+like highlighting for your custom controls
+
+459
+00:19:43,533 --> 00:19:44,866
+now here is Christopher
+
+460
+00:19:44,900 --> 00:19:47,500
+to show us how we can involve our apps further
+
+461
+00:19:47,700 --> 00:19:50,266
+using the concepts we covered so far
+
+462
+00:19:51,100 --> 00:19:52,966
+thanks Jim I'm gonna walk you through
+
+463
+00:19:52,966 --> 00:19:54,099
+how to build an application
+
+464
+00:19:54,100 --> 00:19:55,666
+that incorporates the elements you've Learned
+
+465
+00:19:55,666 --> 00:19:58,199
+previously let's start with Hello World
+
+466
+00:19:58,200 --> 00:19:59,333
+to explore some of the great
+
+467
+00:19:59,333 --> 00:20:00,799
+functionalities you can integrate
+
+468
+00:20:00,800 --> 00:20:01,600
+into your app
+
+469
+00:20:01,666 --> 00:20:03,266
+here's our sample in action
+
+470
+00:20:03,533 --> 00:20:05,333
+upon running the app in the simulator
+
+471
+00:20:05,333 --> 00:20:07,166
+Hello World launches with a window
+
+472
+00:20:07,300 --> 00:20:09,400
+into the shared space right in front of us
+
+473
+00:20:10,266 --> 00:20:12,899
+this is a familiar looking window made in Swift UI
+
+474
+00:20:12,933 --> 00:20:15,499
+and it contains different elements such as text
+
+475
+00:20:15,500 --> 00:20:17,133
+images and buttons
+
+476
+00:20:18,400 --> 00:20:21,300
+using tap gestures allows the navigation within the app
+
+477
+00:20:22,166 --> 00:20:25,399
+observe how our new view has embedded 3D content
+
+478
+00:20:25,766 --> 00:20:29,133
+Swift UI and 3D content now work together seamlessly
+
+479
+00:20:30,366 --> 00:20:31,899
+going back to our main window
+
+480
+00:20:31,933 --> 00:20:33,366
+and selecting planted earth
+
+481
+00:20:33,566 --> 00:20:34,933
+brings us to a new view
+
+482
+00:20:35,300 --> 00:20:36,866
+a new element appears
+
+483
+00:20:36,966 --> 00:20:38,166
+this is a volume
+
+484
+00:20:38,166 --> 00:20:40,133
+it contains a 3D model of the earth
+
+485
+00:20:40,133 --> 00:20:42,266
+alongside a few UI elements
+
+486
+00:20:43,300 --> 00:20:44,766
+by moving the window bar
+
+487
+00:20:44,766 --> 00:20:46,899
+the volume's position can be adjusted
+
+488
+00:20:46,900 --> 00:20:48,466
+anywhere in the surroundings
+
+489
+00:20:52,766 --> 00:20:54,166
+going back to our main window
+
+490
+00:20:54,166 --> 00:20:56,366
+again and selecting view Outer Space
+
+491
+00:20:56,566 --> 00:20:57,666
+brings up an invitation
+
+492
+00:20:57,666 --> 00:20:59,499
+for us to enter the solar system
+
+493
+00:21:02,866 --> 00:21:04,699
+from here we can enter space
+
+494
+00:21:05,000 --> 00:21:07,600
+which is shown here with an immersion style of full
+
+495
+00:21:08,000 --> 00:21:10,900
+our example renders planet earth and dims pass through
+
+496
+00:21:10,900 --> 00:21:12,800
+allowing us to focus on the content
+
+497
+00:21:12,800 --> 00:21:14,900
+with no distractions of the surroundings
+
+498
+00:21:16,333 --> 00:21:18,499
+now that we have seen how this looks in action
+
+499
+00:21:18,500 --> 00:21:19,266
+let's break down
+
+500
+00:21:19,266 --> 00:21:20,999
+some of the functionalities of Hello World
+
+501
+00:21:21,000 --> 00:21:22,766
+and show you how to use these concepts
+
+502
+00:21:22,766 --> 00:21:23,799
+in your own apps
+
+503
+00:21:25,000 --> 00:21:26,300
+as you've Learned from gym
+
+504
+00:21:26,366 --> 00:21:30,299
+there are multiple elements windows volumes and spaces
+
+505
+00:21:30,700 --> 00:21:32,333
+you can look at this as a spectrum
+
+506
+00:21:32,333 --> 00:21:34,366
+that your app can use to flex up and down
+
+507
+00:21:34,366 --> 00:21:36,899
+depending on what is best for people using your app
+
+508
+00:21:36,900 --> 00:21:38,133
+in a specific moment
+
+509
+00:21:38,500 --> 00:21:40,000
+you can choose to present one
+
+510
+00:21:40,000 --> 00:21:42,000
+or several windows in a shared space
+
+511
+00:21:42,000 --> 00:21:44,066
+allowing people to be more present
+
+512
+00:21:44,533 --> 00:21:45,866
+that can see pass through
+
+513
+00:21:46,066 --> 00:21:48,699
+and have a choice to have other app side by side
+
+514
+00:21:49,166 --> 00:21:51,966
+or you can choose to increase the immersion level
+
+515
+00:21:52,100 --> 00:21:54,766
+by having your app take over the space entirely
+
+516
+00:21:55,300 --> 00:21:57,466
+finding the most suitable elements for your apps
+
+517
+00:21:57,466 --> 00:21:58,966
+experience in a given moment
+
+518
+00:21:58,966 --> 00:22:01,899
+and flexing between them is an important consideration
+
+519
+00:22:02,000 --> 00:22:04,200
+when you design your app for spatial computing
+
+520
+00:22:05,333 --> 00:22:06,999
+next let's look further
+
+521
+00:22:07,000 --> 00:22:09,366
+into how to use Windows as part of your experience
+
+522
+00:22:10,333 --> 00:22:12,733
+windows serve as a starting point for your app
+
+523
+00:22:13,366 --> 00:22:15,599
+they are built with Swift UI using scenes
+
+524
+00:22:15,600 --> 00:22:18,066
+and they contain traditional views and controls
+
+525
+00:22:19,133 --> 00:22:21,866
+windows on this platform support mixing 2D
+
+526
+00:22:21,866 --> 00:22:23,166
+and 3D content
+
+527
+00:22:23,466 --> 00:22:25,599
+this means that your 3D content can be presented
+
+528
+00:22:25,600 --> 00:22:26,700
+alongside 2D
+
+529
+00:22:26,700 --> 00:22:27,866
+UI in a window
+
+530
+00:22:28,700 --> 00:22:31,900
+windows can be resized and repositioned in space
+
+531
+00:22:32,500 --> 00:22:34,566
+people can arrange them as per their liking
+
+532
+00:22:35,766 --> 00:22:37,299
+let's go back to our example
+
+533
+00:22:37,566 --> 00:22:38,733
+in Hello World
+
+534
+00:22:38,733 --> 00:22:41,566
+the content view holds our swift UI images
+
+535
+00:22:41,566 --> 00:22:43,133
+text and buttons
+
+536
+00:22:43,200 --> 00:22:44,133
+along with a call
+
+537
+00:22:44,133 --> 00:22:46,366
+to action to get more immersive content
+
+538
+00:22:47,466 --> 00:22:48,733
+creating a window is as
+
+539
+00:22:48,733 --> 00:22:50,766
+easy as adding a window group to our scene
+
+540
+00:22:51,366 --> 00:22:52,733
+inside the window group
+
+541
+00:22:52,733 --> 00:22:54,366
+we will display our content view
+
+542
+00:22:55,700 --> 00:22:57,966
+our content view can add 3D content
+
+543
+00:22:58,000 --> 00:23:00,200
+bringing a new dimension of death through your app
+
+544
+00:23:00,366 --> 00:23:03,166
+to do that you can use the new model 3D view
+
+545
+00:23:03,933 --> 00:23:05,766
+model 3D is similar to an image
+
+546
+00:23:05,766 --> 00:23:07,199
+making it easy to load
+
+547
+00:23:07,200 --> 00:23:09,466
+and display beautiful 3D content in your app
+
+548
+00:23:09,500 --> 00:23:11,100
+that is rendered by Reality Kit
+
+549
+00:23:11,700 --> 00:23:13,366
+to add Model 3D to your view
+
+550
+00:23:13,366 --> 00:23:14,866
+we initialize Model 3D
+
+551
+00:23:14,866 --> 00:23:16,966
+by passing the name of the satellite model
+
+552
+00:23:17,400 --> 00:23:19,800
+with this model 3D will find
+
+553
+00:23:19,800 --> 00:23:21,366
+and load the model and place it
+
+554
+00:23:21,366 --> 00:23:22,533
+into your view hierarchy
+
+555
+00:23:23,900 --> 00:23:24,166
+now
+
+556
+00:23:24,166 --> 00:23:26,599
+this window has the satellite embedded into the view
+
+557
+00:23:26,600 --> 00:23:28,933
+and can be seen coming out of the Z axis
+
+558
+00:23:28,966 --> 00:23:31,066
+adding a new dimension of depth your app
+
+559
+00:23:32,366 --> 00:23:33,799
+now that we have added a satellite
+
+560
+00:23:33,800 --> 00:23:35,133
+we can add interactions
+
+561
+00:23:35,133 --> 00:23:37,599
+interactions are fundamentally built into the system
+
+562
+00:23:37,600 --> 00:23:38,966
+and provided by Swift UI
+
+563
+00:23:40,200 --> 00:23:42,800
+Swift UI provides the gesture recognizers you are
+
+564
+00:23:42,800 --> 00:23:44,866
+already familiar with on apple platforms
+
+565
+00:23:45,366 --> 00:23:48,733
+such as tap on hover and rotate gesture
+
+566
+00:23:49,333 --> 00:23:51,699
+the platform provides new gesture recognizers
+
+567
+00:23:51,700 --> 00:23:53,366
+that are made for 3d interactions
+
+568
+00:23:53,366 --> 00:23:55,199
+like rotations in 3d space
+
+569
+00:23:55,400 --> 00:23:57,666
+taps on 3d objects and more
+
+570
+00:23:58,300 --> 00:23:59,200
+let's look at the code
+
+571
+00:23:59,200 --> 00:24:01,566
+that enables interactions with the satellite
+
+572
+00:24:01,933 --> 00:24:04,199
+we are going to enable a spatial tap gesture
+
+573
+00:24:04,333 --> 00:24:06,733
+so we can grab and move the satellite around
+
+574
+00:24:07,200 --> 00:24:11,333
+starting from model 3D we can now add a gesture inside
+
+575
+00:24:11,333 --> 00:24:14,499
+we add a drag gesture targeted to the satellite entity
+
+576
+00:24:14,933 --> 00:24:17,299
+we can then use the values passed in from the update
+
+577
+00:24:17,300 --> 00:24:19,000
+closure to move the satellite
+
+578
+00:24:19,700 --> 00:24:21,166
+let's see what that looks like
+
+579
+00:24:22,400 --> 00:24:23,800
+back in our satellite view
+
+580
+00:24:23,800 --> 00:24:25,400
+where our satellite is rendered
+
+581
+00:24:25,566 --> 00:24:27,766
+note the drag gesture allows me to tap
+
+582
+00:24:27,766 --> 00:24:30,199
+and drag the model moving with my interactions
+
+583
+00:24:33,266 --> 00:24:34,166
+as we've just seen
+
+584
+00:24:34,166 --> 00:24:36,766
+it's easy to mix 2D and 3D content
+
+585
+00:24:36,766 --> 00:24:38,266
+together with model 3D
+
+586
+00:24:39,300 --> 00:24:41,700
+these are just a few things you can do with a window
+
+587
+00:24:42,000 --> 00:24:44,900
+now let's look at another type of element volume
+
+588
+00:24:46,533 --> 00:24:48,533
+let's see what a volume has to offer
+
+589
+00:24:49,266 --> 00:24:51,466
+volume is an extension of a window
+
+590
+00:24:51,533 --> 00:24:53,266
+giving you similar functionality
+
+591
+00:24:54,066 --> 00:24:56,299
+a volume is a new style of window
+
+592
+00:24:56,300 --> 00:24:58,366
+that is ideal for 3D content
+
+593
+00:24:58,800 --> 00:25:00,466
+they can host multiple Swift UI
+
+594
+00:25:00,466 --> 00:25:01,999
+views containing your 2D
+
+595
+00:25:02,000 --> 00:25:03,333
+or 3D content
+
+596
+00:25:03,800 --> 00:25:06,166
+although volumes can be used in a full space
+
+597
+00:25:06,166 --> 00:25:08,166
+they're really built for the shared space
+
+598
+00:25:08,333 --> 00:25:09,099
+therefore
+
+599
+00:25:09,100 --> 00:25:11,500
+content must remain within the bounds of the volume
+
+600
+00:25:12,766 --> 00:25:15,066
+let's look at how to add a volume to your scene
+
+601
+00:25:15,400 --> 00:25:17,700
+you will start by creating a new window group
+
+602
+00:25:17,733 --> 00:25:20,099
+and setting its window style to volumetric
+
+603
+00:25:20,866 --> 00:25:23,333
+then you need to give it a default size
+
+604
+00:25:23,333 --> 00:25:24,733
+with the properties width
+
+605
+00:25:24,766 --> 00:25:26,133
+height and depth
+
+606
+00:25:26,600 --> 00:25:29,266
+the units of a volume can be specified in points
+
+607
+00:25:29,266 --> 00:25:32,466
+or meters let's look at this running in the simulator
+
+608
+00:25:33,200 --> 00:25:34,766
+when the application is presented
+
+609
+00:25:34,766 --> 00:25:36,966
+the volume is placed in front of the person
+
+610
+00:25:37,300 --> 00:25:39,600
+this volume has the dimensions we specified
+
+611
+00:25:39,600 --> 00:25:41,466
+along with the platform controls
+
+612
+00:25:41,933 --> 00:25:43,466
+the application title bar
+
+613
+00:25:43,466 --> 00:25:46,666
+which displays our app name making it easy to identify
+
+614
+00:25:46,766 --> 00:25:48,599
+which app this volume belongs to
+
+615
+00:25:49,266 --> 00:25:52,099
+the window bar enabling the volume to be positioned
+
+616
+00:25:52,333 --> 00:25:53,466
+and the close button
+
+617
+00:25:53,566 --> 00:25:56,266
+suspending the app when tapped closing the volume
+
+618
+00:25:58,100 --> 00:26:01,166
+currently our volume renders the 3d model of the earth
+
+619
+00:26:01,400 --> 00:26:02,933
+but you might want to start adding more
+
+620
+00:26:02,933 --> 00:26:04,666
+content in different behaviors
+
+621
+00:26:04,766 --> 00:26:05,933
+in order to do this
+
+622
+00:26:05,933 --> 00:26:08,733
+you can adopt Reality View as part of your app
+
+623
+00:26:09,900 --> 00:26:11,500
+reality view is a new view
+
+624
+00:26:11,500 --> 00:26:12,966
+that can be added to your scene
+
+625
+00:26:13,200 --> 00:26:15,900
+allowing for any number of entities to be managed
+
+626
+00:26:15,900 --> 00:26:17,500
+directly within Swift UI
+
+627
+00:26:18,766 --> 00:26:20,133
+Swift UI and Reality View
+
+628
+00:26:20,133 --> 00:26:21,766
+let you easily integrate your app
+
+629
+00:26:21,766 --> 00:26:23,999
+by connecting to Swift UI's manage state
+
+630
+00:26:24,100 --> 00:26:25,366
+and entity properties
+
+631
+00:26:25,666 --> 00:26:27,766
+this makes it easy to drive the behavior of
+
+632
+00:26:27,766 --> 00:26:30,499
+3d models with a source of truth from your apps data
+
+633
+00:26:30,500 --> 00:26:31,300
+model
+
+634
+00:26:31,700 --> 00:26:33,333
+conversion between coordinate spaces
+
+635
+00:26:33,333 --> 00:26:33,999
+it's easy
+
+636
+00:26:34,000 --> 00:26:36,666
+with conversion functions provided by Reality View
+
+637
+00:26:37,566 --> 00:26:39,566
+and reality view offers a way to position
+
+638
+00:26:39,566 --> 00:26:40,733
+swift UI elements
+
+639
+00:26:40,733 --> 00:26:41,933
+inside your 3DC
+
+640
+00:26:41,933 --> 00:26:43,099
+in through attachments
+
+641
+00:26:43,600 --> 00:26:44,533
+let's take a moment
+
+642
+00:26:44,533 --> 00:26:46,533
+to look at how we can use attachments
+
+643
+00:26:46,533 --> 00:26:47,733
+inside reality view
+
+644
+00:26:48,700 --> 00:26:51,066
+the Reality View initializer that we're going to use
+
+645
+00:26:51,066 --> 00:26:52,366
+takes three parameters
+
+646
+00:26:52,366 --> 00:26:53,466
+a mate closure
+
+647
+00:26:53,466 --> 00:26:54,733
+an update closure
+
+648
+00:26:54,866 --> 00:26:56,499
+and an attachments view builder
+
+649
+00:26:57,300 --> 00:26:58,133
+the make closure
+
+650
+00:26:58,133 --> 00:26:58,999
+allows you to create
+
+651
+00:26:59,000 --> 00:27:01,366
+entities and attach them to the route entity
+
+652
+00:27:02,066 --> 00:27:03,166
+the update closure
+
+653
+00:27:03,166 --> 00:27:05,566
+which is called whenever the state of the view changes
+
+654
+00:27:06,133 --> 00:27:08,199
+and lastly the attachments closure
+
+655
+00:27:08,300 --> 00:27:11,366
+is where we add our swift UI views with a tag property
+
+656
+00:27:11,533 --> 00:27:14,066
+that allows Reality View to translate our views
+
+657
+00:27:14,066 --> 00:27:14,999
+into entities
+
+658
+00:27:15,500 --> 00:27:17,400
+now let's work through an example
+
+659
+00:27:17,400 --> 00:27:19,900
+of how to use attachments with Reality View
+
+660
+00:27:20,966 --> 00:27:22,966
+adding an attachment is as easy as putting your
+
+661
+00:27:22,966 --> 00:27:23,566
+swift UI
+
+662
+00:27:23,566 --> 00:27:26,333
+view inside the attachment closure of Reality View
+
+663
+00:27:26,866 --> 00:27:29,299
+let's use this icon of a delicious pastry
+
+664
+00:27:29,300 --> 00:27:31,500
+to represent a location on our 3d globe
+
+665
+00:27:32,066 --> 00:27:33,133
+for each attachment
+
+666
+00:27:33,133 --> 00:27:35,733
+you must add a tag that gives the attachment a name
+
+667
+00:27:35,900 --> 00:27:37,500
+I'll name this one pin
+
+668
+00:27:38,400 --> 00:27:39,733
+to display the attachment
+
+669
+00:27:39,733 --> 00:27:41,799
+I'll add it to the content of my reality view
+
+670
+00:27:42,066 --> 00:27:43,666
+I'll do that in the update closure
+
+671
+00:27:43,666 --> 00:27:45,933
+by adding it to the root entity of the scene
+
+672
+00:27:46,500 --> 00:27:49,100
+here we can see the attachment made previously
+
+673
+00:27:49,200 --> 00:27:50,333
+rendering on the globe
+
+674
+00:27:50,333 --> 00:27:52,333
+above my favorite bakery location
+
+675
+00:27:53,900 --> 00:27:54,866
+as we've just seen
+
+676
+00:27:54,866 --> 00:27:57,533
+using Reality Kit unleashes powerful features
+
+677
+00:27:57,533 --> 00:27:58,866
+such as model 3D
+
+678
+00:27:59,000 --> 00:28:02,300
+reality view attachments and so many more
+
+679
+00:28:02,700 --> 00:28:04,900
+these can be easily integrated into your app
+
+680
+00:28:06,133 --> 00:28:07,866
+this is only scratching the surface
+
+681
+00:28:07,866 --> 00:28:09,399
+of what Reality Kit can do
+
+682
+00:28:10,066 --> 00:28:11,399
+if you want to know more
+
+683
+00:28:11,566 --> 00:28:13,299
+I encourage you to go and watch
+
+684
+00:28:13,300 --> 00:28:16,000
+build spatial experiences with Reality Kit
+
+685
+00:28:16,200 --> 00:28:16,966
+and
+
+686
+00:28:16,966 --> 00:28:20,066
+enhance your spatial computing app with Reality Kit
+
+687
+00:28:21,166 --> 00:28:23,199
+let's recap what we went through so far
+
+688
+00:28:23,533 --> 00:28:25,499
+a volume is a container that is
+
+689
+00:28:25,500 --> 00:28:27,666
+ideal for 2D and 3D content
+
+690
+00:28:28,133 --> 00:28:30,333
+volumes are built for the shared space
+
+691
+00:28:30,533 --> 00:28:32,099
+can coexist with windows
+
+692
+00:28:32,100 --> 00:28:34,266
+and are bounded to specific dimensions
+
+693
+00:28:35,100 --> 00:28:39,066
+next let's dive into our last type of element spaces
+
+694
+00:28:40,300 --> 00:28:42,866
+once your app is opening a dedicated full space
+
+695
+00:28:42,866 --> 00:28:44,933
+the system hides all other apps
+
+696
+00:28:44,933 --> 00:28:46,666
+leaving only your app visible
+
+697
+00:28:47,766 --> 00:28:49,866
+now you can place your apps window
+
+698
+00:28:49,866 --> 00:28:52,399
+volumes and content anywhere around you
+
+699
+00:28:53,600 --> 00:28:55,533
+thanks to Arkit and Reality Kit
+
+700
+00:28:55,533 --> 00:28:57,199
+your virtual content can
+
+701
+00:28:57,266 --> 00:28:58,899
+even interact with your surroundings
+
+702
+00:28:59,333 --> 00:29:00,799
+you could throw a virtual ball
+
+703
+00:29:00,800 --> 00:29:01,500
+into the room
+
+704
+00:29:01,500 --> 00:29:03,600
+and watch as it bounces off the wall
+
+705
+00:29:03,600 --> 00:29:05,000
+and then rolls on the floor
+
+706
+00:29:06,300 --> 00:29:07,966
+and with the addition of hand tracking
+
+707
+00:29:07,966 --> 00:29:10,733
+you can build custom gestures and interactions
+
+708
+00:29:10,766 --> 00:29:13,299
+or place the content relative to people's hands
+
+709
+00:29:14,300 --> 00:29:16,800
+many of these capabilities are coming from AR Kit
+
+710
+00:29:17,200 --> 00:29:18,700
+to go into more depth and
+
+711
+00:29:18,700 --> 00:29:20,533
+learn how you can leverage them in your app
+
+712
+00:29:20,533 --> 00:29:21,733
+be sure to check out
+
+713
+00:29:21,800 --> 00:29:24,100
+Meet AR Kit for a spatial computing session
+
+714
+00:29:25,066 --> 00:29:27,666
+with spaces your app can also offer
+
+715
+00:29:27,666 --> 00:29:28,733
+different levels of immersion
+
+716
+00:29:28,733 --> 00:29:30,133
+depending on which style is chosen
+
+717
+00:29:30,133 --> 00:29:31,166
+at creation time
+
+718
+00:29:32,666 --> 00:29:33,399
+Jim talked a bit
+
+719
+00:29:33,400 --> 00:29:35,500
+about the spectrum of immersion available in a full
+
+720
+00:29:35,500 --> 00:29:37,266
+space let's dive in
+
+721
+00:29:37,266 --> 00:29:39,566
+and learn more about how you can add more immersion
+
+722
+00:29:39,566 --> 00:29:40,366
+into your app
+
+723
+00:29:41,666 --> 00:29:42,566
+immersion style
+
+724
+00:29:42,566 --> 00:29:45,333
+is a parameter that can be passed in your full space
+
+725
+00:29:45,600 --> 00:29:48,366
+there are two basic styles called dot mixed
+
+726
+00:29:48,466 --> 00:29:49,333
+and dot full
+
+727
+00:29:50,166 --> 00:29:50,466
+mix
+
+728
+00:29:50,466 --> 00:29:53,333
+style layers your apps content on top of pass through
+
+729
+00:29:53,700 --> 00:29:56,766
+full style hides pass through and displays your content
+
+730
+00:29:56,800 --> 00:29:57,600
+only
+
+731
+00:29:58,700 --> 00:30:01,566
+you can also combine the two by choosing progressive
+
+732
+00:30:02,100 --> 00:30:04,300
+this style allows some pass through initially
+
+733
+00:30:04,466 --> 00:30:05,766
+but the person can change
+
+734
+00:30:05,766 --> 00:30:08,099
+the level of immersion all the way up to full
+
+735
+00:30:08,100 --> 00:30:09,733
+by turning the digital crown
+
+736
+00:30:09,766 --> 00:30:11,666
+located at the top of the device
+
+737
+00:30:12,333 --> 00:30:15,133
+let's go back to our example to explore immersion style
+
+738
+00:30:15,200 --> 00:30:17,800
+I'll start with the mix style and see how that looks
+
+739
+00:30:17,933 --> 00:30:20,399
+and because full space is a swift you I seen
+
+740
+00:30:20,500 --> 00:30:23,000
+I can use reality View to display the earth
+
+741
+00:30:24,166 --> 00:30:26,699
+here's the earth viewed from high orbit
+
+742
+00:30:27,466 --> 00:30:29,566
+and here's how I displayed the scene in my app
+
+743
+00:30:29,900 --> 00:30:32,666
+notice I didn't actually specify the immersion style
+
+744
+00:30:32,966 --> 00:30:35,166
+that's because when you create an immersive space
+
+745
+00:30:35,166 --> 00:30:37,766
+Swift UI assumes mixed styled by default
+
+746
+00:30:38,600 --> 00:30:40,733
+let's also take your app completely immersive
+
+747
+00:30:40,733 --> 00:30:42,733
+by adding a different immersion style
+
+748
+00:30:42,933 --> 00:30:45,566
+this time I'll use Immersion Style full
+
+749
+00:30:46,933 --> 00:30:48,266
+adding an immersive style
+
+750
+00:30:48,266 --> 00:30:50,366
+to the end of our immersive space is easy
+
+751
+00:30:50,966 --> 00:30:53,533
+we store the immersive style in our state variable
+
+752
+00:30:53,533 --> 00:30:54,966
+and then set the type to full
+
+753
+00:30:55,766 --> 00:30:56,899
+because we want to give
+
+754
+00:30:56,900 --> 00:30:57,700
+people the choice of
+
+755
+00:30:57,700 --> 00:30:59,400
+when they enter an immersive experience
+
+756
+00:30:59,400 --> 00:31:00,966
+it's a good idea to add a button
+
+757
+00:31:00,966 --> 00:31:01,933
+to allow the person
+
+758
+00:31:01,933 --> 00:31:04,299
+to decide if they want to enter this immersive style
+
+759
+00:31:04,666 --> 00:31:07,733
+now let's see the new immersive style in action
+
+760
+00:31:08,500 --> 00:31:09,333
+back in our app
+
+761
+00:31:09,333 --> 00:31:11,566
+I've taken Hello World from a single window
+
+762
+00:31:11,566 --> 00:31:12,599
+to fully immersed
+
+763
+00:31:12,600 --> 00:31:15,200
+allowing us to view planet earth from any angle
+
+764
+00:31:17,266 --> 00:31:18,766
+and that's just the beginning of what you can
+
+765
+00:31:18,766 --> 00:31:19,999
+do with your spatial app
+
+766
+00:31:20,333 --> 00:31:22,133
+let's see where you can go from here
+
+767
+00:31:23,100 --> 00:31:23,966
+in this session
+
+768
+00:31:23,966 --> 00:31:25,366
+we've covered the fundamentals
+
+769
+00:31:25,366 --> 00:31:26,366
+how to get started
+
+770
+00:31:26,366 --> 00:31:26,766
+and then
+
+771
+00:31:26,766 --> 00:31:28,733
+took you through the basics of building an app
+
+772
+00:31:29,166 --> 00:31:30,533
+we have some great sessions
+
+773
+00:31:30,533 --> 00:31:31,799
+that should be your next stop
+
+774
+00:31:31,966 --> 00:31:33,899
+about the principles of spatial design
+
+775
+00:31:34,200 --> 00:31:36,666
+or to learn about building apps with Swift UI
+
+776
+00:31:36,733 --> 00:31:37,966
+and with Reality Kit
+
+777
+00:31:38,300 --> 00:31:40,566
+or to begin creating your 3D content
+
+778
+00:31:41,333 --> 00:31:42,333
+with spatial computing
+
+779
+00:31:42,333 --> 00:31:45,133
+your app creation can venture into new exciting avenues
+
+780
+00:31:45,133 --> 00:31:46,366
+guided by your ingenuity
+
+781
+00:31:46,566 --> 00:31:47,699
+thanks for watching
+
