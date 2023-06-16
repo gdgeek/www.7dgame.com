@@ -1,5 +1,7 @@
 import { MetaSocket } from '@/node-editor/sockets/sockets'
 
+import env from '@/environment.js'
+
 var VerseType = {
   title: 'Verse',
   root: true,
@@ -17,10 +19,6 @@ var VerseType = {
     {
       type: 'space',
       key: 'space'
-    },
-    {
-      type: 'story',
-      key: 'story'
     }
   ],
   inputs: [
@@ -32,4 +30,11 @@ var VerseType = {
     }
   ]
 }
+if (env.canStory()) {
+  VerseType.controls.push({
+    type: 'story',
+    key: 'story'
+  })
+}
+
 export default VerseType

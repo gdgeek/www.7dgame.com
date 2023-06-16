@@ -15,6 +15,9 @@ function canWeb() {
 function canBlog() {
   return '7dgame.com' === process.env.VUE_APP_BASE_MODE
 }
+function canStory() {
+  return '7dgame.com' === process.env.VUE_APP_BASE_MODE
+}
 function canSetup() {
   return 'local' === process.env.VUE_APP_BASE_MODE
 }
@@ -82,6 +85,7 @@ module.exports = {
   canWeb,
   canBlog,
   canSetup,
+  canStory,
   subtitle,
   title,
   canManager,

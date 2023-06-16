@@ -183,6 +183,9 @@ function getIOMapByUuid(verse) {
   const iMap = new Map()
   const oMap = new Map()
   verse.metas.forEach(meta => {
+    if (!meta.event_node) {
+      return
+    }
     meta.event_node.inputs.forEach(input => {
       iMap.set(input.uuid, input)
     })

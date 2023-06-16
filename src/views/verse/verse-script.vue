@@ -62,6 +62,9 @@ export default {
       const inputs = []
 
       this.verse.metas.forEach(meta => {
+        if (!meta.event_node) {
+          return
+        }
         meta.event_node.inputs.forEach(input => {
           inputs.push({
             title: this.metas.get(meta.id) + ':' + input.title,
