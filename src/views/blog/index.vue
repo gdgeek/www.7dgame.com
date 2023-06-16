@@ -1,5 +1,7 @@
 <template>
   <div class="background-screen-border">
+    <Giant></Giant>
+
     <el-card class="box-card"></el-card>
 
     <el-card class="box-card">
@@ -19,6 +21,7 @@
 </template>
 
 <script>
+import Giant from '@/components/Web/Giant'
 import Book from '@/components/Book.vue'
 
 import Cards from '@/components/Web/Cards'
@@ -27,6 +30,7 @@ export default {
   name: 'WebIndex',
   components: {
     Cards,
+    Giant,
     Book
   },
   data() {
