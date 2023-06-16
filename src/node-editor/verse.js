@@ -229,6 +229,10 @@ const addLinked = async function ({ node, linked }) {
   }
 }
 const addMetaEvent = async function (meta, data) {
+  if (!meta.event_node) {
+    return
+  }
+  console.error(1)
   const node = editor_.nodes.find(n => {
     if (
       n.name.toLowerCase() === 'meta' &&
@@ -238,17 +242,25 @@ const addMetaEvent = async function (meta, data) {
     }
     return false
   })
+
+  console.error(2)
   if (node) {
+    console.error(5)
+    console.error(meta)
+    console.error(meta.event_node)
+
     meta.event_node.outputs.forEach(o => {
       node.addOutput(
         new Rete.Output(o.uuid, '[' + o.title + ']', EventSocket, 'multiConns')
       )
     })
+    console.error(4)
     meta.event_node.inputs.forEach(i => {
       node.addInput(
         new Rete.Input(i.uuid, '[' + i.title + ']', EventSocket, 'multiConns')
       )
     })
+    console.error(3)
     editor_.selectNode(node)
     editor_.selected.clear()
   }

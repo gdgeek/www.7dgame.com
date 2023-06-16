@@ -1,13 +1,6 @@
 <template>
   <div class="background-screen-border">
-    <AppleReality></AppleReality>
-
-    <el-card class="box-card">
-      <el-alert
-        title="此域名是苹果热情的AR开发者为苹果公司保护。"
-        type="error"
-      ></el-alert>
-    </el-card>
+    <el-card class="box-card"></el-card>
 
     <el-card class="box-card">
       <br />
@@ -20,17 +13,12 @@
     </el-card>
     <br />
     <el-card class="box-card">
-      <el-alert
-        title="我们做了7年HoloLens项目，今日开始专心Apple AR。"
-        type="error"
-      ></el-alert>
       <cards />
     </el-card>
   </div>
 </template>
 
 <script>
-import AppleReality from '@/components/Web/AppleReality'
 import Book from '@/components/Book.vue'
 
 import Cards from '@/components/Web/Cards'
@@ -39,7 +27,6 @@ export default {
   name: 'WebIndex',
   components: {
     Cards,
-    AppleReality,
     Book
   },
   data() {

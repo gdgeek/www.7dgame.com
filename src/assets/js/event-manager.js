@@ -144,6 +144,10 @@ async function loadLinked(verse) {
       node: meta.uuid,
       linked: []
     }
+    if (!meta.event_node) {
+      return
+    }
+
     meta.event_node.outputs.forEach(output => {
       if (lMap.has(output.id)) {
         nd.linked.push(lMap.get(output.id))
@@ -160,7 +164,11 @@ async function loadLinked(verse) {
 function getIOMapById(verse) {
   const iMap = new Map()
   const oMap = new Map()
+
   verse.metas.forEach(meta => {
+    if (!meta.event_node) {
+      return
+    }
     meta.event_node.inputs.forEach(input => {
       iMap.set(input.id, { node: meta.uuid, input })
     })

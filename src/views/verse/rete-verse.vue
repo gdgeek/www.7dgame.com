@@ -95,13 +95,16 @@ export default {
   },
 
   async mounted() {
+    console.log('==============')
     editor.initVerse({
       container: this.$refs.rete,
       verse_id: this.id,
       root: this
     })
+
     const response = await getVerse(this.id, 'metas, metaKnights,share')
 
+    console.log('123')
     this.verse = response.data
     if (this.verse.data == null) {
       this.verse.data = JSON.stringify({
@@ -118,18 +121,26 @@ export default {
         }
       })
     }
+
+    console.log(44)
     const data = JSON.parse(this.verse.data)
 
+    console.log(55)
     data.children.metas = this.supplyMetas(
       data.children.metas,
       this.verse.metas,
       this.verse.metaKnights
     )
 
+    console.log(66)
     //初始化数据
     await editor.setup(data)
+    console.log(777)
     await this.setSlots(data)
+    console.log(888)
     await this.arrange()
+
+    console.log('123??')
     if (!this.saveable) {
       editor.ban()
     }
@@ -325,6 +336,8 @@ export default {
     },
 
     async postEvent({ meta_id, node, inputs, outputs }) {
+      alert(1234)
+      alert(outputs)
       if (this.saveable) {
         await editor.loadEvent(meta_id, node, {
           inputs,
@@ -352,10 +365,16 @@ export default {
     },
 
     async arrange() {
+      console.log('!')
       await editor.removeLinked()
+      console.log('!2')
       await editor.arrange()
+      console.log('!3')
       await sleep(300)
+      console.log('!4')
       const data = await manager.loadLinked(this.verse)
+
+      console.log('!5')
       for (let i = 0; i < data.length; ++i) {
         const item = data[i]
         await editor.addLinked(item)
@@ -370,16 +389,24 @@ export default {
     },
 
     async setSlots(data) {
+      console.log(999)
       for (let i = 0; i < data.children.metas.length; ++i) {
         const node = data.children.metas[i]
         if (node.type.toLowerCase() == 'meta') {
+          console.log(889)
           const meta = this.verse.metas.find(item => {
+            console.log(99)
             if (item.id === node.parameters.id) {
+              console.log(2299)
               return true
             }
+            console.log(11)
             return false
           })
+          console.log(88)
           await editor.addMetaEvent(meta, node)
+
+          console.log(99)
         }
       }
     }
