@@ -4,6 +4,7 @@ import Blockly from 'blockly'
 import Event from './event.js'
 import EventWithParameter from './event-with-parameter.js'
 import Start from './start.js'
+import Anchor from './anchor.js'
 import Sleep from '../helper/sleep.js'
 
 const VerseCategory = {
@@ -14,7 +15,8 @@ const VerseCategory = {
     Event.toolbox,
     EventWithParameter.toolbox,
     Start.toolbox,
-    Sleep.toolbox
+    Sleep.toolbox,
+    Anchor.toolbox
   ]
 }
 
@@ -27,5 +29,6 @@ function VerseRegister(parameters) {
   RegisterData(EventWithParameter, parameters)
   RegisterData(Start, parameters)
   RegisterData(Sleep, parameters)
+  RegisterData(Anchor, parameters)
 }
 export { VerseCategory, VerseRegister }

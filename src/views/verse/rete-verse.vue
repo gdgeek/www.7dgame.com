@@ -6,7 +6,11 @@
       :ban="banKnight"
       ref="knightDialog"
     />
-    <knight-setup-dialog ref="knightSetup" />
+    <knight-setup-dialog
+      @selected="knightSelect"
+      @cancel="clearKnight()"
+      ref="knightSetup"
+    />
     <space-dialog
       @selected="spaceSelect"
       @cancel="clearSpace()"
@@ -14,7 +18,7 @@
     />
     <event-dialog
       :node="event.node"
-      :meta_id="event.meta_id"
+      :uuid="event.uuid"
       @postEvent="postEvent"
       ref="dialog"
     ></event-dialog>
@@ -54,7 +58,7 @@ import { putVerse } from '@/api/v1/verse'
 
 import { mapMutations } from 'vuex'
 import { getVerse } from '@/api/v1/verse'
-
+import { getMetaKnight } from '@/api/v1/meta-knight'
 var randomWords = require('random-words')
 import { v4 as uuidv4 } from 'uuid'
 import SpaceDialog from '@/components/MrPP/SpaceDialog.vue'
@@ -64,6 +68,7 @@ import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
 import { AbilityEditable } from '@/ability/ability'
 
 import EventDialog from '@/components/Rete/EventDialog.vue'
+import { getKnight } from '@/api/v1/knight'
 async function sleep(time) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -89,13 +94,13 @@ export default {
       verse: null,
       event: {
         node: null,
-        meta_id: -1
+        meta_id: -1,
+        uuid: null
       }
     }
   },
 
   async mounted() {
-    console.log('==============')
     editor.initVerse({
       container: this.$refs.rete,
       verse_id: this.id,
@@ -104,7 +109,6 @@ export default {
 
     const response = await getVerse(this.id, 'metas, metaKnights,share')
 
-    console.log('123')
     this.verse = response.data
     if (this.verse.data == null) {
       this.verse.data = JSON.stringify({
@@ -122,25 +126,59 @@ export default {
       })
     }
 
-    console.log(44)
     const data = JSON.parse(this.verse.data)
-
-    console.log(55)
+    console.error(data)
+    if (!data.children.metas) {
+      data.children.metas = []
+    }
     data.children.metas = this.supplyMetas(
       data.children.metas,
       this.verse.metas,
-      this.verse.metaKnights
+      item => {
+        return {
+          type: 'Meta',
+          parameters: {
+            uuid: item.uuid,
+            id: item.id,
+            title: randomWords(),
+            transform: {
+              position: { x: 0, y: 0, z: 0 },
+              rotate: { x: 0, y: 0, z: 0 },
+              scale: { x: 1, y: 1, z: 1 }
+            }
+          }
+        }
+      }
+      // this.verse.metaKnights
     )
-
-    console.log(66)
+    if (!data.children.metaKnights) {
+      data.children.metaKnights = []
+    }
+    data.children.metaKnights = this.supplyMetas(
+      data.children.metaKnights,
+      this.verse.metaKnights,
+      item => {
+        return {
+          type: 'MetaKnight',
+          parameters: {
+            uuid: item.uuid,
+            id: item.id,
+            knight: item.knight_id,
+            title: randomWords(),
+            transform: {
+              position: { x: 0, y: 0, z: 0 },
+              rotate: { x: 0, y: 0, z: 0 },
+              scale: { x: 1, y: 1, z: 1 }
+            }
+          }
+        }
+      }
+    )
     //初始化数据
     await editor.setup(data)
-    console.log(777)
-    await this.setSlots(data)
-    console.log(888)
+    await this.slots(data)
     await this.arrange()
 
-    console.log('123??')
     if (!this.saveable) {
       editor.ban()
     }
@@ -183,80 +221,38 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-    supplyMetas(children, metas, metaKnights) {
-      const mRet = children.filter(function (item) {
-        if (
-          metas.find(m => {
-            return item.type === 'Meta' && m.id === item.parameters.id
-          })
-        ) {
-          return true
+
+    createMetaKnight() {
+      this.$refs.knightSetup.open()
+    },
+    supplyMetas(children, nodes, creater) {
+      const ret = children.filter(function (item) {
+        if (item) {
+          if (
+            nodes.find(m => {
+              return m.id === item.parameters.id
+            })
+          ) {
+            return true
+          }
         }
+
         return false
       })
-      const kRet = children.filter(function (item) {
+
+      const supply = nodes.filter(function (item) {
         if (
-          metaKnights.find(m => {
-            return item.type === 'Knight' && m.id === item.parameters.id
-          })
-        ) {
-          return true
-        }
-        return false
-      })
-      const ret = [...mRet, ...kRet]
-      const mSupply = metas.filter(function (item) {
-        if (
+          item &&
           children.find(m => {
-            return m.type === 'Meta' && m.parameters.id == item.id
+            return m && m.parameters.id == item.id
           })
         ) {
           return false
         }
         return true
       })
-
-      mSupply.forEach(item => {
-        ret.push({
-          type: 'Meta',
-          parameters: {
-            uuid: uuidv4(),
-            id: item.id,
-            title: randomWords(),
-            transform: {
-              position: { x: 0, y: 0, z: 0 },
-              rotate: { x: 0, y: 0, z: 0 },
-              scale: { x: 1, y: 1, z: 1 }
-            }
-          }
-        })
-      })
-
-      const kSupply = metaKnights.filter(function (item) {
-        if (
-          children.find(m => {
-            return m.type === 'Knight' && m.parameters.id == item.id
-          })
-        ) {
-          return false
-        }
-        return true
-      })
-
-      kSupply.forEach(item => {
-        ret.push({
-          type: 'Knight',
-          parameters: {
-            uuid: uuidv4(),
-            id: item.id,
-            title: randomWords(),
-            transform: {
-              position: { x: 0, y: 0, z: 0 },
-              rotate: { x: 0, y: 0, z: 0 },
-              scale: { x: 1, y: 1, z: 1 }
-            }
-          }
-        })
+      supply.forEach(item => {
+        ret.push(creater(item))
       })
 
       return ret
@@ -292,14 +288,36 @@ export default {
         }
       }
     },
+    _updateKnightMetaEvent(data, knight_id) {
+      getKnight(knight_id).then(async response => {
+        const info = JSON.parse(response.data.info)
+        if (info.events) {
+          info.events.inputs.forEach(item => {
+            item.uuid = uuidv4()
+          })
+          info.events.outputs.forEach(item => {
+            item.uuid = uuidv4()
+          })
+          await editor.loadEvent(data.uuid, data.event_node, {
+            inputs: info.events.inputs,
+            outputs: info.events.outputs
+          })
 
+          data.event_node = await manager.rebuild(
+            data.event_node,
+            info.events.inputs,
+            info.events.outputs
+          )
+        }
+      })
+    },
     clearKnight() {
       this.knight.callback = null
     },
-    knightSelect(data) {
-      if (this.knight.callback !== null) {
-        this.knight.callback(data)
-      }
+    async knightSelect(data) {
+      const node = await editor.addMetaKnight({
+        knight: data.id
+      })
     },
     _setVerseName(name) {
       this.verse.name = name
@@ -326,20 +344,18 @@ export default {
           }
           return false
         })
+
         if (meta) {
           this.event.node = meta.event_node
-          this.event.meta_id = meta.id
-
+          this.event.uuid = meta.uuid
           this.$refs.dialog.open()
         }
       }
     },
 
-    async postEvent({ meta_id, node, inputs, outputs }) {
-      alert(1234)
-      alert(outputs)
+    async postEvent({ uuid, node, inputs, outputs }) {
       if (this.saveable) {
-        await editor.loadEvent(meta_id, node, {
+        await editor.loadEvent(uuid, node, {
           inputs,
           outputs
         })
@@ -354,7 +370,9 @@ export default {
 
       if (self.saveable) {
         const list = await editor.saveEvent()
+
         await manager.saveLinked(this.verse, list)
+
         await editor.removeLinked()
         const data = await editor.save()
         await putVerse(verse_id, {
@@ -365,48 +383,45 @@ export default {
     },
 
     async arrange() {
-      console.log('!')
       await editor.removeLinked()
-      console.log('!2')
       await editor.arrange()
-      console.log('!3')
       await sleep(300)
-      console.log('!4')
       const data = await manager.loadLinked(this.verse)
 
-      console.log('!5')
       for (let i = 0; i < data.length; ++i) {
         const item = data[i]
         await editor.addLinked(item)
       }
     },
-    async setup(json) {
-      const data = JSON.parse(json)
-      await editor.setup(data)
-      this.checkMetas(data)
-      this.setSlots(data)
-      return data
-    },
 
-    async setSlots(data) {
-      console.log(999)
+    async slots(data) {
       for (let i = 0; i < data.children.metas.length; ++i) {
         const node = data.children.metas[i]
-        if (node.type.toLowerCase() == 'meta') {
-          console.log(889)
-          const meta = this.verse.metas.find(item => {
-            console.log(99)
-            if (item.id === node.parameters.id) {
-              console.log(2299)
-              return true
-            }
-            console.log(11)
-            return false
-          })
-          console.log(88)
-          await editor.addMetaEvent(meta, node)
 
-          console.log(99)
+        const meta = this.verse.metas.find(item => {
+          if (item.id === node.parameters.id) {
+            return true
+          }
+          return false
+        })
+
+        if (meta) {
+          await editor.addEventNode(meta.event_node, node.parameters.uuid)
+        }
+      }
+
+      for (let i = 0; i < data.children.metaKnights.length; ++i) {
+        const node = data.children.metaKnights[i]
+
+        const metaKnight = this.verse.metaKnights.find(item => {
+          if (item.id === node.parameters.id) {
+            return true
+          }
+          return false
+        })
+
+        if (metaKnight) {
+          await editor.addEventNode(metaKnight.event_node, node.parameters.uuid)
         }
       }
     }

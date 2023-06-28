@@ -79,6 +79,7 @@ const setup = async function (data) {
     arrange()
     editor_.view.resize()
     AreaPlugin.zoomAt(editor_)
+    editor_.silent = false
   }, 250)
 }
 

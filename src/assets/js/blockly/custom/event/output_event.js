@@ -1,5 +1,7 @@
 import Blockly from 'blockly'
 import EventType from './type'
+
+import Helper from '../helper'
 const data = {
   name: 'output_event'
 }
@@ -48,7 +50,9 @@ const block = {
 
       // TODO: Assemble Lua into code variable.
       var code =
-        '_G.helper.output_event("' + index + '", "' + output_event + '")\n'
+        '_G.helper.trigger_event(' +
+        Helper.output_event(index, output_event) +
+        ')\n'
 
       return code
     }

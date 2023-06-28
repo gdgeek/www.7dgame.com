@@ -63,10 +63,10 @@ async function rebuild(node, inputs, outputs) {
   return ret
 }
 
-function filter(verse, map, list) {
+function filter(links, map, list) {
   const oldValue = []
   const newValue = []
-  verse.links.forEach(item => {
+  links.forEach(item => {
     oldValue.push({
       id: item.id,
       input: item.event_input_id,
@@ -86,6 +86,7 @@ function filter(verse, map, list) {
     addList: [],
     removeList: []
   }
+
   ret.addList = Array.from(newValue).filter(item => {
     const same = Array.from(oldValue).find(item2 => {
       if (item.input === item2.input && item.output === item2.output) {
@@ -111,7 +112,7 @@ function filter(verse, map, list) {
     }
     return true
   })
-
+  /**/
   return ret
 }
 function getLinked(data, linked, map) {
@@ -128,27 +129,45 @@ function getLinked(data, linked, map) {
   })
   return data
 }
+function getNodes(verse) {
+  const nodes = []
+
+  verse.metas.forEach(meta => {
+    let node = { uuid: meta.uuid }
+    Object.assign(node, meta.event_node)
+    nodes.push(node)
+  })
+  verse.metaKnights.forEach(metaKnight => {
+    let node = { uuid: metaKnight.uuid }
+    Object.assign(node, metaKnight.event_node)
+    nodes.push(node)
+  })
+  return nodes
+}
 async function loadLinked(verse) {
-  const map = getIOMapById(verse)
+  const nodes = getNodes(verse)
+  const map = getIOMapById(nodes)
+  const ret = []
 
   const lMap = new Map()
+
   verse.links.forEach(item => {
     lMap.set(
       item.event_output_id,
       getLinked(lMap.get(item.event_output_id), item, map)
     )
   })
-  const ret = []
-  verse.metas.forEach(meta => {
+
+  nodes.forEach(node => {
     const nd = {
-      node: meta.uuid,
+      node: node.uuid,
       linked: []
     }
-    if (!meta.event_node) {
+    if (!node) {
       return
     }
 
-    meta.event_node.outputs.forEach(output => {
+    node.outputs.forEach(output => {
       if (lMap.has(output.id)) {
         nd.linked.push(lMap.get(output.id))
       }
@@ -157,47 +176,51 @@ async function loadLinked(verse) {
       ret.push(nd)
     }
   })
-  console.error(ret)
+
   return ret
 }
 
-function getIOMapById(verse) {
+function getIOMapById(nodes) {
   const iMap = new Map()
   const oMap = new Map()
 
-  verse.metas.forEach(meta => {
-    if (!meta.event_node) {
+  nodes.forEach(node => {
+    if (!node) {
       return
     }
-    meta.event_node.inputs.forEach(input => {
-      iMap.set(input.id, { node: meta.uuid, input })
+    node.inputs.forEach(input => {
+      iMap.set(input.id, { node: node.uuid, input })
     })
 
-    meta.event_node.outputs.forEach(output => {
-      oMap.set(output.id, { node: meta.uuid, output })
+    node.outputs.forEach(output => {
+      oMap.set(output.id, { node: node.uuid, output })
     })
   })
+
   return { iMap, oMap }
 }
-function getIOMapByUuid(verse) {
+function getIOMapByUuid(nodes) {
   const iMap = new Map()
   const oMap = new Map()
-  verse.metas.forEach(meta => {
-    if (!meta.event_node) {
+  nodes.forEach(node => {
+    if (!node) {
       return
     }
-    meta.event_node.inputs.forEach(input => {
+    node.inputs.forEach(input => {
       iMap.set(input.uuid, input)
     })
 
-    meta.event_node.outputs.forEach(output => {
+    node.outputs.forEach(output => {
       oMap.set(output.uuid, output)
     })
   })
+
   return { iMap, oMap }
 }
 async function saveLinked(verse, list) {
-  const map = getIOMapByUuid(verse)
+  const nodes = getNodes(verse)
+
+  const map = getIOMapByUuid(nodes)
 
   const links = []
   for (var i = 0; i < list.length; i++) {
@@ -215,7 +238,8 @@ async function saveLinked(verse, list) {
       }
     }
   }
-  const oo = filter(verse, map, links)
+
+  const oo = filter(verse.links, map, links)
 
   oo.addList.forEach(async item => {
     const response = await postEventLink({

@@ -72,9 +72,11 @@ export default {
             uuid: input.uuid
           })
         })
-      }) /**/
+      })
+      const anchors = JSON.parse(this.verse.data).children.anchors
       return {
-        events: inputs
+        events: inputs,
+        anchors
       }
     },
     saveable() {

@@ -41,7 +41,9 @@ const block = {
       var code = '..'
 
       var code =
-        "meta['$main'] = function(parameter) \n" + statements_content + 'end\n'
+        "verse['$main'] = function(parameter) \n  is_playing = true\n" +
+        statements_content +
+        '  is_playing = false\nend\n'
 
       return code
     }

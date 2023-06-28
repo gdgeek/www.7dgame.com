@@ -1,5 +1,7 @@
 import Blockly from 'blockly'
 import EventType from './type'
+
+import Helper from '../helper'
 const data = {
   name: 'event'
 }
@@ -17,7 +19,7 @@ const block = {
           name: 'Event',
           options: function () {
             const events = resource.events
-            let opt = []
+            let opt = [['none', JSON.stringify({ index: '', uuid: '' })]]
             events.forEach(item => {
               opt.push([item.title, JSON.stringify(item)])
             })
@@ -48,7 +50,9 @@ const block = {
 
       // TODO: Assemble Lua into code variable.
       var code =
-        '_G.helper.verse_event("' + event.index + '", "' + event.uuid + '")\n'
+        '_G.helper.call_event(' +
+        Helper.input_event(event.index, event.uuid) +
+        ')\n'
 
       return code
     }

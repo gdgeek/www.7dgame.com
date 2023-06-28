@@ -1,5 +1,6 @@
 import Blockly from 'blockly'
 import EventType from './type'
+import Helper from '../helper'
 const data = {
   name: 'event-with-parameter'
 }
@@ -14,14 +15,15 @@ const block = {
       args0: [
         {
           type: 'input_value',
-          name: 'Parameter'
+          name: 'Parameter',
+          check: 'Parameter'
         },
         {
           type: 'field_dropdown',
           name: 'Event',
           options: function () {
             const events = resource.events
-            let opt = []
+            let opt = [['none', JSON.stringify({ index: '', uuid: '' })]]
             events.forEach(item => {
               opt.push([item.title, JSON.stringify(item)])
             })
@@ -46,7 +48,7 @@ const block = {
     }
     return data
   },
-  getLua({ index }) {
+  getLua() {
     const lua = function (block) {
       var event = JSON.parse(block.getFieldValue('Event'))
       var parameters = Blockly.Lua.valueToCode(
@@ -57,11 +59,9 @@ const block = {
 
       // TODO: Assemble Lua into code variable.
       var code =
-        '_G.helper.verse_event("' +
-        event.index +
-        '", "' +
-        event.uuid +
-        '",' +
+        '_G.helper.verse_event(' +
+        Helper.input_event(event.index, event.uuid) +
+        ',' +
         parameters +
         ')\n'
 

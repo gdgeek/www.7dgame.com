@@ -23,7 +23,6 @@
 import Blockly from 'blockly'
 import toolbox from '@/assets/js/blockly/verse/toolbox'
 import { AddBlocks } from '@/assets/js/blockly/verse/blocks'
-//import { putCyber } from '@/api/v1/cyber'
 
 import 'blockly/lua'
 
@@ -80,11 +79,6 @@ export default {
     if (this.blockly) {
       this.load(this.blockly)
     }
-    /*
-    if (self.cyber && self.cyber.data) {
-      self.load(self.cyber.data)
-    }
-    console.log(this.workspace) */
   },
   methods: {
     load(data) {
@@ -93,7 +87,8 @@ export default {
     handleClick(tab, event) {
       if (this.activeName === 'script') {
         this.script =
-          'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
+          'local verse = {}\nlocal is_playing = false\n\n' +
+          Blockly.Lua.workspaceToCode(this.workspace)
       }
       console.log(tab, event)
     },
@@ -103,7 +98,8 @@ export default {
 
       try {
         const script =
-          'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
+          'local verse = {}\nlocal is_playing = false\n\n' +
+          Blockly.Lua.workspaceToCode(this.workspace)
 
         this.$emit('submit', this.id, JSON.stringify(data), script, () => {
           this.$message({
@@ -111,10 +107,6 @@ export default {
             type: 'success'
           })
         })
-        /*const response = await putCyber(this.cyber.id, {
-          data: JSON.stringify(data),
-          script
-        })*/
       } catch (e) {
         this.$message({
           message: e.message,

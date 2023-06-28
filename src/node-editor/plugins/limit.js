@@ -36,7 +36,8 @@ function install(editor, options) {
         limit = item
       }
     })
-    if (limit === null || typeof limit.min === 'undefined') {
+
+    if (limit === null || typeof limit.max === 'undefined') {
       return true
     }
 
@@ -46,8 +47,8 @@ function install(editor, options) {
         ++count
       }
     })
-    if (count >= limit.min) {
-      alert('禁止创建' + component.name + '模块(至多' + limit.min + '个)')
+    if (count >= limit.max) {
+      alert('禁止创建' + component.name + '模块(至多' + limit.max + '个)')
       return false
     }
     return true

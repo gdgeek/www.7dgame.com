@@ -1,130 +1,81 @@
 <template>
-  <div>
-    <el-form :inline="true" ref="value" size="mini">
-      <el-form-item :inline="true" class="el-form-item" label="骑士">
-        <div v-if="value_ === null">
-          <el-button @click="select()" size="mini">未指派</el-button>
-        </div>
-        <div v-else>
-          <div v-if="item === null">
-            <i>载入中</i>
-          </div>
-          <div v-else>
-            <el-popover
-              placement="top-start"
-              :title="'标题:' + item.title"
-              width="200"
-              trigger="hover"
-            >
-              <el-image
-                v-if="item.image"
-                style="width: 100px; height: 100px"
-                :src="item.image.url"
-                fit="contain"
-              ></el-image>
-              <el-button-group slot="reference">
-                <el-button type="primary" plain @click="select()" size="mini">
-                  {{ value_ }}:{{ item.title }}
-                </el-button>
-                <el-button
-                  @click="click()"
-                  size="mini"
-                  icon="el-icon-edit"
-                ></el-button>
-              </el-button-group>
-            </el-popover>
-          </div>
-        </div>
-      </el-form-item>
-    </el-form>
-  </div>
+  <el-form :hidden="hidden" :inline="true" size="mini">
+    <el-form-item class="el-form-item" :inline="true" :label="data.title">
+      <el-popover
+        placement="top-start"
+        :title="title"
+        width="200"
+        trigger="hover"
+      >
+        <el-image
+          style="width: 100px; height: 100px"
+          :src="image"
+          fit="contain"
+        ></el-image>
+        <el-tag slot="reference">{{ title }}</el-tag>
+      </el-popover>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
 import { getKnight } from '@/api/v1/knight'
-import { putMetaKnight, getMetaKnight } from '@/api/v1/meta-knight'
 export default {
-  props: ['data', 'root', 'emitter', 'getData', 'putData'],
+  props: ['data', 'emitter', 'root', 'getData', 'putData'],
 
   data() {
     return {
-      item: null,
-      id: null,
-      value_: null
+      value: null,
+      item: null
     }
   },
   computed: {
-    value: {
-      get() {
-        return this.value_
-      },
-      set(value) {
-        if (this.value_ != value) {
-          this.value_ = value
-          this.refresh()
-        }
+    hidden() {
+      if (typeof this.data.hidden !== 'undefined' && this.data.hidden) {
+        return true
       }
+      return false
+    },
+    title() {
+      if (this.item === null) {
+        return '{空}'
+      }
+      return this.item.title
+    },
+    image() {
+      if (this.item === null) {
+        return '{空}'
+      }
+      return this.item.image.url
     }
   },
-  mounted() {
-    const self = this
+  async mounted() {
+    const value = this.getData(this.data.key)
+    if (typeof value !== 'undefined') {
+      this.value = value
+    } else if (typeof this.data.default !== 'undefined') {
+      this.value = this.data.default
+    }
 
-    this.$on('setId', async function (id) {
-      self.id = id
-      let r = await getMetaKnight(id)
-      const value = r.data.knight_id
-      if (typeof value !== 'undefined') {
-        this.value = value
-      } else if (typeof this.data.default !== 'undefined') {
-        this.value = this.data.default
-      }
-      self.reload()
-    })
+    this.refresh()
   },
+
   methods: {
-    click() {
-      this.root.setupKnight({ value: this.value, callback: this.onKnight })
-    },
-    select() {
-      this.root.openKnight({ value: this.value, callback: this.onKnight })
-    },
-
-    onKnight(data) {
-      if (data === null) {
-        this.value = null
-        this.item = null
-      } else {
-        this.value = data.id
-        this.item = data
-      }
-      this.reload()
-    },
-    async reload() {
-      const self = this
-      if (
-        this.value !== null &&
-        (this.item === null || this.value != this.item.id)
-      ) {
-        try {
-          const response = await getKnight(self.value, {
-            expand: 'author,image'
-          })
-
-          if (response.data !== null) {
-            self.item = response.data
-          }
-        } catch (e) {
-          console.error(e)
-        }
-      }
-    },
     refresh() {
-      if (this.root.saveable) {
-        putMetaKnight(this.id, { knight_id: this.value })
+      if (this.value !== null) {
+        getKnight(this.value, {
+          expand: 'image,author'
+        }).then(response => {
+          this.item = response.data
+        })
       }
-
+      if (this.data) {
+        this.putData(this.data.key, this.value)
+      }
       this.emitter.trigger('process', { status: 'node' })
     }
   }
 }
 </script>
+
+<style lang="scss" scoped></style>

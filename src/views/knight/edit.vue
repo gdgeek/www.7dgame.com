@@ -1,5 +1,12 @@
 <template>
   <div class="verse-view">
+    <event-dialog
+      :node="events"
+      :uuid="id"
+      @postEvent="postEvent"
+      ref="dialog"
+    ></event-dialog>
+
     <el-row :gutter="20" style="margin: 28px 18px 0">
       <el-col :sm="16">
         <el-card v-if="item" class="box-card">
@@ -45,14 +52,18 @@
         </el-form>
 
         <el-card v-if="item !== null" class="box-card">
-          <el-button
-            style="width: 100%"
-            @click="onSubmit"
-            type="primary"
-            size="mini"
-          >
-            保存
-          </el-button>
+          <el-button-group>
+            <el-button
+              @click="onSubmit"
+              icon="el-icon-circle-check"
+              type="primary"
+            >
+              信息保存
+            </el-button>
+            <el-button @click="openDialog" type="primary" icon="el-icon-edit">
+              事件编辑
+            </el-button>
+          </el-button-group>
           <br />
         </el-card>
       </el-col>
@@ -76,6 +87,7 @@
 </template>
 
 <script>
+import EventDialog from '@/components/Rete/EventDialog.vue'
 import { getKnight, putKnight } from '@/api/v1/knight'
 export default {
   data() {
@@ -83,8 +95,25 @@ export default {
       item: null
     }
   },
-  components: {},
+  components: {
+    EventDialog
+  },
   computed: {
+    info: {
+      get: function () {
+        if (this.item) return JSON.parse(this.item.info)
+        return null
+      },
+      set: function (data) {
+        this.item.info = JSON.stringify(data)
+      }
+    },
+    events() {
+      if (this.info) {
+        return this.info.events
+      }
+      return null
+    },
     id() {
       return parseInt(this.$route.query.id)
     }
@@ -93,9 +122,22 @@ export default {
     this.refresh()
   },
   methods: {
-    async refresh() {
-      const response = await getKnight(this.id, { expand: 'image,author' })
+    async postEvent({ uuid, node, inputs, outputs }) {
+      if (this.item) {
+        let info = this.info
+        info.events = { inputs, outputs }
+        this.info = info
+      }
 
+      this.$refs.dialog.close()
+    },
+    async openDialog() {
+      this.$refs.dialog.open()
+    },
+    async refresh() {
+      const response = await getKnight(this.id, {
+        expand: 'image,author'
+      })
       this.item = response.data
     },
     onSubmit() {

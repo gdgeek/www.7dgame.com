@@ -1,4 +1,8 @@
-import { MetaSocket } from '@/node-editor/sockets/sockets'
+import {
+  MetaKnightSocket,
+  MetaSocket,
+  AnchorSocket
+} from '@/node-editor/sockets/sockets'
 
 import env from '@/environment.js'
 
@@ -23,9 +27,21 @@ var VerseType = {
   ],
   inputs: [
     {
+      key: 'anchors',
+      title: 'Anchor',
+      socket: AnchorSocket,
+      multiConns: true
+    },
+    {
       key: 'metas',
       title: 'Meta',
       socket: MetaSocket,
+      multiConns: true
+    },
+    {
+      key: 'metaKnights',
+      title: 'MetaKnight',
+      socket: MetaKnightSocket,
       multiConns: true
     }
   ]

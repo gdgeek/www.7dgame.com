@@ -1,7 +1,7 @@
-import { MetaSocket } from '@/node-editor/sockets/sockets'
+import { MetaKnightSocket } from '@/node-editor/sockets/sockets'
 
-var KnightType = {
-  title: 'Knight',
+var MetaKnightType = {
+  title: 'MetaKnight',
   controls: [
     {
       type: 'uuid',
@@ -10,7 +10,7 @@ var KnightType = {
     {
       type: 'num',
       key: 'id',
-      hidden: true,
+      hidden: false,
       readonly: true
     },
     {
@@ -22,10 +22,10 @@ var KnightType = {
 
     {
       type: 'knight',
-      key: 'knight',
       title: '骑士',
-      readonly: false,
-      ignore: true
+      key: 'knight',
+      hidden: false,
+      readonly: true
     },
     {
       type: 'transform',
@@ -37,10 +37,10 @@ var KnightType = {
   outputs: [
     {
       key: 'out',
-      title: 'Meta',
-      socket: MetaSocket,
+      title: 'MetaKnight',
+      socket: MetaKnightSocket,
       multiConns: false
     }
   ]
 }
-export default KnightType
+export default MetaKnightType

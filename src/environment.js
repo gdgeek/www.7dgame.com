@@ -16,7 +16,10 @@ function canBlog() {
   return '7dgame.com' === process.env.VUE_APP_BASE_MODE
 }
 function canStory() {
-  return '7dgame.com' === process.env.VUE_APP_BASE_MODE
+  return (
+    'local' === process.env.VUE_APP_BASE_MODE ||
+    '7dgame.com' === process.env.VUE_APP_BASE_MODE
+  )
 }
 function canSetup() {
   return 'local' === process.env.VUE_APP_BASE_MODE

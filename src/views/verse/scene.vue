@@ -32,8 +32,6 @@ export default {
 
     return {
       isInit: false,
-      //editor: null,
-      //data: null,
       src,
       verse: null
     }

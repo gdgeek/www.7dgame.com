@@ -10,10 +10,18 @@ import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
 import BanPlugin from '@/node-editor/plugins/ban'
 import KnightPlugin from '@/node-editor/plugins/knight'
-import MetaPlugin from '@/node-editor/plugins/meta'
+import MetaKnightPlugin from '@/node-editor/plugins/metaKnight'
+
+import MetaPlugin from '@/node-editor/plugins/meta.js'
 import AlwaysConnectionPlugin from '@/node-editor/plugins/alwaysConnection'
 import { Component } from '@/node-editor/components/Component'
-import { Meta, Verse, Knight } from '@/node-editor/type/verseEditor'
+import {
+  Meta,
+  Verse,
+  Knight,
+  Anchor,
+  MetaKnight
+} from '@/node-editor/type/verseEditor'
 import { Build } from '@/node-editor/factory'
 
 let editor_ = null
@@ -22,19 +30,13 @@ const arrange = function () {
   editor_.trigger('arrange', editor_.nodes)
   console.error('arrange')
 }
-let outMeta_ = 0
-const addMeta = function (meta) {
-  const component = editor_.getComponent('Meta')
-  component.createNode({ meta }).then(node => {
-    node.position = [-300 + outMeta_ * 50, -150 + outMeta_ * 50]
-    editor_.addNode(node)
-    outMeta_++
-  })
-}
 
 const saveEvent = async function () {
   const list = editor_.nodes.filter(node => {
-    if (node.name.toLowerCase() === 'meta') {
+    if (
+      node.name.toLowerCase() === 'meta' ||
+      node.name.toLowerCase() === 'metaknight'
+    ) {
       return true
     }
     return false
@@ -92,12 +94,15 @@ const setup = async function (data) {
     arrange()
     editor_.view.resize()
     AreaPlugin.zoomAt(editor_)
+    editor_.silent = false
   }, 250)
 }
-const loadEvent = async function (id, oldValue, newValue) {
-  const node = getNodeByID({ id })
+const loadEvent = async function (uuid, oldValue, newValue) {
+  const node = getNodeByUUID({ uuid })
 
   if (!node) {
+    console.error(333)
+    console.error(uuid)
     return
   }
 
@@ -175,19 +180,20 @@ const loadEvent = async function (id, oldValue, newValue) {
       new Rete.Output(i.uuid, '[' + i.title + ']', EventSocket, 'multiConns')
     )
   })
+
   editor_.selectNode(node)
   editor_.selected.clear()
 }
 const getNodeByUUID = function ({ uuid }) {
   const node = editor_.nodes.find(item => {
-    if (item.data && item.data.uuid === uuid) {
+    if (item.data && item.data.uuid && item.data.uuid === uuid) {
       return true
     }
     return false
   })
   return node
 }
-
+/*
 const getNodeByID = function ({ id }) {
   const node = editor_.nodes.find(item => {
     if (item.data.id && item.data.id === id) {
@@ -196,7 +202,7 @@ const getNodeByID = function ({ id }) {
     return false
   })
   return node
-}
+}*/
 const removeLinked = async function () {
   const list = []
   editor_.nodes.forEach(node => {
@@ -228,60 +234,24 @@ const addLinked = async function ({ node, linked }) {
     })
   }
 }
-const addMetaEvent = async function (meta, data) {
-  if (!meta.event_node) {
+const addEventNode = async function (event_node, uuid) {
+  if (!event_node) {
     return
   }
-  console.error(1)
   const node = editor_.nodes.find(n => {
-    if (
-      n.name.toLowerCase() === 'meta' &&
-      n.data.uuid === data.parameters.uuid
-    ) {
-      return true
-    }
-    return false
-  })
-
-  console.error(2)
-  if (node) {
-    console.error(5)
-    console.error(meta)
-    console.error(meta.event_node)
-
-    meta.event_node.outputs.forEach(o => {
-      node.addOutput(
-        new Rete.Output(o.uuid, '[' + o.title + ']', EventSocket, 'multiConns')
-      )
-    })
-    console.error(4)
-    meta.event_node.inputs.forEach(i => {
-      node.addInput(
-        new Rete.Input(i.uuid, '[' + i.title + ']', EventSocket, 'multiConns')
-      )
-    })
-    console.error(3)
-    editor_.selectNode(node)
-    editor_.selected.clear()
-  }
-} /*
-const addEvent = async function (uuid, event) {
- 
-  const node = editor_.nodes.find(n => {
-    if (n.name.toLowerCase() === 'meta' && n.data.uuid === uuid) {
+    if (n.data.uuid && n.data.uuid === uuid) {
       return true
     }
     return false
   })
 
   if (node) {
-    const data = JSON.parse(event.data)
-    data.output.forEach(o => {
+    event_node.outputs.forEach(o => {
       node.addOutput(
         new Rete.Output(o.uuid, '[' + o.title + ']', EventSocket, 'multiConns')
       )
     })
-    data.input.forEach(i => {
+    event_node.inputs.forEach(i => {
       node.addInput(
         new Rete.Input(i.uuid, '[' + i.title + ']', EventSocket, 'multiConns')
       )
@@ -289,7 +259,7 @@ const addEvent = async function (uuid, event) {
     editor_.selectNode(node)
     editor_.selected.clear()
   }
-}*/
+}
 const banKnight = function () {
   const nodes = editor_.nodes.filter(n => {
     if (n.name.toLowerCase() === 'knight') {
@@ -314,17 +284,35 @@ const ban = function () {
   editor_.use(BanPlugin)
 }
 const initVerse = async function ({ container, verseId, root }) {
-  const types = [Meta, Verse, Knight]
+  const types = [Meta, Verse, Knight, Anchor, MetaKnight]
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
+  editor_.silent = true
   editor_.use(ConnectionPlugin)
   editor_.use(VueRenderPlugin)
-  editor_.use(ContextMenuPlugin, { nodeItems: { Clone: false } })
+
+  editor_.use(ContextMenuPlugin, {
+    nodeItems: { Clone: false },
+    delay: 100,
+    allocate(component) {
+      if (component.type_.title === 'MetaKnight') {
+        return null
+      }
+
+      return []
+    },
+    rename(component) {
+      console.log(component)
+      return component.name
+    }
+  })
+
   editor_.use(AutoArrangePlugin, { margin: { x: 50, y: 50 }, depth: 110 })
   editor_.use(AreaPlugin)
   editor_.use(LimitPlugin, [{ name: 'Verse', max: 1, min: 1 }])
 
   editor_.use(MetaPlugin, { verseId, root })
-  editor_.use(KnightPlugin, { verseId, root })
+  editor_.use(KnightPlugin, { root })
+  editor_.use(MetaKnightPlugin, { verseId, root })
 
   editor_.use(AlwaysConnectionPlugin, [
     {
@@ -332,13 +320,18 @@ const initVerse = async function ({ container, verseId, root }) {
       input: { name: 'Verse', socket: 'metas' }
     },
     {
-      output: { name: 'Knight', socket: 'out' },
-      input: { name: 'Verse', socket: 'metas' }
+      output: { name: 'MetaKnight', socket: 'out' },
+      input: { name: 'Verse', socket: 'metaKnights' }
+    },
+    {
+      output: { name: 'Anchor', socket: 'out' },
+      input: { name: 'Verse', socket: 'anchors' }
     }
   ])
   editor_.use(RandomStringPlugin, [
     { component: 'Meta', target: 'title' },
-    { component: 'Knight', target: 'title' }
+    { component: 'MetaKnight', target: 'title' },
+    { component: 'Anchor', target: 'title' }
   ])
 
   engine_ = new Rete.Engine('MrPP@0.1.0')
@@ -359,6 +352,28 @@ const initVerse = async function ({ container, verseId, root }) {
 
   editor_.trigger('process', { status: 'init' })
 }
+
+const addMetaKnight = function (parameters) {
+  return new Promise((resolve, reject) => {
+    const component = editor_.getComponent('MetaKnight')
+
+    component
+      .createNode(parameters)
+      .then(node => {
+        editor_.addNode(node)
+
+        setTimeout(() => {
+          arrange()
+          editor_.view.resize()
+          AreaPlugin.zoomAt(editor_)
+          resolve(node)
+        }, 250)
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
 export default {
   ban,
   initVerse,
@@ -367,11 +382,9 @@ export default {
   arrange,
   save,
   saveEvent,
-
-  addMetaEvent,
-  //addEvent,
+  addMetaKnight,
+  addEventNode,
   addLinked,
   removeLinked,
-  loadEvent,
-  addMeta
+  loadEvent
 }

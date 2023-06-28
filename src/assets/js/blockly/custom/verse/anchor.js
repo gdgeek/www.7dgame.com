@@ -1,34 +1,32 @@
 import Blockly from 'blockly'
-import DataType from './type'
+import EventType from './type'
 import Helper from '../helper'
 const data = {
-  name: 'polygen_entity'
+  name: 'anchor'
 }
 const block = {
   title: data.name,
-  type: DataType.name,
-  colour: DataType.colour,
+  type: EventType.name,
+  colour: EventType.colour,
   getBlockJson({ resource }) {
     const json = {
-      type: data.name,
-      message0: '模型 %1',
+      type: 'block_type',
+      message0: '锚点 %1',
       args0: [
         {
           type: 'field_dropdown',
-          name: 'Polygen',
+          name: 'Anchor',
           options: function () {
-            const polygen = resource.polygen
             let opt = [['none', '']]
-            polygen.forEach(poly => {
-              // alert(poly.name)
-              opt.push([poly.name, poly.uuid])
+            resource.anchors.forEach(item => {
+              opt.push([item.parameters.title, item.parameters.uuid])
             })
             return opt
           }
         }
       ],
-      output: 'Polygen',
-      colour: DataType.colour,
+      output: 'Parameter',
+      colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
     }
@@ -43,10 +41,10 @@ const block = {
     }
     return data
   },
-  getLua({ index }) {
+  getLua() {
     const lua = function (block) {
-      var dropdown_polygen = block.getFieldValue('Polygen')
-      return [Helper.handler(index, dropdown_polygen), Blockly.Lua.ORDER_NONE]
+      var anchor = block.getFieldValue('Anchor')
+      return [Helper.parameter('anchor', anchor), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

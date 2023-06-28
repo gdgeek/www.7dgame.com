@@ -73,17 +73,49 @@ function VerseLoader(editor) {
 		const matrix = builder.getMatrix4(meta.parameters.transform)
 		node.matrix = matrix
 	}
+	this.addAnchor = async function (anchor) {
+		console.error('anchor')
+		console.error(anchor)
 
+		let root = editor.objectByUuid(anchor.parameters.uuid)
+		const transform = anchor.parameters.transform
+		if (typeof root === 'undefined') {
+			root = new THREE.Object3D()
+			root.name = anchor.parameters.title + '(Anchor)'
+			root.uuid = anchor.parameters.uuid
+			root.type = 'Group'
+			root.locked = false
+			builder.setTransform(root, transform)
+
+			const geometry = new THREE.LatheGeometry()
+			const mesh = new THREE.Mesh(
+				geometry,
+				new THREE.MeshStandardMaterial({ side: THREE.DoubleSide })
+			)
+			mesh.name = 'Anchor'
+
+			//	var m = new THREE.Matrix4().makeScale(0.1, 0.1, 0.1)
+			mesh.scale.set(0.1, 0.1, 0.1)
+			mesh.locked = true
+			root.add(mesh)
+
+			editor.addObject(root)
+		} else {
+			builder.setTransform(root, transform)
+		}
+		//root.applyMatrix4(matrix)
+	}
 	this.addMeta = async function (meta, context, resources) {
 		let root = editor.objectByUuid(meta.parameters.uuid)
-		const matrix = builder.getMatrix4(meta.parameters.transform)
+		//const matrix = builder.getMatrix4(meta.parameters.transform)
+		const transform = meta.parameters.transform
 		if (typeof root === 'undefined') {
 			root = new THREE.Object3D()
 			root.name = meta.parameters.title
 			root.uuid = meta.parameters.uuid
 			root.type = 'Group'
 			root.locked = false
-			root.applyMatrix4(matrix)
+			builder.setTransform(root, transform)
 		}
 
 		if (context.children) {
@@ -108,6 +140,28 @@ function VerseLoader(editor) {
 	}
 
 	this.save = async function () {
+		const anchors = this.verse.children.anchors
+		anchors.forEach(anchor => {
+			const node = editor.objectByUuid(anchor.parameters.uuid)
+			if (node) {
+				anchor.parameters.name = node.name
+				anchor.parameters.transform.position = {
+					x: node.position.x,
+					y: node.position.y,
+					z: node.position.z
+				}
+				anchor.parameters.transform.rotate = {
+					x: (node.rotation.x / Math.PI) * 180,
+					y: (node.rotation.y / Math.PI) * 180,
+					z: (node.rotation.z / Math.PI) * 180
+				}
+				anchor.parameters.transform.scale = {
+					x: node.scale.x,
+					y: node.scale.y,
+					z: node.scale.z
+				}
+			}
+		})
 		const metas = this.verse.children.metas
 		metas.forEach(meta => {
 			const node = editor.objectByUuid(meta.parameters.uuid)
@@ -129,9 +183,6 @@ function VerseLoader(editor) {
 					y: node.scale.y,
 					z: node.scale.z
 				}
-
-				//meta.parameters.transform.active = node.visible
-				//(JSON.stringify(meta.parameters.transform.rotate))
 			}
 		})
 
@@ -173,6 +224,12 @@ function VerseLoader(editor) {
 		this.data.resources.forEach(r => {
 			resources.set(r.id, r)
 		})
+		if (this.verse.children.anchors) {
+			this.verse.children.anchors.forEach(async anchor => {
+				await self.addAnchor(anchor)
+			})
+		}
+		//this.verse.children.anchors
 		this.verse.children.metas.forEach(async meta => {
 			if (meta.type == 'Meta' && metas.has(meta.parameters.id)) {
 				const data = metas.get(meta.parameters.id)
