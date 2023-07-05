@@ -1,6 +1,6 @@
 import { postEventInput, deleteEventInput } from '@/api/v1/event-input'
 import { postEventOutput, deleteEventOutput } from '@/api/v1/event-output'
-import { postEventLink, deleteEventLink } from '@/api/v1/event-link'
+import { postEventLink, testDelEventLink } from '@/api/v1/event-link'
 
 async function rebuild(node, inputs, outputs) {
   const ret = node
@@ -222,6 +222,8 @@ async function saveLinked(verse, list) {
 
   const map = getIOMapByUuid(nodes)
 
+  console.error(list)
+  console.error(map)
   const links = []
   for (var i = 0; i < list.length; i++) {
     const item = list[i]
@@ -239,6 +241,7 @@ async function saveLinked(verse, list) {
     }
   }
 
+  console.error(links)
   const oo = filter(verse.links, map, links)
 
   oo.addList.forEach(async item => {
@@ -251,7 +254,11 @@ async function saveLinked(verse, list) {
   })
 
   oo.removeList.forEach(async item => {
-    await deleteEventLink(item.id)
+    try {
+      await testDelEventLink(item.id)
+    } catch (e) {
+      console.log(e)
+    }
     verse.links = verse.links.filter(item2 => item2.id !== item.id)
   })
 }

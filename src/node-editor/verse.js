@@ -28,7 +28,6 @@ let editor_ = null
 let engine_ = null
 const arrange = function () {
   editor_.trigger('arrange', editor_.nodes)
-  console.error('arrange')
 }
 
 const saveEvent = async function () {

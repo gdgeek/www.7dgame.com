@@ -14,14 +14,14 @@
                 @click="save()"
               >
                 <font-awesome-icon icon="save" />
-                保存
+                保存脚本
               </el-button>
             </el-button-group>
           </div>
           <blockly-script
             v-if="script !== null && verse !== null"
             ref="blockly"
-            :blockly="script.blockly"
+            :blockly="script.workspace"
             :resource="resource"
             :id="id"
             @submit="submit"
@@ -51,7 +51,7 @@ export default {
       loading: false,
       script: null,
       verse: null,
-      metas: new Map()
+      titles: new Map()
     }
   },
   computed: {
@@ -60,15 +60,29 @@ export default {
     },
     resource() {
       const inputs = []
-
+      const nodes = []
       this.verse.metas.forEach(meta => {
         if (!meta.event_node) {
           return
         }
+        nodes.push(meta.event_node)
         meta.event_node.inputs.forEach(input => {
           inputs.push({
-            title: this.metas.get(meta.id) + ':' + input.title,
+            title: this.titles.get(meta.uuid) + ':' + input.title,
             index: meta.uuid,
+            uuid: input.uuid
+          })
+        })
+      })
+      this.verse.metaKnights.forEach(metaKnight => {
+        if (!metaKnight.event_node) {
+          return
+        }
+        nodes.push(metaKnight.event_node)
+        metaKnight.event_node.inputs.forEach(input => {
+          inputs.push({
+            title: this.titles.get(metaKnight.uuid) + ':' + input.title,
+            index: metaKnight.uuid,
             uuid: input.uuid
           })
         })
@@ -112,13 +126,20 @@ export default {
     this.script = response.data
     this.loading = false
 
-    const verseResponse = await getVerse(this.script.verse_id)
+    const verseResponse = await getVerse(
+      this.script.verse_id,
+      'metas, metaKnights,share'
+    )
 
     this.verse = verseResponse.data
     console.log(this.verse.data)
     const data = JSON.parse(this.verse.data)
     data.children.metas.forEach(meta => {
-      this.metas.set(meta.parameters.id, meta.parameters.title)
+      this.titles.set(meta.parameters.uuid, meta.parameters.title)
+    })
+
+    data.children.metaKnights.forEach(metaKnight => {
+      this.titles.set(metaKnight.parameters.uuid, metaKnight.parameters.title)
     })
 
     this.setBreadcrumbs({
@@ -158,9 +179,10 @@ export default {
       this.$refs.blockly.save()
     },
     async submit(id, blockly, code, end) {
+      console.error(blockly)
       const response = await putVerseScript(id, {
         script: code,
-        blockly: blockly
+        workspace: blockly
       })
       this.script = response.data
 

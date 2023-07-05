@@ -1,9 +1,8 @@
 import Blockly from 'blockly'
 import EventType from './type'
-
 import Helper from '../helper'
 const data = {
-  name: 'event'
+  name: 'message'
 }
 const block = {
   title: data.name,
@@ -12,23 +11,15 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '调用 %1',
+      message0: '消息 %1',
       args0: [
         {
-          type: 'field_dropdown',
-          name: 'Event',
-          options: function () {
-            const events = resource.events
-            let opt = [['none', '']]
-            events.forEach(item => {
-              opt.push([item.title, item.uuid])
-            })
-            return opt
-          }
+          type: 'field_input',
+          name: 'Message',
+          text: 'message'
         }
       ],
-      previousStatement: null,
-      nextStatement: null,
+      output: 'Parameter',
       colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
@@ -44,14 +35,10 @@ const block = {
     }
     return data
   },
-  getLua({ index }) {
+  getLua() {
     const lua = function (block) {
-      var event = block.getFieldValue('Event')
-
-      // TODO: Assemble Lua into code variable.
-      var code = '_G.helper.call_event(' + JSON.stringify(event) + ')\n'
-
-      return code
+      var message = block.getFieldValue('Message')
+      return [Helper.parameter('message', message), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

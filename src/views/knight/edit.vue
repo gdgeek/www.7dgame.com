@@ -2,7 +2,7 @@
   <div class="verse-view">
     <event-dialog
       :node="events"
-      :uuid="id"
+      uuid="uuid"
       @postEvent="postEvent"
       ref="dialog"
     ></event-dialog>
@@ -35,6 +35,9 @@
         <el-form ref="item" v-if="item" :model="item" label-width="80px">
           <el-form-item label="骑士名称">
             <el-input v-model="item.title"></el-input>
+          </el-form-item>
+          <el-form-item label="类型">
+            <el-input v-model="item.type"></el-input>
           </el-form-item>
           <el-form-item label="图片">
             <el-input v-model="item.image_id"></el-input>

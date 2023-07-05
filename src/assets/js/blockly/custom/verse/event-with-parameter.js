@@ -23,9 +23,9 @@ const block = {
           name: 'Event',
           options: function () {
             const events = resource.events
-            let opt = [['none', JSON.stringify({ index: '', uuid: '' })]]
+            let opt = [['none', '']]
             events.forEach(item => {
-              opt.push([item.title, JSON.stringify(item)])
+              opt.push([item.title, item.uuid])
             })
             return opt
           }
@@ -50,7 +50,7 @@ const block = {
   },
   getLua() {
     const lua = function (block) {
-      var event = JSON.parse(block.getFieldValue('Event'))
+      var event = block.getFieldValue('Event')
       var parameters = Blockly.Lua.valueToCode(
         block,
         'Parameter',
@@ -59,8 +59,8 @@ const block = {
 
       // TODO: Assemble Lua into code variable.
       var code =
-        '_G.helper.verse_event(' +
-        Helper.input_event(event.index, event.uuid) +
+        '_G.helper.call_event(' +
+        JSON.stringify(event) +
         ',' +
         parameters +
         ')\n'

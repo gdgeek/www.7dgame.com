@@ -371,6 +371,9 @@ export default {
       if (self.saveable) {
         const list = await editor.saveEvent()
 
+        const response = await getVerse(this.id, 'metas, metaKnights,share')
+
+        this.verse = response.data
         await manager.saveLinked(this.verse, list)
 
         await editor.removeLinked()
