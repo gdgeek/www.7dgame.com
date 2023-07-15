@@ -14,7 +14,7 @@
           </el-tag>
           <el-divider direction="vertical"></el-divider>
         </span>
-        <span v-if="this.output.list.length <= 2">
+        <span v-if="this.output.list.length <= 5">
           <el-input
             class="input-new-tag"
             v-if="output.visible"
@@ -41,7 +41,7 @@
           </el-tag>
           <el-divider direction="vertical"></el-divider>
         </span>
-        <span v-if="this.input.list.length <= 2">
+        <span v-if="this.input.list.length <= 5">
           <el-input
             class="input-new-tag"
             v-if="input.visible"

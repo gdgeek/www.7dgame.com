@@ -5,6 +5,7 @@ import Event from './event.js'
 import EventWithParameter from './event-with-parameter.js'
 import Start from './start.js'
 import Anchor from './anchor.js'
+import Rectangle from './rectangle.js'
 import Message from './message.js'
 import Sleep from '../helper/sleep.js'
 
@@ -18,7 +19,8 @@ const VerseCategory = {
     Start.toolbox,
     Sleep.toolbox,
     Anchor.toolbox,
-    Message.toolbox
+    Message.toolbox,
+    Rectangle.toolbox
   ]
 }
 
@@ -33,5 +35,6 @@ function VerseRegister(parameters) {
   RegisterData(Sleep, parameters)
   RegisterData(Anchor, parameters)
   RegisterData(Message, parameters)
+  RegisterData(Rectangle, parameters)
 }
 export { VerseCategory, VerseRegister }

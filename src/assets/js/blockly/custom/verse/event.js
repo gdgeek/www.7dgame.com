@@ -49,7 +49,7 @@ const block = {
       var event = block.getFieldValue('Event')
 
       // TODO: Assemble Lua into code variable.
-      var code = '_G.helper.call_event(' + JSON.stringify(event) + ')\n'
+      var code = '_G.helper.exe_event(' + JSON.stringify(event) + ')\n'
 
       return code
     }

@@ -10,10 +10,13 @@ function output_event(index, uuid) {
 function parameter(type, uuid) {
   return "_G.helper.parameter('" + type + "', '" + uuid + "')"
 }
-
+function range(anchor, radius) {
+  return '_G.helper.range(' + anchor + ', ' + radius + ')'
+}
 module.exports = {
   handler,
   input_event,
   output_event,
-  parameter
+  parameter,
+  range
 }
