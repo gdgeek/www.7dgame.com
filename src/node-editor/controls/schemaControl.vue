@@ -1,27 +1,21 @@
 <template>
-  <div>
-    <el-form :hidden="hidden" :inline="true" size="mini">
-      <el-form-item class="el-form-item" :inline="true" :label="data.title">
-        <el-popover
-          placement="top-start"
-          :title="title"
-          width="200"
-          trigger="hover"
-        >
-          <el-image
-            style="width: 100px; height: 100px"
-            :src="image"
-            fit="contain"
-          ></el-image>
-          <el-tag slot="reference">{{ title }}</el-tag>
-        </el-popover>
-
-        <el-button size="small" @click="click()" v-if="item && item.schema">
-          数据输入
-        </el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+  <el-form :hidden="hidden" :inline="true" size="mini">
+    <el-form-item class="el-form-item" :inline="true" :label="data.title">
+      <el-popover
+        placement="top-start"
+        :title="title"
+        width="200"
+        trigger="hover"
+      >
+        <el-image
+          style="width: 100px; height: 100px"
+          :src="image"
+          fit="contain"
+        ></el-image>
+        <el-tag slot="reference">{{ title }}</el-tag>
+      </el-popover>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
@@ -67,24 +61,12 @@ export default {
   },
 
   methods: {
-    click() {
-      alert('click')
-      this.root.knightForm({
-        item: this.item
-      })
-      /* this.root.openResources({
-        value: this.value,
-        callback: this.onResource,
-        type: this.data.resource
-      })*/
-    },
     refresh() {
       if (this.value !== null) {
         getKnight(this.value, {
           expand: 'image,author'
         }).then(response => {
           this.item = response.data
-          console.error(this.item)
         })
       }
       if (this.data) {

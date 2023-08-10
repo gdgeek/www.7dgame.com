@@ -45,7 +45,12 @@
           <el-form-item label="模型">
             <el-input v-model="item.mesh_id"></el-input>
           </el-form-item>
-
+          <el-form-item label="定制">
+            <el-input v-model="item.schema"></el-input>
+          </el-form-item>
+          <el-form-item v-if="item.events" label="事件">
+            <el-input v-model="item.events"></el-input>
+          </el-form-item>
           <el-form-item label="数据">
             <el-input type="textarea" v-model="item.data"></el-input>
           </el-form-item>
@@ -128,7 +133,11 @@ export default {
     async postEvent({ uuid, node, inputs, outputs }) {
       if (this.item) {
         let info = this.info
+        if (info === null) info = {}
+
         info.events = { inputs, outputs }
+        this.item.events = JSON.stringify({ inputs, outputs })
+
         this.info = info
       }
 

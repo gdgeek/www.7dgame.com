@@ -1,11 +1,5 @@
 <template>
   <div>
-    <knight-dialog
-      @selected="knightSelect"
-      @cancel="clearKnight()"
-      :ban="banKnight"
-      ref="knightDialog"
-    />
     <knight-setup-dialog
       @selected="knightSelect"
       @cancel="clearKnight()"
@@ -221,7 +215,9 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-
+    knightForm(params) {
+      alert(JSON.stringify(params))
+    },
     createMetaKnight() {
       this.$refs.knightSetup.open()
     },
@@ -278,16 +274,7 @@ export default {
         this.$refs.knightSetup.open(data)
       }
     },
-    openKnight({ value, callback }) {
-      if (this.saveable) {
-        this.banKnight = editor.banKnight()
 
-        this.knight.callback = callback
-        if (this.knight.callback) {
-          this.$refs.knightDialog.open(value, this.id)
-        }
-      }
-    },
     _updateKnightMetaEvent(data, knight_id) {
       getKnight(knight_id).then(async response => {
         const info = JSON.parse(response.data.info)
