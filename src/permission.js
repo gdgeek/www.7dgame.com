@@ -11,13 +11,12 @@ import { AbilityRouter } from '@/ability/ability'
 import ability from './ability'
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 router.beforeEach(async (to, from, next) => {
-  //alert(to.path)
   // start progress bar
   NProgress.start()
 
   const token = getToken()
   const hasGetUserInfo = store.getters.userData !== null
-  // alert(token)
+
   if (token !== null && !hasGetUserInfo) {
     if (!ability.can('goto', new AbilityRouter(to.path))) {
       await store.dispatch('user/getUser')

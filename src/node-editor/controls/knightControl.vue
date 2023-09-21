@@ -31,6 +31,7 @@ export default {
 
   data() {
     return {
+      id: null,
       value: null,
       item: null
     }
@@ -63,25 +64,23 @@ export default {
       this.value = this.data.default
     }
 
+    this.$on('setId', function (id) {
+      this.id = id
+    })
     this.refresh()
   },
 
   methods: {
     click() {
-      alert('click')
       this.root.knightForm({
-        item: this.item
+        id: this.id,
+        schema: this.item.schema
       })
-      /* this.root.openResources({
-        value: this.value,
-        callback: this.onResource,
-        type: this.data.resource
-      })*/
     },
     refresh() {
       if (this.value !== null) {
         getKnight(this.value, {
-          expand: 'image,author'
+          expand: 'image, author'
         }).then(response => {
           this.item = response.data
           console.error(this.item)

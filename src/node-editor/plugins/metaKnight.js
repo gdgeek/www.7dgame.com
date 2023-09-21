@@ -30,7 +30,7 @@ function install(editor, options) {
   })
 
   editor.on('nodecreate', component => {
-    if (component.name !== 'MetaKnight' || editor.silent) {
+    if (component.name !== 'MetaKnight') {
       return true
     }
     let id = component.data['id']
@@ -38,16 +38,24 @@ function install(editor, options) {
     if (options.root.saveable) {
       if (typeof id === 'undefined') {
         const uuid = uuidv4()
-        postMetaKnight({
+        const data = {
           verse_id: options.root.id,
           uuid,
           knight_id: component.data['knight']
-        }).then(response => {
+        }
+        postMetaKnight(data).then(response => {
           const data = response.data
           id = data.id
           component.controls.get('id').setValue(id)
           component.controls.get('uuid').setValue(uuid)
           options.root._updateKnightMetaEvent(data, component.data['knight'])
+          setTimeout(() => {
+            component.controls.get('knight').$emit('setId', id)
+          })
+        })
+      } else {
+        setTimeout(() => {
+          component.controls.get('knight').$emit('setId', id)
         })
       }
     }

@@ -1,6 +1,7 @@
 import Blockly from 'blockly'
 import EventType from './type'
 import Helper from '../helper'
+import Argument from '../argument'
 const data = {
   name: 'message'
 }
@@ -38,7 +39,7 @@ const block = {
   getLua() {
     const lua = function (block) {
       var message = block.getFieldValue('Message')
-      return [Helper.parameter('message', message), Blockly.Lua.ORDER_NONE]
+      return [Argument.string(message), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

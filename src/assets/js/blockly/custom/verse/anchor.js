@@ -1,6 +1,7 @@
 import Blockly from 'blockly'
 import EventType from './type'
 import Helper from '../helper'
+import Argument from '../argument'
 const data = {
   name: 'anchor'
 }
@@ -43,8 +44,8 @@ const block = {
   },
   getLua() {
     const lua = function (block) {
-      var anchor = block.getFieldValue('Anchor')
-      return [Helper.parameter('anchor', anchor), Blockly.Lua.ORDER_NONE]
+      var key = block.getFieldValue('Anchor')
+      return [Argument.anchor(key), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

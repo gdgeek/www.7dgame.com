@@ -1,5 +1,6 @@
 <template>
   <div>
+    <knight-data-dialog ref="knightData" @submit="knightDataSubmit" />
     <knight-setup-dialog
       @selected="knightSelect"
       @cancel="clearKnight()"
@@ -52,11 +53,10 @@ import { putVerse } from '@/api/v1/verse'
 
 import { mapMutations } from 'vuex'
 import { getVerse } from '@/api/v1/verse'
-import { getMetaKnight } from '@/api/v1/meta-knight'
 var randomWords = require('random-words')
 import { v4 as uuidv4 } from 'uuid'
 import SpaceDialog from '@/components/MrPP/SpaceDialog.vue'
-import KnightDialog from '@/components/MrPP/KnightDialog.vue'
+import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
 import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
 
 import { AbilityEditable } from '@/ability/ability'
@@ -75,7 +75,7 @@ export default {
     EventDialog,
     KnightSetupDialog,
     SpaceDialog,
-    KnightDialog
+    KnightDataDialog
   },
 
   data() {
@@ -215,8 +215,13 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-    knightForm(params) {
-      alert(JSON.stringify(params))
+    knightDataSubmit(data) {
+      console.error(data)
+    },
+    knightForm({ id, schema }) {
+      console.error(id)
+
+      this.$refs.knightData.open(id, JSON.parse(schema))
     },
     createMetaKnight() {
       this.$refs.knightSetup.open()

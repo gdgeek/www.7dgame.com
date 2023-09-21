@@ -1,6 +1,7 @@
 import Blockly from 'blockly'
 import EventType from './type'
 import Helper from '../helper'
+import Argument from '../argument'
 const data = {
   name: 'rectangle'
 }
@@ -56,7 +57,7 @@ const block = {
       // TODO: Assemble javascript into code variable.
 
       var number_radius = block.getFieldValue('Radius')
-      var code = Helper.range(value_anchor, number_radius)
+      var code = Argument.range(value_anchor, number_radius)
       // TODO: Change ORDER_NONE to the correct strength.
 
       return [code, Blockly.Lua.ORDER_NONE]

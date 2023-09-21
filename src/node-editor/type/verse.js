@@ -15,6 +15,12 @@ var VerseType = {
       key: 'uuid'
     },
     {
+      title: '地板高度',
+      type: 'number',
+      key: 'flootHeight',
+      default: 0
+    },
+    {
       type: 'verse-name',
       key: 'verse',
       readonly: true,
