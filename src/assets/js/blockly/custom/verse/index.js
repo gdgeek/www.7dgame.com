@@ -3,11 +3,14 @@ import Blockly from 'blockly'
 
 import Event from './event.js'
 import EventWithParameter from './event-with-parameter.js'
+import Task from './task.js'
+import TaskArray from './task-array.js'
 import Start from './start.js'
 import Anchor from './anchor.js'
 import Rectangle from './rectangle.js'
 import Message from './message.js'
 import Sleep from '../helper/sleep.js'
+import Execute from './execute.js'
 
 const VerseCategory = {
   kind: 'category',
@@ -20,7 +23,10 @@ const VerseCategory = {
     Sleep.toolbox,
     Anchor.toolbox,
     Message.toolbox,
-    Rectangle.toolbox
+    Rectangle.toolbox,
+    Task.toolbox,
+    TaskArray.toolbox,
+    Execute.toolbox
   ]
 }
 
@@ -36,5 +42,8 @@ function VerseRegister(parameters) {
   RegisterData(Anchor, parameters)
   RegisterData(Message, parameters)
   RegisterData(Rectangle, parameters)
+  RegisterData(Task, parameters)
+  RegisterData(TaskArray, parameters)
+  RegisterData(Execute, parameters)
 }
 export { VerseCategory, VerseRegister }
