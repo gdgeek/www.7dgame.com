@@ -57,19 +57,6 @@ const block = {
 
       var code = '_G.helper.task_array("' + type + '",' + array + ')\n'
 
-      alert(code)
-      /*
-     
-      var parameters = Blockly.Lua.valueToCode(
-        block,
-        'Parameter',
-        Blockly.Lua.ORDER_ATOMIC
-      )
-
-      // TODO: Assemble Lua into code variable.
-      var code =
-        '_G.helper.task(' + JSON.stringify(event) + ',' + parameters + ')\n'
-*/
       return [code, Blockly.Lua.ORDER_NONE]
     }
     return lua

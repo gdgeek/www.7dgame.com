@@ -38,20 +38,20 @@ const block = {
   },
   getLua({ index }) {
     const lua = function (block) {
-      var statements_content = Blockly.Lua.statementToCode(block, 'content')
+      var generator = Blockly.Lua
 
-      //var statements_content = Blockly.Lua.statementToCode(block, 'content')
-      // TODO: Assemble Lua into code variable.
-      var code = '..'
-      /*
-     
-*/
+      var statements_content = generator.valueToCode(
+        block,
+        'content',
+        Blockly.Lua.ORDER_NONE
+      )
 
-      var execute = '_G.helper.task_execute(' + statements_content + ')\n'
+      var execute = '  _G.helper.task_execute(' + statements_content + ')\n'
       var code =
         "verse['$main'] = function(parameter) \n  is_playing = true\n" +
         execute +
         '  is_playing = false\nend\n'
+
       return code
     }
     return lua

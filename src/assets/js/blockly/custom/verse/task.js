@@ -61,9 +61,9 @@ const block = {
       var code = null
       if (parameters) {
         code =
-          '_G.helper.task(' + JSON.stringify(event) + ',' + parameters + ')\n'
+          '_G.helper.task(' + JSON.stringify(event) + ',' + parameters + ')'
       } else {
-        code = '_G.helper.task(' + JSON.stringify(event) + ')\n'
+        code = '_G.helper.task(' + JSON.stringify(event) + ')'
       }
 
       return [code, Blockly.Lua.ORDER_NONE]
