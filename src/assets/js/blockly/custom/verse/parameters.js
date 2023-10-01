@@ -15,7 +15,7 @@ const block = {
       args0: [
         {
           type: 'input_value',
-          name: 'TaskArray',
+          name: 'ParameterArray',
           check: 'Array'
         }
       ],
@@ -42,7 +42,7 @@ const block = {
 
       var array = Blockly.Lua.valueToCode(
         block,
-        'TaskArray',
+        'ParameterArray',
         Blockly.Lua.ORDER_ATOMIC
       )
 
