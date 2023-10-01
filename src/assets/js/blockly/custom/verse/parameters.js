@@ -2,7 +2,7 @@ import Blockly from 'blockly'
 import EventType from './type'
 import Helper from '../helper'
 const data = {
-  name: 'task-array'
+  name: 'parameters'
 }
 const block = {
   title: data.name,
@@ -11,16 +11,8 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '任务 %1 %2',
+      message0: '参数列表 %1',
       args0: [
-        {
-          type: 'field_dropdown',
-          name: 'ArrayType',
-          options: [
-            ['list', 'LIST'],
-            ['set', 'SET']
-          ]
-        },
         {
           type: 'input_value',
           name: 'TaskArray',
@@ -28,7 +20,7 @@ const block = {
         }
       ],
       inputsInline: true,
-      output: 'Task',
+      output: 'Parameter',
       colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
@@ -46,7 +38,7 @@ const block = {
   },
   getLua() {
     const lua = function (block) {
-      var type = block.getFieldValue('ArrayType')
+      //  var type = block.getFieldValue('ArrayType')
 
       var array = Blockly.Lua.valueToCode(
         block,
@@ -54,7 +46,7 @@ const block = {
         Blockly.Lua.ORDER_ATOMIC
       )
 
-      var code = '_G.helper.task_array("' + type + '",' + array + ')\n'
+      var code = '_G.helper.parameters(' + array + ')\n'
 
       return [code, Blockly.Lua.ORDER_NONE]
     }

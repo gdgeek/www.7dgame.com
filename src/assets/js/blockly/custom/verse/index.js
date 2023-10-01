@@ -11,6 +11,7 @@ import Rectangle from './rectangle.js'
 import Message from './message.js'
 import Sleep from '../helper/sleep.js'
 import Execute from './execute.js'
+import Parameters from './parameters.js'
 
 const VerseCategory = {
   kind: 'category',
@@ -26,7 +27,8 @@ const VerseCategory = {
     Rectangle.toolbox,
     Task.toolbox,
     TaskArray.toolbox,
-    Execute.toolbox
+    Execute.toolbox,
+    Parameters.toolbox
   ]
 }
 
@@ -45,5 +47,6 @@ function VerseRegister(parameters) {
   RegisterData(Task, parameters)
   RegisterData(TaskArray, parameters)
   RegisterData(Execute, parameters)
+  RegisterData(Parameters, parameters)
 }
 export { VerseCategory, VerseRegister }
