@@ -38,8 +38,6 @@ const block = {
   },
   getLua() {
     const lua = function (block) {
-      //  var type = block.getFieldValue('ArrayType')
-
       var array = Blockly.Lua.valueToCode(
         block,
         'ParameterArray',
