@@ -6,6 +6,10 @@ function string(value) {
   return "_G.helper.argument_string('" + value + "')"
 }
 
+function player(value) {
+  return '_G.helper.argument_player(' + value + ')'
+}
+
 function anchor(key) {
   return "_G.helper.argument_anchor('" + key + "')"
 }
@@ -16,5 +20,6 @@ module.exports = {
   number,
   string,
   range,
-  anchor
+  anchor,
+  player
 }

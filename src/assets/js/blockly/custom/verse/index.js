@@ -12,6 +12,7 @@ import Message from './message.js'
 import Sleep from '../helper/sleep.js'
 import Execute from './execute.js'
 import Parameters from './parameters.js'
+import Player from './player.js'
 
 const VerseCategory = {
   kind: 'category',
@@ -28,7 +29,8 @@ const VerseCategory = {
     Task.toolbox,
     TaskArray.toolbox,
     Execute.toolbox,
-    Parameters.toolbox
+    Parameters.toolbox,
+    Player.toolbox
   ]
 }
 
@@ -48,5 +50,6 @@ function VerseRegister(parameters) {
   RegisterData(TaskArray, parameters)
   RegisterData(Execute, parameters)
   RegisterData(Parameters, parameters)
+  RegisterData(Player, parameters)
 }
 export { VerseCategory, VerseRegister }

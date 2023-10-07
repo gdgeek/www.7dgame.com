@@ -1,8 +1,9 @@
 import Blockly from 'blockly'
 import EventType from './type'
 import Helper from '../helper'
+import Argument from '../argument'
 const data = {
-  name: 'task-array'
+  name: 'player'
 }
 const block = {
   title: data.name,
@@ -11,28 +12,21 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '任务数组 %1 %2',
+      message0: '玩家位置 %1',
       args0: [
         {
-          type: 'field_dropdown',
-          name: 'ArrayType',
-          options: [
-            ['list', 'LIST'],
-            ['set', 'SET']
-          ]
-        },
-        {
           type: 'input_value',
-          name: 'TaskArray',
-          check: 'Array'
+          name: 'Player',
+          check: 'Number'
         }
       ],
       inputsInline: true,
-      output: 'Task',
+      output: 'Parameter',
       colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
     }
+
     return json
   },
   getBlock: function (parameters) {
@@ -46,17 +40,13 @@ const block = {
   },
   getLua() {
     const lua = function (block) {
-      var type = block.getFieldValue('ArrayType')
-
-      var array = Blockly.Lua.valueToCode(
+      var id = Blockly.Lua.valueToCode(
         block,
-        'TaskArray',
+        'Player',
         Blockly.Lua.ORDER_ATOMIC
       )
 
-      var code = '_G.helper.task_array("' + type + '",' + array + ')\n'
-
-      return [code, Blockly.Lua.ORDER_NONE]
+      return [Argument.player(id), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },
