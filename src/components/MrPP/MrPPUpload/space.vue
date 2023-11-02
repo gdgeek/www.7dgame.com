@@ -27,9 +27,6 @@ import path from 'path'
 import { postFile } from '@/api/v1/files'
 import { postSpace } from '@/api/v1/space'
 
-//import env from '@/environment.js'
-//import cloud from '@/assets/js/file/tencent-cloud.js'
-
 import { mapState } from 'vuex'
 
 export default {
