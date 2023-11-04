@@ -34,7 +34,7 @@ describe('Hamburger.vue', async () => {
       expect(file.type).toBe('image/png')
       expect(file.extension).toBe('.jpg')
       const md5 = await store.fileMD5(file)
-      const handler = await store.storeHandler()
+      const handler = await store.publicHandler()
     })
     fs.exists(filePath)
       .then(exists => {
@@ -55,7 +55,7 @@ describe('Hamburger.vue', async () => {
           expect(file.extension).toBe('.jpg')
           const md5 = await store.fileMD5(file)
           console.log(md5)
-          const handler = await store.storeHandler()
+          const handler = await store.publicHandler()
           const has = store.fileHas(md5, file.extension, handler)
           if (has) {
             done()

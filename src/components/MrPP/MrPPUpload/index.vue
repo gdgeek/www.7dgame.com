@@ -138,7 +138,7 @@ export default {
       const md5 = await store.fileMD5(file, function (p) {
         self.progress(p, 0)
       })
-      const handler = await store.storeHandler()
+      const handler = await store.publicHandler()
       const has = await store.fileHas(md5, file.extension, handler, self.dir)
 
       if (!has) {
