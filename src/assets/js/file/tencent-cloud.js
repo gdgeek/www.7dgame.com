@@ -15,14 +15,11 @@ async function publicHandler() {
 async function privateHandler() { 
 
   const response = await cloud()
-
-  console.error(response.data)
   const handler = await fileHandler(response.data.private.bucket, response.data.private.region)
-  console.error('response.data')
+
   return handler
 }
 async function rawHandler() {
-  alert('raw')
   const response = await store()
   return await fileHandler(response.data.raw.bucket, response.data.raw.region)
 }
