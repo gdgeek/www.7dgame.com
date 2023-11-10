@@ -7,7 +7,6 @@
             <b id="title" v-if="data">场景名称：{{ data.title }}</b>
           </div>
           <div v-loading="expire" class="box-item">
-           
             <three
               v-if="data"
               ref="three"
@@ -127,7 +126,6 @@ export default {
     }
   },
   created: async function () {
-   
     const self = this
     self.expire = true
     try {

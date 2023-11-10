@@ -20,7 +20,6 @@ const block = {
             const polygen = resource.polygen
             let opt = [['none', '']]
             polygen.forEach(poly => {
-              // alert(poly.name)
               opt.push([poly.name, poly.uuid])
             })
             return opt

@@ -9,7 +9,6 @@ class SceneBuilder {
 		this.editor = editor
 	}
 	async loadPolygen(url) {
-		//	alert(url)
 		return new Promise((resolve, reject) => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
 			const dracoLoader = new DRACOLoader()
@@ -122,7 +121,8 @@ class SceneBuilder {
 		return plane
 	}
 	lockNode(node) {
-		node.locked = true
+		//node.locked = true
+		node.userData['locked'] = true
 		node.children.forEach(item => {
 			this.lockNode(item)
 		})

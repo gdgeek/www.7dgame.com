@@ -415,7 +415,9 @@ Editor.prototype = {
 	select: function (object) {
 		if (
 			this.selected === object ||
-			(object !== null && typeof object.locked !== 'undefined' && object.locked)
+			(object !== null &&
+				typeof object.userData['locked'] !== 'undefined' &&
+				object.userData['locked'])
 		) {
 			return
 		}

@@ -11,7 +11,7 @@ function fileUrl(name, extension, handler = null, dir = '') {
 
   const url =
     env.api + '/' + path.join('storage', handler.bucket, dir, filename)
-  alert(url)
+
   return url
 }
 
@@ -78,7 +78,6 @@ function fileUpdateImpl(md5, extension, file, progress, handler, dir, skip) {
         resolve(response)
       }
     } catch (e) {
-      alert(111)
       reject(e)
     }
   })
@@ -86,13 +85,11 @@ function fileUpdateImpl(md5, extension, file, progress, handler, dir, skip) {
 
 function fileUpload(md5, extension, file, progress, handler, dir = '') {
   return new Promise((resolve, reject) => {
-    alert(dir)
     fileUpdateImpl(md5, extension, file, progress, handler, dir, 0)
       .then(response => {
         resolve(response)
       })
       .catch(error => {
-        alert(JSON.stringify(error))
         reject(error)
       })
   })

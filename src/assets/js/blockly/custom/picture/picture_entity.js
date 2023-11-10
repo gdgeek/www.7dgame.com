@@ -21,7 +21,6 @@ const block = {
             const picture = resource.picture
             let opt = [['none', '']]
             picture.forEach(pic => {
-              // alert(poly.name)
               opt.push([pic.name, pic.uuid])
             })
             return opt

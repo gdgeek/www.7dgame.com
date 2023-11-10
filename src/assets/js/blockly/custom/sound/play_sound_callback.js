@@ -62,7 +62,7 @@ const block = {
       )
 
       var checkbox_occupy = block.getFieldValue('occupy') === 'TRUE'
-      //alert(statements_callback)
+
       // TODO: Assemble Lua into code variable.
       var code =
         'CS.MLua.Sound.Play(' +

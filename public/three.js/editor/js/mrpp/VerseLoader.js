@@ -73,18 +73,19 @@ function VerseLoader(editor) {
 		const matrix = builder.getMatrix4(meta.parameters.transform)
 		node.matrix = matrix
 	}
-	this.addAnchor = async function (anchor) {
-		console.error('anchor')
-		console.error(anchor)
+	this.addPoint = async function (point, type) {
+		console.error('point')
+		console.error(point)
 
-		let root = editor.objectByUuid(anchor.parameters.uuid)
-		const transform = anchor.parameters.transform
+		let root = editor.objectByUuid(point.parameters.uuid)
+		const transform = point.parameters.transform
 		if (typeof root === 'undefined') {
 			root = new THREE.Object3D()
-			root.name = anchor.parameters.title + '(Anchor)'
-			root.uuid = anchor.parameters.uuid
+			root.userData['locked'] = false
+			root.name = point.parameters.title
+			root.uuid = point.parameters.uuid
 			root.type = 'Group'
-			root.locked = false
+
 			builder.setTransform(root, transform)
 
 			const geometry = new THREE.LatheGeometry()
@@ -92,18 +93,16 @@ function VerseLoader(editor) {
 				geometry,
 				new THREE.MeshStandardMaterial({ side: THREE.DoubleSide })
 			)
-			mesh.name = 'Anchor'
+			mesh.name = type
 
-			//	var m = new THREE.Matrix4().makeScale(0.1, 0.1, 0.1)
 			mesh.scale.set(0.1, 0.1, 0.1)
-			mesh.locked = true
+			//mesh.locked = true
+			mesh.userData['locked'] = true
 			root.add(mesh)
-
 			editor.addObject(root)
 		} else {
 			builder.setTransform(root, transform)
 		}
-		//root.applyMatrix4(matrix)
 	}
 	this.addMeta = async function (meta, context, resources) {
 		let root = editor.objectByUuid(meta.parameters.uuid)
@@ -114,7 +113,8 @@ function VerseLoader(editor) {
 			root.name = meta.parameters.title
 			root.uuid = meta.parameters.uuid
 			root.type = 'Group'
-			root.locked = false
+			//root.locked = false
+			root.userData['locked'] = false
 			builder.setTransform(root, transform)
 		}
 
@@ -138,52 +138,41 @@ function VerseLoader(editor) {
 		node.uuid = data.mesh.md5
 		return node
 	}
-
+	this.readPoint = async function (point) {
+		const node = editor.objectByUuid(point.parameters.uuid)
+		if (typeof node !== 'undefined') {
+			point.parameters.title = node.name
+			point.parameters.transform.position = {
+				x: node.position.x,
+				y: node.position.y,
+				z: node.position.z
+			}
+			point.parameters.transform.rotate = {
+				x: (node.rotation.x / Math.PI) * 180,
+				y: (node.rotation.y / Math.PI) * 180,
+				z: (node.rotation.z / Math.PI) * 180
+			}
+			point.parameters.transform.scale = {
+				x: node.scale.x,
+				y: node.scale.y,
+				z: node.scale.z
+			}
+		}
+	}
 	this.save = async function () {
 		const anchors = this.verse.children.anchors
 		anchors.forEach(anchor => {
-			const node = editor.objectByUuid(anchor.parameters.uuid)
-			if (node) {
-				anchor.parameters.name = node.name
-				anchor.parameters.transform.position = {
-					x: node.position.x,
-					y: node.position.y,
-					z: node.position.z
-				}
-				anchor.parameters.transform.rotate = {
-					x: (node.rotation.x / Math.PI) * 180,
-					y: (node.rotation.y / Math.PI) * 180,
-					z: (node.rotation.z / Math.PI) * 180
-				}
-				anchor.parameters.transform.scale = {
-					x: node.scale.x,
-					y: node.scale.y,
-					z: node.scale.z
-				}
-			}
+			this.readPoint(anchor)
 		})
+
+		const mks = this.verse.children.metaKnights
+		mks.forEach(mk => {
+			this.readPoint(mk)
+		})
+
 		const metas = this.verse.children.metas
 		metas.forEach(meta => {
-			const node = editor.objectByUuid(meta.parameters.uuid)
-
-			if (node) {
-				meta.parameters.name = node.name
-				meta.parameters.transform.position = {
-					x: node.position.x,
-					y: node.position.y,
-					z: node.position.z
-				}
-				meta.parameters.transform.rotate = {
-					x: (node.rotation.x / Math.PI) * 180,
-					y: (node.rotation.y / Math.PI) * 180,
-					z: (node.rotation.z / Math.PI) * 180
-				}
-				meta.parameters.transform.scale = {
-					x: node.scale.x,
-					y: node.scale.y,
-					z: node.scale.z
-				}
-			}
+			this.readPoint(meta)
 		})
 
 		window.URL = window.URL || window.webkitURL
@@ -209,7 +198,25 @@ function VerseLoader(editor) {
 	}
 
 	this.loadDatas = async function () {
-		let knights = new Map()
+		if (this.verse.children.anchors) {
+			this.verse.children.anchors.forEach(async anchor => {
+				await self.addPoint(anchor, 'Anchor')
+			})
+		}
+
+		if (this.verse.children.metaKnights) {
+			this.verse.children.metaKnights.forEach(async mk => {
+				await self.addPoint(mk, 'MetaKnight')
+			})
+		}
+
+		if (this.verse.children.metas) {
+			this.verse.children.metas.forEach(async meta => {
+				await self.addPoint(meta, 'Meta')
+			})
+		}
+
+		/*let knights = new Map()
 
 		this.data.datas.knights.forEach(m => {
 			knights.set(m.id, m)
@@ -219,7 +226,7 @@ function VerseLoader(editor) {
 		this.data.datas.metas.forEach(m => {
 			metas.set(m.id, JSON.parse(m.data))
 		})
-
+*
 		let resources = new Map()
 		this.data.resources.forEach(r => {
 			resources.set(r.id, r)
@@ -243,6 +250,7 @@ function VerseLoader(editor) {
 				}
 			}
 		})
+		*/
 	}
 	this.removeNode = async function (oldValue, newValue) {
 		const oldMetas = oldValue.children.metas

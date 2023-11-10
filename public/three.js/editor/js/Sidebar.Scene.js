@@ -40,7 +40,10 @@ function SidebarScene(editor) {
 			if (object.children.length > 0) {
 				opener.classList.add(state ? 'open' : 'closed')
 			}
-			if (typeof object.locked !== 'undefined' && object.locked) {
+			if (
+				typeof object.userData['locked'] !== 'undefined' &&
+				object.userData['locked']
+			) {
 				opener.classList.add('locked')
 			}
 
