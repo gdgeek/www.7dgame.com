@@ -1234,27 +1234,27 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@lljj/vjsf-utils@1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@lljj/vjsf-utils/-/vjsf-utils-1.18.0.tgz#f21467c5e432268b007053489f93690abe75beff"
-  integrity sha512-QzJ2nIW5feBimh/4XDw4LXpn7qeVFu0XXZ0c4BTE8WfuSzc6+9CpfZfFQH/k6SbwULV6xjz2h2q+aOYb3myOgg==
+"@lljj/vjsf-utils@1.19.0":
+  version "1.19.0"
+  resolved "https://registry.npmmirror.com/@lljj/vjsf-utils/-/vjsf-utils-1.19.0.tgz#db45106399df918ca916e9a1b12767eb53f197a6"
+  integrity sha512-dnW7bmwJdPLFjV3W54TA/9DTcB5WT5ElntNJZfaYbRldZywztmBpBO+JEZ8uTyKSchke1eBXDyP8kC/9wbvjwg==
   dependencies:
     ajv "^6.10.2"
 
-"@lljj/vue-json-schema-form@^1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@lljj/vue-json-schema-form/-/vue-json-schema-form-1.18.0.tgz#d49ff2bd7bcf4a5a309caefc187d986121345ed9"
-  integrity sha512-F2utmkpc6xdex/7Yu2W3/T9pVPLcMr9iWaG7e36Av9kkY8DPA6bDchno++WKLteMzv+5miNF3/zTDgcVGnCJUA==
+"@lljj/vue-json-schema-form@^1.19.0":
+  version "1.19.0"
+  resolved "https://registry.npmmirror.com/@lljj/vue-json-schema-form/-/vue-json-schema-form-1.19.0.tgz#5910d91b5db339101d856a3559646f666f3cabfb"
+  integrity sha512-jNhA0BNJerKC/eUUgZ0pS6hPODDFavfObKztU5IBDG2Nsi+ghEiKs6g6YmbOB5UGgatxhAGeIDqgVj/oaP/5DQ==
   dependencies:
-    "@lljj/vjsf-utils" "1.18.0"
-    "@lljj/vue2-form-core" "1.18.0"
+    "@lljj/vjsf-utils" "1.19.0"
+    "@lljj/vue2-form-core" "1.19.0"
 
-"@lljj/vue2-form-core@1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@lljj/vue2-form-core/-/vue2-form-core-1.18.0.tgz#b90fe1b8128617cbf2c36d9e4dbaf436ead1504a"
-  integrity sha512-Lwdcp1RX3zW0Wd8fQbSo8VehNdouBMNKtnLj3ndCWInOvnXW5b2ybAck/HtPLzrxfui5B4AJmTfF/leUQNveJg==
+"@lljj/vue2-form-core@1.19.0":
+  version "1.19.0"
+  resolved "https://registry.npmmirror.com/@lljj/vue2-form-core/-/vue2-form-core-1.19.0.tgz#78137eefc341f0e85b55ada714225427d03effbb"
+  integrity sha512-LhmoJWOEilNg2K6fJMnrJ8waRXD3UVSp3KEeyi47dfDAzRCkEI/Qm/F+XILkqiJz5TPp2RDfThWktXPChtWzaQ==
   dependencies:
-    "@lljj/vjsf-utils" "1.18.0"
+    "@lljj/vjsf-utils" "1.19.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"

@@ -1,7 +1,8 @@
 <template>
   <div class="verse-view">
     <event-dialog
-      :node="events"
+      v-if="item"
+      :node="JSON.parse(item.events)"
       uuid="uuid"
       @postEvent="postEvent"
       ref="dialog"
@@ -48,8 +49,27 @@
           <el-form-item label="定制">
             <el-input v-model="item.schema"></el-input>
           </el-form-item>
-          <el-form-item v-if="item.events" label="事件">
-            <el-input v-model="item.events"></el-input>
+          <el-form-item
+            v-if="events && events.inputs && events.inputs.length > 0"
+            label="输入事件"
+          >
+            <span v-for="(item, index) in events.inputs" :key="index">
+              <el-tag size="mini">
+                {{ item.title }}
+              </el-tag>
+              &nbsp;
+            </span>
+          </el-form-item>
+          <el-form-item
+            v-if="events && events.outputs && events.outputs.length > 0"
+            label="输出事件"
+          >
+            <span v-for="(item, index) in events.outputs" :key="index">
+              <el-tag size="mini">
+                {{ item.title }}
+              </el-tag>
+              &nbsp;
+            </span>
           </el-form-item>
           <el-form-item label="数据">
             <el-input type="textarea" v-model="item.data"></el-input>
@@ -107,20 +127,11 @@ export default {
     EventDialog
   },
   computed: {
-    info: {
-      get: function () {
-        if (this.item) return JSON.parse(this.item.info)
-        return null
-      },
-      set: function (data) {
-        this.item.info = JSON.stringify(data)
-      }
-    },
     events() {
-      if (this.info) {
-        return this.info.events
+      if (this.item) {
+        return JSON.parse(this.item.events)
       }
-      return null
+      return { inputs: {}, outputs: {} }
     },
     id() {
       return parseInt(this.$route.query.id)
@@ -132,13 +143,7 @@ export default {
   methods: {
     async postEvent({ uuid, node, inputs, outputs }) {
       if (this.item) {
-        let info = this.info
-        if (info === null) info = {}
-
-        info.events = { inputs, outputs }
         this.item.events = JSON.stringify({ inputs, outputs })
-
-        this.info = info
       }
 
       this.$refs.dialog.close()
