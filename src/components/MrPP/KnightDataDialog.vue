@@ -17,7 +17,6 @@
             @on-cancel="handlerCancel"
             @on-change="handlerChange"
           ></vue-form>
-          123
         </template>
       </span>
     </el-dialog>

@@ -6,8 +6,12 @@
       uuid="uuid"
       @postEvent="postEvent"
       ref="dialog"
-    ></event-dialog>
-
+    />
+    <resource-dialog
+      @selected="selectResources"
+      @cancel="openResources()"
+      ref="resourceDialog"
+    />
     <el-row :gutter="20" style="margin: 28px 18px 0">
       <el-col :sm="16">
         <el-card v-if="item" class="box-card">
@@ -18,17 +22,11 @@
             <span>{{ item.title }}</span>
           </div>
 
-          <div class="box-item">
+          <div class="box-item" @click="selectImage">
             <el-image
-              v-if="!item.image"
               fit="contain"
               style="width: 100%; height: 300px"
-            />
-            <el-image
-              v-else
-              fit="contain"
-              style="width: 100%; height: 300px"
-              :src="item.image.url"
+              :src="image"
             />
           </div>
         </el-card>
@@ -39,12 +37,6 @@
           </el-form-item>
           <el-form-item label="类型">
             <el-input v-model="item.type"></el-input>
-          </el-form-item>
-          <el-form-item label="图片">
-            <el-input v-model="item.image_id"></el-input>
-          </el-form-item>
-          <el-form-item label="模型">
-            <el-input v-model="item.mesh_id"></el-input>
           </el-form-item>
           <el-form-item label="定制">
             <el-input v-model="item.schema"></el-input>
@@ -115,6 +107,7 @@
 </template>
 
 <script>
+import ResourceDialog from '@/components/MrPP/ResourceDialog.vue'
 import EventDialog from '@/components/Rete/EventDialog.vue'
 import { getKnight, putKnight } from '@/api/v1/knight'
 export default {
@@ -124,7 +117,8 @@ export default {
     }
   },
   components: {
-    EventDialog
+    EventDialog,
+    ResourceDialog
   },
   computed: {
     events() {
@@ -132,6 +126,10 @@ export default {
         return JSON.parse(this.item.events)
       }
       return { inputs: {}, outputs: {} }
+    },
+    image() {
+      if (this.item && this.item.image) return this.item.image.url
+      return ''
     },
     id() {
       return parseInt(this.$route.query.id)
@@ -141,6 +139,25 @@ export default {
     this.refresh()
   },
   methods: {
+    openResources(
+      { value, callback, type } = { value: null, callback: null, type: null }
+    ) {
+      //alert(JSON.stringify({ value, callback, type }))
+    },
+    async selectResources(data) {
+      this.item.image_id = data.image_id
+      await putKnight(this.id, this.item)
+
+      this.$message({
+        message: '保存成功',
+        type: 'success'
+      })
+      await this.refresh()
+    },
+
+    async selectImage() {
+      this.$refs.resourceDialog.openIt({ type: 'picture' })
+    },
     async postEvent({ uuid, node, inputs, outputs }) {
       if (this.item) {
         this.item.events = JSON.stringify({ inputs, outputs })
@@ -157,15 +174,13 @@ export default {
       })
       this.item = response.data
     },
-    onSubmit() {
-      const self = this
-      putKnight(self.id, self.item).then(response => {
-        self.$message({
-          message: '保存成功',
-          type: 'success'
-        })
-        this.refresh()
+    async onSubmit() {
+      await putKnight(this.id, this.item)
+      this.$message({
+        message: '保存成功',
+        type: 'success'
       })
+      await this.refresh()
     }
   }
 }
