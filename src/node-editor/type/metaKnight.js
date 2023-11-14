@@ -10,7 +10,7 @@ var MetaKnightType = {
     {
       type: 'num',
       key: 'id',
-      hidden: false,
+      hidden: true,
       readonly: true
     },
     {
