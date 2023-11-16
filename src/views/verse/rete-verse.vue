@@ -280,28 +280,30 @@ export default {
       }
     },
 
-    _updateKnightMetaEvent(data, knight_id) {
-      getKnight(knight_id).then(async response => {
-        const info = JSON.parse(response.data.info)
-        if (info.events) {
-          info.events.inputs.forEach(item => {
+    async _updateKnightMetaEvent(data, knight_id) {
+      const response = await getKnight(knight_id)
+      if (response.data.events) {
+        const events = JSON.parse(response.data.events)
+
+        if (events) {
+          events.inputs.forEach(item => {
             item.uuid = uuidv4()
           })
-          info.events.outputs.forEach(item => {
+          events.outputs.forEach(item => {
             item.uuid = uuidv4()
           })
           await editor.loadEvent(data.uuid, data.event_node, {
-            inputs: info.events.inputs,
-            outputs: info.events.outputs
+            inputs: events.inputs,
+            outputs: events.outputs
           })
 
           data.event_node = await manager.rebuild(
             data.event_node,
-            info.events.inputs,
-            info.events.outputs
+            events.inputs,
+            events.outputs
           )
         }
-      })
+      }
     },
     clearKnight() {
       this.knight.callback = null
