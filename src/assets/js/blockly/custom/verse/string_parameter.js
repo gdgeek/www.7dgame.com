@@ -3,7 +3,7 @@ import EventType from './type'
 import Helper from '../helper'
 import Argument from '../argument'
 const data = {
-  name: 'message'
+  name: 'string_parameter'
 }
 const block = {
   title: data.name,
@@ -12,14 +12,16 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '消息 %1',
+      message0: '字符参数 %1',
       args0: [
         {
-          type: 'field_input',
-          name: 'Message',
-          text: 'message'
+          type: 'input_value',
+          name: 'Input',
+          inputsInline: true,
+          check: 'String'
         }
       ],
+      inputsInline: true,
       output: 'Parameter',
       colour: EventType.colour,
       tooltip: '',
@@ -38,8 +40,13 @@ const block = {
   },
   getLua() {
     const lua = function (block) {
-      var message = block.getFieldValue('Message')
-      return [Argument.string(message), Blockly.Lua.ORDER_NONE]
+      var input = Blockly.Lua.valueToCode(
+        block,
+        'Input',
+        Blockly.Lua.ORDER_NONE
+      )
+
+      return [Argument.string(input), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

@@ -8,7 +8,8 @@ import TaskArray from './task-array.js'
 import Start from './start.js'
 import Anchor from './anchor.js'
 import Rectangle from './rectangle.js'
-import Message from './message.js'
+import NumberParameter from './number_parameter.js'
+import StringParameter from './string_parameter.js'
 import Sleep from '../helper/sleep.js'
 import Execute from './execute.js'
 import Parameters from './parameters.js'
@@ -24,7 +25,8 @@ const VerseCategory = {
     Start.toolbox,
     Sleep.toolbox,
     Anchor.toolbox,
-    Message.toolbox,
+    NumberParameter.toolbox,
+    StringParameter.toolbox,
     Rectangle.toolbox,
     Task.toolbox,
     TaskArray.toolbox,
@@ -44,7 +46,8 @@ function VerseRegister(parameters) {
   RegisterData(Start, parameters)
   RegisterData(Sleep, parameters)
   RegisterData(Anchor, parameters)
-  RegisterData(Message, parameters)
+  RegisterData(NumberParameter, parameters)
+  RegisterData(StringParameter, parameters)
   RegisterData(Rectangle, parameters)
   RegisterData(Task, parameters)
   RegisterData(TaskArray, parameters)

@@ -4,6 +4,7 @@ import { postMetaResource } from './meta-resource'
 import { v4 as uuidv4 } from 'uuid'
 
 async function initVerse(name, resource) {
+  alert(1)
   const json = {
     name,
     description: '通过模型[' + resource.name + ']创建的简单场景。',

@@ -3,7 +3,7 @@ function number(value) {
 }
 
 function string(value) {
-  return "_G.helper.argument_string('" + value + "')"
+  return '_G.helper.argument_string(' + value + ')'
 }
 
 function player(value) {
