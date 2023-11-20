@@ -45,7 +45,6 @@ const block = {
         'Input',
         Blockly.Lua.ORDER_NONE
       )
-
       return [Argument.number(input), Blockly.Lua.ORDER_NONE]
     }
     return lua
