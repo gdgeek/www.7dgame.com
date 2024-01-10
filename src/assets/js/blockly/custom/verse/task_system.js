@@ -1,9 +1,8 @@
 import Blockly from 'blockly'
 import EventType from './type'
 import Helper from '../helper'
-import Argument from '../argument'
 const data = {
-  name: 'player'
+  name: 'task_system'
 }
 const block = {
   title: data.name,
@@ -12,21 +11,32 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '玩家位置 %1',
+      message0: '系统方法： %1 参数 %2',
       args0: [
         {
+          type: 'field_dropdown',
+          name: 'Event',
+          options: function () {
+            let opt = [
+              ['player:setmark', 'player:setmark'],
+              ['player:reset', 'player:reset']
+            ]
+
+            return opt
+          }
+        },
+        {
           type: 'input_value',
-          name: 'Player',
-          check: 'Number'
+          name: 'Parameter',
+          check: 'Parameter'
         }
       ],
       inputsInline: true,
-      output: 'Parameter',
+      output: 'Task',
       colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
     }
-
     return json
   },
   getBlock: function (parameters) {
@@ -40,13 +50,23 @@ const block = {
   },
   getLua() {
     const lua = function (block) {
-      var id = Blockly.Lua.valueToCode(
+      var event = block.getFieldValue('Event')
+      var parameters = Blockly.Lua.valueToCode(
         block,
-        'Player',
+        'Parameter',
         Blockly.Lua.ORDER_ATOMIC
       )
 
-      return [Argument.player(id), Blockly.Lua.ORDER_NONE]
+      // TODO: Assemble Lua into code variable.
+      var code = null
+      if (parameters) {
+        code =
+          '_G.system.task(' + JSON.stringify(event) + ',' + parameters + ')'
+      } else {
+        code = '_G.system.task(' + JSON.stringify(event) + ')'
+      }
+
+      return [code, Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

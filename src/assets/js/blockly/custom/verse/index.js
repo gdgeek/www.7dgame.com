@@ -14,7 +14,8 @@ import StringParameter from './string_parameter.js'
 import Sleep from './sleep.js'
 import Execute from './execute.js'
 import Parameters from './parameters.js'
-import Player from './player.js'
+import TaskSystem from './task_system.js'
+import PlayerPosition from './player_position.js'
 
 const VerseCategory = {
   kind: 'category',
@@ -35,7 +36,8 @@ const VerseCategory = {
     TaskArray.toolbox,
     Execute.toolbox,
     Parameters.toolbox,
-    Player.toolbox
+    TaskSystem.toolbox,
+    PlayerPosition.toolbox
   ]
 }
 
@@ -55,6 +57,7 @@ function VerseRegister(parameters) {
   RegisterData(TaskArray, parameters)
   RegisterData(Execute, parameters)
   RegisterData(Parameters, parameters)
-  RegisterData(Player, parameters)
+  RegisterData(TaskSystem, parameters)
+  RegisterData(PlayerPosition, parameters)
 }
 export { VerseCategory, VerseRegister }
