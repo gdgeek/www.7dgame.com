@@ -1,9 +1,7 @@
 import Blockly from 'blockly'
 import EventType from './type'
-
-import Helper from '../helper'
 const data = {
-  name: 'execute'
+  name: 'system_task'
 }
 const block = {
   title: data.name,
@@ -12,15 +10,22 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '任务执行 %1',
+      message0: '系统方法： %1 参数 %2',
       args0: [
         {
           type: 'input_value',
-          name: 'content',
-          check: 'Task'
+          name: 'Input',
+          inputsInline: true,
+          check: 'String'
+        },
+        {
+          type: 'input_value',
+          name: 'Parameter',
+          check: 'Parameter'
         }
       ],
       inputsInline: true,
+      output: 'Task',
       colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
@@ -36,23 +41,28 @@ const block = {
     }
     return data
   },
-  getLua({ index }) {
+  getLua() {
     const lua = function (block) {
-      var generator = Blockly.Lua
-
-      var statements_content = generator.valueToCode(
+      var input = Blockly.Lua.valueToCode(
         block,
-        'content',
+        'Input',
         Blockly.Lua.ORDER_NONE
       )
+      var parameters = Blockly.Lua.valueToCode(
+        block,
+        'Parameter',
+        Blockly.Lua.ORDER_ATOMIC
+      )
 
-      var execute = '  _G.task.execute(' + statements_content + ')\n'
-      var code =
-        "verse['$main'] = function(parameter) \n  is_playing = true\n" +
-        execute +
-        '  is_playing = false\nend\n'
+      // TODO: Assemble Lua into code variable.
+      var code = null
+      if (parameters) {
+        code = '_G.system.task(' + input + ',' + parameters + ')'
+      } else {
+        code = '_G.system.task(' + input + ')'
+      }
 
-      return code
+      return [code, Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

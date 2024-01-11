@@ -2,7 +2,7 @@ import Blockly from 'blockly'
 import EventType from './type'
 import Helper from '../helper'
 const data = {
-  name: 'task-array'
+  name: 'task_array'
 }
 const block = {
   title: data.name,
@@ -54,7 +54,7 @@ const block = {
         Blockly.Lua.ORDER_ATOMIC
       )
 
-      var code = '_G.helper.task_array("' + type + '",' + array + ')\n'
+      var code = '_G.task.array("' + type + '",' + array + ')\n'
 
       return [code, Blockly.Lua.ORDER_NONE]
     }

@@ -4,7 +4,7 @@ import Blockly from 'blockly'
 //import Event from './event.js'
 //import EventWithParameter from './event-with-parameter.js'
 import Task from './task.js'
-import TaskArray from './task-array.js'
+import TaskArray from './task_array.js'
 import LoadLevel from './load_level.js'
 import UnloadLevel from './unload_level.js'
 import Anchor from './anchor.js'
@@ -14,7 +14,8 @@ import StringParameter from './string_parameter.js'
 import Sleep from './sleep.js'
 import Execute from './execute.js'
 import Parameters from './parameters.js'
-import TaskSystem from './task_system.js'
+import SystemTask from './system_task.js'
+import SystemParameter from './system_parameter.js'
 import PlayerPosition from './player_position.js'
 
 const VerseCategory = {
@@ -36,7 +37,8 @@ const VerseCategory = {
     TaskArray.toolbox,
     Execute.toolbox,
     Parameters.toolbox,
-    TaskSystem.toolbox,
+    SystemTask.toolbox,
+    SystemParameter.toolbox,
     PlayerPosition.toolbox
   ]
 }
@@ -57,7 +59,8 @@ function VerseRegister(parameters) {
   RegisterData(TaskArray, parameters)
   RegisterData(Execute, parameters)
   RegisterData(Parameters, parameters)
-  RegisterData(TaskSystem, parameters)
+  RegisterData(SystemTask, parameters)
+  RegisterData(SystemParameter, parameters)
   RegisterData(PlayerPosition, parameters)
 }
 export { VerseCategory, VerseRegister }
