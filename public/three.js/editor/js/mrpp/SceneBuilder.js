@@ -15,7 +15,6 @@ class SceneBuilder {
 			//dracoLoader.setDecoderPath( '/three.js/editor/draco/' );
 			dracoLoader.setDecoderPath('./draco/')
 			loader.setDRACOLoader(dracoLoader)
-			const self = this
 
 			loader.load(
 				// resource URL

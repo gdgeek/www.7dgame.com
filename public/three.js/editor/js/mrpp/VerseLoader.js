@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { SceneBuilder } from './SceneBuilder.js'
-
+import { GLTFLoader } from '../../../examples/jsm/loaders/GLTFLoader.js'
+import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
 function VerseLoader(editor) {
 	//editor.spaceLoader = this
 	const self = this
@@ -87,19 +88,28 @@ function VerseLoader(editor) {
 			root.type = 'Group'
 
 			builder.setTransform(root, transform)
+			//!!
+			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
+			//const dracoLoader = new DRACOLoader()
+			//dracoLoader.setDecoderPath( '/three.js/editor/draco/' );
+			//dracoLoader.setDecoderPath('./draco/')
+			//loader.setDRACOLoader(dracoLoader)
+			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
+				const mesh = gltf.scene.children[0]
+
+				mesh.name = type
+
+				mesh.scale.set(0.1, 0.1, 0.1)
+				//mesh.locked = true
+				mesh.userData['locked'] = true
+				root.add(mesh)
+				editor.addObject(root)
+			})
+			//loader.load('../../../mesh/unreal-gizmo.glb', gltf => {
+			//	alert(123)
+			//})
 
 			const geometry = new THREE.LatheGeometry()
-			const mesh = new THREE.Mesh(
-				geometry,
-				new THREE.MeshStandardMaterial({ side: THREE.DoubleSide })
-			)
-			mesh.name = type
-
-			mesh.scale.set(0.1, 0.1, 0.1)
-			//mesh.locked = true
-			mesh.userData['locked'] = true
-			root.add(mesh)
-			editor.addObject(root)
 		} else {
 			builder.setTransform(root, transform)
 		}
