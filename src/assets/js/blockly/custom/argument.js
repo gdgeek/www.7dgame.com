@@ -1,7 +1,9 @@
 function number(value) {
   return '_G.argument.number(' + value + ')'
 }
-
+function boolean(value) {
+  return '_G.argument.boolean(' + value + ')'
+}
 function string(value) {
   return '_G.argument.string(' + value + ')'
 }
@@ -19,6 +21,7 @@ function range(anchor, radius) {
 module.exports = {
   number,
   string,
+  boolean,
   range,
   anchor,
   player

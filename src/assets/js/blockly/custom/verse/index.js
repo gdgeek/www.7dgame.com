@@ -10,6 +10,7 @@ import UnloadLevel from './unload_level.js'
 import Anchor from './anchor.js'
 import Rectangle from './rectangle.js'
 import NumberParameter from './number_parameter.js'
+import BooleanParameter from './boolean_parameter.js'
 import StringParameter from './string_parameter.js'
 import Sleep from './sleep.js'
 import Execute from './execute.js'
@@ -31,6 +32,7 @@ const VerseCategory = {
     Sleep.toolbox,
     Anchor.toolbox,
     NumberParameter.toolbox,
+    BooleanParameter.toolbox,
     StringParameter.toolbox,
     Rectangle.toolbox,
     Task.toolbox,
@@ -53,6 +55,7 @@ function VerseRegister(parameters) {
   RegisterData(Sleep, parameters)
   RegisterData(Anchor, parameters)
   RegisterData(NumberParameter, parameters)
+  RegisterData(BooleanParameter, parameters)
   RegisterData(StringParameter, parameters)
   RegisterData(Rectangle, parameters)
   RegisterData(Task, parameters)
