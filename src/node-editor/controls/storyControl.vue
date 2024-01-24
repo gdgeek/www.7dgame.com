@@ -26,12 +26,20 @@
                 icon="el-icon-edit-outline"
                 @click="enterScript(data)"
               ></el-button>
-              <el-button size="mini" icon="el-icon-arrow-up"></el-button>
-              <el-button size="mini" icon="el-icon-arrow-down"></el-button>
+              <el-button
+                size="mini"
+                @click="up(data.id)"
+                icon="el-icon-arrow-up"
+              ></el-button>
+              <el-button
+                size="mini"
+                @click="down(data.id)"
+                icon="el-icon-arrow-down"
+              ></el-button>
               <el-button
                 size="mini"
                 icon="el-icon-delete"
-                @click="delScript(data.id)"
+                @click="del(data.id)"
               ></el-button>
             </el-button-group>
           </el-timeline-item>
@@ -154,7 +162,44 @@ export default {
         })
       }
     },
-    async delScript(id) {
+    moveElementForward(arr, value) {
+      let index = arr.indexOf(value)
+      if (index > 0) {
+        // 如果元素不在数组第一位
+        // 交换元素至前一位置
+        let temp = arr[index - 1]
+        arr[index - 1] = arr[index]
+        arr[index] = temp
+      }
+      return arr
+    },
+    moveElementBackward(arr, value) {
+      let index = arr.indexOf(value)
+      if (index < arr.length - 1) {
+        // 如果元素不在数组最后一位
+        // 交换元素至后一位置
+        let temp = arr[index + 1]
+        arr[index + 1] = arr[index]
+        arr[index] = temp
+      }
+      return arr
+    },
+    async up(id) {
+      this.content = {
+        switch: this.content.switch,
+        sorted: this.moveElementForward(this.content.sorted, id)
+      }
+      //  this.content.sorted = this.moveElementForward(this.content.sorted, id)
+      this.refresh()
+    },
+    async down(id) {
+      this.content = {
+        switch: this.content.switch,
+        sorted: this.moveElementBackward(this.content.sorted, id)
+      }
+      this.refresh()
+    },
+    async del(id) {
       try {
         await this.$confirm('此操作将永久删除该脚本, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -177,15 +222,26 @@ export default {
     },
     async refresh() {
       const response = await getVerseScripts(this.root.$route.query.id)
-      this.scripts = response.data
-      this.content.sorted = []
-      this.scripts.forEach(item => {
-        this.content.sorted.push(item.id)
+      // this.content.sorted = [46, 46, 48, 49]
+      const map = new Map()
+      response.data.forEach(item => {
+        if (!this.content.sorted.includes(item.id)) {
+          this.content.sorted.push(item.id)
+        }
+        map[item.id] = item
+      })
+      this.scripts = []
+      this.content.sorted.forEach(index => {
+        if (map.hasOwnProperty(index)) {
+          this.scripts.push(map[index])
+        }
       })
     }
   },
   async mounted() {
     const val = this.getData(this.data.key)
+
+    //alert(JSON.stringify(val))
     if (typeof val !== 'undefined') {
       this.content = JSON.parse(val)
     } else if (typeof this.data.default !== 'undefined') {
