@@ -2,12 +2,12 @@
   <el-form :inline="true" size="mini">
     <el-form-item class="el-form-item" :inline="true" label="故事">
       <el-switch
-        v-model="content.switch"
+        v-model="content.contactor"
         active-color="#13ce66"
         inactive-color="#ff4949"
       ></el-switch>
 
-      <el-timeline v-if="content.switch">
+      <el-timeline v-if="content.contactor">
         <div v-if="scripts">
           <el-timeline-item
             v-for="data in scripts"
@@ -75,7 +75,7 @@ export default {
       scripts: [],
       content: {
         sorted: [],
-        switch: false
+        contactor: false
       }
     }
   },
@@ -186,7 +186,7 @@ export default {
     },
     async up(id) {
       this.content = {
-        switch: this.content.switch,
+        contactor: this.content.contactor,
         sorted: this.moveElementForward(this.content.sorted, id)
       }
       //  this.content.sorted = this.moveElementForward(this.content.sorted, id)
@@ -194,7 +194,7 @@ export default {
     },
     async down(id) {
       this.content = {
-        switch: this.content.switch,
+        contactor: this.content.contactor,
         sorted: this.moveElementBackward(this.content.sorted, id)
       }
       this.refresh()
