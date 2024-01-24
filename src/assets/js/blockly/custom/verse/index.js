@@ -5,6 +5,7 @@ import Blockly from 'blockly'
 //import EventWithParameter from './event-with-parameter.js'
 import Task from './task.js'
 import TaskArray from './task_array.js'
+import TaskCricle from './task_circle.js'
 import LoadLevel from './load_level.js'
 import UnloadLevel from './unload_level.js'
 import Anchor from './anchor.js'
@@ -36,6 +37,7 @@ const VerseCategory = {
     StringParameter.toolbox,
     Rectangle.toolbox,
     Task.toolbox,
+    TaskCricle.toolbox,
     TaskArray.toolbox,
     Execute.toolbox,
     Parameters.toolbox,
@@ -59,6 +61,7 @@ function VerseRegister(parameters) {
   RegisterData(StringParameter, parameters)
   RegisterData(Rectangle, parameters)
   RegisterData(Task, parameters)
+  RegisterData(TaskCricle, parameters)
   RegisterData(TaskArray, parameters)
   RegisterData(Execute, parameters)
   RegisterData(Parameters, parameters)
