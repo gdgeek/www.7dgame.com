@@ -18,7 +18,7 @@ import Execute from './execute.js'
 import Parameters from './parameters.js'
 import SystemTask from './system_task.js'
 import SystemParameter from './system_parameter.js'
-import PlayerPosition from './player_position.js'
+import Player from './player.js'
 
 const VerseCategory = {
   kind: 'category',
@@ -43,7 +43,7 @@ const VerseCategory = {
     Parameters.toolbox,
     SystemTask.toolbox,
     SystemParameter.toolbox,
-    PlayerPosition.toolbox
+    Player.toolbox
   ]
 }
 
@@ -67,6 +67,6 @@ function VerseRegister(parameters) {
   RegisterData(Parameters, parameters)
   RegisterData(SystemTask, parameters)
   RegisterData(SystemParameter, parameters)
-  RegisterData(PlayerPosition, parameters)
+  RegisterData(Player, parameters)
 }
 export { VerseCategory, VerseRegister }

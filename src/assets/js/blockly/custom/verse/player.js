@@ -12,8 +12,18 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '玩家位置 %1',
+      message0: '玩家 %1 ,参数 %2',
       args0: [
+        {
+          type: 'field_dropdown',
+          name: 'PlayerType',
+          options: [
+            ['索引', 'index'],
+            ['Id', 'id'],
+            ['服务器', 'server'],
+            ['随机客户', 'random_client']
+          ]
+        },
         {
           type: 'input_value',
           name: 'Player',
@@ -40,13 +50,15 @@ const block = {
   },
   getLua() {
     const lua = function (block) {
+      var type = block.getFieldValue('PlayerType')
+
       var id = Blockly.Lua.valueToCode(
         block,
         'Player',
         Blockly.Lua.ORDER_ATOMIC
       )
 
-      return [Argument.player(id), Blockly.Lua.ORDER_NONE]
+      return [Argument.player(type, id), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

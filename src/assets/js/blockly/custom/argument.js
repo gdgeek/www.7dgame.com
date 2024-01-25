@@ -8,8 +8,18 @@ function string(value) {
   return '_G.argument.string(' + value + ')'
 }
 
-function player(value) {
-  return '_G.argument.player(' + value + ')'
+function player(type, value) {
+  switch (type) {
+    case 'index':
+      return '_G.argument.index_player(' + value + ')'
+    case 'id':
+      return '_G.argument.id_player(' + value + ')'
+    case 'server':
+      return '_G.argument.server_player()'
+    case 'random_client':
+      return '_G.argument.random_player()'
+  }
+  return '_G.argument.server_player()'
 }
 
 function anchor(key) {
