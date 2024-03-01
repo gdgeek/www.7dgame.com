@@ -17,6 +17,11 @@ export function postPolygen(data) {
   return postResources(data)
 }
 
+export function postVoxel(data) {
+  data.type = 'voxel'
+  return postResources(data)
+}
+
 export function postPicture(data) {
   data.type = 'picture'
   return postResources(data)
@@ -42,6 +47,9 @@ function deleteResources(id) {
 export function deletePolygen(id) {
   return deleteResources(id)
 }
+export function deleteVoxel(id) {
+  return deleteResources(id)
+}
 
 export function deletePicture(id) {
   return deleteResources(id)
@@ -64,6 +72,10 @@ function putResources(id, resource) {
 
 export function putPolygen(id, polygen) {
   return putResources(id, polygen)
+}
+
+export function putVoxel(id, voxel) {
+  return putResources(id, voxel)
 }
 export function putPicture(id, picture) {
   return putResources(id, picture)
@@ -107,9 +119,13 @@ export function getResourceList() {
     method: 'get'
   })
 }*/
-export function postPolygens(sort = '-created_at', search = '', page = 0) {
+export function getPolygens(sort = '-created_at', search = '', page = 0) {
   return getResources('polygen', sort, search, page)
 }
+export function getVoxels(sort = '-created_at', search = '', page = 0) {
+  return getResources('voxel', sort, search, page)
+}
+
 export function getPictures(sort = '-created_at', search = '', page = 0) {
   return getResources('picture', sort, search, page)
 }
@@ -131,6 +147,9 @@ export function getResource(type, id, expand = 'image,author') {
 }
 export function getPolygen(id, expand = 'image,file,author') {
   return getResource('polygen', id, expand)
+}
+export function getVoxel(id, expand = 'image,file,author') {
+  return getResource('voxel', id, expand)
 }
 export function getPicture(id, expand = 'image,file,author') {
   return getResource('picture', id, expand)

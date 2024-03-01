@@ -10,7 +10,7 @@
           @sort="sort"
         >
           <el-button-group :inline="true">
-            <router-link to="/polygen/upload">
+            <router-link to="/voxel/upload">
               <el-button size="mini" type="primary" icon="el-icon-upload">
                 <span class="hidden-sm-and-down">上传模型</span>
               </el-button>
@@ -35,7 +35,7 @@
               @named="namedWindow"
               @deleted="deletedWindow"
             >
-              <router-link slot="enter" :to="'/polygen/view?id=' + item.id">
+              <router-link slot="enter" :to="'/voxel/view?id=' + item.id">
                 <el-button-group :inline="true">
                   <el-button
                     v-if="item.info === null || item.image === null"
@@ -74,7 +74,7 @@
 
 <script>
 import 'element-ui/lib/theme-chalk/index.css'
-import { getPolygens, putPolygen, deletePolygen } from '@/api/resources'
+import { getVoxels, putVoxel, deleteVoxel } from '@/api/resources'
 import MrPPCard from '@/components/MrPP/MrPPCard'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
@@ -132,8 +132,8 @@ export default {
     },
     named: function (id, newValue) {
       const self = this
-      const polygen = { name: newValue }
-      putPolygen(id, polygen)
+      const voxel = { name: newValue }
+      putVoxel(id, voxel)
         .then(response => {
           self.refresh()
         })
@@ -166,7 +166,7 @@ export default {
     deleted: function (id) {
       const self = this
 
-      deletePolygen(id)
+      deleteVoxel(id)
         .then(response => {
           self.refresh()
         })
@@ -180,7 +180,7 @@ export default {
     },
     refresh() {
       const self = this
-      getPolygens(self.sorted, self.searched, self.pagination.current)
+      getVoxels(self.sorted, self.searched, self.pagination.current)
         .then(response => {
           console.log(response.headers)
           self.pagination = {

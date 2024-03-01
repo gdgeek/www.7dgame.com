@@ -85,6 +85,7 @@ export function UpdateAbility($ability, roles, userId) {
       '/site/logout',
       '/resource/',
       /^\/polygen[\/]/,
+      /^\/voxel[\/]/,
       /^\/space[\/]/,
       /^\/picture[\/]/,
       /^\/video[\/]/,

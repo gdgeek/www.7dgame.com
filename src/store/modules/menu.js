@@ -74,6 +74,23 @@ const state = {
       icon: 'cubes',
       items: [
         {
+          label: '体素管理',
+          url: '/voxel/',
+          icon: 'cubes',
+          items: [
+            {
+              label: '体素列表',
+              url: '/voxel/index',
+              icon: 'list'
+            },
+            {
+              label: '体素上传',
+              url: '/voxel/upload',
+              icon: 'upload'
+            }
+          ]
+        },
+        {
           label: '模型管理',
           url: '/polygen/',
           icon: 'cube',
@@ -87,13 +104,7 @@ const state = {
               label: '模型上传',
               url: '/polygen/upload',
               icon: 'upload'
-            } /*,
-            {
-              label: '模型上传(高级)',
-              hidden: true,
-              url: '/polygen/upload-advanced',
-              icon: 'upload'
-            }*/
+            }
           ]
         },
         {

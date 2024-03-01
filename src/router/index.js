@@ -187,6 +187,33 @@ export const constantRoutes = [
         ]
       },
       {
+        path: 'voxel',
+        name: 'Voxel',
+        meta: { title: '体素资源' },
+        redirect: '/voxel/index',
+        component: Empty,
+        children: [
+          {
+            meta: { title: '列表' },
+            path: 'index',
+            name: 'VoxelIndex',
+            component: () => import('@/views/voxel/index')
+          },
+          {
+            path: 'upload',
+            name: 'VoxelUpload',
+            meta: { title: '体素上传' },
+            component: () => import('@/views/voxel/upload')
+          },
+          {
+            path: 'view',
+            name: 'VoxelView',
+            meta: { title: '体素处理' },
+            component: () => import('@/views/voxel/view')
+          }
+        ]
+      },
+      {
         path: 'picture',
         name: 'Picture',
         meta: { title: '图片资源' },
