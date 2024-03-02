@@ -68,7 +68,7 @@
 </template>
 <script>
 import { getVoxel, putVoxel, deleteVoxel } from '@/api/resources'
-//import { createVerseFromPolygen } from '@/api/v1/meta-verse'
+import { createVerseFromResource } from '@/api/v1/meta-verse'
 
 import { postFile } from '@/api/v1/files'
 import { printVector3 } from '@/assets/js/helper'
@@ -84,7 +84,6 @@ export default {
     return {
       loading: false,
       data: null,
-      info: null,
       file: null,
       expire: false,
       percentage: 0
@@ -95,28 +94,37 @@ export default {
       store: state => state.config.store
     }),
     tableData() {
-      if (this.data !== null && this.info !== null) {
-        console.log(this.data)
+      if (this.prepare) {
+        const info = JSON.parse(this.data.info)
         return [
           {
             item: '模型名称',
             text: this.data.name
           },
+
           {
-            item: '体素宽度',
-            text: this.info.width
+            item: '创建者',
+            text: this.data.author.nickname
           },
           {
-            item: '体素高度',
-            text: this.info.height
+            item: '创建时间',
+            text: this.data.created_at
           },
           {
-            item: '体素深度',
-            text: this.info.depth
+            item: '文件大小',
+            text: this.data.file.size + '字节'
+          },
+          {
+            item: '体素尺寸',
+            text: printVector3(info.size)
+          },
+          {
+            item: '体素中心',
+            text: printVector3(info.center)
           },
           {
             item: '体素数量',
-            text: this.info.count
+            text: info.count
           }
         ]
       } else {
@@ -170,8 +178,11 @@ export default {
         .then(async ({ value }) => {
           self.loading = true
           try {
-            /*
-            const data = await createVerseFromPolygen(value, self.data)
+            const data = await createVerseFromResource(
+              'Voxel',
+              value,
+              self.data
+            )
 
             this.$message({
               type: 'success',
@@ -179,7 +190,7 @@ export default {
             })
             setTimeout(() => {
               this.$router.push('/meta-verse/index')
-            }, 300)*/
+            }, 300)
           } catch (error) {
             this.$message({
               type: 'error',
@@ -283,9 +294,13 @@ export default {
       const response = await postFile(data)
       this.updateVoxel(response.data.id, info)
     },
-    save: async function (info) {
-      console.error(info)
-      this.info = info
+    save: async function (data) {
+      const info = {
+        size: data.size,
+        center: data.center,
+        count: data.count
+      }
+
       const self = this
 
       const store = this.store
@@ -293,7 +308,7 @@ export default {
         self.expire = false
         return
       }
-      const blob = info.screenshot
+      const blob = data.screenshot
       blob.name = self.data.name
       blob.extension = '.jpg'
       const file = blob

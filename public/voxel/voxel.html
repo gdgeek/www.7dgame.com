@@ -75,37 +75,44 @@
         mesh.read(data, async function () {
           await voxel.changeMesh(10, mesh, function () {
 
-            let ix = 10000;
-            let mx = -10000;
-            let iy = 10000;
-            let my = -10000;
-            let iz = 10000;
-            let mz = -10000;
+            let x = [10000, -10000]
+            let y = [10000, -10000]
+            let z = [10000, -10000]
             for (let i = 0; i < mesh.vox.length; i++) {
-              if (mesh.vox[i][0] > mx) {
-                mx = mesh.vox[i][0]
+              if (mesh.vox[i][0] > x[1]) {
+                x[1] = mesh.vox[i][0]
               }
-              if (mesh.vox[i][0] < ix) {
-                ix = mesh.vox[i][0]
+              if (mesh.vox[i][0] < x[0]) {
+                x[0] = mesh.vox[i][0]
+              }
+              if (mesh.vox[i][1] > y[1]) {
+                y[1] = mesh.vox[i][1]
+              }
+              if (mesh.vox[i][1] < y[0]) {
+                y[0] = mesh.vox[i][1]
               }
 
-              if (mesh.vox[i][1] > my) {
-                my = mesh.vox[i][1]
+              if (mesh.vox[i][2] > z[1]) {
+                z[1] = mesh.vox[i][2]
               }
-              if (mesh.vox[i][1] < iy) {
-                iy = mesh.vox[i][1]
-              }
-              if (mesh.vox[i][2] > mz) {
-                mz = mesh.vox[i][2]
-              }
-              if (mesh.vox[i][2] < iz) {
-                iz = mesh.vox[i][2]
+              if (mesh.vox[i][2] < z[0]) {
+                z[0] = mesh.vox[i][2]
               }
 
             }
             setTimeout(() => {
               voxel.renderer.domElement.toBlob(function (blob) {
-                save({ width: mx - ix + 1, height: my - iy + 1, depth: mz - iz + 1, count: mesh.vox.length, screenshot: blob })
+                const size = {
+                  x: x[1] - x[0] + 1,
+                  y: y[1] - y[0] + 1,
+                  z: z[1] - z[0] + 1
+                }
+                const center = {
+                  x: (x[1] + x[0] + 1) / 2,
+                  y: (y[1] + y[0] + 1) / 2,
+                  z: (z[1] + z[0] + 1) / 2
+                }
+                save({ size, center, count: mesh.vox.length, screenshot: blob })
 
               }, 'image/jpeg')
 

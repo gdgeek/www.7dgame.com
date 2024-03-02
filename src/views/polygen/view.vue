@@ -68,7 +68,7 @@
 </template>
 <script>
 import { getPolygen, putPolygen, deletePolygen } from '@/api/resources'
-import { createVerseFromPolygen } from '@/api/v1/meta-verse'
+import { createVerseFromResource } from '@/api/v1/meta-verse'
 
 import { postFile } from '@/api/v1/files'
 import { printVector3 } from '@/assets/js/helper'
@@ -173,7 +173,11 @@ export default {
         .then(async ({ value }) => {
           self.loading = true
           try {
-            const data = await createVerseFromPolygen(value, self.data)
+            const data = await createVerseFromResource(
+              'Polygen',
+              value,
+              self.data
+            )
 
             this.$message({
               type: 'success',

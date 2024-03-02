@@ -1,7 +1,7 @@
 import { EntitySocket, ComponentSocket } from '@/node-editor/sockets/sockets'
 
-var VideoType = {
-  title: 'Video',
+var PolygenType = {
+  title: 'Voxel',
   allocate: ['实体'],
   controls: [
     {
@@ -25,40 +25,13 @@ var VideoType = {
       title: '激活',
       readonly: false
     },
+
     {
       type: 'resource',
       key: 'resource',
-      resource: 'video',
-      title: '视频',
+      resource: 'voxel',
+      title: '体素',
       readonly: false
-    },
-    {
-      type: 'number',
-      key: 'width',
-      title: '宽度',
-      readonly: false,
-      default: 0.5
-    },
-    {
-      type: 'bool',
-      key: 'loop',
-      title: '循环',
-      readonly: false,
-      default: false
-    },
-    {
-      type: 'bool',
-      key: 'play',
-      title: '播放',
-      readonly: false,
-      default: true
-    },
-    {
-      type: 'bool',
-      key: 'console',
-      title: '控制',
-      readonly: false,
-      default: true
     }
   ],
   inputs: [
@@ -84,4 +57,4 @@ var VideoType = {
     }
   ]
 }
-export default VideoType
+export default PolygenType

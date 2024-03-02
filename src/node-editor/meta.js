@@ -28,7 +28,8 @@ import {
   Action,
   Tooltip,
   Billboard,
-  Moved
+  Moved,
+  Voxel
 } from './type/metaEditor'
 
 let editor_ = null
@@ -89,6 +90,7 @@ const initMeta = async function ({ container, root }) {
     Entity,
     Polygen,
     Picture,
+    Voxel,
     Video,
     Sound,
     Text,
@@ -128,6 +130,7 @@ const initMeta = async function ({ container, root }) {
     { component: 'Polygen', target: 'name' },
     { component: 'Video', target: 'name' },
     { component: 'Picture', target: 'name' },
+    { component: 'Voxel', target: 'name' },
     { component: 'Sound', target: 'name' },
     { component: 'Text', target: 'name' },
     { component: 'Text', target: 'text' },
@@ -143,6 +146,7 @@ const initMeta = async function ({ container, root }) {
     { component: 'Video', target: 'uuid' },
     { component: 'Picture', target: 'uuid' },
     { component: 'Sound', target: 'uuid' },
+    { component: 'Voxel', target: 'uuid' },
     { component: 'Text', target: 'uuid' },
     { component: 'Entity', target: 'uuid' },
     { component: 'Button', target: 'uuid' },
