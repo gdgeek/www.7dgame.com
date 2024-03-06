@@ -53,13 +53,13 @@ function getIP() {
   }
   return null
 }
-
+function test() {}
 function title() {
-  switch (process.env.VUE_APP_BASE_MODE) {
+  /*switch (process.env.VUE_APP_BASE_MODE) {
     case '7dgame.com':
       return '苹果AR元气项目'
-  }
-  return '元宇宙实景编程平台！'
+  }*/
+  return '上海不加班网络科技有限公司'
 }
 function subtitle() {
   switch (process.env.VUE_APP_BASE_MODE) {
