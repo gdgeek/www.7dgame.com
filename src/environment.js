@@ -60,11 +60,11 @@ function title() {
     return '不加班官方网站'
   }
   if (hostname.toLowerCase().includes('4mr.cn')) {
-    return '不加班官方网站  '
+    return '不加班官方网站'
   }
 
   if (hostname.toLowerCase().includes('hololens2.cn')) {
-    return '内部版本'
+    return '不加班官方网站'
   }
 
   if (hostname.toLowerCase().includes('bujiaban.com')) {
@@ -73,11 +73,10 @@ function title() {
   if (hostname.toLowerCase().includes('localhost')) {
     return '混合现实编程'
   }
-
-  switch (process.env.VUE_APP_BASE_MODE) {
-    case '7dgame.com':
-      return '苹果AR元气项目'
+  if (hostname.toLowerCase().includes('7dgame.com')) {
+    return '不加班官方网站'
   }
+
   return '上海不加班网络科技有限公司'
 }
 function subtitle() {
