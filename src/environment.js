@@ -64,7 +64,7 @@ function title() {
   }
 
   if (hostname.toLowerCase().includes('hololens2.cn')) {
-    return '不加班官方网站'
+    return '上海不加班网络科技'
   }
 
   if (hostname.toLowerCase().includes('bujiaban.com')) {
