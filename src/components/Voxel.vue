@@ -88,14 +88,11 @@ export default {
 
     //  canvas.appendChild(renderer.domElement) /**/
 
-    const light = new DirectionalLight(0xffffff, 1)
-    light.position.set(-0.5, 0, 0.7)
-
-    //let l = await this.light();
-    self.scene.add(light)
-    self.scene.add(new PointLight(0xffffff, 3))
-    const ambient = new AmbientLight(0xffffff, 1)
-    self.scene.add(ambient)
+    const hemiLight = new THREE.HemisphereLight(0x888888, 0x444444,1)
+    self.scene.add(hemiLight)
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.75)
+    dirLight.position.set(1.5, 3, 2.5)
+    this.scene.add(dirLight)
 
     function animate() {
       requestAnimationFrame(animate)
