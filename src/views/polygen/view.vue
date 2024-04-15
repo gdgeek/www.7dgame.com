@@ -290,6 +290,7 @@ export default {
       this.updatePolygen(response.data.id, info)
     },
     loaded: async function (info) {
+      console.error(info)
       const self = this
       const store = this.store
       if (self.prepare) {

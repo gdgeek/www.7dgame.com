@@ -12,7 +12,7 @@
               v-if="data"
               ref="three"
               :file="data.file"
-              @save="save"
+              @loaded="loaded"
               @progress="progress"
             />
           </div>
@@ -294,21 +294,15 @@ export default {
       const response = await postFile(data)
       this.updateVoxel(response.data.id, info)
     },
-    save: async function (data) {
-      const info = {
-        size: data.size,
-        center: data.center,
-        count: data.count
-      }
-
+    
+    loaded: async function (info) {
       const self = this
-
       const store = this.store
       if (self.prepare) {
         self.expire = false
         return
       }
-      const blob = data.screenshot
+      const blob = await this.screenshot()
       blob.name = self.data.name
       blob.extension = '.jpg'
       const file = blob
@@ -334,6 +328,10 @@ export default {
       }
 
       await self.saveFile(md5, file.extension, info, file, handler)
+    },
+    
+    screenshot: function () {
+      return this.$refs.three.screenshot()
     }
   }
 }

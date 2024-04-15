@@ -223,27 +223,26 @@ export default {
           // called when the resource is loaded
           function (chunks) {
             
-            for(let i =0; i<chunks.length; i++){
 
-              const chunk = chunks[i]
-              const mesh = new VOXMesh(chunk)
-              const box = new Box3().setFromObject(mesh)
-             // alert(mesh.scene)
-           //   mesh.scale.setScalar(0.0015)
-           const center = new Vector3()
-            box.getCenter(center)
-            const size = new Vector3()
-            box.getSize(size)
-            const scale = self.target / size.x
-            mesh.position.set(
-              -center.x * scale,
-              -center.y * scale,
-              -center.z * scale
-            )
-            mesh.scale.set(scale, scale, scale)
+          const chunk = chunks[0]
+          const mesh = new VOXMesh(chunk)
+          const box = new Box3().setFromObject(mesh)
+          // alert(mesh.scene)
+          //   mesh.scale.setScalar(0.0015)
+          const center = new Vector3()
+          box.getCenter(center)
+          const size = new Vector3()
+          box.getSize(size)
+          const scale = self.target / size.x
+          mesh.position.set(
+            -center.x * scale,
+            -center.y * scale,
+            -center.z * scale
+          )
+          mesh.scale.set(scale, scale, scale)
 
-            self.scene.add(mesh)
-            }
+          self.scene.add(mesh)
+            
             /*
             const box = new Box3().setFromObject(model.scene)
 
