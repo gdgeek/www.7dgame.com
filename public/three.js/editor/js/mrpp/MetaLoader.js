@@ -62,7 +62,6 @@ function MetaLoader(editor) {
 		self.data.resources.forEach(r => {
 			resources.set(r.id, r)
 		})
-
 		if (self.meta.children) {
 			for (let i = 0; i < self.meta.children.entities.length; ++i) {
 				const node = await builder.addEntity(
@@ -82,6 +81,7 @@ function MetaLoader(editor) {
 		newEntities.forEach(entity => {
 			entities.add(entity.parameters.uuid)
 		})
+
 		oldEntities.forEach(entity => {
 			if (!entities.has(entity.parameters.uuid)) {
 				const obj = editor.objectByUuid(meta.parameters.uuid)

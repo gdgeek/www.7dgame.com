@@ -3,10 +3,27 @@ import * as THREE from 'three'
 import { AddObjectCommand } from '../commands/AddObjectCommand.js'
 import { GLTFLoader } from '../../../examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
+import { VOXLoader, VOXMesh } from '../../../examples/jsm/loaders/VOXLoader.js'
 
 class SceneBuilder {
 	constructor(editor) {
 		this.editor = editor
+	}
+	async loadVoxel(url) {
+		return new Promise((resolve, reject) => {
+			const loader = new VOXLoader()
+			loader.load(
+				url,
+
+				function (chunks) {
+					const chunk = chunks[0]
+					const mesh = new VOXMesh(chunk)
+
+					mesh.scale.set(0.005, 0.005, 0.005)
+					resolve(mesh)
+				}
+			)
+		})
 	}
 	async loadPolygen(url) {
 		return new Promise((resolve, reject) => {
@@ -66,8 +83,8 @@ class SceneBuilder {
 	}
 
 	async getPolygen(data, resources) {
-		if (resources.has(data.parameters.polygen)) {
-			const resource = resources.get(data.parameters.polygen)
+		if (resources.has(data.parameters.resource)) {
+			const resource = resources.get(data.parameters.resource)
 			const node = await this.loadPolygen(resource.file.url)
 			node.name = data.parameters.name + '[polygen]'
 			node.uuid = resource.file.md5
@@ -107,9 +124,19 @@ class SceneBuilder {
 		plane.name = data.parameters.name + '[text]'
 		return plane
 	}
+	async getVoxel(data, resources) {
+		if (resources.has(data.parameters.resource)) {
+			const resource = resources.get(data.parameters.resource)
+			const node = await this.loadVoxel(resource.file.url)
+			node.name = '[voxel]'
+			node.uuid = resource.file.md5
+			return node
+		}
+		return null
+	}
 	async getVideo(data, resources) {
 		const self = this
-		const resource = resources.get(data.parameters.video)
+		const resource = resources.get(data.parameters.resource)
 		const info = JSON.parse(resource.info)
 		const size = info.size
 		const width = data.parameters.width
@@ -154,6 +181,9 @@ class SceneBuilder {
 				break
 			case 'video':
 				node = await this.getVideo(data, resources)
+				break
+			case 'voxel':
+				node = await this.getVoxel(data, resources)
 				break
 			case 'text':
 				node = await this.getText(data, resources)

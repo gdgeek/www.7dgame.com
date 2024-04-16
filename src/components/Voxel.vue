@@ -22,7 +22,11 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
-import { VOXLoader, VOXMesh, VOXData3DTexture } from 'three/examples/jsm/loaders/VOXLoader.js'
+import {
+  VOXLoader,
+  VOXMesh,
+  VOXData3DTexture
+} from '@/assets/js/voxel/VOXLoader.js'
 
 function toFixedVector3(vec, n) {
   const result = new Vector3()
@@ -88,7 +92,7 @@ export default {
 
     //  canvas.appendChild(renderer.domElement) /**/
 
-    const hemiLight = new THREE.HemisphereLight(0x888888, 0x444444,1)
+    const hemiLight = new THREE.HemisphereLight(0x888888, 0x444444, 1)
     self.scene.add(hemiLight)
     const dirLight = new THREE.DirectionalLight(0xffffff, 0.75)
     dirLight.position.set(1.5, 3, 2.5)
@@ -214,50 +218,30 @@ export default {
         dracoLoader.setDecoderPath('/three.js/examples/js/libs/draco/')
         const gltf = new GLTFLoader()
         gltf.setDRACOLoader(dracoLoader)
-        const loader = new VOXLoader();
+        const loader = new VOXLoader()
         loader.load(
           self.file.url,
-          // called when the resource is loaded
+
           function (chunks) {
-            
-
-          const chunk = chunks[0]
-          const mesh = new VOXMesh(chunk)
-          const box = new Box3().setFromObject(mesh)
-          // alert(mesh.scene)
-          //   mesh.scale.setScalar(0.0015)
-          const center = new Vector3()
-          box.getCenter(center)
-          const size = new Vector3()
-          box.getSize(size)
-          const scale = self.target / size.x
-          mesh.position.set(
-            -center.x * scale,
-            -center.y * scale,
-            -center.z * scale
-          )
-          mesh.scale.set(scale, scale, scale)
-
-          self.scene.add(mesh)
-            
-            /*
-            const box = new Box3().setFromObject(model.scene)
-
+            const chunk = chunks[0]
+            console.error(chunk.data.length/4)
+            const mesh = new VOXMesh(chunk)
+            const box = new Box3().setFromObject(mesh)
             const center = new Vector3()
             box.getCenter(center)
             const size = new Vector3()
             box.getSize(size)
             const scale = self.target / size.x
-            model.scene.position.set(
+            mesh.position.set(
               -center.x * scale,
               -center.y * scale,
               -center.z * scale
             )
-            model.scene.scale.set(scale, scale, scale)
+            mesh.scale.set(scale, scale, scale)
 
-            self.scene.add(model.scene)
-*/
+            self.scene.add(mesh)
             self.$emit('loaded', {
+              count:chunk.data.length/4,
               size: toFixedVector3(size, 5),
               center: toFixedVector3(
                 new Vector3(center.x, center.y, center.z),

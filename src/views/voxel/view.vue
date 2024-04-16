@@ -274,7 +274,6 @@ export default {
     },
     updateVoxel: async function (imageId, info) {
       const voxel = { image_id: imageId, info: JSON.stringify(info) }
-
       const response = await putVoxel(this.data.id, voxel)
       console.log(response.data)
       this.data.image_id = response.data.image_id

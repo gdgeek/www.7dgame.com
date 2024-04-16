@@ -89,7 +89,7 @@ function SidebarScene(editor) {
 		if (object.isLine) return 'Line'
 		if (object.isPoints) return 'Points'
 
-		return 'Object3D'
+		return 'Object3D_4'
 	}
 
 	function buildHTML(object) {

@@ -516,6 +516,7 @@ function SidebarObject(editor) {
 	function update() {
 		const object = editor.selected
 
+		console.error(object)
 		if (object !== null) {
 			const newPosition = new THREE.Vector3(
 				objectPositionX.getValue(),
@@ -904,6 +905,7 @@ function SidebarObject(editor) {
 	})
 
 	function updateUI(object) {
+		console.error(object)
 		objectType.setValue(object.type)
 
 		objectUUID.setValue(object.uuid)

@@ -9,7 +9,7 @@ import { SidebarSettings } from './Sidebar.Settings.js'
 
 function Sidebar(editor) {
 	const strings = editor.strings
-
+  
 	const container = new UITabbedPanel()
 	container.setId('sidebar')
 
@@ -17,6 +17,7 @@ function Sidebar(editor) {
 		new SidebarScene(editor),
 		new SidebarProperties(editor),
 		new SidebarAnimation(editor),
+		new SidebarScript(editor),
 		new SidebarScript(editor)
 	)
 	const project = new SidebarProject(editor)
