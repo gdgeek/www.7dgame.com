@@ -226,7 +226,6 @@ export default {
 
           function (chunks) {
             const chunk = chunks[0]
-            console.error(chunk.data.length/4)
             const mesh = new VOXMesh(chunk)
             const box = new Box3().setFromObject(mesh)
             const center = new Vector3()

@@ -284,7 +284,7 @@ function VerseLoader(editor) {
 	}
 	this.load = async function (data) {
 		if (typeof this.room === 'undefined') {
-			this.room = await builder.loadRoom()
+			this.room = await builder.lights()
 			builder.lockNode(this.room)
 			editor.addObject(this.room)
 		}

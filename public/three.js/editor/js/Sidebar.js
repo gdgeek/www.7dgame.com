@@ -3,13 +3,14 @@ import { UITabbedPanel, UISpan } from './libs/ui.js'
 import { SidebarScene } from './Sidebar.Scene.js'
 import { SidebarProperties } from './Sidebar.Properties.js'
 import { SidebarScript } from './Sidebar.Script.js'
+import { SidebarComponent } from './Sidebar.Component.js'
 import { SidebarAnimation } from './Sidebar.Animation.js'
 import { SidebarProject } from './Sidebar.Project.js'
 import { SidebarSettings } from './Sidebar.Settings.js'
 
 function Sidebar(editor) {
 	const strings = editor.strings
-  
+
 	const container = new UITabbedPanel()
 	container.setId('sidebar')
 
@@ -18,7 +19,7 @@ function Sidebar(editor) {
 		new SidebarProperties(editor),
 		new SidebarAnimation(editor),
 		new SidebarScript(editor),
-		new SidebarScript(editor)
+		new SidebarComponent(editor)
 	)
 	const project = new SidebarProject(editor)
 	const settings = new SidebarSettings(editor)

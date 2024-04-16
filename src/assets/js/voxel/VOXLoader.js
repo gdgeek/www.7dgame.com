@@ -175,13 +175,13 @@ class VOXLoader extends Loader {
 
 class VOXMesh extends Mesh {
 
-	constructor( chunk ) {
+	constructor( chunk, cell = 1 ) {
 
 		const data = chunk.data;
 		const size = chunk.size;
 		const palette = chunk.palette;
 
-		//
+	
 
 		const vertices = [];
 		const colors = [];
@@ -205,7 +205,7 @@ class VOXMesh extends Mesh {
 
 				_color.setRGB( r, g, b, SRGBColorSpace );
 
-				vertices.push( tile[ i + 0 ] + x, tile[ i + 1 ] + y, tile[ i + 2 ] + z );
+				vertices.push( (tile[ i + 0 ] + x)* cell, (tile[ i + 1 ] + y)* cell, (tile[ i + 2 ] + z)* cell );
 				colors.push( _color.r, _color.g, _color.b );
 
 			}

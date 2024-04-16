@@ -24,6 +24,7 @@ function SidebarScene(editor) {
 	const nodeStates = new WeakMap()
 
 	function buildOption(object, draggable) {
+
 		const option = document.createElement('div')
 		option.draggable = draggable
 		option.innerHTML = buildHTML(object)
@@ -337,23 +338,26 @@ function SidebarScene(editor) {
 
 		options.push(buildOption(camera, false))
 		options.push(buildOption(scene, false))
-		;(function addObjects(objects, pad) {
-			for (let i = 0, l = objects.length; i < l; i++) {
-				const object = objects[i]
+			; (function addObjects(objects, pad) {
+				for (let i = 0, l = objects.length; i < l; i++) {
+					const object = objects[i]
 
-				if (nodeStates.has(object) === false) {
-					nodeStates.set(object, false)
+					if (nodeStates.has(object) === false) {
+						nodeStates.set(object, false)
+					}
+
+					if (!object.userData['locked']) {
+						const option = buildOption(object, true)
+						option.style.paddingLeft = pad * 18 + 'px'
+						options.push(option)
+					}
+
+
+					if (nodeStates.get(object) === true) {
+						addObjects(object.children, pad + 1)
+					}
 				}
-
-				const option = buildOption(object, true)
-				option.style.paddingLeft = pad * 18 + 'px'
-				options.push(option)
-
-				if (nodeStates.get(object) === true) {
-					addObjects(object.children, pad + 1)
-				}
-			}
-		})(scene.children, 0)
+			})(scene.children, 0)
 
 		outliner.setOptions(options)
 

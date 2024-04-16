@@ -17,30 +17,32 @@ class SceneBuilder {
 
 				function (chunks) {
 					const chunk = chunks[0]
-					const mesh = new VOXMesh(chunk)
+					const mesh = new VOXMesh(chunk, 0.005)
 
-					mesh.scale.set(0.005, 0.005, 0.005)
+					//mesh.scale.set(0.005, 0.005, 0.005)
 					resolve(mesh)
 				}
 			)
 		})
 	}
 	async loadPolygen(url) {
+		const self = this
 		return new Promise((resolve, reject) => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
 			const dracoLoader = new DRACOLoader()
-			//dracoLoader.setDecoderPath( '/three.js/editor/draco/' );
+
 			dracoLoader.setDecoderPath('./draco/')
 			loader.setDRACOLoader(dracoLoader)
 
 			loader.load(
 				// resource URL
 				url,
-				// called when the resource is loaded
 				function (gltf) {
 					resolve(gltf.scene)
+					gltf.scene.children.forEach(item => {
+						self.lockNode(item)
+					})
 				},
-				// called while loading is progressing
 				function (xhr) {
 					//console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
 				},
@@ -98,15 +100,35 @@ class SceneBuilder {
 		return new Promise(resolve => {
 			textureLoader.load(url, texture => {
 				const geometry = new THREE.PlaneGeometry(width, height)
+
 				const material = new THREE.MeshBasicMaterial({
 					color: 0xffffff,
 					side: THREE.DoubleSide,
 					map: texture
 				})
 				const plane = new THREE.Mesh(geometry, material)
+
+
 				resolve(plane)
 			})
 		})
+	}
+
+	async getPicture(data, resources) {
+		const self = this
+		const resource = resources.get(data.parameters.resource)
+		const info = JSON.parse(resource.info)
+		const size = info.size
+		const width = data.parameters.width
+		const height = width * (size.y / size.x)
+		const plane = await self.getPlane(resource.image.url, width, height)
+
+		return plane
+	}
+	async getEntity(data, resources) {
+		const entity = new THREE.Group()
+		entity.name = data.parameters.name
+		return entity;
 	}
 	async getText(data, resources) {
 		const text = data.parameters.text
@@ -134,6 +156,11 @@ class SceneBuilder {
 		}
 		return null
 	}
+	async getSound(data, resources) {
+		const entity = new THREE.Group()
+		entity.name = data.parameters.name
+		return entity;
+	}
 	async getVideo(data, resources) {
 		const self = this
 		const resource = resources.get(data.parameters.resource)
@@ -157,20 +184,30 @@ class SceneBuilder {
 		let node = editor.objectByUuid(entity.parameters.uuid)
 
 		if (typeof node === 'undefined') {
-			node = new THREE.Object3D()
+			node = await this.building(entity, resources)
+
 			node.name = entity.parameters.name
 			node.uuid = entity.parameters.uuid
 			node.applyMatrix4(this.getMatrix4(entity.parameters.transform))
-			const point = await this.building(entity, resources)
-			if (point !== null) {
-				node.add(point)
-			}
 		}
-
 		for (let i = 0; i < entity.children.entities.length; ++i) {
 			const child = await this.addEntity(entity.children.entities[i], resources)
 			node.add(child)
 		}
+
+		node.visible = entity.parameters.active
+		console.error(entity.parameters)
+		const userData = { "type": entity.type }
+		const exclude = ['name', 'uuid', 'transform', 'active']
+
+		Object.keys(entity.parameters).forEach(key => {
+			if (!exclude.includes(key)) {
+				userData[key] = entity.parameters[key]
+			}
+		})
+		console.error(entity.children.components)
+		node.components = entity.children.components
+		node.userData = userData
 		return node
 	}
 	async building(data, resources) {
@@ -179,8 +216,14 @@ class SceneBuilder {
 			case 'polygen':
 				node = await this.getPolygen(data, resources)
 				break
+			case 'picture':
+				node = await this.getPicture(data, resources)
+				break
 			case 'video':
 				node = await this.getVideo(data, resources)
+				break
+			case 'sound':
+				node = await this.getSound(data, resources)
 				break
 			case 'voxel':
 				node = await this.getVoxel(data, resources)
@@ -188,14 +231,17 @@ class SceneBuilder {
 			case 'text':
 				node = await this.getText(data, resources)
 				break
+			case 'entity':
+				node = await this.getEntity(data, resources)
+				break
 		}
-		if (node !== null) {
+		/*if (node !== null) {
 			this.lockNode(node)
-		}
+		}*/
 		return node
 	}
 
-	async loadRoom() {
+	async lights() {
 		const light = {
 			metadata: {
 				version: 4.5,

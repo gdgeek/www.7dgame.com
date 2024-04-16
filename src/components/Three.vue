@@ -89,12 +89,9 @@ export default {
 
     const light = new DirectionalLight(0xffffff, 1)
     light.position.set(-0.5, 0, 0.7)
-
-    //let l = await this.light();
     self.scene.add(light)
     self.scene.add(new PointLight(0xffffff, 3))
-    const ambient = new AmbientLight(0xffffff, 1)
-    self.scene.add(ambient)
+    self.scene.add(new AmbientLight(0xffffff, 1))
 
     function animate() {
       requestAnimationFrame(animate)

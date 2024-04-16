@@ -425,7 +425,7 @@ function setQuaternionFromProperEuler(q, a, b, c, order) {
     default:
       console.warn(
         'THREE.MathUtils: .setQuaternionFromProperEuler() encountered an unknown order: ' +
-          order
+        order
       )
   }
 }
@@ -1694,9 +1694,8 @@ class Color {
       return `color(${colorSpace} ${_rgb.r} ${_rgb.g} ${_rgb.b})`
     }
 
-    return `rgb(${(_rgb.r * 255) | 0},${(_rgb.g * 255) | 0},${
-      (_rgb.b * 255) | 0
-    })`
+    return `rgb(${(_rgb.r * 255) | 0},${(_rgb.g * 255) | 0},${(_rgb.b * 255) | 0
+      })`
   }
 
   offsetHSL(h, s, l) {
@@ -2544,8 +2543,8 @@ class Vector4 {
 
     let s = Math.sqrt(
       (m32 - m23) * (m32 - m23) +
-        (m13 - m31) * (m13 - m31) +
-        (m21 - m12) * (m21 - m12)
+      (m13 - m31) * (m13 - m31) +
+      (m21 - m12) * (m21 - m12)
     ) // used to normalize
 
     if (Math.abs(s) < 0.001) s = 1 // prevent divide by zero, should not happen if matrix is orthogonal and should be
@@ -3195,7 +3194,7 @@ class Quaternion {
       default:
         console.warn(
           'THREE.Quaternion: .setFromEuler() encountered an unknown order: ' +
-            order
+          order
         )
     }
 
@@ -3341,9 +3340,9 @@ class Quaternion {
   length() {
     return Math.sqrt(
       this._x * this._x +
-        this._y * this._y +
-        this._z * this._z +
-        this._w * this._w
+      this._y * this._y +
+      this._z * this._z +
+      this._w * this._w
     )
   }
 
@@ -3522,7 +3521,7 @@ class Quaternion {
     return this
   }
 
-  _onChangeCallback() {}
+  _onChangeCallback() { }
 
   *[Symbol.iterator]() {
     yield this._x
@@ -5540,33 +5539,33 @@ class Matrix4 {
 
     return (
       n41 *
-        (+n14 * n23 * n32 -
-          n13 * n24 * n32 -
-          n14 * n22 * n33 +
-          n12 * n24 * n33 +
-          n13 * n22 * n34 -
-          n12 * n23 * n34) +
+      (+n14 * n23 * n32 -
+        n13 * n24 * n32 -
+        n14 * n22 * n33 +
+        n12 * n24 * n33 +
+        n13 * n22 * n34 -
+        n12 * n23 * n34) +
       n42 *
-        (+n11 * n23 * n34 -
-          n11 * n24 * n33 +
-          n14 * n21 * n33 -
-          n13 * n21 * n34 +
-          n13 * n24 * n31 -
-          n14 * n23 * n31) +
+      (+n11 * n23 * n34 -
+        n11 * n24 * n33 +
+        n14 * n21 * n33 -
+        n13 * n21 * n34 +
+        n13 * n24 * n31 -
+        n14 * n23 * n31) +
       n43 *
-        (+n11 * n24 * n32 -
-          n11 * n22 * n34 -
-          n14 * n21 * n32 +
-          n12 * n21 * n34 +
-          n14 * n22 * n31 -
-          n12 * n24 * n31) +
+      (+n11 * n24 * n32 -
+        n11 * n22 * n34 -
+        n14 * n21 * n32 +
+        n12 * n21 * n34 +
+        n14 * n22 * n31 -
+        n12 * n24 * n31) +
       n44 *
-        (-n13 * n22 * n31 -
-          n11 * n23 * n32 +
-          n11 * n22 * n33 +
-          n13 * n21 * n32 -
-          n12 * n21 * n33 +
-          n12 * n23 * n31)
+      (-n13 * n22 * n31 -
+        n11 * n23 * n32 +
+        n11 * n22 * n33 +
+        n13 * n21 * n32 -
+        n12 * n21 * n33 +
+        n12 * n23 * n31)
     )
   }
 
@@ -6225,7 +6224,7 @@ class Euler {
       default:
         console.warn(
           'THREE.Euler: .setFromRotationMatrix() encountered an unknown order: ' +
-            order
+          order
         )
     }
 
@@ -6284,7 +6283,7 @@ class Euler {
     return this
   }
 
-  _onChangeCallback() {}
+  _onChangeCallback() { }
 
   *[Symbol.iterator]() {
     yield this._x
@@ -6436,9 +6435,9 @@ class Object3D extends EventDispatcher {
     this.userData = {}
   }
 
-  onBeforeRender() {}
+  onBeforeRender() { }
 
-  onAfterRender() {}
+  onAfterRender() { }
 
   applyMatrix4(matrix) {
     if (this.matrixAutoUpdate) this.updateMatrix()
@@ -6701,7 +6700,7 @@ class Object3D extends EventDispatcher {
     return target.set(e[8], e[9], e[10]).normalize()
   }
 
-  raycast() {}
+  raycast() { }
 
   traverse(callback) {
     callback(this)
@@ -7309,11 +7308,11 @@ class Material extends EventDispatcher {
     this._alphaTest = value
   }
 
-  onBuild() {}
+  onBuild() { }
 
-  onBeforeRender() {}
+  onBeforeRender() { }
 
-  onBeforeCompile() {}
+  onBeforeCompile() { }
 
   customProgramCacheKey() {
     return this.onBeforeCompile.toString()
@@ -7333,8 +7332,8 @@ class Material extends EventDispatcher {
       if (key === 'shading') {
         console.warn(
           'THREE.' +
-            this.type +
-            ': .shading has been removed. Use the boolean .flatShading instead.'
+          this.type +
+          ': .shading has been removed. Use the boolean .flatShading instead.'
         )
         this.flatShading = newValue === FlatShading ? true : false
         continue
@@ -7345,10 +7344,10 @@ class Material extends EventDispatcher {
       if (currentValue === undefined) {
         console.warn(
           'THREE.' +
-            this.type +
-            ": '" +
-            key +
-            "' is not a property of this material."
+          this.type +
+          ": '" +
+          key +
+          "' is not a property of this material."
         )
         continue
       }
@@ -7643,8 +7642,7 @@ class Material extends EventDispatcher {
 
 Material.prototype.isMaterial = true
 
-Material.fromType = function () /*type*/
-{
+Material.fromType = function () /*type*/ {
   // TODO: Behavior added in Materials.js
   return null
 }
@@ -7724,7 +7722,7 @@ class BufferAttribute {
     this.version = 0
   }
 
-  onUploadCallback() {}
+  onUploadCallback() { }
 
   set needsUpdate(value) {
     if (value === true) this.version++
@@ -8628,7 +8626,7 @@ class BufferGeometry extends EventDispatcher {
       offset = 0
       console.warn(
         'THREE.BufferGeometry.merge(): Overwriting original geometry, starting at offset=0. ' +
-          'Use BufferGeometryUtils.mergeBufferGeometries() for lossless merge.'
+        'Use BufferGeometryUtils.mergeBufferGeometries() for lossless merge.'
       )
     }
 
@@ -11754,8 +11752,8 @@ const ShaderLib = {
   },
 
   /* -------------------------------------------------------------------------
-	//	Cube map shader
-	 ------------------------------------------------------------------------- */
+  //	Cube map shader
+   ------------------------------------------------------------------------- */
   cube: {
     uniforms: mergeUniforms([
       UniformsLib.envmap,
@@ -12408,7 +12406,7 @@ function WebGLBindingStates(gl, extensions, attributes, capabilities) {
                 normalized,
                 stride * bytesPerElement,
                 (offset + (size / programAttribute.locationSize) * i) *
-                  bytesPerElement
+                bytesPerElement
               )
             }
           } else {
@@ -12616,7 +12614,7 @@ function WebGLCapabilities(gl, extensions, parameters) {
     if (precision === 'highp') {
       if (
         gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT).precision >
-          0 &&
+        0 &&
         gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT)
           .precision > 0
       ) {
@@ -13218,11 +13216,11 @@ class PMREMGenerator {
 
       this._pingPongRenderTarget = _createRenderTarget(width, height, params)
       const { _lodMax } = this
-      ;({
-        sizeLods: this._sizeLods,
-        lodPlanes: this._lodPlanes,
-        sigmas: this._sigmas
-      } = _createPlanes(_lodMax))
+        ; ({
+          sizeLods: this._sizeLods,
+          lodPlanes: this._lodPlanes,
+          sigmas: this._sigmas
+        } = _createPlanes(_lodMax))
       this._blurMaterial = _getBlurShader(_lodMax, width, height)
     }
 
@@ -13343,7 +13341,7 @@ class PMREMGenerator {
     for (let i = 1; i < this._lodPlanes.length; i++) {
       const sigma = Math.sqrt(
         this._sigmas[i] * this._sigmas[i] -
-          this._sigmas[i - 1] * this._sigmas[i - 1]
+        this._sigmas[i - 1] * this._sigmas[i - 1]
       )
       const poleAxis = _axisDirections[(i - 1) % _axisDirections.length]
 
@@ -15418,16 +15416,16 @@ function getToneMappingFunction(functionName, toneMapping) {
 function generateExtensions(parameters) {
   const chunks = [
     parameters.extensionDerivatives ||
-    !!parameters.envMapCubeUVHeight ||
-    parameters.bumpMap ||
-    parameters.tangentSpaceNormalMap ||
-    parameters.clearcoatNormalMap ||
-    parameters.flatShading ||
-    parameters.shaderID === 'physical'
+      !!parameters.envMapCubeUVHeight ||
+      parameters.bumpMap ||
+      parameters.tangentSpaceNormalMap ||
+      parameters.clearcoatNormalMap ||
+      parameters.flatShading ||
+      parameters.shaderID === 'physical'
       ? '#extension GL_OES_standard_derivatives : enable'
       : '',
     (parameters.extensionFragDepth || parameters.logarithmicDepthBuffer) &&
-    parameters.rendererExtensionFragDepth
+      parameters.rendererExtensionFragDepth
       ? '#extension GL_EXT_frag_depth : enable'
       : '',
     parameters.extensionDrawBuffers && parameters.rendererExtensionDrawBuffers
@@ -15436,7 +15434,7 @@ function generateExtensions(parameters) {
     (parameters.extensionShaderTextureLOD ||
       parameters.envMap ||
       parameters.transmission) &&
-    parameters.rendererExtensionShaderTextureLod
+      parameters.rendererExtensionShaderTextureLod
       ? '#extension GL_EXT_shader_texture_lod : enable'
       : ''
   ]
@@ -15985,17 +15983,17 @@ function WebGLProgram(renderer, cacheKey, parameters, bindingStates) {
       const fragmentErrors = getShaderErrors(gl, glFragmentShader, 'fragment')
       console.error(
         'THREE.WebGLProgram: Shader Error ' +
-          gl.getError() +
-          ' - ' +
-          'VALIDATE_STATUS ' +
-          gl.getProgramParameter(program, gl.VALIDATE_STATUS) +
-          '\n\n' +
-          'Program Info Log: ' +
-          programLog +
-          '\n' +
-          vertexErrors +
-          '\n' +
-          fragmentErrors
+        gl.getError() +
+        ' - ' +
+        'VALIDATE_STATUS ' +
+        gl.getProgramParameter(program, gl.VALIDATE_STATUS) +
+        '\n\n' +
+        'Program Info Log: ' +
+        programLog +
+        '\n' +
+        vertexErrors +
+        '\n' +
+        fragmentErrors
       )
     } else if (programLog !== '') {
       console.warn('THREE.WebGLProgram: Program Info Log:', programLog)
@@ -16264,8 +16262,8 @@ function WebGLPrograms(
         currentRenderTarget === null
           ? renderer.outputEncoding
           : currentRenderTarget.isXRRenderTarget === true
-          ? currentRenderTarget.texture.encoding
-          : LinearEncoding,
+            ? currentRenderTarget.texture.encoding
+            : LinearEncoding,
       map: !!material.map,
       matcap: !!material.matcap,
       envMap: !!envMap,
@@ -18286,15 +18284,15 @@ function WebGLState(gl, extensions, capabilities) {
     material.blending === NormalBlending && material.transparent === false
       ? setBlending(NoBlending)
       : setBlending(
-          material.blending,
-          material.blendEquation,
-          material.blendSrc,
-          material.blendDst,
-          material.blendEquationAlpha,
-          material.blendSrcAlpha,
-          material.blendDstAlpha,
-          material.premultipliedAlpha
-        )
+        material.blending,
+        material.blendEquation,
+        material.blendSrc,
+        material.blendDst,
+        material.blendEquationAlpha,
+        material.blendSrcAlpha,
+        material.blendDstAlpha,
+        material.premultipliedAlpha
+      )
     depthBuffer.setFunc(material.depthFunc)
     depthBuffer.setTest(material.depthTest)
     depthBuffer.setMask(material.depthWrite)
@@ -18689,24 +18687,24 @@ function WebGLTextures(
         context.drawImage(image, 0, 0, width, height)
         console.warn(
           'THREE.WebGLRenderer: Texture has been resized from (' +
-            image.width +
-            'x' +
-            image.height +
-            ') to (' +
-            width +
-            'x' +
-            height +
-            ').'
+          image.width +
+          'x' +
+          image.height +
+          ') to (' +
+          width +
+          'x' +
+          height +
+          ').'
         )
         return canvas
       } else {
         if ('data' in image) {
           console.warn(
             'THREE.WebGLRenderer: Image in DataTexture is too big (' +
-              image.width +
-              'x' +
-              image.height +
-              ').'
+            image.width +
+            'x' +
+            image.height +
+            ').'
           )
         }
 
@@ -18757,8 +18755,8 @@ function WebGLTextures(
       if (_gl[internalFormatName] !== undefined) return _gl[internalFormatName]
       console.warn(
         "THREE.WebGLRenderer: Attempt to use non-existing WebGL internal format '" +
-          internalFormatName +
-          "'"
+        internalFormatName +
+        "'"
       )
     }
 
@@ -18953,9 +18951,9 @@ function WebGLTextures(
     if (textureUnit >= maxTextures) {
       console.warn(
         'THREE.WebGLTextures: Trying to use ' +
-          textureUnit +
-          ' texture units while this GPU supports only ' +
-          maxTextures
+        textureUnit +
+        ' texture units while this GPU supports only ' +
+        maxTextures
       )
     }
 
@@ -21782,7 +21780,7 @@ class WebXRManager extends EventDispatcher {
       onAnimationFrameCallback = callback
     }
 
-    this.dispose = function () {}
+    this.dispose = function () { }
   }
 }
 
@@ -22238,9 +22236,9 @@ function createCanvasElement() {
 
 function WebGLRenderer(parameters = {}) {
   const _canvas =
-      parameters.canvas !== undefined
-        ? parameters.canvas
-        : createCanvasElement(),
+    parameters.canvas !== undefined
+      ? parameters.canvas
+      : createCanvasElement(),
     _context = parameters.context !== undefined ? parameters.context : null,
     _depth = parameters.depth !== undefined ? parameters.depth : true,
     _stencil = parameters.stencil !== undefined ? parameters.stencil : true,
@@ -22705,7 +22703,7 @@ function WebGLRenderer(parameters = {}) {
   }
 
   function /* event */
-  onContextRestore() {
+    onContextRestore() {
     console.log('THREE.WebGLRenderer: Context Restored.')
     _isContextLost = false
     const infoAutoReset = info.autoReset
@@ -23321,8 +23319,8 @@ function WebGLRenderer(parameters = {}) {
       _currentRenderTarget === null
         ? _this.outputEncoding
         : _currentRenderTarget.isXRRenderTarget === true
-        ? _currentRenderTarget.texture.encoding
-        : LinearEncoding
+          ? _currentRenderTarget.texture.encoding
+          : LinearEncoding
     const envMap = (
       material.isMeshStandardMaterial ? cubeuvmaps : cubemaps
     ).get(material.envMap || environment)
@@ -23819,7 +23817,7 @@ function WebGLRenderer(parameters = {}) {
         if (
           textureFormat !== RGBAFormat &&
           utils.convert(textureFormat) !==
-            _gl.getParameter(_gl.IMPLEMENTATION_COLOR_READ_FORMAT)
+          _gl.getParameter(_gl.IMPLEMENTATION_COLOR_READ_FORMAT)
         ) {
           console.error(
             'THREE.WebGLRenderer.readRenderTargetPixels: renderTarget is not in RGBA or implementation defined format.'
@@ -23835,7 +23833,7 @@ function WebGLRenderer(parameters = {}) {
         if (
           textureType !== UnsignedByteType &&
           utils.convert(textureType) !==
-            _gl.getParameter(_gl.IMPLEMENTATION_COLOR_READ_TYPE) && // Edge and Chrome Mac < 52 (#9513)
+          _gl.getParameter(_gl.IMPLEMENTATION_COLOR_READ_TYPE) && // Edge and Chrome Mac < 52 (#9513)
           !(
             textureType === FloatType &&
             (capabilities.isWebGL2 ||
@@ -24122,7 +24120,7 @@ function WebGLRenderer(parameters = {}) {
 
 WebGLRenderer.prototype.isWebGLRenderer = true
 
-class WebGL1Renderer extends WebGLRenderer {}
+class WebGL1Renderer extends WebGLRenderer { }
 
 WebGL1Renderer.prototype.isWebGL1Renderer = true
 
@@ -24227,7 +24225,7 @@ class InterleavedBuffer {
     this.uuid = generateUUID()
   }
 
-  onUploadCallback() {}
+  onUploadCallback() { }
 
   set needsUpdate(value) {
     if (value === true) this.version++
@@ -25348,7 +25346,7 @@ class InstancedMesh extends Mesh {
     matrix.toArray(this.instanceMatrix.array, index * 16)
   }
 
-  updateMorphTargets() {}
+  updateMorphTargets() { }
 
   dispose() {
     this.dispatchEvent({
@@ -27147,10 +27145,10 @@ class CurvePath extends Curve {
       const resolution = curve.isEllipseCurve
         ? divisions * 2
         : curve.isLineCurve || curve.isLineCurve3
-        ? 1
-        : curve.isSplineCurve
-        ? divisions * curve.points.length
-        : divisions
+          ? 1
+          : curve.isSplineCurve
+            ? divisions * curve.points.length
+            : divisions
       const pts = curve.getPoints(resolution)
 
       for (let j = 0; j < pts.length; j++) {
@@ -31311,7 +31309,7 @@ class Interpolant {
           //-
           //- 				if ( t >= t1 || t1 === undefined ) {
           forward_scan: if (!(t < t1)) {
-            for (let giveUpAt = i1 + 2; ; ) {
+            for (let giveUpAt = i1 + 2; ;) {
               if (t1 === undefined) {
                 if (t < t0) break forward_scan // after end
 
@@ -31346,7 +31344,7 @@ class Interpolant {
               t0 = t1global
             } // linear reverse scan
 
-            for (let giveUpAt = i1 - 2; ; ) {
+            for (let giveUpAt = i1 - 2; ;) {
               if (t0 === undefined) {
                 // before start
                 this._cachedIndex = 0
@@ -31901,8 +31899,8 @@ class KeyframeTrack {
 
       for (
         let readOffset = lastIndex * stride,
-          writeOffset = writeIndex * stride,
-          j = 0;
+        writeOffset = writeIndex * stride,
+        j = 0;
         j !== stride;
         ++j
       ) {
@@ -31942,7 +31940,7 @@ KeyframeTrack.prototype.DefaultInterpolation = InterpolateLinear
  * A Track of Boolean keyframe values.
  */
 
-class BooleanKeyframeTrack extends KeyframeTrack {}
+class BooleanKeyframeTrack extends KeyframeTrack { }
 
 BooleanKeyframeTrack.prototype.ValueTypeName = 'bool'
 BooleanKeyframeTrack.prototype.ValueBufferType = Array
@@ -31954,7 +31952,7 @@ BooleanKeyframeTrack.prototype.InterpolantFactoryMethodSmooth = undefined // Not
  * A Track of keyframe values that represent color.
  */
 
-class ColorKeyframeTrack extends KeyframeTrack {}
+class ColorKeyframeTrack extends KeyframeTrack { }
 
 ColorKeyframeTrack.prototype.ValueTypeName = 'color' // ValueBufferType is inherited
 
@@ -31962,7 +31960,7 @@ ColorKeyframeTrack.prototype.ValueTypeName = 'color' // ValueBufferType is inher
  * A Track of numeric keyframe values.
  */
 
-class NumberKeyframeTrack extends KeyframeTrack {}
+class NumberKeyframeTrack extends KeyframeTrack { }
 
 NumberKeyframeTrack.prototype.ValueTypeName = 'number' // ValueBufferType is inherited
 
@@ -32022,7 +32020,7 @@ QuaternionKeyframeTrack.prototype.InterpolantFactoryMethodSmooth = undefined
  * A Track that interpolates Strings
  */
 
-class StringKeyframeTrack extends KeyframeTrack {}
+class StringKeyframeTrack extends KeyframeTrack { }
 
 StringKeyframeTrack.prototype.ValueTypeName = 'string'
 StringKeyframeTrack.prototype.ValueBufferType = Array
@@ -32034,7 +32032,7 @@ StringKeyframeTrack.prototype.InterpolantFactoryMethodSmooth = undefined
  * A Track of vectored keyframe values.
  */
 
-class VectorKeyframeTrack extends KeyframeTrack {}
+class VectorKeyframeTrack extends KeyframeTrack { }
 
 VectorKeyframeTrack.prototype.ValueTypeName = 'vector' // ValueBufferType is inherited
 
@@ -32527,7 +32525,7 @@ class Loader {
     this.requestHeader = {}
   }
 
-  load() {}
+  load() { }
 
   loadAsync(url, onProgress) {
     const scope = this
@@ -32536,7 +32534,7 @@ class Loader {
     })
   }
 
-  parse() {}
+  parse() { }
 
   setCrossOrigin(crossOrigin) {
     this.crossOrigin = crossOrigin
@@ -36327,7 +36325,7 @@ class PropertyBinding {
     if (results.propertyName === null || results.propertyName.length === 0) {
       throw new Error(
         'PropertyBinding: can not parse propertyName from trackName: ' +
-          trackName
+        trackName
       )
     }
 
@@ -36380,9 +36378,9 @@ class PropertyBinding {
     return null
   } // these are used to "bind" a nonexistent property
 
-  _getValue_unavailable() {}
+  _getValue_unavailable() { }
 
-  _setValue_unavailable() {} // Getters
+  _setValue_unavailable() { } // Getters
 
   _getValue_direct(buffer, offset) {
     buffer[offset] = this.targetObject[this.propertyName]
@@ -36504,8 +36502,8 @@ class PropertyBinding {
     if (!targetObject) {
       console.error(
         'THREE.PropertyBinding: Trying to update node for track: ' +
-          this.path +
-          " but it wasn't found."
+        this.path +
+        " but it wasn't found."
       )
       return
     }
@@ -36587,10 +36585,10 @@ class PropertyBinding {
       const nodeName = parsedPath.nodeName
       console.error(
         'THREE.PropertyBinding: Trying to update property for track: ' +
-          nodeName +
-          '.' +
-          propertyName +
-          " but it wasn't found.",
+        nodeName +
+        '.' +
+        propertyName +
+        " but it wasn't found.",
         targetObject
       )
       return
@@ -36844,7 +36842,7 @@ class AnimationObjectGroup {
       } else if (objects[index] !== knownObject) {
         console.error(
           'THREE.AnimationObjectGroup: Different objects with the same UUID ' +
-            'detected. Clean the caches or recreate your infrastructure when reloading scenes.'
+          'detected. Clean the caches or recreate your infrastructure when reloading scenes.'
         )
       } // else the object is already where we want it to be
     } // for arguments
@@ -38718,19 +38716,19 @@ class PointLightHelper extends Mesh {
     this.matrixAutoUpdate = false
     this.update()
     /*
-		// TODO: delete this comment?
-		const distanceGeometry = new THREE.IcosahedronGeometry( 1, 2 );
-		const distanceMaterial = new THREE.MeshBasicMaterial( { color: hexColor, fog: false, wireframe: true, opacity: 0.1, transparent: true } );
-		this.lightSphere = new THREE.Mesh( bulbGeometry, bulbMaterial );
-		this.lightDistance = new THREE.Mesh( distanceGeometry, distanceMaterial );
-		const d = light.distance;
-		if ( d === 0.0 ) {
-			this.lightDistance.visible = false;
-		} else {
-			this.lightDistance.scale.set( d, d, d );
-		}
-		this.add( this.lightDistance );
-		*/
+    // TODO: delete this comment?
+    const distanceGeometry = new THREE.IcosahedronGeometry( 1, 2 );
+    const distanceMaterial = new THREE.MeshBasicMaterial( { color: hexColor, fog: false, wireframe: true, opacity: 0.1, transparent: true } );
+    this.lightSphere = new THREE.Mesh( bulbGeometry, bulbMaterial );
+    this.lightDistance = new THREE.Mesh( distanceGeometry, distanceMaterial );
+    const d = light.distance;
+    if ( d === 0.0 ) {
+      this.lightDistance.visible = false;
+    } else {
+      this.lightDistance.scale.set( d, d, d );
+    }
+    this.add( this.lightDistance );
+    */
   }
 
   dispose() {
@@ -38745,14 +38743,14 @@ class PointLightHelper extends Mesh {
       this.material.color.copy(this.light.color)
     }
     /*
-		const d = this.light.distance;
-			if ( d === 0.0 ) {
-				this.lightDistance.visible = false;
-			} else {
-				this.lightDistance.visible = true;
-			this.lightDistance.scale.set( d, d, d );
-			}
-		*/
+    const d = this.light.distance;
+      if ( d === 0.0 ) {
+        this.lightDistance.visible = false;
+      } else {
+        this.lightDistance.visible = true;
+      this.lightDistance.scale.set( d, d, d );
+      }
+    */
   }
 }
 
@@ -39175,19 +39173,19 @@ class BoxHelper extends LineSegments {
     const min = _box.min
     const max = _box.max
     /*
-			5____4
-		1/___0/|
-		| 6__|_7
-		2/___3/
-			0: max.x, max.y, max.z
-		1: min.x, max.y, max.z
-		2: min.x, min.y, max.z
-		3: max.x, min.y, max.z
-		4: max.x, max.y, min.z
-		5: min.x, max.y, min.z
-		6: min.x, min.y, min.z
-		7: max.x, min.y, min.z
-		*/
+      5____4
+    1/___0/|
+    | 6__|_7
+    2/___3/
+      0: max.x, max.y, max.z
+    1: min.x, max.y, max.z
+    2: min.x, min.y, max.z
+    3: max.x, min.y, max.z
+    4: max.x, max.y, min.z
+    5: min.x, max.y, min.z
+    6: min.x, min.y, min.z
+    7: max.x, min.y, min.z
+    */
 
     const position = this.geometry.attributes.position
     const array = position.array
@@ -40008,14 +40006,12 @@ Loader.prototype.extractUrlBase = function (url) {
 }
 
 Loader.Handlers = {
-  add: function () /* regex, loader */
-  {
+  add: function () /* regex, loader */ {
     console.error(
       'THREE.Loader: Handlers.add() has been removed. Use LoadingManager.addHandler() instead.'
     )
   },
-  get: function () /* file */
-  {
+  get: function () /* file */ {
     console.error(
       'THREE.Loader: Handlers.get() has been removed. Use LoadingManager.getHandler() instead.'
     )
@@ -40124,8 +40120,7 @@ Matrix3.prototype.multiplyVector3 = function (vector) {
   return vector.applyMatrix3(this)
 }
 
-Matrix3.prototype.multiplyVector3Array = function () /* a */
-{
+Matrix3.prototype.multiplyVector3Array = function () /* a */ {
   console.error('THREE.Matrix3: .multiplyVector3Array() has been removed.')
 }
 
@@ -40136,8 +40131,7 @@ Matrix3.prototype.applyToBufferAttribute = function (attribute) {
   return attribute.applyMatrix3(this)
 }
 
-Matrix3.prototype.applyToVector3Array = function () /* array, offset, length */
-{
+Matrix3.prototype.applyToVector3Array = function () /* array, offset, length */ {
   console.error('THREE.Matrix3: .applyToVector3Array() has been removed.')
 }
 
@@ -40194,8 +40188,7 @@ Matrix4.prototype.multiplyVector4 = function (vector) {
   return vector.applyMatrix4(this)
 }
 
-Matrix4.prototype.multiplyVector3Array = function () /* a */
-{
+Matrix4.prototype.multiplyVector3Array = function () /* a */ {
   console.error('THREE.Matrix4: .multiplyVector3Array() has been removed.')
 }
 
@@ -40240,8 +40233,7 @@ Matrix4.prototype.applyToBufferAttribute = function (attribute) {
   return attribute.applyMatrix4(this)
 }
 
-Matrix4.prototype.applyToVector3Array = function () /* array, offset, length */
-{
+Matrix4.prototype.applyToVector3Array = function () /* array, offset, length */ {
   console.error('THREE.Matrix4: .applyToVector3Array() has been removed.')
 }
 
@@ -40544,7 +40536,7 @@ SkinnedMesh.prototype.initBones = function () {
 PerspectiveCamera.prototype.setLens = function (focalLength, filmGauge) {
   console.warn(
     'THREE.PerspectiveCamera.setLens is deprecated. ' +
-      'Use .setFocalLength and .filmGauge for a photographic setup.'
+    'Use .setFocalLength and .filmGauge for a photographic setup.'
   )
   if (filmGauge !== undefined) this.filmGauge = filmGauge
   this.setFocalLength(focalLength)
@@ -40652,8 +40644,7 @@ Object.defineProperties(BufferAttribute.prototype, {
       )
       return this.usage === DynamicDrawUsage
     },
-    set: function () /* value */
-    {
+    set: function () /* value */ {
       console.warn(
         'THREE.BufferAttribute: .dynamic has been deprecated. Use .usage instead.'
       )
@@ -40669,16 +40660,14 @@ BufferAttribute.prototype.setDynamic = function (value) {
   this.setUsage(value === true ? DynamicDrawUsage : StaticDrawUsage)
   return this
 }
-;(BufferAttribute.prototype.copyIndicesArray = function () /* indices */
-{
-  console.error('THREE.BufferAttribute: .copyIndicesArray() has been removed.')
-}),
-  (BufferAttribute.prototype.setArray = function () /* array */
-  {
-    console.error(
-      'THREE.BufferAttribute: .setArray has been removed. Use BufferGeometry .setAttribute to replace/resize attribute buffers'
-    )
-  }) //
+  ; (BufferAttribute.prototype.copyIndicesArray = function () /* indices */ {
+    console.error('THREE.BufferAttribute: .copyIndicesArray() has been removed.')
+  }),
+    (BufferAttribute.prototype.setArray = function () /* array */ {
+      console.error(
+        'THREE.BufferAttribute: .setArray has been removed. Use BufferGeometry .setAttribute to replace/resize attribute buffers'
+      )
+    }) //
 
 BufferGeometry.prototype.addIndex = function (index) {
   console.warn(
@@ -40777,8 +40766,7 @@ InterleavedBuffer.prototype.setDynamic = function (value) {
   return this
 }
 
-InterleavedBuffer.prototype.setArray = function () /* array */
-{
+InterleavedBuffer.prototype.setArray = function () /* array */ {
   console.error(
     'THREE.InterleavedBuffer: .setArray has been removed. Use BufferGeometry .setAttribute to replace/resize attribute buffers'
   )
@@ -40834,15 +40822,15 @@ Object.defineProperties(Material.prototype, {
     get: function () {
       console.error(
         'THREE.' +
-          this.type +
-          ': .shading has been removed. Use the boolean .flatShading instead.'
+        this.type +
+        ': .shading has been removed. Use the boolean .flatShading instead.'
       )
     },
     set: function (value) {
       console.warn(
         'THREE.' +
-          this.type +
-          ': .shading has been removed. Use the boolean .flatShading instead.'
+        this.type +
+        ': .shading has been removed. Use the boolean .flatShading instead.'
       )
       this.flatShading = value === FlatShading
     }
@@ -40851,16 +40839,16 @@ Object.defineProperties(Material.prototype, {
     get: function () {
       console.warn(
         'THREE.' +
-          this.type +
-          ': .stencilMask has been removed. Use .stencilFuncMask instead.'
+        this.type +
+        ': .stencilMask has been removed. Use .stencilFuncMask instead.'
       )
       return this.stencilFuncMask
     },
     set: function (value) {
       console.warn(
         'THREE.' +
-          this.type +
-          ': .stencilMask has been removed. Use .stencilFuncMask instead.'
+        this.type +
+        ': .stencilMask has been removed. Use .stencilFuncMask instead.'
       )
       this.stencilFuncMask = value
     }
@@ -41071,8 +41059,7 @@ Object.defineProperties(WebGLRenderer.prototype, {
       )
       return undefined
     },
-    set: function () /* value */
-    {
+    set: function () /* value */ {
       console.warn(
         'THREE.WebGLRenderer: .shadowMapCullFace has been removed. Set Material.shadowSide instead.'
       )
@@ -41150,8 +41137,7 @@ Object.defineProperties(WebGLShadowMap.prototype, {
       )
       return undefined
     },
-    set: function () /* cullFace */
-    {
+    set: function () /* cullFace */ {
       console.warn(
         'THREE.WebGLRenderer: .shadowMap.cullFace has been removed. Set Material.shadowSide instead.'
       )
@@ -41384,20 +41370,17 @@ function JSONLoader() {
 } //
 
 const SceneUtils = {
-  createMultiMaterialObject: function () /* geometry, materials */
-  {
+  createMultiMaterialObject: function () /* geometry, materials */ {
     console.error(
       'THREE.SceneUtils has been moved to /examples/jsm/utils/SceneUtils.js'
     )
   },
-  detach: function () /* child, parent, scene */
-  {
+  detach: function () /* child, parent, scene */ {
     console.error(
       'THREE.SceneUtils has been moved to /examples/jsm/utils/SceneUtils.js'
     )
   },
-  attach: function () /* child, scene, parent */
-  {
+  attach: function () /* child, scene, parent */ {
     console.error(
       'THREE.SceneUtils has been moved to /examples/jsm/utils/SceneUtils.js'
     )

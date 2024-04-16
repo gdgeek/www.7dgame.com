@@ -1,5 +1,6 @@
 import {
 	BufferGeometry,
+	Color,
 	Data3DTexture,
 	FileLoader,
 	Float32BufferAttribute,
@@ -8,7 +9,8 @@ import {
 	Mesh,
 	MeshStandardMaterial,
 	NearestFilter,
-	RedFormat
+	RedFormat,
+	SRGBColorSpace
 } from 'three';
 
 class VOXLoader extends Loader {
@@ -53,10 +55,16 @@ class VOXLoader extends Loader {
 
 		const id = data.getUint32( 0, true );
 		const version = data.getUint32( 4, true );
-		alert(version)
-		if ( id !== 542658390 || version !== 150 ) {
 
-			console.error( 'Not a valid VOX file' );
+		if ( id !== 542658390 ) {
+
+			console.error( 'THREE.VOXLoader: Invalid VOX file.' );
+			return;
+
+		}
+		if ( version !== 150 && version !== 200) {
+
+			console.error( 'THREE.VOXLoader: Invalid VOX file. Unsupported version:', version );
 			return;
 
 		}
@@ -98,9 +106,13 @@ class VOXLoader extends Loader {
 
 		let i = 8;
 
-		let chunk;
+		let chunk = {
+			palette: DEFAULT_PALETTE,
+			size: { x: 0, y: 0, z: 0 },
+		};
 		const chunks = [];
-
+		chunks.push(chunk);
+		
 		while ( i < data.byteLength ) {
 
 			let id = '';
@@ -112,7 +124,7 @@ class VOXLoader extends Loader {
 			}
 
 			const chunkSize = data.getUint32( i, true ); i += 4;
-			data.getUint32( i, true ); i += 4; // childChunks
+			i += 4; // childChunks
 
 			if ( id === 'SIZE' ) {
 
@@ -120,12 +132,8 @@ class VOXLoader extends Loader {
 				const y = data.getUint32( i, true ); i += 4;
 				const z = data.getUint32( i, true ); i += 4;
 
-				chunk = {
-					palette: DEFAULT_PALETTE,
-					size: { x: x, y: y, z: z },
-				};
+				chunk.size  = { x: x, y: y, z: z };
 
-				chunks.push( chunk );
 
 				i += chunkSize - ( 3 * 4 );
 
@@ -156,6 +164,7 @@ class VOXLoader extends Loader {
 
 			}
 
+
 		}
 
 		return chunks;
@@ -166,13 +175,13 @@ class VOXLoader extends Loader {
 
 class VOXMesh extends Mesh {
 
-	constructor( chunk ) {
+	constructor( chunk, cell = 1 ) {
 
 		const data = chunk.data;
 		const size = chunk.size;
 		const palette = chunk.palette;
 
-		//
+	
 
 		const vertices = [];
 		const colors = [];
@@ -184,6 +193,8 @@ class VOXMesh extends Mesh {
 		const nz = [ 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0 ];
 		const pz = [ 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1 ];
 
+		const _color = new Color();
+
 		function add( tile, x, y, z, r, g, b ) {
 
 			x -= size.x / 2;
@@ -192,8 +203,10 @@ class VOXMesh extends Mesh {
 
 			for ( let i = 0; i < 18; i += 3 ) {
 
-				vertices.push( tile[ i + 0 ] + x, tile[ i + 1 ] + y, tile[ i + 2 ] + z );
-				colors.push( r, g, b );
+				_color.setRGB( r, g, b, SRGBColorSpace );
+
+				vertices.push( (tile[ i + 0 ] + x)* cell, (tile[ i + 1 ] + y)* cell, (tile[ i + 2 ] + z)* cell );
+				colors.push( _color.r, _color.g, _color.b );
 
 			}
 

@@ -76,6 +76,12 @@ function Editor() {
 		scriptChanged: new Signal(),
 		scriptRemoved: new Signal(),
 
+
+		componentAdded: new Signal(),
+		componentChanged: new Signal(),
+		componentRemoved: new Signal(),
+
+
 		windowResize: new Signal(),
 
 		showGridChanged: new Signal(),

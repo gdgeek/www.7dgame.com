@@ -367,7 +367,7 @@ function SidebarObject(editor) {
 	)
 	objectPenumbraRow.add(objectPenumbra)
 
-	container.add(objectPenumbraRow)
+	//container.add(objectPenumbraRow)
 
 	// decay
 
@@ -379,7 +379,7 @@ function SidebarObject(editor) {
 	)
 	objectDecayRow.add(objectDecay)
 
-	container.add(objectDecayRow)
+	//container.add(objectDecayRow)
 
 	// shadow
 
@@ -401,7 +401,7 @@ function SidebarObject(editor) {
 	).onChange(update)
 	objectShadowRow.add(objectReceiveShadow)
 
-	container.add(objectShadowRow)
+	//container.add(objectShadowRow)
 
 	// shadow bias
 
@@ -418,7 +418,7 @@ function SidebarObject(editor) {
 		.onChange(update)
 	objectShadowBiasRow.add(objectShadowBias)
 
-	container.add(objectShadowBiasRow)
+	//container.add(objectShadowBiasRow)
 
 	// shadow normal offset
 
@@ -433,7 +433,7 @@ function SidebarObject(editor) {
 	const objectShadowNormalBias = new UINumber(0).onChange(update)
 	objectShadowNormalBiasRow.add(objectShadowNormalBias)
 
-	container.add(objectShadowNormalBiasRow)
+	//container.add(objectShadowNormalBiasRow)
 
 	// shadow radius
 
@@ -446,7 +446,7 @@ function SidebarObject(editor) {
 	const objectShadowRadius = new UINumber(1).onChange(update)
 	objectShadowRadiusRow.add(objectShadowRadius)
 
-	container.add(objectShadowRadiusRow)
+	//container.add(objectShadowRadiusRow)
 
 	// visible
 
@@ -470,7 +470,7 @@ function SidebarObject(editor) {
 	)
 	objectFrustumCulledRow.add(objectFrustumCulled)
 
-	container.add(objectFrustumCulledRow)
+	//！！	container.add(objectFrustumCulledRow)
 
 	// renderOrder
 
@@ -482,7 +482,7 @@ function SidebarObject(editor) {
 	)
 	objectRenderOrderRow.add(objectRenderOrder)
 
-	container.add(objectRenderOrderRow)
+	//container.add(objectRenderOrderRow)
 
 	// user data
 
@@ -509,14 +509,13 @@ function SidebarObject(editor) {
 	)
 	objectUserDataRow.add(objectUserData)
 
-	container.add(objectUserDataRow)
+	//container.add(objectUserDataRow)
 
 	//
 
 	function update() {
 		const object = editor.selected
 
-		console.error(object)
 		if (object !== null) {
 			const newPosition = new THREE.Vector3(
 				objectPositionX.getValue(),
@@ -905,7 +904,6 @@ function SidebarObject(editor) {
 	})
 
 	function updateUI(object) {
-		console.error(object)
 		objectType.setValue(object.type)
 
 		objectUUID.setValue(object.uuid)
