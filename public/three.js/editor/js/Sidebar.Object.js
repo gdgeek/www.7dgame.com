@@ -495,7 +495,6 @@ function SidebarObject(editor) {
 	objectUserData.onKeyUp(function () {
 		try {
 			JSON.parse(objectUserData.getValue())
-
 			objectUserData.dom.classList.add('success')
 			objectUserData.dom.classList.remove('fail')
 		} catch (error) {
@@ -509,7 +508,7 @@ function SidebarObject(editor) {
 	)
 	objectUserDataRow.add(objectUserData)
 
-	//container.add(objectUserDataRow)
+	container.add(objectUserDataRow)
 
 	//
 

@@ -1,10 +1,19 @@
-import { UIPanel, UIBreak, UIText, UIButton, UIRow, UIInput } from './libs/ui.js';
+import { UIPanel, UIBreak, UIText, UIButton, UIRow, UISelect, UIInput, UIHorizontalRule } from './libs/ui.js';
 
+
+import { AddComponentCommand } from './commands/AddComponentCommand.js';
 import { AddScriptCommand } from './commands/AddScriptCommand.js';
 import { SetScriptValueCommand } from './commands/SetScriptValueCommand.js';
 import { RemoveScriptCommand } from './commands/RemoveScriptCommand.js';
+import { ComponentContainer } from './mrpp/ComponentContainer.js';
+//import { RemoveComponentCommand } from './commands/RemoveComponentCommand.js';
 
 function SidebarComponent(editor) {
+
+
+
+
+
 
 	const strings = editor.strings;
 
@@ -13,38 +22,20 @@ function SidebarComponent(editor) {
 	const container = new UIPanel();
 	container.setDisplay('none');
 
-	container.add(new UIText("component").setTextTransform('uppercase'));
-	container.add(new UIBreak());
-	container.add(new UIBreak());
-	const object = editor.selected;
-	alert(object)
-	//
+
+
+
+	const topContainer = new UIRow();
+	container.add(topContainer);
 
 	const componentsContainer = new UIRow();
 	container.add(componentsContainer);
-	/*
-		const newScript = new UIButton('test');
-		newScript.onClick(function () {
-	
-			const script = { name: '', source: 'function update( event ) {}' };
-			editor.execute(new AddScriptCommand(editor, editor.selected, script));
-	
-		});
-		container.add(newScript);
-	*/
-	/*
-	let loadScript = new UI.Button( 'Load' );
-	loadScript.setMarginLeft( '4px' );
-	container.add( loadScript );
-	*/
-
-	//
 
 	function update() {
-
+		topContainer.clear();
+		topContainer.setDisplay('none');
 		componentsContainer.clear();
 		componentsContainer.setDisplay('none');
-
 		const object = editor.selected;
 
 		if (object === null) {
@@ -53,41 +44,65 @@ function SidebarComponent(editor) {
 
 		}
 
-		console.error(object.components)
 
 
 
 		const components = object.components;
-		//	const scripts = editor.scripts[object.uuid];
+
+
+
+		if (components !== undefined) {
+
+			topContainer.setDisplay('block');
+
+			topContainer.add(new UIText("components").setTextTransform('uppercase'));
+			topContainer.add(new UIBreak());
+			topContainer.add(new UIBreak());
+
+			const label = new UIText('选择项:');
+			topContainer.add(label);
+
+			// 创建下拉框
+			const select = new UISelect().setWidth('100px');
+			select.setOptions({ // 设置下拉框的选项
+				'Rotate': '自旋转'
+			});
+			select.setValue('Rotate');
+			select.onChange(function () { // 下拉框选项改变时触发的事件
+				console.log('Selected option:', select.getValue());
+			});
+			topContainer.add(select);
+
+
+			const newComponent = new UIButton('new');
+			newComponent.onClick(function () {
+				alert(select.getValue())
+				const component = ComponentContainer.Create(select.getValue());
+				alert(component)
+				if (component != undefined) {
+					const command = new AddComponentCommand(editor, editor.selected, component);
+					editor.execute(command);
+				}
+			}.bind(this));
+			topContainer.add(newComponent);
+		}
+
+
 
 		if (components !== undefined && components.length > 0) {
 
 			componentsContainer.setDisplay('block');
 			for (let i = 0; i < components.length; i++) {
 				(function (object, component) {
-					console.error(component)
-					const name = new UIInput(component.type).setWidth('130px').setFontSize('12px');
-					name.onChange(function () {
 
-						//editor.execute(new SetScriptValueCommand(editor, editor.selected, script, 'name', this.getValue()));
+					componentsContainer.add(new UIHorizontalRule());
 
-					});
-					componentsContainer.add(name);
+					const cc = new ComponentContainer(editor, object, component);
+					cc.renderer(componentsContainer);
 
 
-					const remove = new UIButton(strings.getKey('sidebar/script/remove'));
-					remove.setMarginLeft('4px');
-					remove.onClick(function () {
 
-						if (confirm('Are you sure?')) {
-
-							//	editor.execute(new RemoveScriptCommand(editor, editor.selected, script));
-
-						}
-
-					});
-					componentsContainer.add(remove);
-
+					// 将水平分隔线添加到容器中
 					componentsContainer.add(new UIBreak());
 
 				})(object, components[i]);

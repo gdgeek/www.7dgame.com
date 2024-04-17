@@ -82,8 +82,8 @@ export default {
       const self = this
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
-          case 'save-meta':
-            self.saveMeta(e.data.meta)
+          case 'save':
+            self.saveMeta(e.data.data)
             break
           case 'ready':
             if (self.isInit == false) {

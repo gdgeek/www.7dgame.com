@@ -13,6 +13,10 @@ function MetaLoader(editor) {
 
 
 	this.compareObjectsAndPrintDifferences = function (obj1, obj2, path = '', tolerance = 0.0001) {
+		if (obj1 == null || obj2 == null) {
+			console.log('One of the objects is null');
+			return;
+		}
 		const keys1 = Object.keys(obj1);
 		const keys2 = Object.keys(obj2);
 
@@ -45,6 +49,7 @@ function MetaLoader(editor) {
 			}
 		}
 	}
+
 	this.save = async function () {
 
 
@@ -54,11 +59,13 @@ function MetaLoader(editor) {
 		const meta = await self.write(editor.scene.getObjectByName('$root'))
 
 		const data = {
-			from: 'mrpp-editor',
-			action: 'save-meta',
-			meta: JSON.stringify(meta)
+			action: 'save',
+			data: JSON.stringify(meta)
 		}
-		window.parent.postMessage(data, '*')
+
+		editor.signals.messagePost.dispatch(data)
+		//editor.signals.message.dispatch(data)
+		//window.parent.postMessage(data, '*')
 
 	}
 	this.writeEntity = function (node) {
@@ -125,7 +132,11 @@ function MetaLoader(editor) {
 		const entities = []
 		data.children = { "entities": [], "addons": [] }
 		root.children.forEach(node => {
-			entities.push(self.writeEntity(node))
+			const entity = self.writeEntity(node);
+			if (entity != null) {
+				entities.push(entity)
+			}
+
 			//console.error(node.userData)
 		})
 		data.children.entities = entities
@@ -135,11 +146,15 @@ function MetaLoader(editor) {
 		root.uuid = data.parameters.uuid
 		if (data.children) {
 			for (let i = 0; i < data.children.entities.length; ++i) {
-				const node = await builder.addEntity(
-					data.children.entities[i],
-					resources
-				)
-				root.add(node)
+				if (data.children.entities[i] != null) {
+					const node = await builder.addEntity(
+						data.children.entities[i],
+						resources
+					)
+					if (node != null) {
+						root.add(node)
+					}
+				}
 			}
 		}
 	}
