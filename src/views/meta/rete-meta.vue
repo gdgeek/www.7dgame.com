@@ -55,7 +55,6 @@ export default {
     return {
       resource: {
         callback: null
-        // type: null
       },
       loading: false,
       id: parseInt(this.$route.query.id),

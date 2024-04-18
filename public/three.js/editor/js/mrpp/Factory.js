@@ -7,6 +7,7 @@ import { VOXLoader, VOXMesh } from '../../../examples/jsm/loaders/VOXLoader.js'
 class Factory {
 	constructor() {
 	}
+
 	async loadVoxel(url) {
 		return new Promise((resolve, reject) => {
 			const loader = new VOXLoader()
@@ -21,6 +22,13 @@ class Factory {
 					resolve(mesh)
 				}
 			)
+		})
+	}
+	lockNode(node) {
+		//node.locked = true
+		node.userData['locked'] = true
+		node.children.forEach(item => {
+			this.lockNode(item)
 		})
 	}
 	async loadPolygen(url) {
@@ -118,12 +126,8 @@ class Factory {
 
 
 		if (resources.has(data.parameters.resource)) {
-
 			const resource = resources.get(data.parameters.resource)
-			const node = await this.loadVoxel(resource.file.url)
-			node.name = '[voxel]'
-			node.uuid = resource.file.md5
-			return node
+			return await this.loadVoxel(resource.file.url)
 		}
 		return null
 	}
@@ -178,19 +182,19 @@ class Factory {
 		switch (data.type.toLowerCase()) {
 
 			case 'polygen':
-				node = await this.getPolygen(data, resources)
+				node = await this.getPolygen(data, resources)//resource
 				break
 			case 'picture':
-				node = await this.getPicture(data, resources)
+				node = await this.getPicture(data, resources)//resource
 				break
 			case 'video':
-				node = await this.getVideo(data, resources)
+				node = await this.getVideo(data, resources)//resource
 				break
 			case 'sound':
-				node = await this.getSound(data, resources)
+				node = await this.getSound(data, resources)//resource
 				break
 			case 'voxel':
-				node = await this.getVoxel(data, resources)
+				node = await this.getVoxel(data, resources)//resource
 				break
 			case 'text':
 				node = await this.getText(data, resources)
@@ -202,12 +206,12 @@ class Factory {
 		if (node == null) {
 			node = await this.getEmpty(data, resources)
 		}
+
 		node.name = data.parameters.name
 		node.uuid = data.parameters.uuid
 		node.applyMatrix4(this.getMatrix4(data.parameters.transform))
-
 		node.visible = data.parameters.active
-		console.error(data.parameters)
+
 		const userData = { "type": data.type }
 		const exclude = ['name', 'uuid', 'transform', 'active']
 

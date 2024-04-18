@@ -4,13 +4,32 @@ import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
 import { AddObjectCommand } from './commands/AddObjectCommand.js';
 import { Factory } from './mrpp/Factory.js'
+import { Builder } from './mrpp/Builder.js'
+
 function MenubarAdd(editor) {
 
+
 	const factory = new Factory();
+	const builder = new Builder();
 	const strings = editor.strings;
 
 	const resources = new Map()
 	const container = new UIPanel();
+	editor.signals.messageReceive.add(async function (message) {
+		if (message.action === 'resource') {
+
+			resources.set(message.data.id, message.data)
+
+			const data = builder.resource(message.data)
+			if (data != null) {
+				const node = await factory.building(data, resources);
+				if (node != null) {
+					editor.execute(new AddObjectCommand(editor, node));
+				}
+			}
+
+		}
+	});
 	container.setClass('menu');
 
 	const title = new UIPanel();
@@ -35,34 +54,18 @@ function MenubarAdd(editor) {
 		editor.execute(new AddObjectCommand(editor, mesh));
 
 	});
-	options.add(option);
+	//options.add(option);
 
 	//
 
-	options.add(new UIHorizontalRule());
+	//options.add(new UIHorizontalRule());
 
 
 	option = new UIRow();
 	option.setClass('option');
 	option.setTextContent("Entity");
 	option.onClick(async function () {
-		const node = await factory.building({
-			type: "Entity",
-			children: {
-				components: [],
-				entities: []
-			},
-			parameters: {
-				name: "Entity",
-				transform: {
-					position: { x: 0, y: 0, z: 0 },
-					scale: { x: 1, y: 1, z: 1 },
-					rotate: { x: 0, y: 0, z: 0 }
-				},
-				uuid: THREE.MathUtils.generateUUID(),
-				active: true
-			}
-		}, resources);
+		const node = await factory.building(builder.entity(), resources);
 		editor.execute(new AddObjectCommand(editor, node));
 
 	});
@@ -75,43 +78,55 @@ function MenubarAdd(editor) {
 	option.setClass('option');
 	option.setTextContent("Text");
 	option.onClick(async function () {
-
-
-		const node = await factory.building({
-			type: "Text",
-			children: {
-				components: [],
-				entities: []
-			},
-			parameters: {
-				name: "Text",
-				transform: {
-					position: { x: 0, y: 0, z: 0 },
-					scale: { x: 1, y: 1, z: 1 },
-					rotate: { x: 0, y: 0, z: 0 }
-				},
-				uuid: THREE.MathUtils.generateUUID(),
-				active: true,
-				text: "Hello World"
-			}
-		}, resources);
-
+		const node = await factory.building(builder.text(), resources);
 		editor.execute(new AddObjectCommand(editor, node));
-
-
 	});
 	options.add(option);
 
 
 	option = new UIRow();
 	option.setClass('option');
-	option.setTextContent("Test");
+	option.setTextContent("体素");
 	option.onClick(async function () {
-		editor.signals.messagePost.dispatch("Hello World");
+		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'voxel' } });
 	});
 	options.add(option);
 
 
+
+
+	option = new UIRow();
+	option.setClass('option');
+	option.setTextContent("模型");
+	option.onClick(async function () {
+		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'polygen' } });
+	});
+	options.add(option);
+
+
+	option = new UIRow();
+	option.setClass('option');
+	option.setTextContent("音频");
+	option.onClick(async function () {
+		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'sound' } });
+	});
+	options.add(option);
+
+	option = new UIRow();
+	option.setClass('option');
+	option.setTextContent("图片");
+	option.onClick(async function () {
+		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'picture' } });
+	});
+	options.add(option);
+
+	option = new UIRow();
+	option.setClass('option');
+	option.setTextContent("视频");
+	option.onClick(async function () {
+		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'video' } });
+	});
+	options.add(option);
 
 	// Box
 

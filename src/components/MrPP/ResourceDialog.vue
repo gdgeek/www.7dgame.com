@@ -234,6 +234,7 @@ export default {
       await this.open(selected, binding, type)
     },
     async open(value, meta_id = null, type = null) {
+     
       this.binding = {
         items: null,
         sorted: '-created_at',

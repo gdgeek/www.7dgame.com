@@ -56,14 +56,14 @@ function MetaLoader(editor) {
 		window.URL = window.URL || window.webkitURL
 		window.BlobBuilder =
 			window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder
-		const meta = await self.write(editor.scene.getObjectByName('$root'))
+		const meta = await self.write(editor.scene)
 
 		const data = {
 			action: 'save',
 			data: JSON.stringify(meta)
 		}
 
-		editor.signals.messagePost.dispatch(data)
+		editor.signals.messageSend.dispatch(data)
 		//editor.signals.message.dispatch(data)
 		//window.parent.postMessage(data, '*')
 
@@ -153,6 +153,8 @@ function MetaLoader(editor) {
 					)
 					if (node != null) {
 						root.add(node)
+
+						editor.signals.sceneGraphChanged.dispatch()
 					}
 				}
 			}
@@ -207,17 +209,12 @@ function MetaLoader(editor) {
 			light3.name = "light3"
 			lights.add(light3);
 			scene.add(lights)
+			builder.lockNode(lights)
 			editor.signals.sceneGraphChanged.dispatch()
 		}
-		builder.lockNode(lights)
 
-		let root = editor.scene.getObjectByName("$root");
-		if (root == null) {
-			root = new THREE.Group();
-			root.name = "$root";
-			scene.add(root)
-			editor.signals.sceneGraphChanged.dispatch()
-		}
+		let root = editor.scene;
+
 
 		if (meta.data !== null) {
 			const data = JSON.parse(meta.data)

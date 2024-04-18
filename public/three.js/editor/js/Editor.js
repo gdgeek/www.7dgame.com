@@ -91,7 +91,8 @@ function Editor() {
 
 		viewportCameraChanged: new Signal(),
 
-		messagePost: new Signal()
+		messageSend: new Signal(),
+		messageReceive: new Signal()
 	}
 
 	this.config = new Config()
@@ -421,6 +422,10 @@ Editor.prototype = {
 	//
 
 	select: function (object) {
+		console.error(object)
+		while (object != null && object.userData['type'] == undefined) {
+			object = object.parent
+		}
 		if (
 			this.selected === object ||
 			(object !== null &&

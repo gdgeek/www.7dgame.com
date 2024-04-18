@@ -85,8 +85,7 @@
 
 		const editor = new Editor()
 
-		editor.signals.messagePost.add(function (data) {
-
+		editor.signals.messageSend.add(function (data) {
 			data.from = 'mrpp-editor';
 			data.verify = 'mrpp.com';
 			window.parent.postMessage(data, '*')
@@ -233,15 +232,20 @@
 
 		const loader = new MetaLoader(editor)
 		window.addEventListener('message', e => {
+
 			if (e.data.verify === 'mrpp.com') {
+				editor.signals.messageReceive.dispatch(e.data)
 				switch (e.data.action) {
 					case 'load':
-						//	alert(JSON.stringify(e.data.data))
 						loader.load(e.data.data)
-
+						console.error(e.data.data)
 						break
 					case 'reload':
 						loader.load(e.data.data)
+
+						break
+					case 'resource':
+						alert(JSON.stringify(e.data.data))
 
 						break
 				}
@@ -251,7 +255,7 @@
 		const data = {
 			action: 'ready'
 		}
-		editor.signals.messagePost.dispatch(data)
+		editor.signals.messageSend.dispatch(data)
 		//window.parent.postMessage(data, '*')
 	</script>
 </body>
