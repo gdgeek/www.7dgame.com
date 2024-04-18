@@ -3,6 +3,14 @@ import * as THREE from 'three'
 import { SceneBuilder } from './SceneBuilder.js'
 
 function MetaLoader(editor) {
+
+	editor.selector = function (object) {
+		if (object.userData.type != undefined) {
+			return true;
+		}
+		return false;
+	}
+
 	const self = this
 	editor.signals.upload.add(function () {
 		self.save()
@@ -53,9 +61,6 @@ function MetaLoader(editor) {
 	this.save = async function () {
 
 
-		window.URL = window.URL || window.webkitURL
-		window.BlobBuilder =
-			window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder
 		const meta = await self.write(editor.scene)
 
 		const data = {
@@ -64,8 +69,6 @@ function MetaLoader(editor) {
 		}
 
 		editor.signals.messageSend.dispatch(data)
-		//editor.signals.message.dispatch(data)
-		//window.parent.postMessage(data, '*')
 
 	}
 	this.writeEntity = function (node) {
@@ -136,8 +139,6 @@ function MetaLoader(editor) {
 			if (entity != null) {
 				entities.push(entity)
 			}
-
-			//console.error(node.userData)
 		})
 		data.children.entities = entities
 		return data;
@@ -153,13 +154,13 @@ function MetaLoader(editor) {
 					)
 					if (node != null) {
 						root.add(node)
-
 						editor.signals.sceneGraphChanged.dispatch()
 					}
 				}
 			}
 		}
 	}
+	/*
 	this.removeNode = async function (oldValue, newValue) {
 		const oldEntities = oldValue.children.entities
 		const newEntities = newValue.children.entities
@@ -177,13 +178,13 @@ function MetaLoader(editor) {
 				}
 			}
 		})
-	}
+	}*/
 	this.clear = async function () {
 		this.editor.clear()
 	}
 
 	this.load = async function (meta) {
-		//console.error(meta)
+
 		let scene = editor.scene;
 		if (scene == null) {
 			scene = new THREE.Scene();
@@ -218,24 +219,16 @@ function MetaLoader(editor) {
 
 		if (meta.data !== null) {
 			const data = JSON.parse(meta.data)
-			if (typeof self.data !== 'undefined') {
-				await this.removeNode(self.data, data)
-			}
-			self.data = data
+
 			const resources = new Map()
 			meta.resources.forEach(r => {
 				resources.set(r.id, r)
 			})
-			//console.error(data)
-
 			await self.read(root, data, resources)
-			const copy = await self.write(root);
-			//console.error(copy)
-			self.compareObjectsAndPrintDifferences(data, copy)
+			//const copy = await self.write(root);
+			//self.compareObjectsAndPrintDifferences(data, copy)
 			editor.signals.sceneGraphChanged.dispatch()
 		}
-		return;
-
 
 
 

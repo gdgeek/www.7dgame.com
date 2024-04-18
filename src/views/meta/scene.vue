@@ -98,12 +98,12 @@ export default {
       }
       return this.$can('editable', new AbilityEditable(data.editable))
     },
-    async loadResource(data) {
+    loadResource(data) {
       
       this.$refs.dialog.open(null, this.id, data.type)
      
     },
-    async postMessage(data) { 
+    postMessage(data) { 
       data.verify = 'mrpp.com';
       const iframe = document.getElementById('editor')
       iframe.contentWindow.postMessage(data, '*')
@@ -192,14 +192,8 @@ export default {
         type: 'success',
         message: '保存成功!'
       })
-      const r = await getMeta(this.id)
-      const data = {
-        verify: 'mrpp.com',
-        action: 'reload',
-        data: r.data
-      }
-      const iframe = document.getElementById('editor')
-      iframe.contentWindow.postMessage(data, '*')
+  
+              
     }
   }
 }

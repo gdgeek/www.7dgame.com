@@ -7,6 +7,26 @@ class SceneBuilder {
 		this.factory = new Factory()
 	}
 
+	async readMeta(root, data, resources) {
+		//	root.uuid = data.parameters.uuid
+		if (data.children) {
+			for (let i = 0; i < data.children.entities.length; ++i) {
+				if (data.children.entities[i] != null) {
+					const node = await this.addEntity(
+						data.children.entities[i],
+						resources
+					)
+
+					if (node != null) {
+						this.lockNode(node)
+						root.add(node)
+						this.editor.signals.sceneGraphChanged.dispatch()
+					}
+				}
+			}
+		}
+	}
+
 	setTransform(node, transform) {
 		const p = transform.position
 		const s = transform.scale
@@ -44,7 +64,6 @@ class SceneBuilder {
 		})
 	}
 	async addEntity(entity, resources) {
-		console.error(entity)
 		let node = editor.objectByUuid(entity.parameters.uuid)
 
 		if (typeof node === 'undefined') {

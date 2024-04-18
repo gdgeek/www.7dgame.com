@@ -32,19 +32,12 @@ export default {
 
     return {
       isInit: false,
-      src,
-      verse: null
+      src
     }
   },
   computed: {
     id() {
       return parseInt(this.$route.query.id)
-    },
-    saveable() {
-      if (this.verse === null) {
-        return false
-      }
-      return this.$can('editable', new AbilityEditable(this.verse.editable))
     }
   },
   destroyed() {
@@ -83,36 +76,45 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
+    postMessage(data) { 
+      data.verify = 'mrpp.com';
+      const iframe = document.getElementById('editor')
+      iframe.contentWindow.postMessage(data, '*')
+    },
+    saveable(verse) {
+      if (verse === null) {
+        return false
+      }
+      return this.$can('editable', new AbilityEditable(verse.editable))
+    },
+    
     async handleMessage(e) {
       const self = this
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
           case 'save-verse':
-            self.saveVerse(e.data.verse)
+            self.saveVerse(e.data.data)
 
             break
           case 'ready':
             if (self.isInit == false) {
               self.isInit = true
-              const iframe = document.getElementById('editor')
-              const r = await getVerse(this.id)
-              self.verse = r.data
-
+              const verse = await getVerse(this.id)
+             
               const data = {
-                verify: 'mrpp.com',
                 action: 'load',
                 id: this.id,
-                data: self.verse,
-                saveable: this.saveable
+                data: verse.data,
+                saveable: this.saveable(verse.data)
               }
-              iframe.contentWindow.postMessage(data, '*')
+              self.postMessage(data)
             }
             break
         }
       }
     },
     async saveVerse(verse) {
-      if (!this.saveable) {
+      if (!this.saveable(JSON.parse(verse))) {
         this.$message({
           type: 'info',
           message: '没有保存权限!'
@@ -125,14 +127,13 @@ export default {
           message: '保存成功!!!'
         })
       })
-      const r = await getVerse(this.id)
+      /*
+      const verse = await getVerse(this.id)
       const data = {
-        verify: 'mrpp.com',
         action: 'reload',
-        data: r.data
+        data: verse.data
       }
-      const iframe = document.getElementById('editor')
-      iframe.contentWindow.postMessage(data, '*')
+      this.postMessage(data)*/
     }
   }
 }

@@ -14,6 +14,7 @@ _DEFAULT_CAMERA.lookAt(new THREE.Vector3())
 function Editor() {
 	var Signal = signals.Signal
 
+	this.selector = null;
 	this.signals = {
 		upload: new Signal(),
 		// script
@@ -422,16 +423,13 @@ Editor.prototype = {
 	//
 
 	select: function (object) {
-		console.error(object)
-		while (object != null && object.userData['type'] == undefined) {
-			object = object.parent
+		if (this.selector != null) {
+			while (object != null && !this.selector(object)) {
+				object = object.parent
+			}
 		}
-		if (
-			this.selected === object ||
-			(object !== null &&
-				typeof object.userData['locked'] !== 'undefined' &&
-				object.userData['locked'])
-		) {
+
+		if (this.selected === object) {
 			return
 		}
 
