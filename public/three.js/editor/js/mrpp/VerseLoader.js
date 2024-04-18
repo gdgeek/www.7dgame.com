@@ -4,13 +4,11 @@ import { GLTFLoader } from '../../../examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
 function VerseLoader(editor) {
 
+	const types = ['Meta', 'Anchor', 'MetaKnight']
 
 	editor.selector = function (object) {
-		//alert(object.userData.type)
-		if (object.userData.type == 'Meta' || object.userData.type == 'Anchor' || object.userData.type == 'MetaKnight') {
-			return true;
-		}
-		return false;
+
+		return types.includes(object.type);
 	}
 
 	const self = this
@@ -26,12 +24,13 @@ function VerseLoader(editor) {
 			const node = new THREE.Group()
 			node.name = data.parameters.title
 
+			node.type = data.type;
 			node.uuid = data.parameters.uuid
 
 			const transform = data.parameters.transform
 			builder.setTransform(node, transform)
 
-			const userData = { "type": data.type }
+			const userData = {}
 			const exclude = ['name', 'title', 'uuid', 'transform', 'active']
 
 			Object.keys(data.parameters).forEach(key => {
@@ -59,12 +58,13 @@ function VerseLoader(editor) {
 			const node = new THREE.Group()
 			node.name = data.parameters.title
 
+			node.type = data.type;
 			node.uuid = data.parameters.uuid
 
 			const transform = data.parameters.transform
 			builder.setTransform(node, transform)
 
-			const userData = { "type": data.type }
+			const userData = {}
 			const exclude = ['name', 'title', 'uuid', 'transform', 'active']
 
 			Object.keys(data.parameters).forEach(key => {
@@ -84,7 +84,8 @@ function VerseLoader(editor) {
 			const node = new THREE.Object3D()
 			node.name = data.parameters.title
 			node.uuid = data.parameters.uuid
-			const userData = { "type": data.type }
+			node.type = data.type;
+			const userData = {}
 			const exclude = ['name', 'title', 'uuid', 'transform', 'active']
 
 			Object.keys(data.parameters).forEach(key => {
@@ -198,12 +199,12 @@ function VerseLoader(editor) {
 	}
 	this.writeData = function (node) {
 
-		if (node.userData.type == undefined) {
-			return null
+		if (!types.includes(node.type)) {
+			return null;
 		}
 		const data = {}
 
-		data.type = node.userData.type
+		data.type = node.type
 
 
 		data.parameters = {}
@@ -249,14 +250,14 @@ function VerseLoader(editor) {
 		const metaKnights = []
 		//	data.children = { "anchors": [], "metas": [], "metaKnights": [] }
 		root.children.forEach(node => {
-			const userData = node.userData;
+
 			const nd = this.writeData(node)
 			if (nd != null) {
-				if (userData.type == 'Anchor') {
+				if (node.type == 'Anchor') {
 					anchors.push(nd)
-				} else if (userData.type == 'Meta') {
+				} else if (node.type == 'Meta') {
 					metas.push(nd)
-				} else if (userData.type == 'MetaKnight') {
+				} else if (node.type == 'MetaKnight') {
 					metaKnights.push(nd)
 				}
 			}
