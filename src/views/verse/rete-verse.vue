@@ -157,7 +157,7 @@ export default {
           parameters: {
             uuid: item.uuid,
             id: item.id,
-            knight: item.knight_id,
+            meta: item.meta_id,
             title: randomWords(),
             transform: {
               position: { x: 0, y: 0, z: 0 },
@@ -280,8 +280,8 @@ export default {
       }
     },
 
-    async _updateKnightMetaEvent(data, knight_id) {
-      const response = await getMeta(knight_id)
+    async _updateKnightMetaEvent(data, meta_id) {
+      const response = await getMeta( meta_id)
       if (response.data.events) {
         const events = JSON.parse(response.data.events)
 

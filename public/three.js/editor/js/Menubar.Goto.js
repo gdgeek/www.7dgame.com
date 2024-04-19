@@ -3,13 +3,13 @@ import * as THREE from 'three';
 import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
 import { AddObjectCommand } from './commands/AddObjectCommand.js';
-import { MateFactory } from './mrpp/MateFactory.js'
+import { MetaFactory } from './mrpp/MetaFactory.js'
 import { Builder } from './mrpp/Builder.js'
 
 function MenubarGoto(editor) {
 
 
-	const factory = new MateFactory();
+	const factory = new MetaFactory();
 	const builder = new Builder();
 	const strings = editor.strings;
 

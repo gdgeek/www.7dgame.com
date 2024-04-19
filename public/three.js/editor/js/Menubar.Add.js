@@ -119,7 +119,7 @@ function MenubarAdd(editor) {
 	} else if (editor.type.toLowerCase() == 'verse') {
 		const factory = new VerseFactory();
 		editor.signals.messageReceive.add(async function (message) {
-			alert(message.action)
+
 			if (message.action === 'add-meta') {
 				alert(JSON.stringify(message.data))
 

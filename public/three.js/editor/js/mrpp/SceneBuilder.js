@@ -1,10 +1,10 @@
 import * as THREE from 'three'
 
-import { MateFactory } from './MateFactory.js'
+import { MetaFactory } from './MetaFactory.js'
 class SceneBuilder {
 	constructor(editor) {
 		this.editor = editor
-		this.factory = new MateFactory()
+		this.factory = new MetaFactory()
 	}
 
 	async readMeta(root, data, resources) {
