@@ -345,7 +345,7 @@ export default {
 
         const response = await postVerseKnight({
           verse_id: this.verse_id,
-          knight_id: data.id
+          meta_id: data.id
         })
         this.refresh()
         this.$message({

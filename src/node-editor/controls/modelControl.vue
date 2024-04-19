@@ -65,6 +65,7 @@ export default {
     }
 
     this.$on('setId', function (id) {
+      alert("@@!")
       this.id = id
     })
     this.refresh()
@@ -72,13 +73,15 @@ export default {
 
   methods: {
     click() {
-      this.root.knightForm({
+      this.root.metaForm({
         id: this.id,
         schema: this.item.schema
       })
     },
     refresh() {
       if (this.value !== null) {
+        alert("this.value")
+        alert(this.value)
         getMeta(this.value, {
           expand: 'image, author'
         }).then(response => {

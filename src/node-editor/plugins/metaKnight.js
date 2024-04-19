@@ -36,26 +36,35 @@ function install(editor, options) {
     let id = component.data['id']
 
     if (options.root.saveable) {
-      if (typeof id === 'undefined') {
+
+      if (typeof id == 'undefined') {
+        alert(JSON.stringify(component.data))
         const uuid = uuidv4()
         const data = {
           verse_id: options.root.id,
           uuid,
-          knight_id: component.data['knight']
+          meta_id: component.data['meta_id']
         }
+        alert(JSON.stringify(data))
         postMetaKnight(data).then(response => {
           const data = response.data
+
           id = data.id
+          console.error("id")
+          console.error(id)
           component.controls.get('id').setValue(id)
           component.controls.get('uuid').setValue(uuid)
-          options.root._updateKnightMetaEvent(data, component.data['knight'])
+          options.root._updateKnightMetaEvent(data, component.data['meta_id'])
           setTimeout(() => {
-            component.controls.get('knight').$emit('setId', id)
+            alert(id)
+            component.controls.get('meta_id').$emit('setId', id)
           })
         })
       } else {
         setTimeout(() => {
-          component.controls.get('knight').$emit('setId', id)
+          alert('id')
+          alert(id)
+          component.controls.get('meta_id').$emit('setId', id)
         })
       }
     }

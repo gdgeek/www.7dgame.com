@@ -3,7 +3,7 @@ import Rete from 'rete'
 import ActionControl from './actionControl.vue'
 import VueNumControl from './numControl.vue'
 import MetaControl from './metaControl.vue'
-import KnightControl from './knightControl.vue'
+import ModelControl from './modelControl.vue'
 import TransformControl from './transformControl.vue'
 import StringControl from './stringControl.vue'
 import SelectControl from './selectControl.vue'
@@ -50,8 +50,8 @@ export class Control extends Rete.Control {
       case 'string':
         this.component = StringControl
         break
-      case 'knight':
-        this.component = KnightControl
+      case 'model':
+        this.component = ModelControl
         break
       case 'polygen-reset':
         this.component = PolygenResetControl

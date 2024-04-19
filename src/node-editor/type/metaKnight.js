@@ -22,8 +22,8 @@ var MetaKnightType = {
 
     {
       type: 'knight',
-      title: '骑士',
-      key: 'knight',
+      title: '元数据',
+      key: 'meta_id',
       hidden: false,
       readonly: true
     },

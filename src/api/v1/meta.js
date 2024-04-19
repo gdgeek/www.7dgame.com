@@ -11,6 +11,11 @@ export function postMeta(data) {
 }
 
 export function getMeta(id, expand = '') {
+
+  console.error("=====")
+  console.error(id)
+  console.error("=====?")
+  console.error(id.toString())
   return request({
     url: path.join(
       'v1',

@@ -218,7 +218,7 @@ export default {
     knightDataSubmit(data) {
       console.error(data)
     },
-    knightForm({ id, schema }) {
+    metaForm({ id, schema }) {
       console.error(id)
 
       this.$refs.knightData.open(id, JSON.parse(schema))
@@ -281,6 +281,7 @@ export default {
     },
 
     async _updateKnightMetaEvent(data, meta_id) {
+      alert(meta_id)
       const response = await getMeta( meta_id)
       if (response.data.events) {
         const events = JSON.parse(response.data.events)
@@ -310,7 +311,7 @@ export default {
     },
     async knightSelect(data) {
       const node = await editor.addMetaKnight({
-        knight: data.id
+        meta_id : data.id
       })
     },
     _setVerseName(name) {
