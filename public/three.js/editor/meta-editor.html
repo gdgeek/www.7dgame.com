@@ -85,6 +85,7 @@
 
 		const editor = new Editor()
 
+		editor.type = 'mate';
 		editor.signals.messageSend.add(function (data) {
 			data.from = 'mrpp-editor';
 			data.verify = 'mrpp.com';

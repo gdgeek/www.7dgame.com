@@ -53,6 +53,22 @@ class Builder {
 		}
 		return ret;
 	}
+	anchor(title = 'Anchor') {
+		return {
+			type: 'Anchor',
+			children: {},
+			parameters: {
+				title: title,
+				transform: {
+					position: { x: 0, y: 0, z: 0 },
+					scale: { x: 1, y: 1, z: 1 },
+					rotate: { x: 0, y: 0, z: 0 }
+				},
+				uuid: THREE.MathUtils.generateUUID(),
+				active: true,
+			}
+		}
+	}
 	text(content = "Hello World") {
 		const ret = this.node("Text", "Text");
 		ret.parameters.text = content;

@@ -83,8 +83,8 @@
 
 		//
 
-		const editor = new Editor()
-
+		const editor = new Editor();
+		editor.type = 'verse';
 		editor.signals.messageSend.add(function (data) {
 			//	alert(JSON.stringify(data))
 			data.from = 'mrpp-editor';

@@ -3,13 +3,13 @@ import * as THREE from 'three';
 import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
 import { AddObjectCommand } from './commands/AddObjectCommand.js';
-import { Factory } from './mrpp/Factory.js'
+import { MateFactory } from './mrpp/MateFactory.js'
 import { Builder } from './mrpp/Builder.js'
 
-function MenubarBlockly(editor) {
+function MenubarGoto(editor) {
 
 
-	const factory = new Factory();
+	const factory = new MateFactory();
 	const builder = new Builder();
 	const strings = editor.strings;
 
@@ -66,4 +66,4 @@ function MenubarBlockly(editor) {
 
 }
 
-export { MenubarBlockly };
+export { MenubarGoto };

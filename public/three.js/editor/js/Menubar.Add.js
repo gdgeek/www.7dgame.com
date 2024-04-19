@@ -3,13 +3,13 @@ import * as THREE from 'three';
 import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
 import { AddObjectCommand } from './commands/AddObjectCommand.js';
-import { Factory } from './mrpp/Factory.js'
+import { MateFactory } from './mrpp/MateFactory.js'
 import { Builder } from './mrpp/Builder.js'
 
 function MenubarAdd(editor) {
 
 
-	const factory = new Factory();
+	const factory = new MateFactory();
 	const builder = new Builder();
 	const strings = editor.strings;
 
@@ -27,7 +27,6 @@ function MenubarAdd(editor) {
 					editor.execute(new AddObjectCommand(editor, node));
 				}
 			}
-
 		}
 	});
 	container.setClass('menu');
@@ -41,93 +40,108 @@ function MenubarAdd(editor) {
 	options.setClass('options');
 	container.add(options);
 
-	// Group
 
-	let option = new UIRow();
-	option.setClass('option');
-	option.setTextContent(strings.getKey('menubar/add/group'));
-	option.onClick(function () {
+	let option = null;
 
-		const mesh = new THREE.Group();
-		mesh.name = 'Group';
+	if (editor.type.toLowerCase() == 'meta') {
 
-		editor.execute(new AddObjectCommand(editor, mesh));
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("节点");
+		option.onClick(async function () {
+			const node = await factory.building(builder.entity(), resources);
+			editor.execute(new AddObjectCommand(editor, node));
 
-	});
-	//options.add(option);
-
-	//
-
-	//options.add(new UIHorizontalRule());
-
-
-	option = new UIRow();
-	option.setClass('option');
-	option.setTextContent("Entity");
-	option.onClick(async function () {
-		const node = await factory.building(builder.entity(), resources);
-		editor.execute(new AddObjectCommand(editor, node));
-
-	});
-	options.add(option);
+		});
+		options.add(option);
 
 
 
 
-	option = new UIRow();
-	option.setClass('option');
-	option.setTextContent("Text");
-	option.onClick(async function () {
-		const node = await factory.building(builder.text(), resources);
-		editor.execute(new AddObjectCommand(editor, node));
-	});
-	options.add(option);
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("文本");
+		option.onClick(async function () {
+			const node = await factory.building(builder.text(), resources);
+			editor.execute(new AddObjectCommand(editor, node));
+		});
+		options.add(option);
 
 
-	option = new UIRow();
-	option.setClass('option');
-	option.setTextContent("体素");
-	option.onClick(async function () {
-		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'voxel' } });
-	});
-	options.add(option);
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("体素");
+		option.onClick(async function () {
+			editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'voxel' } });
+		});
+		options.add(option);
 
 
 
 
-	option = new UIRow();
-	option.setClass('option');
-	option.setTextContent("模型");
-	option.onClick(async function () {
-		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'polygen' } });
-	});
-	options.add(option);
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("模型");
+		option.onClick(async function () {
+			editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'polygen' } });
+		});
+		options.add(option);
 
 
-	option = new UIRow();
-	option.setClass('option');
-	option.setTextContent("音频");
-	option.onClick(async function () {
-		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'sound' } });
-	});
-	options.add(option);
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("音频");
+		option.onClick(async function () {
+			editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'sound' } });
+		});
+		options.add(option);
 
-	option = new UIRow();
-	option.setClass('option');
-	option.setTextContent("图片");
-	option.onClick(async function () {
-		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'picture' } });
-	});
-	options.add(option);
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("图片");
+		option.onClick(async function () {
+			editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'picture' } });
+		});
+		options.add(option);
 
-	option = new UIRow();
-	option.setClass('option');
-	option.setTextContent("视频");
-	option.onClick(async function () {
-		editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'video' } });
-	});
-	options.add(option);
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("视频");
+		option.onClick(async function () {
+			editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'video' } });
+		});
+		options.add(option);
 
+	} else if (editor.type.toLowerCase() == 'verse') {
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("锚点");
+		option.onClick(async function () {
+
+			const node = await factory.building(builder.anchor());
+			//editor.execute(new AddObjectCommand(editor, node));
+		});
+		options.add(option);
+
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("Mate");
+		option.onClick(async function () {
+			//editor.signals.messageSend.dispatch({ action: 'load_space' });
+		});
+		options.add(option);
+
+
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("Knight");
+		option.onClick(async function () {
+			//editor.signals.messageSend.dispatch({ action: 'load_space' });
+		});
+		options.add(option);
+	}
+
+	/*
 	// Box
 
 	option = new UIRow();

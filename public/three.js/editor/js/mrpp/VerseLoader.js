@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { SceneBuilder } from './SceneBuilder.js'
 import { GLTFLoader } from '../../../examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
+import { VerseFactory } from './VerseFactory.js'
 function VerseLoader(editor) {
 
 	const types = ['Meta', 'Anchor', 'MetaKnight']
@@ -16,6 +17,7 @@ function VerseLoader(editor) {
 	editor.signals.upload.add(function () {
 		self.save()
 	})
+	const factory = new VerseFactory();
 	const builder = new SceneBuilder(editor)
 
 	this.addMetaKnight = async function (root, data, meta, resources) {
@@ -28,7 +30,7 @@ function VerseLoader(editor) {
 			node.uuid = data.parameters.uuid
 
 			const transform = data.parameters.transform
-			builder.setTransform(node, transform)
+			factory.setTransform(node, transform)
 
 			const userData = {}
 
@@ -48,7 +50,7 @@ function VerseLoader(editor) {
 				mesh.scale.set(0.1, 0.1, 0.1)
 				mesh.rotation.set(Math.PI / 2, Math.PI / 2, 0)
 				node.add(gltf.scene)
-				builder.lockNode(gltf.scene)
+				factory.lockNode(gltf.scene)
 				resolve(node)
 			})
 			root.add(node)
@@ -65,7 +67,7 @@ function VerseLoader(editor) {
 			node.uuid = data.parameters.uuid
 
 			const transform = data.parameters.transform
-			builder.setTransform(node, transform)
+			factory.setTransform(node, transform)
 
 			const userData = {}
 			const exclude = ['name', 'title', 'uuid', 'transform', 'active']
@@ -101,14 +103,14 @@ function VerseLoader(editor) {
 			node.userData = userData;
 
 			const transform = data.parameters.transform
-			builder.setTransform(node, transform)
+			factory.setTransform(node, transform)
 			root.add(node)
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
 			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
 				const mesh = gltf.scene;//.children[0]
 				mesh.scale.set(0.1, 0.1, 0.1)
 				mesh.rotation.set(Math.PI / 2, Math.PI / 2, 0)
-				builder.lockNode(gltf.scene)
+				factory.lockNode(gltf.scene)
 				node.add(gltf.scene)
 				console.error(node)
 				resolve(node)
@@ -116,13 +118,13 @@ function VerseLoader(editor) {
 		})
 	}
 
-
-	this.loadSpace = async function (data) {
-		const node = await builder.loadPolygen(data.mesh.url)
-		node.name = 'Space'
-		node.uuid = data.mesh.md5
-		return node
-	}
+	/*
+		this.loadSpace = async function (data) {
+			const node = await builder.loadPolygen(data.mesh.url)
+			node.name = 'Space'
+			node.uuid = data.mesh.md5
+			return node
+		}*/
 
 	this.save = async function () {
 
@@ -174,6 +176,7 @@ function VerseLoader(editor) {
 			}
 		}
 	}
+	/*
 	this.loadIt = async function () {
 		if (this.data.space) {
 			space = await self.loadSpace(this.data.space)
@@ -182,7 +185,7 @@ function VerseLoader(editor) {
 		}
 
 
-	}
+	}*/
 	this.writeData = function (node) {
 
 		if (!types.includes(node.type)) {
