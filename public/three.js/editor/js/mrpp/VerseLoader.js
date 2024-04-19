@@ -31,6 +31,7 @@ function VerseLoader(editor) {
 			builder.setTransform(node, transform)
 
 			const userData = {}
+
 			const exclude = ['name', 'title', 'uuid', 'transform', 'active']
 
 			Object.keys(data.parameters).forEach(key => {
@@ -38,6 +39,8 @@ function VerseLoader(editor) {
 					userData[key] = data.parameters[key]
 				}
 			})
+
+			userData.draggable = false
 			node.userData = userData
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
 			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
@@ -72,6 +75,7 @@ function VerseLoader(editor) {
 					userData[key] = data.parameters[key]
 				}
 			})
+			userData.draggable = false
 			node.userData = userData
 
 			root.add(node)
@@ -93,6 +97,7 @@ function VerseLoader(editor) {
 					userData[key] = data.parameters[key]
 				}
 			})
+			userData.draggable = false
 			node.userData = userData;
 
 			const transform = data.parameters.transform
@@ -118,27 +123,7 @@ function VerseLoader(editor) {
 		node.uuid = data.mesh.md5
 		return node
 	}
-	this.readPoint = async function (point) {
-		const node = editor.objectByUuid(point.parameters.uuid)
-		if (typeof node !== 'undefined') {
-			point.parameters.title = node.name
-			point.parameters.transform.position = {
-				x: node.position.x,
-				y: node.position.y,
-				z: node.position.z
-			}
-			point.parameters.transform.rotate = {
-				x: (node.rotation.x / Math.PI) * 180,
-				y: (node.rotation.y / Math.PI) * 180,
-				z: (node.rotation.z / Math.PI) * 180
-			}
-			point.parameters.transform.scale = {
-				x: node.scale.x,
-				y: node.scale.y,
-				z: node.scale.z
-			}
-		}
-	}
+
 	this.save = async function () {
 
 		const root = editor.scene;
@@ -190,12 +175,13 @@ function VerseLoader(editor) {
 		}
 	}
 	this.loadIt = async function () {
-		let space = editor.objectByUuid(this.data.space.mesh.md5)
-		if (typeof space === 'undefined') {
+		if (this.data.space) {
 			space = await self.loadSpace(this.data.space)
 			builder.lockNode(space)
-			this.room.add(space)
+			editor.scene.add(space)
 		}
+
+
 	}
 	this.writeData = function (node) {
 
@@ -319,83 +305,10 @@ function VerseLoader(editor) {
 			}
 		}*/
 	}
-	this.loadDatas = async function () {
-		if (this.verse.children.anchors) {
-			this.verse.children.anchors.forEach(async anchor => {
-				await self.addPoint(anchor, 'Anchor')
-			})
-		}
-
-		if (this.verse.children.metaKnights) {
-			this.verse.children.metaKnights.forEach(async mk => {
-				await self.addPoint(mk, 'MetaKnight')
-			})
-		}
-
-		if (this.verse.children.metas) {
-			this.verse.children.metas.forEach(async meta => {
-				await self.addPoint(meta, 'Meta')
-			})
-		}
-
-		/*let knights = new Map()
-	
-		this.data.datas.knights.forEach(m => {
-			knights.set(m.id, m)
-		})
-	
-		let metas = new Map()
-		this.data.datas.metas.forEach(m => {
-			metas.set(m.id, JSON.parse(m.data))
-		})
-	*
-		let resources = new Map()
-		this.data.resources.forEach(r => {
-			resources.set(r.id, r)
-		})
-		if (this.verse.children.anchors) {
-			this.verse.children.anchors.forEach(async anchor => {
-				await self.addAnchor(anchor)
-			})
-		}
-		//this.verse.children.anchors
-		this.verse.children.metas.forEach(async meta => {
-			if (meta.type == 'Meta' && metas.has(meta.parameters.id)) {
-				const data = metas.get(meta.parameters.id)
-				if (data !== null) {
-					await self.addMeta(meta, data, resources)
-				}
-			} else if (meta.type == 'Knight' && knights.has(meta.parameters.id)) {
-				const data = knights.get(meta.parameters.id)
-				if (data !== null && data.data !== null) {
-					await self.addKnight(meta, data)
-				}
-			}
-		})
-		*/
-	}
-	this.removeNode = async function (oldValue, newValue) {
-		const oldMetas = oldValue.children.metas
-		const newMetas = newValue.children.metas
-
-		let metas = new Set()
-		newMetas.forEach(meta => {
-			metas.add(meta.parameters.uuid)
-		})
-		oldMetas.forEach(meta => {
-			if (!metas.has(meta.parameters.uuid)) {
-				const obj = editor.objectByUuid(meta.parameters.uuid)
-				if (typeof obj !== 'undefined') {
-					editor.removeObject(obj)
-				}
-			}
-		})
-	}
 	this.clear = async function () {
 		this.scene.clear()
 	}
 	this.load = async function (verse) {
-
 
 		let scene = editor.scene;
 		if (scene == null) {
@@ -435,7 +348,6 @@ function VerseLoader(editor) {
 				await this.removeNode(self.data, data)
 			}
 
-			console.error(verse)
 			const resources = new Map()
 			verse.resources.forEach(item => {
 				resources.set(item.id, item)

@@ -58,7 +58,7 @@ class SceneBuilder {
 	}
 
 	lockNode(node) {
-		node.userData['locked'] = true
+		node.userData.hidden = true
 		node.children.forEach(item => {
 			this.lockNode(item)
 		})

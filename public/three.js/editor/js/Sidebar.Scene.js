@@ -41,12 +41,7 @@ function SidebarScene(editor) {
 			if (object.children.length > 0) {
 				opener.classList.add(state ? 'open' : 'closed')
 			}
-			if (
-				typeof object.userData['locked'] !== 'undefined' &&
-				object.userData['locked']
-			) {
-				opener.classList.add('locked')
-			}
+
 
 			opener.addEventListener('click', function () {
 				nodeStates.set(object, nodeStates.get(object) === false) // toggle
@@ -346,10 +341,17 @@ function SidebarScene(editor) {
 						nodeStates.set(object, false)
 					}
 
-					if (!object.userData['locked']) {
-						const option = buildOption(object, true)
-						option.style.paddingLeft = pad * 18 + 'px'
-						options.push(option)
+					if (!object.userData.hidden) {
+						if (object.userData.draggable != undefined) {
+							const option = buildOption(object, object.userData.draggable)
+							option.style.paddingLeft = pad * 18 + 'px'
+							options.push(option)
+						} else {
+
+							const option = buildOption(object, true)
+							option.style.paddingLeft = pad * 18 + 'px'
+							options.push(option)
+						}
 					}
 
 
