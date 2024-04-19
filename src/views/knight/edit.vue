@@ -113,7 +113,7 @@
 <script>
 import ResourceDialog from '@/components/MrPP/ResourceDialog.vue'
 import EventDialog from '@/components/Rete/EventDialog.vue'
-import { getKnight, putKnight } from '@/api/v1/knight'
+import { getMeta, putMeta } from '@/api/v1/meta'
 export default {
   data() {
     return {
@@ -150,7 +150,7 @@ export default {
     },
     async selectResources(data) {
       this.item.image_id = data.image_id
-      await putKnight(this.id, this.item)
+      await putMeta(this.id, this.item)
 
       this.$message({
         message: '保存成功',
@@ -173,13 +173,13 @@ export default {
       this.$refs.dialog.open()
     },
     async refresh() {
-      const response = await getKnight(this.id, {
+      const response = await getMeta(this.id, {
         expand: 'image,author'
       })
       this.item = response.data
     },
     async onSubmit() {
-      await putKnight(this.id, this.item)
+      await putMeta(this.id, this.item)
       this.$message({
         message: '保存成功',
         type: 'success'

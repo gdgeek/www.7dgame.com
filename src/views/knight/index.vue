@@ -92,7 +92,7 @@
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 
-import { getKnights, postKnight } from '@/api/v1/knight'
+import { getMetas, postMeta } from '@/api/v1/meta'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
   name: 'KnightIndex',
@@ -140,7 +140,7 @@ export default {
           content: '{}',
           image: null
         }
-        const response = await postKnight(data)
+        const response = await postMeta(data)
         await this.editKnight(response.data.id)
       } catch (e) {
         this.$message({
@@ -157,7 +157,7 @@ export default {
       this.refresh()
     },
     async refresh() {
-      const response = await getKnights(
+      const response = await getMetas(
         this.sorted,
         this.searched,
         this.pagination.current,
