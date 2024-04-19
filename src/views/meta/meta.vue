@@ -41,7 +41,7 @@
 
 <script>
 import editor from '@/node-editor/meta'
-import { getKnight, putKnight } from '@/api/v1/knight'
+import { getMeta, putMeta } from '@/api/v1/meta'
 
 import ResourceDialog from '@/components/MrPP/ResourceDialog.vue'
 import { AbilityEditable } from '@/ability/ability'
@@ -80,7 +80,7 @@ export default {
       container: this.$refs.rete,
       root: this
     })
-    const response = await getKnight(this.id, 'verse,share')
+    const response = await getMeta(this.id, 'verse,share')
     this.meta = response.data
 
     this.breadcrumb(this.meta)
@@ -175,7 +175,7 @@ export default {
     async save() {
       if (this.saveable) {
         const data = await editor.save()
-        await putKnight(this.id, {
+        await putMeta(this.id, {
           data
         })
         editor.arrange()

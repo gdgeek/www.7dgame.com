@@ -96,7 +96,7 @@
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 
-import { getKnights } from '@/api/v1/knight'
+import { getMetas } from '@/api/v1/meta'
 import {
   getVerseKnights,
   postVerseKnight,
@@ -156,7 +156,7 @@ export default {
       this.dialogVisible = true
     },
     async refreshOwner() {
-      const response = await getKnights(
+      const response = await getMetas(
         this.owner.sorted,
         this.owner.searched,
         this.owner.pagination.current,

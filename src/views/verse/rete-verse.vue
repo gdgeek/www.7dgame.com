@@ -62,7 +62,7 @@ import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
 import { AbilityEditable } from '@/ability/ability'
 
 import EventDialog from '@/components/Rete/EventDialog.vue'
-import { getKnight } from '@/api/v1/knight'
+import { getMeta } from '@/api/v1/meta'
 async function sleep(time) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -281,7 +281,7 @@ export default {
     },
 
     async _updateKnightMetaEvent(data, knight_id) {
-      const response = await getKnight(knight_id)
+      const response = await getMeta(knight_id)
       if (response.data.events) {
         const events = JSON.parse(response.data.events)
 

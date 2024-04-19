@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { getKnight } from '@/api/v1/knight'
+import { getMeta } from '@/api/v1/meta'
 export default {
   props: ['data', 'emitter', 'root', 'getData', 'putData'],
 
@@ -63,7 +63,7 @@ export default {
   methods: {
     refresh() {
       if (this.value !== null) {
-        getKnight(this.value, {
+        getMeta(this.value, {
           expand: 'image,author'
         }).then(response => {
           this.item = response.data
