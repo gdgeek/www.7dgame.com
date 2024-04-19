@@ -20,9 +20,8 @@ function VerseLoader(editor) {
 	const factory = new VerseFactory();
 	const builder = new SceneBuilder(editor)
 
-	this.addMetaKnight = async function (root, data, meta, resources) {
+	this.addMetaKnight = async function (data, root = null) {
 		return new Promise(async resolve => {
-			console.error(meta)
 			const node = new THREE.Group()
 			node.name = data.parameters.title
 
@@ -57,9 +56,10 @@ function VerseLoader(editor) {
 		})
 		//await builder.readMeta(node, JSON.parse(meta.data), resources)
 	}
-	this.addMeta = async function (root, data, meta, resources) {
+	//	await builder.readMeta(node, JSON.parse(meta.data), resources)
+	this.addMeta = async function (data, root = null) {
 		return new Promise(async resolve => {
-			console.error(meta)
+
 			const node = new THREE.Group()
 			node.name = data.parameters.title
 
@@ -81,11 +81,11 @@ function VerseLoader(editor) {
 			node.userData = userData
 
 			root.add(node)
-			await builder.readMeta(node, JSON.parse(meta.data), resources)
+
 			resolve(node)
 		})
 	}
-	this.addAnchor = async function (root, data) {
+	this.addAnchor = async function (data, root = null) {
 		return new Promise(resolve => {
 			const node = new THREE.Object3D()
 			node.name = data.parameters.title
@@ -104,7 +104,9 @@ function VerseLoader(editor) {
 
 			const transform = data.parameters.transform
 			factory.setTransform(node, transform)
-			root.add(node)
+			if (root != null) {
+				root.add(node)
+			}
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
 			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
 				const mesh = gltf.scene;//.children[0]
@@ -118,13 +120,7 @@ function VerseLoader(editor) {
 		})
 	}
 
-	/*
-		this.loadSpace = async function (data) {
-			const node = await builder.loadPolygen(data.mesh.url)
-			node.name = 'Space'
-			node.uuid = data.mesh.md5
-			return node
-		}*/
+
 
 	this.save = async function () {
 
@@ -268,7 +264,7 @@ function VerseLoader(editor) {
 
 		if (data.children.anchors) {
 			data.children.anchors.forEach(async item => {
-				await self.addAnchor(root, item)
+				await self.addAnchor(item, root)
 			})
 		}
 
@@ -276,21 +272,20 @@ function VerseLoader(editor) {
 			data.children.metaKnights.forEach(async item => {
 
 				const meta = modules.get(item.parameters.id)
-				await self.addMetaKnight(root, item, meta, resources)
+				await self.addMetaKnight(item, root)
+				console.error(item)
+
 			})
 		}
 
 		if (data.children.metas) {
 			data.children.metas.forEach(async item => {
 				const meta = modules.get(item.parameters.id)
-				await self.addMeta(root, item, meta, resources)
+				const node = await self.addMeta(item, root)
+				editor.signals.sceneGraphChanged.dispatch()
+				await builder.readMeta(node, JSON.parse(meta.data), resources)
 				editor.signals.sceneGraphChanged.dispatch()
 
-				//entity.name = data.parameters.name
-				//return entity;
-				//await builder.readMeta(null, JSON.parse(meta.data), resources)
-				//builder
-				//	await self.addPoint(meta, 'Meta')
 			})
 		}
 		/*if (data.children) {
@@ -361,7 +356,7 @@ function VerseLoader(editor) {
 			})
 			await this.read(root, data, resources, modules)
 			const copy = await this.write(root);
-			//console.error(copy)
+
 			self.compareObjectsAndPrintDifferences(data, copy)
 			editor.signals.sceneGraphChanged.dispatch()
 		}

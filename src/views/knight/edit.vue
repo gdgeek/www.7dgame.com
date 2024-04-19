@@ -38,13 +38,7 @@
           <el-form-item label="类型">
             <el-input v-model="item.type"></el-input>
           </el-form-item>
-          <el-form-item label="定制">
-            <el-input
-              type="textarea"
-              :autosize="{ minRows: 2, maxRows: 4 }"
-              v-model="item.schema"
-            ></el-input>
-          </el-form-item>
+        
           <el-form-item
             v-if="events && events.inputs && events.inputs.length > 0"
             label="输入事件"
