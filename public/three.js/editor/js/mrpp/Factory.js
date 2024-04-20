@@ -3,8 +3,7 @@ class Factory {
 	constructor() {
 	}
 	lockNode(node) {
-		//node.locked = true
-		node.userData.hidden = true
+		node.userData.hidden = false
 		node.children.forEach(item => {
 			this.lockNode(item)
 		})

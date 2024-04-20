@@ -65,7 +65,6 @@ export default {
     }
 
     this.$on('setId', function (id) {
-      alert("@@!")
       this.id = id
     })
     this.refresh()
@@ -80,8 +79,6 @@ export default {
     },
     refresh() {
       if (this.value !== null) {
-        alert("this.value")
-        alert(this.value)
         getMeta(this.value, {
           expand: 'image, author'
         }).then(response => {

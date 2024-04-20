@@ -14,7 +14,6 @@ class MetaFactory extends Factory {
 			const loader = new VOXLoader()
 			loader.load(
 				url,
-
 				function (chunks) {
 					const chunk = chunks[0]
 					const mesh = new VOXMesh(chunk, 0.005)
@@ -23,7 +22,14 @@ class MetaFactory extends Factory {
 					resolve(mesh)
 				}
 			)
-		})
+		}, function (xhr) {
+			console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
+		}, function (error) {
+			reject(error)
+			alert(error)
+			console.error('An error happened')
+		}
+		)
 	}
 
 	async loadPolygen(url) {
@@ -49,6 +55,8 @@ class MetaFactory extends Factory {
 				},
 				// called when loading has errors
 				function (error) {
+
+					alert(error)
 					reject(error)
 					console.error('An error happened')
 				}
@@ -67,34 +75,36 @@ class MetaFactory extends Factory {
 	}
 
 	async getPlane(url, width, height) {
-		const textureLoader = new THREE.TextureLoader()
 		return new Promise(resolve => {
-			textureLoader.load(url, texture => {
-				const geometry = new THREE.PlaneGeometry(width, height)
-
+			const geometry = new THREE.PlaneGeometry(width, height)
+			const loader = new THREE.TextureLoader()
+			loader.load(url, texture => {
 				const material = new THREE.MeshBasicMaterial({
 					color: 0xffffff,
 					side: THREE.DoubleSide,
 					map: texture
 				})
-				const plane = new THREE.Mesh(geometry, material)
-
-
-				resolve(plane)
+				resolve(new THREE.Mesh(geometry, material))
+			}, function (xhr) {
+				//console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
+			}, function (error) {
+				console.error(error)
+				resolve(new THREE.Mesh(geometry))
 			})
+
 		})
 	}
 
 	async getPicture(data, resources) {
-		const self = this
+
 		const resource = resources.get(data.parameters.resource)
 		const info = JSON.parse(resource.info)
 		const size = info.size
 		const width = data.parameters.width
 		const height = width * (size.y / size.x)
-		const plane = await self.getPlane(resource.image.url, width, height)
+		const node = await this.getPlane(resource.image.url, width, height)
 
-		return plane
+		return node
 	}
 	async getEntity(data, resources) {
 		const entity = new THREE.Group()
@@ -144,20 +154,17 @@ class MetaFactory extends Factory {
 		if (data.parameters.resource == undefined) {
 			return null;
 		}
-		const self = this
 		const resource = resources.get(data.parameters.resource)
 		const info = JSON.parse(resource.info)
 		const size = info.size
 		const width = data.parameters.width
 		const height = width * (size.y / size.x)
-		const plane = await self.getPlane(resource.image.url, width, height)
-
-		plane.name = data.parameters.name + '[video]'
-		return plane
+		return await this.getPlane(resource.image.url, width, height)
 	}
 
 
 	async building(data, resources) {
+
 		let node = null
 		switch (data.type.toLowerCase()) {
 
@@ -188,8 +195,9 @@ class MetaFactory extends Factory {
 		}
 		if (node == null) {
 			node = await this.getEmpty(data, resources)
-		}
 
+		}
+		node.type = data.type
 		node.name = data.parameters.name
 		node.uuid = data.parameters.uuid
 		this.setTransform(node, data.parameters.transform)

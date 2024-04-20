@@ -143,42 +143,8 @@ function MetaLoader(editor) {
 		data.children.entities = entities
 		return data;
 	}
-	this.read = async function (root, data, resources) {
-		root.uuid = data.parameters.uuid
-		if (data.children) {
-			for (let i = 0; i < data.children.entities.length; ++i) {
-				if (data.children.entities[i] != null) {
-					const node = await builder.addEntity(
-						data.children.entities[i],
-						resources
-					)
-					if (node != null) {
-						root.add(node)
-						editor.signals.sceneGraphChanged.dispatch()
-					}
-				}
-			}
-		}
-	}
-	/*
-	this.removeNode = async function (oldValue, newValue) {
-		const oldEntities = oldValue.children.entities
-		const newEntities = newValue.children.entities
 
-		let entities = new Set()
-		newEntities.forEach(entity => {
-			entities.add(entity.parameters.uuid)
-		})
 
-		oldEntities.forEach(entity => {
-			if (!entities.has(entity.parameters.uuid)) {
-				const obj = editor.objectByUuid(this.data.parameters.uuid)
-				if (typeof obj !== 'undefined') {
-					editor.removeObject(obj)
-				}
-			}
-		})
-	}*/
 	this.clear = async function () {
 		this.editor.clear()
 	}
@@ -224,9 +190,10 @@ function MetaLoader(editor) {
 			meta.resources.forEach(r => {
 				resources.set(r.id, r)
 			})
-			await self.read(root, data, resources)
-			//const copy = await self.write(root);
-			//self.compareObjectsAndPrintDifferences(data, copy)
+
+			root.uuid = data.parameters.uuid
+
+			await builder.readMeta(root, data, resources)
 			editor.signals.sceneGraphChanged.dispatch()
 		}
 

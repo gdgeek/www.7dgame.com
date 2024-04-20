@@ -281,7 +281,6 @@ export default {
     },
 
     async _updateKnightMetaEvent(data, meta_id) {
-      alert(meta_id)
       const response = await getMeta( meta_id)
       if (response.data.events) {
         const events = JSON.parse(response.data.events)

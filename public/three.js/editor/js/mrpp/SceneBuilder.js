@@ -6,21 +6,42 @@ class SceneBuilder {
 		this.editor = editor
 		this.factory = new MetaFactory()
 	}
-
+	/*
+		async read(root, data, resources) {
+			root.uuid = data.parameters.uuid
+			if (data.children) {
+				for (let i = 0; i < data.children.entities.length; ++i) {
+					if (data.children.entities[i] != null) {
+						const node = await this.factory.building(
+							data.children.entities[i],
+							resources
+						)
+						if (node != null) {
+							root.add(node)
+							this.editor.signals.sceneGraphChanged.dispatch()
+						}
+					}
+				}
+			}
+		}
+	*/
 	async readMeta(root, data, resources) {
-		//	root.uuid = data.parameters.uuid
+
+
 		if (data.children) {
 			for (let i = 0; i < data.children.entities.length; ++i) {
 				if (data.children.entities[i] != null) {
-					const node = await this.addEntity(
-						data.children.entities[i],
-						resources
-					)
+					try {
+						const node = await this.factory.building(data.children.entities[i], resources)
 
-					if (node != null) {
-						this.lockNode(node)
-						root.add(node)
-						this.editor.signals.sceneGraphChanged.dispatch()
+						if (node != null) {
+							this.lockNode(node)
+							root.add(node)
+							this.editor.signals.sceneGraphChanged.dispatch()
+						}
+					} catch (error) {
+
+						console.error(error)
 					}
 				}
 			}
@@ -58,19 +79,14 @@ class SceneBuilder {
 	}
 
 	lockNode(node) {
-		node.userData.hidden = true
-		node.children.forEach(item => {
-			this.lockNode(item)
-		})
+		this.factory.lockNode(node)
 	}
+
+
 	async addEntity(entity, resources) {
-		let node = editor.objectByUuid(entity.parameters.uuid)
 
-		if (typeof node === 'undefined') {
-			node = await this.factory.building(entity, resources)
-		}
+		return await this.factory.building(entity, resources)
 
-		return node
 	}
 
 
@@ -141,5 +157,6 @@ class SceneBuilder {
 		self.editor.addObject(node)
 	}
 }
+
 
 export { SceneBuilder }

@@ -35,7 +35,7 @@ class VerseFactory extends Factory {
 				const mesh = gltf.scene;//.children[0]
 				mesh.scale.set(0.1, 0.1, 0.1)
 				mesh.rotation.set(Math.PI / 2, Math.PI / 2, 0)
-				builder.lockNode(gltf.scene)
+				this.lockNode(gltf.scene)
 				node.add(gltf.scene)
 				console.error(node)
 				resolve(node)

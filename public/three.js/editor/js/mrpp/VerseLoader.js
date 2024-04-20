@@ -20,69 +20,68 @@ function VerseLoader(editor) {
 	const factory = new VerseFactory();
 	const builder = new SceneBuilder(editor)
 
-	this.addMetaKnight = async function (data, root = null) {
-		return new Promise(async resolve => {
-			const node = new THREE.Group()
-			node.name = data.parameters.title
+	this.addMetaKnight = function (data) {
 
-			node.type = data.type;
-			node.uuid = data.parameters.uuid
+		const node = new THREE.Group()
+		node.name = data.parameters.title
 
-			const transform = data.parameters.transform
-			factory.setTransform(node, transform)
+		node.type = data.type;
+		node.uuid = data.parameters.uuid
 
-			const userData = {}
+		const transform = data.parameters.transform
+		factory.setTransform(node, transform)
 
-			const exclude = ['name', 'title', 'uuid', 'transform', 'active']
+		const userData = {}
 
-			Object.keys(data.parameters).forEach(key => {
-				if (!exclude.includes(key)) {
-					userData[key] = data.parameters[key]
-				}
-			})
+		const exclude = ['name', 'title', 'uuid', 'transform', 'active']
 
-			userData.draggable = false
-			node.userData = userData
+		Object.keys(data.parameters).forEach(key => {
+			if (!exclude.includes(key)) {
+				userData[key] = data.parameters[key]
+			}
+		})
+
+		userData.draggable = false
+		node.userData = userData
+		return node;
+	}
+	//	await builder.readMeta(node, JSON.parse(meta.data), resources)
+	this.addMeta = function (data) {
+		const node = new THREE.Group()
+		node.name = data.parameters.title
+
+		node.type = data.type;
+		node.uuid = data.parameters.uuid
+
+		const transform = data.parameters.transform
+		factory.setTransform(node, transform)
+
+		const userData = {}
+		const exclude = ['name', 'title', 'uuid', 'transform', 'active']
+
+		Object.keys(data.parameters).forEach(key => {
+			if (!exclude.includes(key)) {
+				userData[key] = data.parameters[key]
+			}
+		})
+		userData.draggable = false
+		node.userData = userData
+
+
+		return node
+	}
+	this.addGizmo = async function (node) {
+
+		return new Promise(resolve => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
 			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
 				const mesh = gltf.scene;//.children[0]
 				mesh.scale.set(0.1, 0.1, 0.1)
 				mesh.rotation.set(Math.PI / 2, Math.PI / 2, 0)
-				node.add(gltf.scene)
 				factory.lockNode(gltf.scene)
-				resolve(node)
+				node.add(gltf.scene)
+				resolve()
 			})
-			root.add(node)
-		})
-		//await builder.readMeta(node, JSON.parse(meta.data), resources)
-	}
-	//	await builder.readMeta(node, JSON.parse(meta.data), resources)
-	this.addMeta = async function (data, root = null) {
-		return new Promise(async resolve => {
-
-			const node = new THREE.Group()
-			node.name = data.parameters.title
-
-			node.type = data.type;
-			node.uuid = data.parameters.uuid
-
-			const transform = data.parameters.transform
-			factory.setTransform(node, transform)
-
-			const userData = {}
-			const exclude = ['name', 'title', 'uuid', 'transform', 'active']
-
-			Object.keys(data.parameters).forEach(key => {
-				if (!exclude.includes(key)) {
-					userData[key] = data.parameters[key]
-				}
-			})
-			userData.draggable = false
-			node.userData = userData
-
-			root.add(node)
-
-			resolve(node)
 		})
 	}
 	this.addAnchor = async function (data, root = null) {
@@ -211,7 +210,7 @@ function VerseLoader(editor) {
 			y: node.scale.y,
 			z: node.scale.z
 		};
-		const exclude = ['type']
+		const exclude = ['type', 'draggable']
 
 		Object.keys(node.userData).forEach(key => {
 			if (!exclude.includes(key)) {
@@ -261,7 +260,6 @@ function VerseLoader(editor) {
 
 	this.read = async function (root, data, resources, modules) {
 		root.uuid = data.parameters.uuid
-
 		if (data.children.anchors) {
 			data.children.anchors.forEach(async item => {
 				await self.addAnchor(item, root)
@@ -272,22 +270,29 @@ function VerseLoader(editor) {
 			data.children.metaKnights.forEach(async item => {
 
 				const meta = modules.get(item.parameters.id)
-				await self.addMetaKnight(item, root)
-				console.error(item)
-
-			})
-		}
-
-		if (data.children.metas) {
-			data.children.metas.forEach(async item => {
-				const meta = modules.get(item.parameters.id)
-				const node = await self.addMeta(item, root)
+				const node = self.addMetaKnight(item)
+				root.add(node)
 				editor.signals.sceneGraphChanged.dispatch()
+
 				await builder.readMeta(node, JSON.parse(meta.data), resources)
 				editor.signals.sceneGraphChanged.dispatch()
+				await this.addGizmo(node)
+				editor.signals.sceneGraphChanged.dispatch()
 
 			})
 		}
+		/*
+				if (data.children.metas) {
+					data.children.metas.forEach(async item => {
+						const meta = modules.get(item.parameters.id)
+						const node = self.addMeta(item, root)
+						root.add(node)
+						editor.signals.sceneGraphChanged.dispatch()
+						await builder.readMeta(node, JSON.parse(meta.data), resources)
+						editor.signals.sceneGraphChanged.dispatch()
+		
+					})
+				}*/
 		/*if (data.children) {
 			for (let i = 0; i < data.children.entities.length; ++i) {
 				if (data.children.entities[i] != null) {

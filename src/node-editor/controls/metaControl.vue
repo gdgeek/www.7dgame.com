@@ -47,7 +47,6 @@ export default {
     this.refresh()
 
     this.$on('setId', function (id) {
-      alert("@@")
       self.id = id
     })
   },

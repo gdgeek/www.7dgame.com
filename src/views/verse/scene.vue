@@ -107,6 +107,7 @@ export default {
                 data: verse.data,
                 saveable: this.saveable(verse.data)
               }
+              console.error(data)
               self.postMessage(data)
             }
             break

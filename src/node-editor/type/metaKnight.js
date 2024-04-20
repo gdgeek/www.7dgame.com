@@ -21,7 +21,7 @@ var MetaKnightType = {
     },
 
     {
-      type: 'knight',
+      type: 'model',
       title: '元数据',
       key: 'meta_id',
       hidden: false,
