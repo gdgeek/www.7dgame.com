@@ -1,6 +1,7 @@
 import * as THREE from 'three'
-
-import { SceneBuilder } from './SceneBuilder.js'
+import { MetaFactory } from './MetaFactory.js'
+//import { SceneBuilder } from './SceneBuilder.js'
+import { MetaFactory } from './MetaFactory.js';
 
 function MetaLoader(editor) {
 
@@ -17,8 +18,8 @@ function MetaLoader(editor) {
 	})
 
 
-	const builder = new SceneBuilder(editor)
-
+	//const builder = new SceneBuilder(editor)
+	const factory = new MetaFactory();
 
 	this.compareObjectsAndPrintDifferences = function (obj1, obj2, path = '', tolerance = 0.0001) {
 		if (obj1 == null || obj2 == null) {
@@ -176,7 +177,7 @@ function MetaLoader(editor) {
 			light3.name = "light3"
 			lights.add(light3);
 			scene.add(lights)
-			builder.lockNode(lights)
+			factory.lockNode(lights)
 			editor.signals.sceneGraphChanged.dispatch()
 		}
 
@@ -193,7 +194,7 @@ function MetaLoader(editor) {
 
 			root.uuid = data.parameters.uuid
 
-			await builder.readMeta(root, data, resources)
+			await factory.readMeta(root, data, resources)
 			editor.signals.sceneGraphChanged.dispatch()
 		}
 

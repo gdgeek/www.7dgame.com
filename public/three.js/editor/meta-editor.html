@@ -231,32 +231,23 @@
 		}
 
 		const loader = new MetaLoader(editor)
+
+
 		window.addEventListener('message', e => {
 
 			if (e.data.verify === 'mrpp.com') {
 				editor.signals.messageReceive.dispatch(e.data)
-				switch (e.data.action) {
-					case 'load':
-						loader.load(e.data.data)
-						console.error(e.data.data)
-						break
-					case 'reload':
-						loader.load(e.data.data)
-
-						break
-					case 'resource':
-						alert(JSON.stringify(e.data.data))
-
-						break
-				}
 			}
 		})
 
-		const data = {
+		editor.signals.messageReceive.add(async function (data) {
+			if (data.action == 'load') {
+				loader.load(data.data)
+			}
+		})
+		editor.signals.messageSend.dispatch({
 			action: 'ready'
-		}
-		editor.signals.messageSend.dispatch(data)
-		//window.parent.postMessage(data, '*')
+		})
 	</script>
 </body>
 

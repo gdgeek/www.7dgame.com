@@ -86,7 +86,6 @@
 		const editor = new Editor();
 		editor.type = 'verse';
 		editor.signals.messageSend.add(function (data) {
-			//	alert(JSON.stringify(data))
 			data.from = 'mrpp-editor';
 			data.verify = 'mrpp.com';
 			window.parent.postMessage(data, '*')
@@ -227,32 +226,21 @@
 			} catch (error) { }
 		}
 
-		const loader = new VerseLoader(editor)
 		window.addEventListener('message', e => {
-			const urlParams = new URLSearchParams(window.location.search)
-			const id = urlParams.get('id')
-
 			if (e.data.verify === 'mrpp.com') {
-				switch (e.data.action) {
-					case 'load':
-						loader.load(e.data.data)
-						break
-					case 'reload':
-						loader.load(e.data.data)
-
-						break
-				}
+				editor.signals.messageReceive.dispatch(e.data)
 			}
 		})
 
-		const data = {
-			from: 'mrpp-editor',
-			action: 'ready',
-			verse: JSON.stringify(self.verse)
-		}
-
-		window.parent.postMessage(data, '*')
-		///
+		const loader = new VerseLoader(editor)
+		editor.signals.messageReceive.add(async function (data) {
+			if (data.action == 'load') {
+				loader.load(data.data)
+			}
+		})
+		editor.signals.messageSend.dispatch({
+			action: 'ready'
+		})
 	</script>
 </body>
 

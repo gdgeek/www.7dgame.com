@@ -15,7 +15,7 @@
           @sort="sort"
         >
           <el-tag>
-            <b>选择资源</b>
+            <b>选择资源2</b>
           </el-tag>
         </mr-p-p-header>
         <el-divider content-position="left">

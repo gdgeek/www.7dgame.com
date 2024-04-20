@@ -1,11 +1,12 @@
 import * as THREE from 'three'
-import { SceneBuilder } from './SceneBuilder.js'
+//import { SceneBuilder } from './SceneBuilder.js'
 import { GLTFLoader } from '../../../examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
 import { VerseFactory } from './VerseFactory.js'
+import { MetaFactory } from './MetaFactory.js'
 function VerseLoader(editor) {
 
-	const types = ['Meta', 'Anchor', 'MetaKnight']
+	const types = ['Module']
 
 	editor.selector = function (object) {
 
@@ -17,107 +18,11 @@ function VerseLoader(editor) {
 	editor.signals.upload.add(function () {
 		self.save()
 	})
-	const factory = new VerseFactory();
-	const builder = new SceneBuilder(editor)
-
-	this.addMetaKnight = function (data) {
-
-		const node = new THREE.Group()
-		node.name = data.parameters.title
-
-		node.type = data.type;
-		node.uuid = data.parameters.uuid
-
-		const transform = data.parameters.transform
-		factory.setTransform(node, transform)
-
-		const userData = {}
-
-		const exclude = ['name', 'title', 'uuid', 'transform', 'active']
-
-		Object.keys(data.parameters).forEach(key => {
-			if (!exclude.includes(key)) {
-				userData[key] = data.parameters[key]
-			}
-		})
-
-		userData.draggable = false
-		node.userData = userData
-		return node;
-	}
-	//	await builder.readMeta(node, JSON.parse(meta.data), resources)
-	this.addMeta = function (data) {
-		const node = new THREE.Group()
-		node.name = data.parameters.title
-
-		node.type = data.type;
-		node.uuid = data.parameters.uuid
-
-		const transform = data.parameters.transform
-		factory.setTransform(node, transform)
-
-		const userData = {}
-		const exclude = ['name', 'title', 'uuid', 'transform', 'active']
-
-		Object.keys(data.parameters).forEach(key => {
-			if (!exclude.includes(key)) {
-				userData[key] = data.parameters[key]
-			}
-		})
-		userData.draggable = false
-		node.userData = userData
+	const factory = new MetaFactory();
+	//const metaFactory = new MetaFactory();
+	//const builder = new SceneBuilder(editor)
 
 
-		return node
-	}
-	this.addGizmo = async function (node) {
-
-		return new Promise(resolve => {
-			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
-			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
-				const mesh = gltf.scene;//.children[0]
-				mesh.scale.set(0.1, 0.1, 0.1)
-				mesh.rotation.set(Math.PI / 2, Math.PI / 2, 0)
-				factory.lockNode(gltf.scene)
-				node.add(gltf.scene)
-				resolve()
-			})
-		})
-	}
-	this.addAnchor = async function (data, root = null) {
-		return new Promise(resolve => {
-			const node = new THREE.Object3D()
-			node.name = data.parameters.title
-			node.uuid = data.parameters.uuid
-			node.type = data.type;
-			const userData = {}
-			const exclude = ['name', 'title', 'uuid', 'transform', 'active']
-
-			Object.keys(data.parameters).forEach(key => {
-				if (!exclude.includes(key)) {
-					userData[key] = data.parameters[key]
-				}
-			})
-			userData.draggable = false
-			node.userData = userData;
-
-			const transform = data.parameters.transform
-			factory.setTransform(node, transform)
-			if (root != null) {
-				root.add(node)
-			}
-			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
-			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
-				const mesh = gltf.scene;//.children[0]
-				mesh.scale.set(0.1, 0.1, 0.1)
-				mesh.rotation.set(Math.PI / 2, Math.PI / 2, 0)
-				factory.lockNode(gltf.scene)
-				node.add(gltf.scene)
-				console.error(node)
-				resolve(node)
-			})
-		})
-	}
 
 
 
@@ -237,11 +142,7 @@ function VerseLoader(editor) {
 
 			const nd = this.writeData(node)
 			if (nd != null) {
-				if (node.type == 'Anchor') {
-					anchors.push(nd)
-				} else if (node.type == 'Meta') {
-					metas.push(nd)
-				} else if (node.type == 'MetaKnight') {
+				if (node.type == 'Module') {
 					metaKnights.push(nd)
 				}
 			}
@@ -253,12 +154,12 @@ function VerseLoader(editor) {
 			//		entities.push(entity)
 			//	}
 		})
-		data.children = { metas, anchors, metaKnights }
+		data.children = { metaKnights }
 		console.error(data)
 		return data;
 	}
 
-	this.read = async function (root, data, resources, modules) {
+	this.read = async function (root, data, resources, metas) {
 		root.uuid = data.parameters.uuid
 		if (data.children.anchors) {
 			data.children.anchors.forEach(async item => {
@@ -269,44 +170,20 @@ function VerseLoader(editor) {
 		if (data.children.metaKnights) {
 			data.children.metaKnights.forEach(async item => {
 
-				const meta = modules.get(item.parameters.id)
-				const node = self.addMetaKnight(item)
+				const meta = metas.get(item.parameters.meta_id)
+				const node = factory.addModule(item)
 				root.add(node)
 				editor.signals.sceneGraphChanged.dispatch()
-
-				await builder.readMeta(node, JSON.parse(meta.data), resources)
+				if (meta) {
+					await factory.readMeta(node, JSON.parse(meta.data), resources)
+				}
 				editor.signals.sceneGraphChanged.dispatch()
-				await this.addGizmo(node)
+				await factory.addGizmo(node)
 				editor.signals.sceneGraphChanged.dispatch()
 
 			})
 		}
-		/*
-				if (data.children.metas) {
-					data.children.metas.forEach(async item => {
-						const meta = modules.get(item.parameters.id)
-						const node = self.addMeta(item, root)
-						root.add(node)
-						editor.signals.sceneGraphChanged.dispatch()
-						await builder.readMeta(node, JSON.parse(meta.data), resources)
-						editor.signals.sceneGraphChanged.dispatch()
-		
-					})
-				}*/
-		/*if (data.children) {
-			for (let i = 0; i < data.children.entities.length; ++i) {
-				if (data.children.entities[i] != null) {
-					const node = await builder.addEntity(
-						data.children.entities[i],
-						resources
-					)
-					if (node != null) {
-						root.add(node)
-						editor.signals.sceneGraphChanged.dispatch()
-					}
-				}
-			}
-		}*/
+
 	}
 	this.clear = async function () {
 		this.scene.clear()
@@ -338,7 +215,7 @@ function VerseLoader(editor) {
 			light3.name = "light3"
 			lights.add(light3);
 			scene.add(lights)
-			builder.lockNode(lights)
+			factory.lockNode(lights)
 			editor.signals.sceneGraphChanged.dispatch()
 		}
 
@@ -355,11 +232,12 @@ function VerseLoader(editor) {
 			verse.resources.forEach(item => {
 				resources.set(item.id, item)
 			})
-			const modules = new Map()
-			verse.modules.forEach(item => {
-				modules.set(item.id, item)
+			const metas = new Map()
+			console.error(verse)
+			verse.metas.forEach(item => {
+				metas.set(item.id, item)
 			})
-			await this.read(root, data, resources, modules)
+			await this.read(root, data, resources, metas)
 			const copy = await this.write(root);
 
 			self.compareObjectsAndPrintDifferences(data, copy)

@@ -1,5 +1,11 @@
 <template>
+
   <div class="verse-scene">
+    <knight-setup-dialog
+      @selected="select"
+      @cancel="cancel"
+      ref="knightSetup"
+    />
     <el-container>
       <el-main>
         <iframe
@@ -18,12 +24,16 @@
 var qs = require('querystringify')
 var path = require('path')
 
+import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
 import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import { putVerse } from '@/api/v1/verse'
 import { getVerse } from '@/api/e1/verse'
 export default {
   name: 'VerseScene',
+  components: {
+    KnightSetupDialog
+  },
   data() {
     const src = path.join(
       'three.js/editor',
@@ -76,6 +86,16 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
+    async select(data) {
+      
+      this.postMessage({
+        action: 'add-module',
+        data: data
+      })
+    },
+    cancel() { 
+      alert("cancel")
+    },
     postMessage(data) { 
       data.verify = 'mrpp.com';
       const iframe = document.getElementById('editor')
@@ -87,11 +107,23 @@ export default {
       }
       return this.$can('editable', new AbilityEditable(verse.editable))
     },
-    
+    addModule() { 
+
+      this.$refs.knightSetup.open()
+      this.$message({
+              type: 'info',
+              message: '添加模块'
+            })
+    },
     async handleMessage(e) {
       const self = this
       if (e.data.from === 'mrpp-editor') {
+        alert(e.data.action)
         switch (e.data.action) {
+          case 'add-module':
+            self.addModule();
+           
+           break
           case 'save-verse':
             self.saveVerse(e.data.data)
 

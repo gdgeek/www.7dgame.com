@@ -8,6 +8,70 @@ class MetaFactory extends Factory {
 	constructor() {
 		super()
 	}
+	async addGizmo(node) {
+
+		return new Promise(resolve => {
+			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
+			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
+				const mesh = gltf.scene;//.children[0]
+				mesh.scale.set(0.1, 0.1, 0.1)
+				mesh.rotation.set(Math.PI / 2, Math.PI / 2, 0)
+				this.lockNode(gltf.scene)
+				node.add(gltf.scene)
+				resolve()
+			})
+		})
+	}
+
+	addModule(data) {
+
+		const node = new THREE.Group()
+		node.name = data.parameters.title
+
+		node.type = data.type;
+		node.uuid = data.parameters.uuid
+
+		const transform = data.parameters.transform
+		this.setTransform(node, transform)
+
+		const userData = {}
+
+		const exclude = ['name', 'title', 'uuid', 'transform', 'active']
+
+		Object.keys(data.parameters).forEach(key => {
+			if (!exclude.includes(key)) {
+				userData[key] = data.parameters[key]
+			}
+		})
+
+		userData.draggable = false
+		node.userData = userData
+		return node;
+	}
+	async readMeta(root, data, resources, editor = null) {
+
+
+		if (data.children) {
+			for (let i = 0; i < data.children.entities.length; ++i) {
+				if (data.children.entities[i] != null) {
+					try {
+						const node = await this.building(data.children.entities[i], resources)
+
+						if (node != null) {
+							this.lockNode(node)
+							root.add(node)
+							if (editor != null) {
+								editor.signals.sceneGraphChanged.dispatch()
+							}
+						}
+					} catch (error) {
+						console.error(error)
+					}
+				}
+			}
+		}
+	}
+
 
 	async loadVoxel(url) {
 		return new Promise((resolve, reject) => {
@@ -102,6 +166,7 @@ class MetaFactory extends Factory {
 		const size = info.size
 		const width = data.parameters.width
 		const height = width * (size.y / size.x)
+		alert(JSON.stringify(resource))
 		const node = await this.getPlane(resource.image.url, width, height)
 
 		return node

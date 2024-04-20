@@ -53,6 +53,23 @@ class Builder {
 		}
 		return ret;
 	}
+	module(meta_id, title = 'Module') {
+		return {
+			type: 'Module',
+			children: {},
+			parameters: {
+				meta_id: meta_id,
+				title: title,
+				transform: {
+					position: { x: 0, y: 0, z: 0 },
+					scale: { x: 1, y: 1, z: 1 },
+					rotate: { x: 0, y: 0, z: 0 }
+				},
+				uuid: THREE.MathUtils.generateUUID(),
+				active: true,
+			}
+		}
+	}
 	anchor(title = 'Anchor') {
 		return {
 			type: 'Anchor',

@@ -8,40 +8,34 @@ class VerseFactory extends Factory {
 	constructor() {
 		super()
 	}
-	async addAnchor(data, root = null) {
-		return new Promise(resolve => {
-			const node = new THREE.Object3D()
-			node.name = data.parameters.title
-			node.uuid = data.parameters.uuid
-			node.type = data.type;
-			const userData = {}
-			const exclude = ['name', 'title', 'uuid', 'transform', 'active']
 
-			Object.keys(data.parameters).forEach(key => {
-				if (!exclude.includes(key)) {
-					userData[key] = data.parameters[key]
-				}
-			})
-			userData.draggable = false
-			node.userData = userData;
 
-			const transform = data.parameters.transform
-			this.setTransform(node, transform)
-			if (root != null) {
-				root.add(node)
+	addMetaKnight(data) {
+
+		const node = new THREE.Group()
+		node.name = data.parameters.title
+
+		node.type = data.type;
+		node.uuid = data.parameters.uuid
+
+		const transform = data.parameters.transform
+		this.setTransform(node, transform)
+
+		const userData = {}
+
+		const exclude = ['name', 'title', 'uuid', 'transform', 'active']
+
+		Object.keys(data.parameters).forEach(key => {
+			if (!exclude.includes(key)) {
+				userData[key] = data.parameters[key]
 			}
-			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
-			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
-				const mesh = gltf.scene;//.children[0]
-				mesh.scale.set(0.1, 0.1, 0.1)
-				mesh.rotation.set(Math.PI / 2, Math.PI / 2, 0)
-				this.lockNode(gltf.scene)
-				node.add(gltf.scene)
-				console.error(node)
-				resolve(node)
-			})
 		})
+
+		userData.draggable = false
+		node.userData = userData
+		return node;
 	}
+
 }
 
 export { VerseFactory }

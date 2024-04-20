@@ -9,6 +9,7 @@ import { Builder } from './mrpp/Builder.js'
 
 function MenubarAdd(editor) {
 
+	const factory = new MetaFactory();
 
 	const builder = new Builder();
 	const strings = editor.strings;
@@ -48,7 +49,6 @@ function MenubarAdd(editor) {
 		});
 
 
-		const factory = new MetaFactory();
 		option = new UIRow();
 		option.setClass('option');
 		option.setTextContent("节点");
@@ -117,39 +117,35 @@ function MenubarAdd(editor) {
 		options.add(option);
 
 	} else if (editor.type.toLowerCase() == 'verse') {
-		const factory = new VerseFactory();
+		//const factory = new VerseFactory();
 		editor.signals.messageReceive.add(async function (message) {
 
-			if (message.action === 'add-meta') {
-				alert(JSON.stringify(message.data))
+			if (message.action == 'add-module') {
+				const data = message.data;
+
+
+				console.error(data.resources)
+				data.resources.forEach(resource => {
+					resources.set(resource.id, resource)
+				})
+
+
+				const node = factory.addModule(builder.module(data.id))
+
+				await factory.readMeta(node, JSON.parse(data.data), resources, editor)
+				await factory.addGizmo(node)
+				editor.execute(new AddObjectCommand(editor, node));
 
 			}
+
 		});
-		option = new UIRow();
-		option.setClass('option');
-		option.setTextContent("锚点");
-		option.onClick(async function () {
-			const data = builder.anchor();
-			const node = await factory.addAnchor(data);
-			editor.execute(new AddObjectCommand(editor, node));
-
-		}.bind(this));
-		options.add(option);
-
-		option = new UIRow();
-		option.setClass('option');
-		option.setTextContent("Meta");
-		option.onClick(async function () {
-			editor.signals.messageSend.dispatch({ action: 'add-meta' });
-		});
-		options.add(option);
 
 
 		option = new UIRow();
 		option.setClass('option');
-		option.setTextContent("Knight");
+		option.setTextContent("Module");
 		option.onClick(async function () {
-			editor.signals.messageSend.dispatch({ action: 'add-knight' });
+			editor.signals.messageSend.dispatch({ action: 'add-module' });
 		});
 		options.add(option);
 	}

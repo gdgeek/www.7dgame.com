@@ -1,30 +1,12 @@
 import * as THREE from 'three'
-
+/*
 import { MetaFactory } from './MetaFactory.js'
 class SceneBuilder {
 	constructor(editor) {
 		this.editor = editor
 		this.factory = new MetaFactory()
 	}
-	/*
-		async read(root, data, resources) {
-			root.uuid = data.parameters.uuid
-			if (data.children) {
-				for (let i = 0; i < data.children.entities.length; ++i) {
-					if (data.children.entities[i] != null) {
-						const node = await this.factory.building(
-							data.children.entities[i],
-							resources
-						)
-						if (node != null) {
-							root.add(node)
-							this.editor.signals.sceneGraphChanged.dispatch()
-						}
-					}
-				}
-			}
-		}
-	*/
+
 	async readMeta(root, data, resources) {
 
 
@@ -160,3 +142,4 @@ class SceneBuilder {
 
 
 export { SceneBuilder }
+*/
