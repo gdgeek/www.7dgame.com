@@ -153,7 +153,7 @@ export default {
       this.verse.metaKnights,
       item => {
         return {
-          type: 'MetaKnight',
+          type: 'Module',
           parameters: {
             uuid: item.uuid,
             id: item.id,

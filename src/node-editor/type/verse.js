@@ -26,21 +26,10 @@ var VerseType = {
     }
   ],
   inputs: [
-    {
-      key: 'anchors',
-      title: 'Anchor',
-      socket: AnchorSocket,
-      multiConns: true
-    },
-    {
-      key: 'metas',
-      title: 'Meta',
-      socket: MetaSocket,
-      multiConns: true
-    },
+
     {
       key: 'metaKnights',
-      title: 'MetaKnight',
+      title: 'Module',
       socket: MetaKnightSocket,
       multiConns: true
     }

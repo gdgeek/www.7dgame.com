@@ -1,7 +1,7 @@
 import { MetaKnightSocket } from '@/node-editor/sockets/sockets'
 
 var MetaKnightType = {
-  title: 'MetaKnight',
+  title: 'Module',
   controls: [
     {
       type: 'uuid',
@@ -37,7 +37,7 @@ var MetaKnightType = {
   outputs: [
     {
       key: 'out',
-      title: 'MetaKnight',
+      title: 'Module',
       socket: MetaKnightSocket,
       multiConns: false
     }

@@ -9,7 +9,7 @@ import AutoArrangePlugin from 'rete-auto-arrange-plugin'
 import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
 import BanPlugin from '@/node-editor/plugins/ban'
-import KnightPlugin from '@/node-editor/plugins/knight'
+import ModulePlugin from '@/node-editor/plugins/module'
 import MetaKnightPlugin from '@/node-editor/plugins/metaKnight'
 
 import MetaPlugin from '@/node-editor/plugins/meta.js'
@@ -18,8 +18,7 @@ import { Component } from '@/node-editor/components/Component'
 import {
   Meta,
   Verse,
-  Knight,
-  Anchor,
+  _Module,
   MetaKnight
 } from '@/node-editor/type/verseEditor'
 import { Build } from '@/node-editor/factory'
@@ -283,7 +282,7 @@ const ban = function () {
   editor_.use(BanPlugin)
 }
 const initVerse = async function ({ container, verseId, root }) {
-  const types = [Meta, Verse, Knight, Anchor, MetaKnight]
+  const types = [Verse, _Module, MetaKnight]
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
   editor_.silent = true
   editor_.use(ConnectionPlugin)
@@ -293,7 +292,7 @@ const initVerse = async function ({ container, verseId, root }) {
     nodeItems: { Clone: false },
     delay: 100,
     allocate(component) {
-      if (component.type_.title === 'MetaKnight') {
+      if (component.type_.title === 'Module') {
         return null
       }
 
@@ -309,28 +308,17 @@ const initVerse = async function ({ container, verseId, root }) {
   editor_.use(AreaPlugin)
   editor_.use(LimitPlugin, [{ name: 'Verse', max: 1, min: 1 }])
 
-  editor_.use(MetaPlugin, { verseId, root })
-  editor_.use(KnightPlugin, { root })
+  editor_.use(ModulePlugin, { root })
   editor_.use(MetaKnightPlugin, { verseId, root })
 
   editor_.use(AlwaysConnectionPlugin, [
     {
-      output: { name: 'Meta', socket: 'out' },
-      input: { name: 'Verse', socket: 'metas' }
-    },
-    {
-      output: { name: 'MetaKnight', socket: 'out' },
+      output: { name: 'Module', socket: 'out' },
       input: { name: 'Verse', socket: 'metaKnights' }
     },
-    {
-      output: { name: 'Anchor', socket: 'out' },
-      input: { name: 'Verse', socket: 'anchors' }
-    }
   ])
   editor_.use(RandomStringPlugin, [
-    { component: 'Meta', target: 'title' },
-    { component: 'MetaKnight', target: 'title' },
-    { component: 'Anchor', target: 'title' }
+    { component: 'Module', target: 'title' }
   ])
 
   engine_ = new Rete.Engine('MrPP@0.1.0')
@@ -354,7 +342,7 @@ const initVerse = async function ({ container, verseId, root }) {
 
 const addMetaKnight = function (parameters) {
   return new Promise((resolve, reject) => {
-    const component = editor_.getComponent('MetaKnight')
+    const component = editor_.getComponent('Module')
 
     component
       .createNode(parameters)

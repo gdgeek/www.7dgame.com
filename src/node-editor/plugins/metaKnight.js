@@ -8,7 +8,7 @@ import { postMetaKnight, deleteMetaKnight } from '@/api/v1/meta-knight'
 import { v4 as uuidv4 } from 'uuid'
 function install(editor, options) {
   editor.on('noderemove', component => {
-    if (component.name !== 'MetaKnight' || editor.silent) {
+    if (component.name !== 'Module' || editor.silent) {
       return true
     }
     const id = component.data['id']
@@ -30,7 +30,7 @@ function install(editor, options) {
   })
 
   editor.on('nodecreate', component => {
-    if (component.name !== 'MetaKnight') {
+    if (component.name !== 'Module') {
       return true
     }
     let id = component.data['id']

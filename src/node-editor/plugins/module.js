@@ -10,7 +10,8 @@ import { postMetaKnight, deleteMetaKnight } from '@/api/v1/meta-knight'
 import { v4 as uuidv4 } from 'uuid'
 function install(editor, options) {
   editor.on('nodecreate', component => {
-    if (component.name !== 'Knight') {
+    console.error(component)
+    if (component.name !== 'Module ') {
       return true
     } else if (!editor.silent) {
       options.root.createMetaKnight()
@@ -19,6 +20,6 @@ function install(editor, options) {
   })
 }
 export default {
-  name: 'rete-knight',
+  name: 'rete-module',
   install: install
 }
