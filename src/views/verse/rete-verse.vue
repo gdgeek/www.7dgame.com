@@ -101,7 +101,7 @@ export default {
       root: this
     })
 
-    const response = await getVerse(this.id, 'metas, metaKnights,share')
+    const response = await getVerse(this.id, 'metaKnights,share')
 
     this.verse = response.data
     if (this.verse.data == null) {
@@ -121,53 +121,10 @@ export default {
     }
 
     const data = JSON.parse(this.verse.data)
-    console.error(data)
-    if (!data.children.metas) {
-      data.children.metas = []
-    }
-    data.children.metas = this.supplyMetas(
-      data.children.metas,
-      this.verse.metas,
-      item => {
-        return {
-          type: 'Meta',
-          parameters: {
-            uuid: item.uuid,
-            id: item.id,
-            title: randomWords(),
-            transform: {
-              position: { x: 0, y: 0, z: 0 },
-              rotate: { x: 0, y: 0, z: 0 },
-              scale: { x: 1, y: 1, z: 1 }
-            }
-          }
-        }
-      }
-      // this.verse.metaKnights
-    )
+   
     if (!data.children.metaKnights) {
       data.children.metaKnights = []
     }
-    data.children.metaKnights = this.supplyMetas(
-      data.children.metaKnights,
-      this.verse.metaKnights,
-      item => {
-        return {
-          type: 'Module',
-          parameters: {
-            uuid: item.uuid,
-            id: item.id,
-            meta: item.meta_id,
-            title: randomWords(),
-            transform: {
-              position: { x: 0, y: 0, z: 0 },
-              rotate: { x: 0, y: 0, z: 0 },
-              scale: { x: 1, y: 1, z: 1 }
-            }
-          }
-        }
-      }
-    )
     //初始化数据
     await editor.setup(data)
     await this.slots(data)
@@ -225,38 +182,6 @@ export default {
     },
     createMetaKnight() {
       this.$refs.knightSetup.open()
-    },
-    supplyMetas(children, nodes, creater) {
-      const ret = children.filter(function (item) {
-        if (item) {
-          if (
-            nodes.find(m => {
-              return m.id === item.parameters.id
-            })
-          ) {
-            return true
-          }
-        }
-
-        return false
-      })
-
-      const supply = nodes.filter(function (item) {
-        if (
-          item &&
-          children.find(m => {
-            return m && m.parameters.id == item.id
-          })
-        ) {
-          return false
-        }
-        return true
-      })
-      supply.forEach(item => {
-        ret.push(creater(item))
-      })
-
-      return ret
     },
     clearSpace() {
       this.space.callback = null

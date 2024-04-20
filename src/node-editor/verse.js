@@ -10,7 +10,7 @@ import ContextMenuPlugin from 'rete-context-menu-plugin'
 import LimitPlugin from '@/node-editor/plugins/limit'
 import BanPlugin from '@/node-editor/plugins/ban'
 import ModulePlugin from '@/node-editor/plugins/module'
-import MetaKnightPlugin from '@/node-editor/plugins/metaKnight'
+//import MetaKnightPlugin from '@/node-editor/plugins/metaKnight'
 
 import MetaPlugin from '@/node-editor/plugins/meta.js'
 import AlwaysConnectionPlugin from '@/node-editor/plugins/alwaysConnection'
@@ -282,7 +282,7 @@ const ban = function () {
   editor_.use(BanPlugin)
 }
 const initVerse = async function ({ container, verseId, root }) {
-  const types = [Verse, _Module, MetaKnight]
+  const types = [Verse, Meta, _Module, MetaKnight]
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
   editor_.silent = true
   editor_.use(ConnectionPlugin)
@@ -309,7 +309,8 @@ const initVerse = async function ({ container, verseId, root }) {
   editor_.use(LimitPlugin, [{ name: 'Verse', max: 1, min: 1 }])
 
   editor_.use(ModulePlugin, { root })
-  editor_.use(MetaKnightPlugin, { verseId, root })
+  editor_.use(MetaPlugin, { root })
+  //editor_.use(MetaKnightPlugin, { verseId, root })
 
   editor_.use(AlwaysConnectionPlugin, [
     {

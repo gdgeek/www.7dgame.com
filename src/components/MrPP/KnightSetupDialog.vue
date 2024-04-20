@@ -15,8 +15,9 @@
           @sort="sort"
         >
           <el-tag>
-            <b>选择资源2</b>
+            <b>选择元数据</b>
           </el-tag>
+            
         </mr-p-p-header>
         <el-divider content-position="left">
           <el-tag
@@ -82,6 +83,9 @@
           </el-col>
           <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
             <el-button-group>
+              <el-button type="success" size="mini" @click="create">
+                新 建
+              </el-button>
               <el-button size="mini" @click="dialogVisible = false">
                 取 消
               </el-button>
@@ -96,7 +100,9 @@
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 
-import { getMetas } from '@/api/v1/meta'
+import { v4 as uuidv4 } from 'uuid'
+
+import { getMetas, postMeta } from '@/api/v1/meta'
 import {
   getVerseKnights,
   postVerseKnight,
@@ -193,6 +199,18 @@ export default {
     selected(data = null) {
       this.$emit('selected', data)
       this.dialogVisible = false
+    },
+    create() {
+      postMeta({
+        verse_id: 0,
+        type: 'custom',
+        uuid: uuidv4()
+      }).then(response => {
+        console.error(response.data)
+        this.selected(response.data)
+      //  this.$emit('create', response.data)
+        this.dialogVisible = false
+      })
     },
     cancel() {
       this.$emit('cancel')

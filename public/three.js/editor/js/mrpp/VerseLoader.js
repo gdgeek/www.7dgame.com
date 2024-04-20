@@ -174,7 +174,8 @@ function VerseLoader(editor) {
 				const node = factory.addModule(item)
 				root.add(node)
 				editor.signals.sceneGraphChanged.dispatch()
-				if (meta) {
+				alert(meta)
+				if (meta && meta.data) {
 					await factory.readMeta(node, JSON.parse(meta.data), resources)
 				}
 				editor.signals.sceneGraphChanged.dispatch()

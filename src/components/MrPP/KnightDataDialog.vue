@@ -63,6 +63,7 @@ export default {
       })*/
     },
     async open(id, schema) {
+      alert(1)
       this.id = id
       this.schema = schema
       const response = await getMetaKnight(id)
