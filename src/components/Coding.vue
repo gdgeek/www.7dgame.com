@@ -106,9 +106,10 @@ export default {
         input: [],
         output: []
       }
-      ret.input = meta.event_node.inputs
-      ret.output = meta.event_node.outputs
-
+      if (meta.event_node) { 
+        ret.input = meta.event_node.inputs
+        ret.output = meta.event_node.outputs
+      }
       this.addMetaData(data, ret)
       return ret
     },

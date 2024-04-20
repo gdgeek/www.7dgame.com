@@ -72,7 +72,6 @@ export default {
 
   methods: {
     click() {
-      alert(123)
       this.root.metaForm({
         
         id: this.id,

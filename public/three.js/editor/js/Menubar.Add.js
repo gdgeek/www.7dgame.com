@@ -131,7 +131,7 @@ function MenubarAdd(editor) {
 
 
 				const node = factory.addModule(builder.module(data.id))
-				alert(data)
+
 				if (data && data.data) {
 					await factory.readMeta(node, JSON.parse(data.data), resources, editor)
 				}

@@ -58,7 +58,7 @@ class MetaFactory extends Factory {
 						const node = await this.building(data.children.entities[i], resources)
 
 						if (node != null) {
-							this.lockNode(node)
+							//this.lockNode(node)
 							root.add(node)
 							if (editor != null) {
 								editor.signals.sceneGraphChanged.dispatch()
@@ -166,7 +166,6 @@ class MetaFactory extends Factory {
 		const size = info.size
 		const width = data.parameters.width
 		const height = width * (size.y / size.x)
-		alert(JSON.stringify(resource))
 		const node = await this.getPlane(resource.image.url, width, height)
 
 		return node

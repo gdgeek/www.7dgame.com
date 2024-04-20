@@ -2,7 +2,7 @@ import { UITabbedPanel, UISpan } from './libs/ui.js'
 
 import { SidebarScene } from './Sidebar.Scene.js'
 import { SidebarProperties } from './Sidebar.Properties.js'
-//import { SidebarScript } from './Sidebar.Script.js'
+import { SidebarMeta } from './Sidebar.Meta.js'
 import { SidebarComponent } from './Sidebar.Component.js'
 import { SidebarAnimation } from './Sidebar.Animation.js'
 import { SidebarProject } from './Sidebar.Project.js'
@@ -17,10 +17,14 @@ function Sidebar(editor) {
 	const scene = new UISpan().add(
 		new SidebarScene(editor),
 		new SidebarProperties(editor),
-		new SidebarAnimation(editor),
-		//new SidebarScript(editor),
-		new SidebarComponent(editor)
+		new SidebarAnimation(editor)
 	)
+
+	if (editor.type.toLowerCase() == 'meta') {
+		scene.add(new SidebarComponent(editor))
+	} else if (editor.type.toLowerCase() == 'verse') {
+		scene.add(new SidebarMeta(editor))
+	}
 	const project = new SidebarProject(editor)
 	const settings = new SidebarSettings(editor)
 

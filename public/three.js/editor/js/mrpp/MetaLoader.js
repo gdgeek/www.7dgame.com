@@ -1,8 +1,6 @@
 import * as THREE from 'three'
 import { MetaFactory } from './MetaFactory.js'
 //import { SceneBuilder } from './SceneBuilder.js'
-import { MetaFactory } from './MetaFactory.js';
-
 function MetaLoader(editor) {
 
 	editor.selector = function (object) {

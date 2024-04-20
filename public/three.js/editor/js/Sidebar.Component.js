@@ -76,9 +76,8 @@ function SidebarComponent(editor) {
 
 			const newComponent = new UIButton('new');
 			newComponent.onClick(function () {
-				alert(select.getValue())
 				const component = ComponentContainer.Create(select.getValue());
-				alert(component)
+
 				if (component != undefined) {
 					const command = new AddComponentCommand(editor, editor.selected, component);
 					editor.execute(command);
