@@ -2,7 +2,7 @@
 
   <div class="verse-scene">
     <knight-setup-dialog
-      @selected="select"
+      @selected="selected"
       @cancel="cancel"
       ref="knightSetup"
     />
@@ -86,8 +86,8 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-    async select(data) {
-      
+    async selected(data) {
+      alert(JSON.stringify(data))
       this.postMessage({
         action: 'add-module',
         data: data

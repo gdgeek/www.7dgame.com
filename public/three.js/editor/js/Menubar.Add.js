@@ -122,9 +122,9 @@ function MenubarAdd(editor) {
 
 			if (message.action == 'add-module') {
 				const data = message.data;
+				alert(data)
 
-
-				console.error(data.resources)
+				console.error(data)
 				data.resources.forEach(resource => {
 					resources.set(resource.id, resource)
 				})
@@ -132,6 +132,7 @@ function MenubarAdd(editor) {
 
 				const node = factory.addModule(builder.module(data.id))
 
+				node.userData.data = JSON.stringify({})
 				if (data && data.data) {
 					await factory.readMeta(node, JSON.parse(data.data), resources, editor)
 				}

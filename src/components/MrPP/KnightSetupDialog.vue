@@ -202,8 +202,8 @@ export default {
     },
     create() {
       postMeta({
-        verse_id: 0,
-        type: 'custom',
+        title: '新建元数据',
+        custom: 1,
         uuid: uuidv4()
       }).then(response => {
         console.error(response.data)

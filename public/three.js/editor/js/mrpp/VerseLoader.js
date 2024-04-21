@@ -171,14 +171,16 @@ function VerseLoader(editor) {
 			data.children.metaKnights.forEach(async item => {
 
 				const meta = metas.get(item.parameters.meta_id)
-				alert(meta.type)
+
 				const node = factory.addModule(item)
+				//node.userData.custom = meta.custom
 				root.add(node)
 				editor.signals.sceneGraphChanged.dispatch()
-				if (meta && meta.data) {
+				if (meta && meta.data && meta.custom != 0) {
 					await factory.readMeta(node, JSON.parse(meta.data), resources)
+					editor.signals.sceneGraphChanged.dispatch()
 				}
-				editor.signals.sceneGraphChanged.dispatch()
+
 				await factory.addGizmo(node)
 				editor.signals.sceneGraphChanged.dispatch()
 
