@@ -92,6 +92,7 @@
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 
+import { v4 as uuidv4 } from 'uuid'
 import { getMetas, postMeta } from '@/api/v1/meta'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
@@ -137,14 +138,13 @@ export default {
 
         const data = {
           title: input.value,
-          type: 'custom',
-          content: '{}',
-          verse_id: -1,
-          image: null
+          custom: true,
+          uuid:uuidv4()
         }
         const response = await postMeta(data)
         await this.editKnight(response.data.id)
       } catch (e) {
+        console.error()
         this.$message({
           type: 'info',
           message: '取消输入'

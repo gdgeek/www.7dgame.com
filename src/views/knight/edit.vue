@@ -32,11 +32,15 @@
         </el-card>
         <br />
         <el-form ref="item" v-if="item" :model="item" label-width="80px">
-          <el-form-item label="元数据名称">
+         
+          <el-form-item label="名称">
             <el-input v-model="item.title"></el-input>
           </el-form-item>
           <el-form-item label="类型">
-            <el-input v-model="item.type"></el-input>
+            <el-checkbox-group v-model="custom">
+              <el-checkbox label="本地定制"></el-checkbox>
+            </el-checkbox-group>
+          
           </el-form-item>
         
           <el-form-item
@@ -61,8 +65,11 @@
               &nbsp;
             </span>
           </el-form-item>
-          <el-form-item label="数据">
+          <el-form-item v-if="!custom" label="数据">
             <el-input type="textarea" v-model="item.data"></el-input>
+          </el-form-item>
+          <el-form-item v-else label="编辑">
+            <el-link type="primary" @click="editor()" target="_blank">进入编辑器</el-link>
           </el-form-item>
           <el-form-item label="信息">
             <el-input type="textarea" v-model="item.info"></el-input>
@@ -119,6 +126,15 @@ export default {
     ResourceDialog
   },
   computed: {
+    custom: {
+      get() {
+        return this.item.custom != 0
+      },
+      set(value) {
+        this.item.custom = value?1:0
+      }
+    },
+    
     events() {
       if (this.item) {
         return JSON.parse(this.item.events)
@@ -137,6 +153,12 @@ export default {
     this.refresh()
   },
   methods: {
+    editor() { 
+      this.$router.push({
+        path: '/meta/scene',
+        query: { id: this.id, title: this.item.title }
+      })
+    },
     openResources(
       { value, callback, type } = { value: null, callback: null, type: null }
     ) {
@@ -144,6 +166,7 @@ export default {
     },
     async selectResources(data) {
       this.item.image_id = data.image_id
+      alert(this.id)
       await putMeta(this.id, this.item)
 
       this.$message({
@@ -173,6 +196,11 @@ export default {
       this.item = response.data
     },
     async onSubmit() {
+      if (this.item.custom) {
+        this.item.custom = 1
+      } else {
+        this.item.custom = 0
+      }
       await putMeta(this.id, this.item)
       this.$message({
         message: '保存成功',
