@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     async saveVerse(verse) {
-      await putVerse(this.id, { data: verse }).then(response => {
+      await putVerse(this.id, {type:'custom', data: verse }).then(response => {
         this.$message({
           type: 'success',
           message: '保存成功!!'

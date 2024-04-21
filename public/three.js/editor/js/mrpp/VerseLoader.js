@@ -171,6 +171,7 @@ function VerseLoader(editor) {
 			data.children.metaKnights.forEach(async item => {
 
 				const meta = metas.get(item.parameters.meta_id)
+				alert(meta.type)
 				const node = factory.addModule(item)
 				root.add(node)
 				editor.signals.sceneGraphChanged.dispatch()

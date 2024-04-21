@@ -18,7 +18,7 @@
           <div slot="header">
             <i class="el-icon-edit"></i>
 
-            <b id="title">【骑士】名称：</b>
+            <b id="title">【元数据】名称：</b>
             <span>{{ item.title }}</span>
           </div>
 
@@ -32,7 +32,7 @@
         </el-card>
         <br />
         <el-form ref="item" v-if="item" :model="item" label-width="80px">
-          <el-form-item label="骑士名称">
+          <el-form-item label="元数据名称">
             <el-input v-model="item.title"></el-input>
           </el-form-item>
           <el-form-item label="类型">
@@ -89,7 +89,7 @@
       <el-col :sm="8">
         <el-card class="box-card">
           <div slot="header">
-            <b>【骑士】信息</b>
+            <b>【元数据】信息</b>
           </div>
           <div class="box-item">{{ item }}</div>
 

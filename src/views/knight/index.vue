@@ -12,10 +12,10 @@
           @sort="sort"
         >
           <el-button-group :inline="true">
-            <el-button size="mini" type="primary" @click="addKnight()">
+            <el-button size="mini" type="primary" @click="addMeta()">
               <font-awesome-icon icon="plus" />
               &nbsp;
-              <span class="hidden-sm-and-down">创建【骑士】</span>
+              <span class="hidden-sm-and-down">创建【元数据】</span>
             </el-button>
           </el-button-group>
         </mr-p-p-header>
@@ -113,31 +113,33 @@ export default {
       this.searched = value
       this.refresh()
     },
-    async addKnight() {
+    async addMeta() {
       try {
-        const input = await this.$prompt('请输骑士名称', '提示(3-20个字符)', {
+        const input = await this.$prompt('请输元数据名称', '提示(3-20个字符)', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           inputValidator: value => {
             if (!value) {
-              return '骑士名称不能为空'
+              return '元数据名称不能为空'
             }
             if (value.length < 2) {
-              return '骑士名称不能小于2个字符'
+              return '元数据名称不能小于2个字符'
             }
             if (value.length > 20) {
-              return '骑士名称不能大于20个字符'
+              return '元数据名称不能大于20个字符'
             }
           }
         })
         this.$message({
           type: 'success',
-          message: '骑士名称是: ' + input.value
+          message: '元数据名称是: ' + input.value
         })
 
         const data = {
           title: input.value,
+          type: 'custom',
           content: '{}',
+          verse_id: -1,
           image: null
         }
         const response = await postMeta(data)

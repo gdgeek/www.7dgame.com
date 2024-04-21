@@ -46,20 +46,20 @@ export const constantRoutes = [
       {
         path: 'knight',
         name: 'Knight',
-        meta: { title: '骑士' },
+        meta: { title: '元数据' },
         redirect: '/knight/index',
         component: Empty,
         children: [
           {
             path: 'index',
             name: 'KnightIndex',
-            meta: { title: '骑士列表' },
+            meta: { title: '元数据列表' },
             component: () => import('@/views/knight/index')
           },
           {
             path: 'edit',
             name: 'KnightEdit',
-            meta: { title: '骑士编辑' },
+            meta: { title: '元数据编辑' },
             component: () => import('@/views/knight/edit')
           }
         ]

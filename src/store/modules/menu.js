@@ -40,7 +40,7 @@ const state = {
       ]
     },
     {
-      label: '骑士',
+      label: '元数据',
       url: '/knight/',
       icon: 'star',
       items: [

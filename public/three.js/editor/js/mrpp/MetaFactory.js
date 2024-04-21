@@ -27,7 +27,7 @@ class MetaFactory extends Factory {
 
 		const node = new THREE.Group()
 		node.name = data.parameters.title
-
+		console.error(data)
 		node.type = data.type;
 		node.uuid = data.parameters.uuid
 
@@ -272,6 +272,7 @@ class MetaFactory extends Factory {
 
 		Object.keys(data.parameters).forEach(key => {
 			if (!exclude.includes(key)) {
+
 				userData[key] = data.parameters[key]
 			}
 		})
