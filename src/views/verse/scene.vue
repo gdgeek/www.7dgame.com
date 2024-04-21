@@ -118,15 +118,12 @@ export default {
    
       const self = this
       if (e.data.from === 'mrpp-editor') {
-        alert(e.data.action)
         switch (e.data.action) {
           case 'edit-meta':
-            alert(e.data.data.id)
             this.$router.push({
               path: '/meta/scene',
               query: { id: e.data.data.id, title: 'test' }
             })
-            alert("??")
             break
           case 'add-module':
             self.addModule();

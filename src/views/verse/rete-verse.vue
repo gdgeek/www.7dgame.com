@@ -175,10 +175,9 @@ export default {
     knightDataSubmit(data) {
       console.error(data)
     },
-    metaForm({ id, schema }) {
-      console.error(id)
-
-      this.$refs.knightData.open(id, JSON.parse(schema))
+    metaForm(params) {
+    
+      this.$refs.knightData.open(params)
     },
     createMetaKnight() {
       this.$refs.knightSetup.open()
@@ -317,6 +316,8 @@ export default {
     },
 
     async slots(data) {
+
+      return false;
       for (let i = 0; i < data.children.metas.length; ++i) {
         const node = data.children.metas[i]
 

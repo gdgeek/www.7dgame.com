@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-form :hidden="hidden" :inline="true" size="mini">
-      <el-form-item class="el-form-item" :inline="true" :label="data.title">
+    <el-form  :hidden="hidden" :inline="true" size="mini">
+      <el-form-item v-if="item" class="el-form-item" :inline="true" :label="data.title">
         <el-popover
           placement="top-start"
           :title="title"
@@ -13,12 +13,16 @@
             :src="image"
             fit="contain"
           ></el-image>
-          <el-tag slot="reference">{{ title }}</el-tag>
+          
+          <el-tag @click="setup()"  slot="reference">【{{ title }}】</el-tag>
         </el-popover>
-
-        <el-button size="small" @click="click()" v-if="item && item.schema">
-          数据输入
-        </el-button>
+          <el-button size="small" @click="edit()" v-if="custom">
+            编辑
+          </el-button>
+          <el-button size="small" @click="input()" v-else>
+            输入
+          </el-button>
+       
       </el-form-item>
     </el-form>
   </div>
@@ -27,7 +31,7 @@
 <script>
 import { getMeta } from '@/api/v1/meta'
 export default {
-  props: ['data', 'emitter', 'root', 'getData', 'putData'],
+  props: ['data', 'emitter', 'root', 'getData', 'putData','node'],
 
   data() {
     return {
@@ -37,6 +41,9 @@ export default {
     }
   },
   computed: {
+    custom() { 
+      return this.item.custom != 0 
+    },
     hidden() {
       if (typeof this.data.hidden !== 'undefined' && this.data.hidden) {
         return true
@@ -50,7 +57,8 @@ export default {
       return this.item.title
     },
     image() {
-      if (this.item === null) {
+      return null;
+      if (this.item === null && this.item.image === null) {
         return '{空}'
       }
       return this.item.image.url
@@ -71,11 +79,39 @@ export default {
   },
 
   methods: {
-    click() {
+    setup() { 
+
+      this.root.$router.push({
+        path: '/knight/edit',
+        query: {
+          id: this.value
+        }
+      })
+      
+    },
+    edit() { 
+
+      this.root.$router.push({
+        path: '/meta/scene',
+        query: {
+          id: this.value
+        }
+      })
+    },
+    input() {
+      let  data = {}
+      try {
+        data = JSON.parse(this.getData('data'))
+      } catch {
+        data = {}
+      }
+   
       this.root.metaForm({
-        
-        id: this.id,
-        schema: this.item.schema
+        schema: JSON.parse(this.item.data),
+        data:data,
+        callback: (data) => {
+          this.node.controls.get('data').setValue(JSON.stringify(data))
+        }
       })
     },
     refresh() {
@@ -84,6 +120,7 @@ export default {
           expand: 'image, author'
         }).then(response => {
           this.item = response.data
+          console.error("this.item")
           console.error(this.item)
         })
       }

@@ -166,7 +166,7 @@ export default {
     },
     async selectResources(data) {
       this.item.image_id = data.image_id
-      alert(this.id)
+     // alert(this.id)
       await putMeta(this.id, this.item)
 
       this.$message({

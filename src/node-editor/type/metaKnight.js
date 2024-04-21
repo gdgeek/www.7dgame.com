@@ -21,10 +21,17 @@ var MetaKnightType = {
     },
 
     {
-      type: 'model',
+      type: 'module',
       title: '元数据',
       key: 'meta_id',
       hidden: false,
+      readonly: true
+    },
+    {
+      type: 'string',
+      title: '数据',
+      key: 'data',
+      hidden: true,
       readonly: true
     },
     {

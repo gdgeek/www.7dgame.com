@@ -57,12 +57,14 @@
                     </el-card>
                   </div>
                   <div class="clearfix">
-                    <router-link
-                      slot="enter"
-                      :to="'/knight/edit?id=' + item.id"
-                    >
-                      <el-button type="primary" size="mini">编辑</el-button>
-                    </router-link>
+                      <el-button-group style="float: right" :inline="true">
+                   
+
+                        <el-button @click="editor(item.id)"  size="mini"> <i class="el-icon-edit" />编辑</el-button>
+                     
+                        <el-button @click="del(item.id)" size="mini"> <i class="el-icon-delete" />删除</el-button>
+                      </el-button-group>
+                  
                   </div>
                   <div class="bottom clearfix" />
                 </el-card>
@@ -93,7 +95,7 @@
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 
 import { v4 as uuidv4 } from 'uuid'
-import { getMetas, postMeta } from '@/api/v1/meta'
+import { getMetas, postMeta, deleteMeta } from '@/api/v1/meta'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
   name: 'KnightIndex',
@@ -106,6 +108,53 @@ export default {
     this.refresh()
   },
   methods: {
+    editor: function (id) {
+      this.$router.push({ path: '/knight/edit', query: { id } })
+    },
+    /*
+     async del(id) {
+      try {
+        await this.$confirm('此操作将永久删除该脚本, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        const response = await delVerseScripts(id)
+
+        await this.refresh()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      } catch (e) {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      }
+    }, */
+    async del(id) {
+      try {
+        await this.$confirm('此操作将永久删除该【元数据】, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        await deleteMeta(id)
+
+        await this.refresh()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      } catch (e) {
+        console.error(e)
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      }
+    },
     sort: function (value) {
       this.sorted = value
       this.refresh()

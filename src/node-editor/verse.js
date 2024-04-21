@@ -282,7 +282,7 @@ const ban = function () {
   editor_.use(BanPlugin)
 }
 const initVerse = async function ({ container, verseId, root }) {
-  const types = [Verse, Meta, _Module, MetaKnight]
+  const types = [Verse, _Module, MetaKnight]
   editor_ = new Rete.NodeEditor('MrPP@0.1.0', container)
   editor_.silent = true
   editor_.use(ConnectionPlugin)
