@@ -59,7 +59,7 @@ export const constantRoutes = [
           {
             path: 'edit',
             name: 'KnightEdit',
-            meta: { title: '元数据编辑' },
+            meta: { title: '编辑' },
             component: () => import('@/views/knight/edit')
           }
         ]

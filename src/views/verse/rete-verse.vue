@@ -232,9 +232,11 @@ export default {
     clearKnight() {
       this.knight.callback = null
     },
-    async knightSelect(data) {
-      const node = await editor.addMetaKnight({
-        meta_id : data.id
+    async knightSelect({ data,setup }) {
+   
+      const node = await editor.addModule({
+        meta_id : data.id,
+        data : JSON.stringify(setup)
       })
     },
     _setVerseName(name) {
@@ -300,6 +302,11 @@ export default {
       
         await putVerse(verse_id, {
           data
+        })
+
+        this.$message({
+          message: '保存成功',
+          type: 'success'
         })
         await this.arrange()
       }

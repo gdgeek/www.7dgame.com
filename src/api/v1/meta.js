@@ -27,7 +27,8 @@ export function getMetas(
   sort = '-created_at',
   search = '',
   page = 0,
-  expand = 'image,author'
+  expand = 'image,author',
+  custom = -1
 ) {
   let query = []
   query['expand'] = expand
@@ -35,6 +36,9 @@ export function getMetas(
 
   if (search !== '') {
     query['MetaSearch[name]'] = search
+  }
+  if (custom !== -1) {
+    query['MetaSearch[custom]'] = custom
   }
   if (page > 1) {
     query['page'] = page

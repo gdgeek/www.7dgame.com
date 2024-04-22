@@ -86,10 +86,11 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-    async selected(data) {
+    async selected({ data,setup }) {
       this.postMessage({
         action: 'add-module',
-        data: data
+        data: data,
+        setup: setup
       })
     },
     cancel() { 

@@ -1,5 +1,15 @@
 <template>
   <div>
+    <knight-data-dialog ref="knightData" @submit="knightDataSubmit" />
+   
+    <el-dialog
+      :visible.sync="aa"
+      width="95%"
+      height="95px"
+      :show-close="false"
+      @close="cancel()"
+    >
+  </el-dialog>
     <el-dialog
       :visible.sync="dialogVisible"
       width="95%"
@@ -8,9 +18,18 @@
       @close="cancel()"
     >
       <span slot="title" class="dialog-footer">
+        <el-tabs
+          v-model="activeName"
+          type="card"
+          class="demo-tabs"
+          @tab-click="handleClick"
+        >
+          <el-tab-pane label="系统数据" name="prefab"  />
+          <el-tab-pane label="本地定制" name="custom" />
+        </el-tabs>
         <mr-p-p-header
-          :sorted="owner.sorted"
-          :searched="owner.searched"
+          :sorted="active.sorted"
+          :searched="active.searched"
           @search="search"
           @sort="sort"
         >
@@ -21,18 +40,18 @@
         </mr-p-p-header>
         <el-divider content-position="left">
           <el-tag
-            v-if="owner.searched !== ''"
+            v-if="prefab.searched !== ''"
             size="mini"
             closable
             @close="clearSearched()"
           >
-            {{ owner.searched }}
+            {{ prefab.searched }}
           </el-tag>
         </el-divider>
       </span>
-      <waterfall v-if="owner !== null && owner.items !== null" :options="{}">
+      <waterfall v-if="prefab !== null && prefab.items !== null" :options="{}">
         <waterfall-item
-          v-for="(item, index) in owner.items"
+          v-for="(item, index) in prefab.items"
           :key="index"
           style="width: 230px"
         >
@@ -72,10 +91,10 @@
         <el-row :gutter="0">
           <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16">
             <el-pagination
-              :current-page="owner.pagination.current"
-              :page-count="owner.pagination.count"
-              :page-size="owner.pagination.size"
-              :total="owner.pagination.total"
+              :current-page="active.pagination.current"
+              :page-count="active.pagination.count"
+              :page-size="active.pagination.size"
+              :total="active.pagination.total"
               layout="prev, pager, next, jumper"
               background
               @current-change="handleCurrentChange"
@@ -99,6 +118,7 @@
 
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
+import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -114,25 +134,44 @@ export default {
   components: {
     Waterfall,
     WaterfallItem,
-    MrPPHeader
+    MrPPHeader,
+    KnightDataDialog
   },
   data() {
     return {
+      activeName: 'prefab',
       verse_id: -1,
       value: null,
 
-      owner: {
+      prefab: {
         items: null,
         sorted: '-created_at',
         searched: '',
         pagination: { current: 1, count: 1, size: 20, total: 20 }
       },
-      dialogVisible: false
+      custom: {
+        items: null,
+        sorted: '-created_at',
+        searched: '',
+        pagination: { current: 1, count: 1, size: 20, total: 20 }
+      },
+      dialogVisible: false,
+      aa:false
     }
   },
   props: {},
-  computed: {},
+  computed: {
+    active() {
+      if (this.activeName === 'prefab') {
+        return this.prefab
+      }
+      return this.custom
+    }
+  },
   methods: {
+    knightDataSubmit(data) {
+      console.error(data)
+    },
     handleClick(tab, event) {
       this.refresh()
     },
@@ -147,48 +186,79 @@ export default {
       return 'title'
     },
     async open(value, verse_id) {
-      this.owner = {
+      this.prefab = {
         items: null,
         sorted: '-created_at',
         searched: '',
         pagination: { current: 1, count: 1, size: 20, total: 20 }
       }
-
+      this.custom = {
+        items: null,
+        sorted: '-created_at',
+        searched: '',
+        pagination: { current: 1, count: 1, size: 20, total: 20 }
+      }
       this.verse_id = verse_id
       this.value = value
 
-      this.refreshOwner()
+      this.refresh()
 
       this.dialogVisible = true
     },
-    async refreshOwner() {
+    async refreshPrefab() {
       const response = await getMetas(
-        this.owner.sorted,
-        this.owner.searched,
-        this.owner.pagination.current,
-        'image,verseKnights'
+        this.prefab.sorted,
+        this.prefab.searched,
+        this.prefab.pagination.current,
+        'image',
+        0
       )
 
-      this.owner.items = response.data
+      this.prefab.items = response.data
+    },
+    async refreshCustom() {
+      const response = await getMetas(
+        this.custom.sorted,
+        this.custom.searched,
+        this.custom.pagination.current,
+        'image',
+        1
+      )
+
+      this.prefab.items = response.data
     },
     close() {
       this.dialogVisible = false
     },
     sort: function (value) {
-      this.owner.sorted = value
+      this.active.sorted = value
       this.refresh()
     },
     search: function (value) {
-      this.owner.searched = value
+      this.active.searched = value
       this.refresh()
     },
     clearSearched() {
-      this.owner.searched = ''
+      this.active.searched = ''
       this.refresh()
     },
     doSelect(data) {
-      this.$emit('selected', data)
-      this.dialogVisible = false
+    
+     if (data.custom === 1) {
+       this.$emit('selected', { data })
+        this.dialogVisible = false
+     } else {
+
+      this.$refs.knightData.open({
+        schema: JSON.parse(data.data),
+        data: {},
+        callback: (setup) => {
+          this.$emit('selected', {data, setup})
+          this.dialogVisible = false
+        }
+      })
+     }
+   
     },
     doEmpty() {
       this.$emit('selected', null)
@@ -216,11 +286,17 @@ export default {
       this.$emit('cancel')
     },
     handleCurrentChange: function (page) {
-      this.owner.pagination.current = page
+      this.active.pagination.current = page
       this.refresh()
     },
     async refresh() {
-      await this.refreshOwner()
+      if (this.activeName === 'prefab') {
+        this.refreshPrefab()
+      } else {
+        this.refreshCustom()
+      }
+    
+      
     }
   }
 }

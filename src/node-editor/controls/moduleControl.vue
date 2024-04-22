@@ -52,13 +52,15 @@ export default {
       return false
     },
     title() {
+
       if (this.item === null) {
         return '{空}'
       }
       return this.item.title
     },
     image() {
-      if (this.item === null && this.item.image === null) {
+      if (this.item === null || this.item.image === null) {
+
         return null
       }
       return convertToHttps(this.item.image.url)

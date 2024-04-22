@@ -341,7 +341,7 @@ const initVerse = async function ({ container, verseId, root }) {
   editor_.trigger('process', { status: 'init' })
 }
 
-const addMetaKnight = function (parameters) {
+const addModule = function (parameters) {
   return new Promise((resolve, reject) => {
     const component = editor_.getComponent('Module')
 
@@ -370,7 +370,7 @@ export default {
   arrange,
   save,
   saveEvent,
-  addMetaKnight,
+  addModule,
   addEventNode,
   addLinked,
   removeLinked,

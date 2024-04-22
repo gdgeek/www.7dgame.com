@@ -16,6 +16,7 @@
         >
           <el-tab-pane label="绑定资源" name="binding" v-if="meta_id != null" />
           <el-tab-pane label="我的资源" name="owner" />
+
         </el-tabs>
         <mr-p-p-header
           :sorted="active.sorted"
