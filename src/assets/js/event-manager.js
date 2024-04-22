@@ -141,13 +141,13 @@ function getNodes(verse) {
       Object.assign(node, meta.event_node)
       nodes.push(node)
     })
-  }*/
+  }
 
   verse.metaKnights.forEach(metaKnight => {
     let node = { uuid: metaKnight.uuid }
     Object.assign(node, metaKnight.event_node)
     nodes.push(node)
-  })
+  })*/
   return nodes
 }
 async function loadLinked(verse) {

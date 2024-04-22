@@ -97,6 +97,7 @@ class MetaFactory extends Factory {
 	}
 
 	async loadPolygen(url) {
+
 		const self = this
 		return new Promise((resolve, reject) => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
@@ -105,34 +106,40 @@ class MetaFactory extends Factory {
 			dracoLoader.setDecoderPath('./draco/')
 			loader.setDRACOLoader(dracoLoader)
 
-			loader.load(
-				// resource URL
-				url,
-				function (gltf) {
-					resolve(gltf.scene)
-					gltf.scene.children.forEach(item => {
-						self.lockNode(item)
-					})
-				},
-				function (xhr) {
-					//console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
-				},
-				// called when loading has errors
-				function (error) {
+			try {
+				loader.load(
+					url,
+					function (gltf) {
 
-					alert(error)
-					reject(error)
-					console.error('An error happened')
-				}
-			)
+
+						resolve(gltf.scene)
+						gltf.scene.children.forEach(item => {
+							self.lockNode(item)
+						})
+					},
+					function (xhr) {
+						//alert(1)
+						//console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
+					},
+					// called when loading has errors
+					function (error) {
+						resolve(null)
+						console.error('An error happened')
+					}
+				)
+			} catch (error) {
+				resolve(null)
+				console.error(error)
+				//alert(error)
+			}
+
 		})
 	}
 	async getPolygen(data, resources) {
 		if (resources.has(data.parameters.resource)) {
 			const resource = resources.get(data.parameters.resource)
 			const node = await this.loadPolygen(resource.file.url)
-			//	node.name = data.parameters.name + '[polygen]'
-			//	node.uuid = resource.file.md5
+
 			return node
 		}
 		return null

@@ -28,7 +28,7 @@ var VerseType = {
   inputs: [
 
     {
-      key: 'metaKnights',
+      key: 'modules',
       title: 'Module',
       socket: MetaKnightSocket,
       multiConns: true

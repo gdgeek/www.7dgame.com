@@ -134,16 +134,15 @@ function VerseLoader(editor) {
 		data.parameters = { "uuid": root.uuid }
 		data.parameters.space = { "id": -1, "occlusion": false }
 		data.parameters.story = "{\"sorted\":[110],\"contactor\":false}"
-		const anchors = []
-		const metas = []
-		const metaKnights = []
-		//	data.children = { "anchors": [], "metas": [], "metaKnights": [] }
+
+		const modules = []
+
 		root.children.forEach(node => {
 
 			const nd = this.writeData(node)
 			if (nd != null) {
 				if (node.type == 'Module') {
-					metaKnights.push(nd)
+					modules.push(nd)
 				}
 			}
 
@@ -154,7 +153,7 @@ function VerseLoader(editor) {
 			//		entities.push(entity)
 			//	}
 		})
-		data.children = { metaKnights }
+		data.children = { modules }
 		console.error(data)
 		return data;
 	}
@@ -167,8 +166,8 @@ function VerseLoader(editor) {
 			})
 		}
 
-		if (data.children.metaKnights) {
-			data.children.metaKnights.forEach(async item => {
+		if (data.children.modules) {
+			data.children.modules.forEach(async item => {
 
 				const meta = metas.get(item.parameters.meta_id)
 

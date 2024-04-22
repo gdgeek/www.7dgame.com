@@ -122,8 +122,8 @@ export default {
 
     const data = JSON.parse(this.verse.data)
    
-    if (!data.children.metaKnights) {
-      data.children.metaKnights = []
+    if (!data.children.modules) {
+      data.children.modules = []
     }
     //初始化数据
     await editor.setup(data)
@@ -205,7 +205,7 @@ export default {
     },
 
     async _updateKnightMetaEvent(data, meta_id) {
-      const response = await getMeta( meta_id)
+     /* const response = await getMeta( meta_id)
       if (response.data.events) {
         const events = JSON.parse(response.data.events)
 
@@ -227,7 +227,7 @@ export default {
             events.outputs
           )
         }
-      }
+      }*/
     },
     clearKnight() {
       this.knight.callback = null
@@ -289,7 +289,7 @@ export default {
       if (self.saveable) {
         const list = await editor.saveEvent()
 
-        const response = await getVerse(this.id, 'metas, metaKnights,share')
+        const response = await getVerse(this.id, 'metas, share')
 
         this.verse = response.data
         await manager.saveLinked(this.verse, list)
@@ -333,18 +333,18 @@ export default {
         }
       }
 
-      for (let i = 0; i < data.children.metaKnights.length; ++i) {
-        const node = data.children.metaKnights[i]
+      for (let i = 0; i < data.children.modules.length; ++i) {
+        const node = data.children.modules[i]
 
-        const metaKnight = this.verse.metaKnights.find(item => {
+        const modules = this.verse.modules.find(item => {
           if (item.id === node.parameters.id) {
             return true
           }
           return false
         })
 
-        if (metaKnight) {
-          await editor.addEventNode(metaKnight.event_node, node.parameters.uuid)
+        if (modules) {
+          await editor.addEventNode(modules.event_node, node.parameters.uuid)
         }
       }
     }

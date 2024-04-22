@@ -315,7 +315,7 @@ const initVerse = async function ({ container, verseId, root }) {
   editor_.use(AlwaysConnectionPlugin, [
     {
       output: { name: 'Module', socket: 'out' },
-      input: { name: 'Verse', socket: 'metaKnights' }
+      input: { name: 'Verse', socket: 'modules' }
     },
   ])
   editor_.use(RandomStringPlugin, [

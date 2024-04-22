@@ -74,15 +74,15 @@ export default {
           })
         })
       })
-      this.verse.metaKnights.forEach(metaKnight => {
-        if (!metaKnight.event_node) {
+      this.verse.modules.forEach(module => {
+        if (!module.event_node) {
           return
         }
-        nodes.push(metaKnight.event_node)
-        metaKnight.event_node.inputs.forEach(input => {
+        nodes.push(module.event_node)
+        module.event_node.inputs.forEach(input => {
           inputs.push({
-            title: this.titles.get(metaKnight.uuid) + ':' + input.title,
-            index: metaKnight.uuid,
+            title: this.titles.get(module.uuid) + ':' + input.title,
+            index: module.uuid,
             uuid: input.uuid
           })
         })
@@ -128,7 +128,7 @@ export default {
 
     const verseResponse = await getVerse(
       this.script.verse_id,
-      'metas, metaKnights,share'
+      'metas, module,share'
     )
 
     this.verse = verseResponse.data
@@ -138,8 +138,8 @@ export default {
       this.titles.set(meta.parameters.uuid, meta.parameters.title)
     })
 
-    data.children.metaKnights.forEach(metaKnight => {
-      this.titles.set(metaKnight.parameters.uuid, metaKnight.parameters.title)
+    data.children.modules.forEach(module => {
+      this.titles.set(module.parameters.uuid, module.parameters.title)
     })
 
     this.setBreadcrumbs({

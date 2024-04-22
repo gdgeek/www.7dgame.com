@@ -19,7 +19,6 @@ var MetaKnightType = {
       title: '标题',
       readonly: false
     },
-
     {
       type: 'module',
       title: '元数据',
