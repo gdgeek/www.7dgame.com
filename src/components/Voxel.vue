@@ -223,12 +223,9 @@ export default {
         const gltf = new GLTFLoader()
         gltf.setDRACOLoader(dracoLoader)
         const loader = new VOXLoader()
-        const url = self.file.url
-        if (isHttps()) {
-          url = convertToHttps(url)
-        }
+      
         loader.load(
-          url,
+          convertToHttps(self.file.url),
 
           function (chunks) {
             const chunk = chunks[0]

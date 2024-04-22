@@ -104,12 +104,7 @@ export default {
       }
     },
     picture() { 
-      let url = this.file
-
-      if (isHttps()) {
-        url = convertToHttps(url)
-      }
-      return url
+      return convertToHttps(this.file)
     },
     id() {
       return this.$route.query.id

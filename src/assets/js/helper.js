@@ -40,6 +40,9 @@ function isHttps() {
   }
 }
 function convertToHttps(url) {
+  if (url === undefined || url === null) {
+    return url
+  }
   // 检查URL是否以http://开头
   if (url.startsWith('http://')) {
     // 替换'http://'为'https://'
