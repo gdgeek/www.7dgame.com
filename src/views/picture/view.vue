@@ -15,7 +15,7 @@
               element-loading-background="rgba(255,255, 255, 0.3)"
               style="height: 300px; width: 100%"
               :src="picture"
-              :fit="'contain'"
+              fit="contain"
               @load="dealWith()"
             />
           </div>
