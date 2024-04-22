@@ -31,7 +31,7 @@
                 @click="save()"
               >
                 <font-awesome-icon icon="save" />
-                保存
+                保存～
               </el-button>
               <el-button v-else type="primary" size="mini" @click="arrange()">
                 <font-awesome-icon icon="project-diagram" />
@@ -283,19 +283,21 @@ export default {
     },
 
     async save() {
+     
       const self = this
       const verse_id = this.id
 
       if (self.saveable) {
-        const list = await editor.saveEvent()
+        //const list = await editor.saveEvent()
 
-        const response = await getVerse(this.id, 'metas, share')
+      //  const response = await getVerse(this.id, 'metas, share')
 
-        this.verse = response.data
-        await manager.saveLinked(this.verse, list)
+        //this.verse = response.data
+        //await manager.saveLinked(this.verse, list)
 
-        await editor.removeLinked()
+       // await editor.removeLinked()
         const data = await editor.save()
+      
         await putVerse(verse_id, {
           data
         })
@@ -304,15 +306,16 @@ export default {
     },
 
     async arrange() {
-      await editor.removeLinked()
+      //await editor.removeLinked()
       await editor.arrange()
       await sleep(300)
-      const data = await manager.loadLinked(this.verse)
+     /* const data = await manager.loadLinked(this.verse)
 
       for (let i = 0; i < data.length; ++i) {
         const item = data[i]
         await editor.addLinked(item)
-      }
+      }*/
+      await editor.arrange()
     },
 
     async slots(data) {
