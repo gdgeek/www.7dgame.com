@@ -3,6 +3,7 @@ import request from '@/utils/request'
 var qs = require('querystringify')
 var path = require('path')
 export function postMeta(data) {
+
   return request({
     url: path.join('v1', 'metas'),
     method: 'post',
@@ -12,10 +13,7 @@ export function postMeta(data) {
 
 export function getMeta(id, expand = '') {
 
-  console.error("=====")
-  console.error(id)
-  console.error("=====?")
-  console.error(id.toString())
+
   return request({
     url: path.join(
       'v1',

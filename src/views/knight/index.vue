@@ -187,7 +187,7 @@ export default {
 
         const data = {
           title: input.value,
-          custom: true,
+          custom: 1,
           uuid:uuidv4()
         }
         const response = await postMeta(data)
