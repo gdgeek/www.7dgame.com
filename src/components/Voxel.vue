@@ -28,6 +28,8 @@ import {
   VOXData3DTexture
 } from '@/assets/js/voxel/VOXLoader.js'
 
+import { isHttps,  convertToHttps} from '@/assets/js/helper'
+
 function toFixedVector3(vec, n) {
   const result = new Vector3()
   result.x = parseFloat(vec.x.toFixed(n))
@@ -221,8 +223,12 @@ export default {
         const gltf = new GLTFLoader()
         gltf.setDRACOLoader(dracoLoader)
         const loader = new VOXLoader()
+        const url = self.file.url
+        if (isHttps()) {
+          url = convertToHttps(url)
+        }
         loader.load(
-          self.file.url,
+          url,
 
           function (chunks) {
             const chunk = chunks[0]
