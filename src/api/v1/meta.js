@@ -31,11 +31,16 @@ export function getMetas(
   custom = -1
 ) {
   let query = []
+  if (sort === 'name') {
+    sort = 'title'
+  } else if (sort === '-name') {
+    sort = '-title'
+  }
   query['expand'] = expand
   query['sort'] = sort
 
   if (search !== '') {
-    query['MetaSearch[name]'] = search
+    query['MetaSearch[title]'] = search
   }
   if (custom !== -1) {
     query['MetaSearch[custom]'] = custom

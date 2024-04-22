@@ -231,6 +231,7 @@ export default {
       this.dialogVisible = false
     },
     sort: function (value) {
+      
       this.active.sorted = value
       this.refresh()
     },
