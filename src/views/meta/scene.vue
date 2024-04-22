@@ -186,7 +186,7 @@ export default {
         })
         return
       }
-
+      alert(123)
       await putMeta(this.id, { data: meta })
       this.$message({
         type: 'success',

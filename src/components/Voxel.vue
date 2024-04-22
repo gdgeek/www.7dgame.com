@@ -28,7 +28,7 @@ import {
   VOXData3DTexture
 } from '@/assets/js/voxel/VOXLoader.js'
 
-import { isHttps,  convertToHttps} from '@/assets/js/helper'
+import {  convertToHttps} from '@/assets/js/helper'
 
 function toFixedVector3(vec, n) {
   const result = new Vector3()

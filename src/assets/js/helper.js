@@ -40,18 +40,13 @@ function isHttps() {
   }
 }
 function convertToHttps(url) {
-  if (url === undefined || url === null) {
-    return url
-  }
+
   // 检查URL是否以http://开头
-  if (url.startsWith('http://')) {
+  if (url !== undefined || url !== null & url.startsWith('http://')) {
     // 替换'http://'为'https://'
     return url.replace('http://', 'https://');
-  } else if (!url.startsWith('https://')) {
-    // 如果URL不以http://或https://开头，直接添加'https://'
-    return 'https://' + url;
   }
-  // 如果URL已经是https://，直接返回
+
   return url;
 }
 export { isHttps, convertToHttps, printVector3, printVector2, cutString }
