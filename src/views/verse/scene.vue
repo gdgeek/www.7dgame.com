@@ -87,7 +87,6 @@ export default {
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
     async selected(data) {
-      alert(JSON.stringify(data))
       this.postMessage({
         action: 'add-module',
         data: data

@@ -84,7 +84,7 @@ class RotateComponent {
         },
       };
       const proxy = new Proxy(this.component.parameters, proxyHandler)
-      //alert(123)
+
       const command = new SetValueCommand(
         this.editor,
         proxy,

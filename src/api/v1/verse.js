@@ -95,8 +95,6 @@ export function getVerses(
 
 export function putVerse(id, data) {
 
-  alert(JSON.stringify(data))
-  // data.info.version = environment.version
   data.version = environment.version
   return request({
     url: path.join('v1', 'verses', id.toString()),
