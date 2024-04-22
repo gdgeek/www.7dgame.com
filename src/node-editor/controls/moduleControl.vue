@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import {  convertToHttps} from '@/assets/js/helper'
 import { getMeta } from '@/api/v1/meta'
 export default {
   props: ['data', 'emitter', 'root', 'getData', 'putData','node'],
@@ -57,11 +58,10 @@ export default {
       return this.item.title
     },
     image() {
-      return null;
       if (this.item === null && this.item.image === null) {
-        return '{空}'
+        return null
       }
-      return this.item.image.url
+      return convertToHttps(this.item.image.url)
     }
   },
   async mounted() {
