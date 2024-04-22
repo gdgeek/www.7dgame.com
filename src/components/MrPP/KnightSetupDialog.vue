@@ -249,14 +249,20 @@ export default {
         this.dialogVisible = false
      } else {
 
-      this.$refs.knightData.open({
-        schema: JSON.parse(data.data),
-        data: {},
-        callback: (setup) => {
-          this.$emit('selected', {data, setup})
-          this.dialogVisible = false
-        }
-      })
+      if(data.data != null){
+        this.$refs.knightData.open({
+          schema: JSON.parse(data.data),
+          data: {},
+          callback: (setup) => {
+            this.$emit('selected', {data, setup})
+            this.dialogVisible = false
+          }
+        })
+      }else{
+        this.$emit('selected', { data, setup: {} })
+        this.dialogVisible = false
+      }
+    
      }
    
     },
