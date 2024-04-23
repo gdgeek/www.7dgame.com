@@ -118,7 +118,6 @@ class MetaFactory extends Factory {
 						})
 					},
 					function (xhr) {
-						//alert(1)
 						//console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
 					},
 					// called when loading has errors
@@ -130,7 +129,6 @@ class MetaFactory extends Factory {
 			} catch (error) {
 				resolve(null)
 				console.error(error)
-				//alert(error)
 			}
 
 		})

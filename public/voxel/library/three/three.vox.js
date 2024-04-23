@@ -46,7 +46,7 @@ THREE.BaseGeometry.prototype.asyncPrepare = function () {
   that.addLoading(range, l, '处理立方体表面')
 
   return new Promise(function (resolve) {
-    ;(function asyn() {
+    ; (function asyn() {
       that.asyncPrepareRange(l, i, range).then(function () {
         that.loading()
         if (i + range < l) {
@@ -84,7 +84,7 @@ THREE.BaseGeometry.prototype.asyncRadius = function () {
   that.addLoading(range, l, '调整立方体位置')
 
   return new Promise(function (resolve) {
-    ;(function asyn() {
+    ; (function asyn() {
       that.asyncRadiusRange(i, range).then(function () {
         that.loading()
         i += range
@@ -118,7 +118,7 @@ THREE.BaseGeometry.prototype.asyncIndices = function () {
   that.addLoading(range, l, '创建立方体索引')
 
   return new Promise(function (resolve) {
-    ;(function asyn() {
+    ; (function asyn() {
       that.asyncIndicesRange(l, i, range).then(function () {
         that.loading()
         if (i + range < l) {
@@ -179,9 +179,7 @@ THREE.BaseGeometry.prototype.addLoading = function (range, length, text) {
   }
 }
 THREE.BaseGeometry.prototype.loading = function () {
-  //alert("a");
   if (typeof this.loadbar != 'undefined') {
-    //	alert(this.loadbar.step);
     this.loadbar.step()
   } else {
     console.log('do it')
@@ -210,18 +208,18 @@ THREE.BaseGeometry.prototype.buildInput = function (
 
   that.addLoading(range, l, '格式化立方体数据')
 
-  // Wrap the asynchronous loop in a new Promise if needed
-  ;(function asyn() {
-    that.buildInputRange(p, i, range).then(function () {
-      that.loading()
-      if (i + range < l) {
-        i += range
-        asyn() // Recursively call asyn until condition is met
-      } else {
-        end() // Call the end function when done
-      }
-    })
-  })()
+    // Wrap the asynchronous loop in a new Promise if needed
+    ; (function asyn() {
+      that.buildInputRange(p, i, range).then(function () {
+        that.loading()
+        if (i + range < l) {
+          i += range
+          asyn() // Recursively call asyn until condition is met
+        } else {
+          end() // Call the end function when done
+        }
+      })
+    })()
 }
 
 THREE.BaseGeometry.prototype.buildInputRange = function (p, begin, range) {

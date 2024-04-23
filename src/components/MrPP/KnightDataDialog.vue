@@ -40,7 +40,7 @@ export default {
   methods: {
     async handlerSubmit() {
       this.$emit('submit', this.formData)
-      alert(JSON.stringify(this.formData))
+      //alert(JSON.stringify(this.formData))
       if(this.callback != null){
         this.callback(this.formData)
       }

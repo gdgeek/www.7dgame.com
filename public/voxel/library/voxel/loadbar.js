@@ -25,7 +25,6 @@ var Loadbar = function () {
   lb.part = 4
   lb.p = 0
   lb.start = function () {
-    //alert("~~`");
     a.style.width = '0%'
     //$(a).css("width","0%");
     lb.p = 0
@@ -44,15 +43,11 @@ var Loadbar = function () {
   }
 
   lb.step = function () {
-    //alert("?");
-    //alert(lb.n);
     lb.n++
     var n = lb.n / lb.count / lb.part + (lb.p - 1) / lb.part
     var p = n * 97
 
     a.style.width = p + '%'
-    //	alert(p);
-    //$(a).css('width', p + '%')
   }
 
   return lb
