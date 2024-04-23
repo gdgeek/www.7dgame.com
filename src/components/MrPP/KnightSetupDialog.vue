@@ -276,7 +276,6 @@ export default {
         uuid: uuidv4()
       }).then(response => {
         this.selected({data: response.data })
-      //  this.$emit('create', response.data)
         this.dialogVisible = false
       })
     },
