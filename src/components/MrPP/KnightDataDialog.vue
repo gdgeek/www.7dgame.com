@@ -39,7 +39,7 @@ export default {
   props: {},
   methods: {
     async handlerSubmit() {
-      this.$emit('submit', this.formData)
+      //this.$emit('submit', this.formData)
       //alert(JSON.stringify(this.formData))
       if(this.callback != null){
         this.callback(this.formData)

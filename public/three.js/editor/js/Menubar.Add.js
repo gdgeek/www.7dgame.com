@@ -121,17 +121,23 @@ function MenubarAdd(editor) {
 		editor.signals.messageReceive.add(async function (message) {
 
 			if (message.action == 'add-module') {
-				const data = message.data;
+				const data = message.data.data;
+				const setup = message.data.setup;
 
+				console.error(data)
+				alert(data.resources)
+				if (data.resources) {
+					data.resources.forEach(resource => {
+						resources.set(resource.id, resource)
+					})
+				}
 
-				data.resources.forEach(resource => {
-					resources.set(resource.id, resource)
-				})
 
 
 				const node = factory.addModule(builder.module(data.id))
 
-				node.userData.data = JSON.stringify(message.setup)
+				node.userData.data = JSON.stringify(setup)
+				node.userData.custom = data.custom
 				if (data && data.data) {
 					await factory.readMeta(node, JSON.parse(data.data), resources, editor)
 				}

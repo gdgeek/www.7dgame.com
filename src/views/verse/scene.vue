@@ -1,6 +1,8 @@
 <template>
 
   <div class="verse-scene">
+
+    <knight-data-dialog ref="knightData"  />
     <knight-setup-dialog
       @selected="selected"
       @cancel="cancel"
@@ -23,16 +25,18 @@
 <script>
 var qs = require('querystringify')
 var path = require('path')
-
+import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
 import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
 import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import { putVerse } from '@/api/v1/verse'
+import { getMeta} from '@/api/v1/meta'
 import { getVerse } from '@/api/e1/verse'
 export default {
   name: 'VerseScene',
   components: {
-    KnightSetupDialog
+    KnightSetupDialog,
+    KnightDataDialog
   },
   data() {
     const src = path.join(
@@ -86,11 +90,11 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-    async selected({ data,setup }) {
+    async selected({ data, setup }) {
+     
       this.postMessage({
         action: 'add-module',
-        data: data,
-        setup: setup
+        data: { data, setup }
       })
     },
     cancel() { 
@@ -105,6 +109,30 @@ export default {
         return false
       }
       return this.$can('editable', new AbilityEditable(verse.editable))
+    },
+    setupMeta({ meta_id, data, uuid }) {
+      getMeta(meta_id).then(response => {
+        this.$refs.knightData.open({
+          schema:JSON.parse(response.data.data) ,
+          data: JSON.parse(data),
+          callback: (setup) => {
+            alert('!!!')
+            this.postMessage({
+              action: 'setup-module',
+              data: { uuid, setup }
+            })
+          }
+        })
+      })
+       
+     /* this.$refs.knightData.open({
+          schema: JSON.parse(data.data),
+          data: {},
+          callback: (setup) => {
+            //this.$emit('selected', {data, setup})
+            //this.dialogVisible = false
+          }
+        })*/
     },
     addModule() { 
 
@@ -122,9 +150,12 @@ export default {
           case 'edit-meta':
             this.$router.push({
               path: '/meta/scene',
-              query: { id: e.data.data.id, title: 'test' }
+              query: { id: e.data.data.meta_id}
             })
             break
+          case 'setup-meta':
+            self.setupMeta(e.data.data)
+            break;
           case 'add-module':
             self.addModule();
            

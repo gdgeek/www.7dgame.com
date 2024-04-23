@@ -1,15 +1,7 @@
 <template>
   <div>
     <knight-data-dialog ref="knightData" @submit="knightDataSubmit" />
-   
-    <el-dialog
-      :visible.sync="aa"
-      width="95%"
-      height="95px"
-      :show-close="false"
-      @close="cancel()"
-    >
-  </el-dialog>
+  
     <el-dialog
       :visible.sync="dialogVisible"
       width="95%"
@@ -102,7 +94,7 @@
           </el-col>
           <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
             <el-button-group>
-              <el-button type="success" size="mini" @click="create">
+              <el-button v-if="activeName == 'custom' " type="success" size="mini" @click="create">
                 新 建
               </el-button>
               <el-button size="mini" @click="dialogVisible = false">
@@ -155,8 +147,7 @@ export default {
         searched: '',
         pagination: { current: 1, count: 1, size: 20, total: 20 }
       },
-      dialogVisible: false,
-      aa:false
+      dialogVisible: false
     }
   },
   props: {},
@@ -245,7 +236,8 @@ export default {
     },
     doSelect(data) {
     
-     if (data.custom === 1) {
+      if (data.custom === 1) {
+        alert(data)
        this.$emit('selected', { data })
         this.dialogVisible = false
      } else {
@@ -283,8 +275,7 @@ export default {
         custom: 1,
         uuid: uuidv4()
       }).then(response => {
-        console.error(response.data)
-        this.selected(response.data)
+        this.selected({data: response.data })
       //  this.$emit('create', response.data)
         this.dialogVisible = false
       })

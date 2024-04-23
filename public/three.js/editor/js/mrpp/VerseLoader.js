@@ -115,7 +115,7 @@ function VerseLoader(editor) {
 			y: node.scale.y,
 			z: node.scale.z
 		};
-		const exclude = ['type', 'draggable']
+		const exclude = ['type', 'draggable', 'custom']
 
 		Object.keys(node.userData).forEach(key => {
 			if (!exclude.includes(key)) {
@@ -172,14 +172,15 @@ function VerseLoader(editor) {
 				const meta = metas.get(item.parameters.meta_id)
 
 				const node = factory.addModule(item)
-				//node.userData.custom = meta.custom
+
+				node.userData.custom = meta.custom
 				root.add(node)
 				editor.signals.sceneGraphChanged.dispatch()
 				if (meta && meta.data && meta.custom != 0) {
 					await factory.readMeta(node, JSON.parse(meta.data), resources)
 					editor.signals.sceneGraphChanged.dispatch()
-				}
 
+				}
 				await factory.addGizmo(node)
 				editor.signals.sceneGraphChanged.dispatch()
 

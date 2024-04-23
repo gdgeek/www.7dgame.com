@@ -58,7 +58,6 @@ class MetaFactory extends Factory {
 						const node = await this.building(data.children.entities[i], resources)
 
 						if (node != null) {
-							//this.lockNode(node)
 							root.add(node)
 							if (editor != null) {
 								editor.signals.sceneGraphChanged.dispatch()
@@ -120,7 +119,6 @@ class MetaFactory extends Factory {
 					function (xhr) {
 						//console.log((xhr.loaded / xhr.total) * 100 + '% loaded!')
 					},
-					// called when loading has errors
 					function (error) {
 						resolve(null)
 						console.error('An error happened')
