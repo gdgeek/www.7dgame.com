@@ -100,6 +100,7 @@ export default {
         polygen: [],
         picture: [],
         video: [],
+        voxel: [],
         text: [],
         sound: [],
         entity: [],
@@ -123,9 +124,11 @@ export default {
       const entity = self.testPoint(data, [
         'polygen',
         'entity',
+        'voxel',
         'video',
         'picture',
-        'text'
+        'text',
+        'voxel',
       ])
 
       if (entity) {
@@ -159,6 +162,11 @@ export default {
 
       if (text) {
         ret.text.push(text)
+      }
+      const voxel = self.testPoint(data, ['voxel'])
+    
+      if (voxel) {
+        ret.voxel.push(voxel)
       }
 
       if (typeof data.children !== 'undefined') {

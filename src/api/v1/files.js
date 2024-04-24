@@ -6,7 +6,7 @@ import { convertToHttps } from '@/assets/js/helper'
 export function postFile(data) {
   const url = path.join('v1', 'files')
 
-  data.url = convertToHttps(data.url)
+  //data.url = convertToHttps(data.url)
 
   return request({
     url,

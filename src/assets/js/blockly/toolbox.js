@@ -15,6 +15,7 @@ import { ExecuteCategory } from '@/assets/js/blockly/custom/execute'
 import { TaskCategory } from '@/assets/js/blockly/custom/task'
 import { HelperCategory } from '@/assets/js/blockly/custom/helper/index'
 import { PictureCategory } from '@/assets/js/blockly/custom/picture'
+import { VoxelCategory } from '@/assets/js/blockly/custom/voxel'
 import { VideoCategory } from '@/assets/js/blockly/custom/video'
 import { SoundCategory } from '@/assets/js/blockly/custom/sound'
 
@@ -57,6 +58,7 @@ export default {
     TextCategory,
     VideoCategory,
     SoundCategory,
+    VoxelCategory,
     HelperCategory,
     sep,
 

@@ -9,6 +9,7 @@ import { PictureRegister } from '@/assets/js/blockly/custom/picture'
 import { HelperRegister } from '@/assets/js/blockly/custom/helper/index'
 import { VideoRegister } from '@/assets/js/blockly/custom/video'
 import { SoundRegister } from '@/assets/js/blockly/custom/sound'
+import { VoxelRegister } from '@/assets/js/blockly/custom/voxel'
 import { EventRegister } from '@/assets/js/blockly/custom/event'
 
 function AddBlocks(parameters) {
@@ -23,6 +24,7 @@ function AddBlocks(parameters) {
   SoundRegister(parameters)
   EventRegister(parameters)
   TaskRegister(parameters)
+  VoxelRegister(parameters)
 }
 
 export { AddBlocks }
