@@ -41,13 +41,22 @@ function isHttps() {
 }
 function convertToHttps(url) {
 
+  if (isHttps()) {
+    if ((url !== undefined || url !== null & url.startsWith('http://'))) {
+
+      // 替换'http://'为'https://'
+      return url.replace('http://', 'https://');
+    }
+  } else {
+    if ((url !== undefined || url !== null & url.startsWith('https://'))) {
+
+      // 替换'http://'为'https://'
+      return url.replace('https://', 'http://');
+    }
+  }
 
   // 检查URL是否以http://开头
-  if (isHttps() && (url !== undefined || url !== null & url.startsWith('http://'))) {
 
-    // 替换'http://'为'https://'
-    return url.replace('http://', 'https://');
-  }
 
   return url;
 }
