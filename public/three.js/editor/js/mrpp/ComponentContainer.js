@@ -6,9 +6,12 @@ import { ActionComponent } from './components/ActionComponent.js'
 class ComponentContainer {
 
   static Create(type) {
+    alert(type)
     switch (type.toLowerCase()) {
       case 'rotate':
         return RotateComponent.Create();
+      case 'action':
+        return ActionComponent.Create();
     }
     // return {}
   }

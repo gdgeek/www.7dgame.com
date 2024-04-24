@@ -66,7 +66,7 @@ function SidebarComponent(editor) {
 			const select = new UISelect().setWidth('100px');
 			select.setOptions({
 				'Rotate': '自旋转',
-				'Click': '点击触发',
+				'Action': '点击触发',
 			});
 			select.setValue('Rotate');
 			select.onChange(function () { // 下拉框选项改变时触发的事件
