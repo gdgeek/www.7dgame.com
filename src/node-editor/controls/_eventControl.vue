@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     open() {
-      this.root._doMetaEvent(this.metaId)
+     // this.root._doMetaEvent(this.metaId)
     },
 
     click() {

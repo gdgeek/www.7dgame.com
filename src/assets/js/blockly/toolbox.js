@@ -12,6 +12,7 @@ import { PolygenCategory } from '@/assets/js/blockly/custom/polygen'
 import { DataCategory } from '@/assets/js/blockly/custom/data'
 import { TriggerCategory } from '@/assets/js/blockly/custom/trigger'
 import { ExecuteCategory } from '@/assets/js/blockly/custom/execute'
+import { TaskCategory } from '@/assets/js/blockly/custom/task'
 import { HelperCategory } from '@/assets/js/blockly/custom/helper/index'
 import { PictureCategory } from '@/assets/js/blockly/custom/picture'
 import { VideoCategory } from '@/assets/js/blockly/custom/video'
@@ -47,6 +48,7 @@ export default {
     DataCategory,
     TriggerCategory,
     EventCategory,
+    TaskCategory,
     //ExecuteCategory,
     sep,
     EntityCategory,

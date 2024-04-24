@@ -308,10 +308,10 @@ export const constantRoutes = [
             component: () => import('@/views/meta/rete-meta')
           },
           {
-            path: 'cyber',
-            name: 'MetaCyber',
-            meta: { title: '元逻辑' },
-            component: () => import('@/views/meta/cyber')
+            path: 'script',
+            name: 'MetaScript',
+            meta: { title: '脚本' },
+            component: () => import('@/views/meta/script')
           },
           {
             path: 'scene',

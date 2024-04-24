@@ -2,6 +2,7 @@ import { UIPanel, UINumber, UIBreak, UIText, UIButton, UIRow, UIInput, UIHorizon
 import { RemoveComponentCommand } from '../commands/RemoveComponentCommand.js';
 
 import { RotateComponent } from './components/RotateComponent.js'
+import { ActionComponent } from './components/ActionComponent.js'
 class ComponentContainer {
 
   static Create(type) {
@@ -18,6 +19,10 @@ class ComponentContainer {
     switch (component.type.toLowerCase()) {
       case 'rotate':
         this.handler = new RotateComponent(editor, object, component)
+        break;
+      case 'action':
+        // alert("action")
+        this.handler = new ActionComponent(editor, object, component)
         break;
       default:
         console.error('ComponentContainer: Unknown component type.');

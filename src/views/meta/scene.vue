@@ -121,7 +121,7 @@ export default {
             break
           case 'goto':
             if (e.data.data == 'blockly.js') { 
-              this.$router.push({ path: '/meta/cyber', query: { id:this.id, title:this.title } })
+              this.$router.push({ path: '/meta/script', query: { id:this.id, title:this.title } })
 
             }else if (e.data.data == 'rete.js') {
               this.$router.push({ path: '/meta/rete-meta', query: { id:this.id, title:this.title } })

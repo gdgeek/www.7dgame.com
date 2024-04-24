@@ -1,8 +1,9 @@
 import Blockly from 'blockly'
 import EventType from './type'
+
 import Helper from '../helper'
 const data = {
-  name: 'task'
+  name: 'action_execute'
 }
 const block = {
   title: data.name,
@@ -11,28 +12,27 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '方法： %1 参数 %2',
+      message0: '动作 %1 %2',
       args0: [
         {
           type: 'field_dropdown',
-          name: 'Event',
+          name: 'Action',
           options: function () {
-            const events = []//resource.events
+            const action = resource.action
             let opt = [['none', '']]
-            events.forEach(item => {
-              opt.push([item.title, item.uuid])
+            action.forEach(({ name, uuid }) => {
+              opt.push([name, uuid])
             })
             return opt
           }
         },
         {
           type: 'input_value',
-          name: 'Parameter',
-          check: 'Parameter'
+          name: 'content',
+          check: 'Task'
         }
       ],
       inputsInline: true,
-      output: 'Task',
       colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
@@ -48,24 +48,24 @@ const block = {
     }
     return data
   },
-  getLua() {
+  getLua({ index }) {
     const lua = function (block) {
-      var event = block.getFieldValue('Event')
-      var parameters = Blockly.Lua.valueToCode(
+      var generator = Blockly.Lua
+
+      var statements_content = generator.valueToCode(
         block,
-        'Parameter',
-        Blockly.Lua.ORDER_ATOMIC
+        'content',
+        Blockly.Lua.ORDER_NONE
       )
 
-      // TODO: Assemble Lua into code variable.
-      var code = null
-      if (parameters) {
-        code = '_G.task.event(' + JSON.stringify(event) + ',' + parameters + ')'
-      } else {
-        code = '_G.task.event(' + JSON.stringify(event) + ')'
-      }
+      var dropdown_option = block.getFieldValue('Action')
+      var execute = '  _G.task.execute(' + statements_content + ')\n'
+      var code =
+        "meta['@" + dropdown_option + "'] = function(parameter) \n  " +
+        execute +
+        'end\n'
 
-      return [code, Blockly.Lua.ORDER_NONE]
+      return code
     }
     return lua
   },

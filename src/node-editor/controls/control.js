@@ -18,7 +18,7 @@ import CodeControl from './codeControl.vue'
 import ButtonControl from './buttonControl.vue'
 import SpaceControl from './spaceControl.vue'
 import StoryControl from './storyControl.vue'
-import EventControl from './eventControl.vue'
+//import EventControl from './_eventControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, { data, root, node }) {
@@ -29,9 +29,9 @@ export class Control extends Rete.Control {
       case 'select':
         this.component = SelectControl
         break
-      case 'event':
-        this.component = EventControl
-        break
+      //case 'event':
+      //  this.component = EventControl
+      //  break
       case 'meta':
         this.component = MetaControl
         break

@@ -11,12 +11,8 @@
       @cancel="clearSpace()"
       ref="spaceDialog"
     />
-    <event-dialog
-      :node="event.node"
-      :uuid="event.uuid"
-      @postEvent="postEvent"
-      ref="dialog"
-    ></event-dialog>
+   
+    
     <el-container>
       <el-main>
         <el-card v-loading="loading" class="box-card">
@@ -48,7 +44,6 @@
 
 <script>
 import editor from '@/node-editor/verse'
-import manager from '@/assets/js/event-manager'
 import { putVerse } from '@/api/v1/verse'
 
 import { mapMutations } from 'vuex'
@@ -61,8 +56,6 @@ import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
 
 import { AbilityEditable } from '@/ability/ability'
 
-import EventDialog from '@/components/Rete/EventDialog.vue'
-import { getMeta } from '@/api/v1/meta'
 async function sleep(time) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -72,7 +65,6 @@ async function sleep(time) {
 }
 export default {
   components: {
-    EventDialog,
     KnightSetupDialog,
     SpaceDialog,
     KnightDataDialog
@@ -86,11 +78,6 @@ export default {
       space: { callback: null },
       id: parseInt(this.$route.query.id),
       verse: null,
-      event: {
-        node: null,
-        meta_id: -1,
-        uuid: null
-      }
     }
   },
 
@@ -127,7 +114,6 @@ export default {
     }
     //初始化数据
     await editor.setup(data)
-    await this.slots(data)
     await this.arrange()
 
     if (!this.saveable) {
@@ -204,37 +190,13 @@ export default {
       }
     },
 
-    async _updateKnightMetaEvent(data, meta_id) {
-     /* const response = await getMeta( meta_id)
-      if (response.data.events) {
-        const events = JSON.parse(response.data.events)
-
-        if (events) {
-          events.inputs.forEach(item => {
-            item.uuid = uuidv4()
-          })
-          events.outputs.forEach(item => {
-            item.uuid = uuidv4()
-          })
-          await editor.loadEvent(data.uuid, data.event_node, {
-            inputs: events.inputs,
-            outputs: events.outputs
-          })
-
-          data.event_node = await manager.rebuild(
-            data.event_node,
-            events.inputs,
-            events.outputs
-          )
-        }
-      }*/
-    },
+   
     clearKnight() {
       this.knight.callback = null
     },
     async knightSelect({ data,setup }) {
    
-      const node = await editor.addModule({
+       await editor.addModule({
         meta_id : data.id,
         data : JSON.stringify(setup)
       })
@@ -256,33 +218,7 @@ export default {
         this.verse.metas.splice(index, 1)
       }
     },
-    async _doMetaEvent(id) {
-      if (this.saveable) {
-        const meta = this.verse.metas.find(item => {
-          if (item.id === id) {
-            return true
-          }
-          return false
-        })
-
-        if (meta) {
-          this.event.node = meta.event_node
-          this.event.uuid = meta.uuid
-          this.$refs.dialog.open()
-        }
-      }
-    },
-
-    async postEvent({ uuid, node, inputs, outputs }) {
-      if (this.saveable) {
-        await editor.loadEvent(uuid, node, {
-          inputs,
-          outputs
-        })
-        this.node = await manager.rebuild(node, inputs, outputs)
-      }
-      this.$refs.dialog.close()
-    },
+   
 
     async save() {
      
@@ -290,14 +226,7 @@ export default {
       const verse_id = this.id
 
       if (self.saveable) {
-        //const list = await editor.saveEvent()
-
-      //  const response = await getVerse(this.id, 'metas, share')
-
-        //this.verse = response.data
-        //await manager.saveLinked(this.verse, list)
-
-       // await editor.removeLinked()
+      
         const data = await editor.save()
       
         await putVerse(verse_id, {
@@ -313,50 +242,10 @@ export default {
     },
 
     async arrange() {
-      //await editor.removeLinked()
       await editor.arrange()
       await sleep(300)
-     /* const data = await manager.loadLinked(this.verse)
-
-      for (let i = 0; i < data.length; ++i) {
-        const item = data[i]
-        await editor.addLinked(item)
-      }*/
+  
       await editor.arrange()
-    },
-
-    async slots(data) {
-
-      return false;
-      for (let i = 0; i < data.children.metas.length; ++i) {
-        const node = data.children.metas[i]
-
-        const meta = this.verse.metas.find(item => {
-          if (item.id === node.parameters.id) {
-            return true
-          }
-          return false
-        })
-
-        if (meta) {
-          await editor.addEventNode(meta.event_node, node.parameters.uuid)
-        }
-      }
-
-      for (let i = 0; i < data.children.modules.length; ++i) {
-        const node = data.children.modules[i]
-
-        const modules = this.verse.modules.find(item => {
-          if (item.id === node.parameters.id) {
-            return true
-          }
-          return false
-        })
-
-        if (modules) {
-          await editor.addEventNode(modules.event_node, node.parameters.uuid)
-        }
-      }
     }
   },
 

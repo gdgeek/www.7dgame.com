@@ -64,8 +64,9 @@ function SidebarComponent(editor) {
 
 			// 创建下拉框
 			const select = new UISelect().setWidth('100px');
-			select.setOptions({ // 设置下拉框的选项
-				'Rotate': '自旋转'
+			select.setOptions({
+				'Rotate': '自旋转',
+				'Click': '点击触发',
 			});
 			select.setValue('Rotate');
 			select.onChange(function () { // 下拉框选项改变时触发的事件

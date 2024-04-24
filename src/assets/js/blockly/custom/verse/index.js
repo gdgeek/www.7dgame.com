@@ -8,7 +8,7 @@ import TaskArray from './task_array.js'
 import TaskCricle from './task_circle.js'
 import LoadLevel from './load_level.js'
 import UnloadLevel from './unload_level.js'
-import Anchor from './anchor.js'
+//import Anchor from './anchor.js'
 import Rectangle from './rectangle.js'
 import NumberParameter from './number_parameter.js'
 import BooleanParameter from './boolean_parameter.js'
@@ -31,7 +31,7 @@ const VerseCategory = {
     //EventWithParameter.toolbox,
     //  Start.toolbox,
     Sleep.toolbox,
-    Anchor.toolbox,
+    //Anchor.toolbox,
     NumberParameter.toolbox,
     BooleanParameter.toolbox,
     StringParameter.toolbox,
@@ -55,7 +55,7 @@ function VerseRegister(parameters) {
   RegisterData(LoadLevel, parameters)
   RegisterData(UnloadLevel, parameters)
   RegisterData(Sleep, parameters)
-  RegisterData(Anchor, parameters)
+  //RegisterData(Anchor, parameters)
   RegisterData(NumberParameter, parameters)
   RegisterData(BooleanParameter, parameters)
   RegisterData(StringParameter, parameters)

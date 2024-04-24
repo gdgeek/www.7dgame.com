@@ -18,7 +18,7 @@ const block = {
           type: 'field_dropdown',
           name: 'Event',
           options: function () {
-            const events = resource.events
+            const events = []//resource.events
             let opt = [['none', '']]
             events.forEach(item => {
               opt.push([item.title, item.uuid])

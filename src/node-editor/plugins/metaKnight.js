@@ -50,7 +50,7 @@ function install(editor, options) {
           id = data.id
           component.controls.get('id').setValue(id)
           component.controls.get('uuid').setValue(uuid)
-          options.root._updateKnightMetaEvent(data, component.data['meta_id'])
+          // options.root._updateKnightMetaEvent(data, component.data['meta_id'])
           setTimeout(() => {
             component.controls.get('meta_id').$emit('setId', id)
           })

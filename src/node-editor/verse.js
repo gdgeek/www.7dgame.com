@@ -95,6 +95,7 @@ const setup = async function (data) {
     editor_.silent = false
   }, 250)
 }
+/*
 const loadEvent = async function (uuid, oldValue, newValue) {
   const node = getNodeByUUID({ uuid })
 
@@ -182,6 +183,7 @@ const loadEvent = async function (uuid, oldValue, newValue) {
   editor_.selectNode(node)
   editor_.selected.clear()
 }
+*/
 const getNodeByUUID = function ({ uuid }) {
   const node = editor_.nodes.find(item => {
     if (item.data && item.data.uuid && item.data.uuid === uuid) {
@@ -201,6 +203,7 @@ const getNodeByID = function ({ id }) {
   })
   return node
 }*/
+/*
 const removeLinked = async function () {
   const list = []
   editor_.nodes.forEach(node => {
@@ -218,6 +221,8 @@ const removeLinked = async function () {
     editor_.removeConnection(item)
   })
 }
+*/
+/*
 const addLinked = async function ({ node, linked }) {
   const n = getNodeByUUID({ uuid: node })
   if (n) {
@@ -232,6 +237,8 @@ const addLinked = async function ({ node, linked }) {
     })
   }
 }
+*/
+/*
 const addEventNode = async function (event_node, uuid) {
   if (!event_node) {
     return
@@ -257,7 +264,7 @@ const addEventNode = async function (event_node, uuid) {
     editor_.selectNode(node)
     editor_.selected.clear()
   }
-}
+}*/
 const banKnight = function () {
   const nodes = editor_.nodes.filter(n => {
     if (n.name.toLowerCase() === 'knight') {
@@ -371,8 +378,8 @@ export default {
   save,
   saveEvent,
   addModule,
-  addEventNode,
-  addLinked,
-  removeLinked,
-  loadEvent
+  //addEventNode,
+  //addLinked,
+  //removeLinked,
+  //loadEvent
 }

@@ -61,6 +61,7 @@ export default {
     resource() {
       const inputs = []
       const nodes = []
+      /*
       this.verse.metas.forEach(meta => {
         if (!meta.event_node) {
           return
@@ -73,8 +74,8 @@ export default {
             uuid: input.uuid
           })
         })
-      })
-      this.verse.modules.forEach(module => {
+      })*/
+      /*this.verse.modules.forEach(module => {
         if (!module.event_node) {
           return
         }
@@ -86,12 +87,13 @@ export default {
             uuid: input.uuid
           })
         })
-      })
+      })*/
+      /*
       const anchors = JSON.parse(this.verse.data).children.anchors
       return {
         events: inputs,
         anchors
-      }
+      }*/
     },
     saveable() {
       if (this.script === null) {
@@ -134,9 +136,9 @@ export default {
     this.verse = verseResponse.data
     console.log(this.verse.data)
     const data = JSON.parse(this.verse.data)
-    data.children.metas.forEach(meta => {
+    /*data.children.metas.forEach(meta => {
       this.titles.set(meta.parameters.uuid, meta.parameters.title)
-    })
+    })*/
 
     data.children.modules.forEach(module => {
       this.titles.set(module.parameters.uuid, module.parameters.title)
