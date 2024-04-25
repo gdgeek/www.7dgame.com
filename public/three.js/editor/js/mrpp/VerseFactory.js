@@ -1,8 +1,5 @@
 import * as THREE from 'three'
 
-import { GLTFLoader } from '../../../examples/jsm/loaders/GLTFLoader.js'
-import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
-import { VOXLoader, VOXMesh } from '../../../examples/jsm/loaders/VOXLoader.js'
 import { Factory } from './Factory.js'
 class VerseFactory extends Factory {
 	constructor() {
