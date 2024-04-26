@@ -80,7 +80,7 @@ class MetaFactory extends Factory {
 				url,
 				function (chunks) {
 					const chunk = chunks[0]
-					const mesh = new VOXMesh(chunk, 0.005)
+					const mesh = new VOXMesh(chunk)
 
 					//mesh.scale.set(0.005, 0.005, 0.005)
 					resolve(mesh)
