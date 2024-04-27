@@ -3,7 +3,7 @@ import Blockly from 'blockly'
 import TriggerType from './type'
 
 const data = {
-  name: 'action_trigger'
+  name: 'meta_action'
 }
 const block = {
   title: data.name,
@@ -56,7 +56,8 @@ const block = {
 
 
       var code =
-        "meta['@" + dropdown_option + "'] = function(index) \n\
+        "meta['@" + dropdown_option + "'] = function(idx) \n\
+  index = idx\n\
   is_playing = true\n\
   print('" + dropdown_option + "')\n\
 " + statements_content + '\n\

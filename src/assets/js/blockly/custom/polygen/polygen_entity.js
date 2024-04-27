@@ -45,7 +45,7 @@ const block = {
   getLua({ index }) {
     const lua = function (block) {
       var dropdown_polygen = block.getFieldValue('Polygen')
-      return [Helper.handler(index, dropdown_polygen), Blockly.Lua.ORDER_NONE]
+      return [Helper.handler(dropdown_polygen), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

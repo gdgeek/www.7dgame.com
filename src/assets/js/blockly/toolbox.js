@@ -10,6 +10,7 @@ import { TextCategory } from '@/assets/js/blockly/custom/text'
 import { EntityCategory } from '@/assets/js/blockly/custom/entity'
 import { PolygenCategory } from '@/assets/js/blockly/custom/polygen'
 import { DataCategory } from '@/assets/js/blockly/custom/data'
+import { MetaCategory } from '@/assets/js/blockly/custom/meta'
 import { TriggerCategory } from '@/assets/js/blockly/custom/trigger'
 import { ExecuteCategory } from '@/assets/js/blockly/custom/execute'
 import { TaskCategory } from '@/assets/js/blockly/custom/task'
@@ -47,6 +48,7 @@ export default {
 
     sep,
     DataCategory,
+    MetaCategory,
     TriggerCategory,
     EventCategory,
     TaskCategory,

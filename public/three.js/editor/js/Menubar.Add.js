@@ -34,11 +34,13 @@ function MenubarAdd(editor) {
 	if (editor.type.toLowerCase() == 'meta') {
 
 		editor.signals.messageReceive.add(async function (message) {
-			if (message.action === 'add') {
+
+			if (message.action === 'load_resource') {
 
 				resources.set(message.data.id, message.data)
 
 				const data = builder.resource(message.data)
+				alert(data)
 				if (data != null) {
 					const node = await factory.building(data, resources);
 					if (node != null) {
@@ -96,7 +98,7 @@ function MenubarAdd(editor) {
 		option.setClass('option');
 		option.setTextContent("音频");
 		option.onClick(async function () {
-			editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'sound' } });
+			editor.signals.messageSend.dispatch({ action: 'load_resource', data: { type: 'audio' } });
 		});
 		options.add(option);
 

@@ -1,5 +1,5 @@
-function handler(index, uuid) {
-  return "_G.helper.handler('" + index + "', '" + uuid + "')"
+function handler(uuid) {
+  return "_G.helper.handler(index, '" + uuid + "')"
 }
 function input_event(index, uuid) {
   return "_G.helper.input_event('" + index + "', '" + uuid + "')"

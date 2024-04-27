@@ -48,7 +48,7 @@ const block = {
       // TODO: Assemble Lua into code variable.
       // var code =
       // TODO: Change ORDER_NONE to the correct strength.
-      return [Helper.handler(index, dropdown_text), Blockly.Lua.ORDER_NONE]
+      return [Helper.handler(dropdown_text), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

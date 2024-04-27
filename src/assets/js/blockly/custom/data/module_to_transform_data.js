@@ -43,7 +43,7 @@ const block = {
       // var code = 'CS.UnityEngine.Vector3()'
       // TODO: Change ORDER_NONE to the correct strength.
       return [code, Blockly.Lua.ORDER_NONE]
-      return [Helper.handler(index, dropdown), Blockly.Lua.ORDER_NONE]
+      return [Helper.handler(dropdown), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

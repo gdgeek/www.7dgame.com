@@ -1,6 +1,7 @@
 import { EntityRegister } from '@/assets/js/blockly/custom/entity'
 import { DataRegister } from '@/assets/js/blockly/custom/data'
 import { TriggerRegister } from '@/assets/js/blockly/custom/trigger'
+import { MetaRegister } from '@/assets/js/blockly/custom/meta'
 import { ExecuteRegister } from '@/assets/js/blockly/custom/execute'
 import { TaskRegister } from '@/assets/js/blockly/custom/task'
 import { TextRegister } from '@/assets/js/blockly/custom/text'
@@ -13,6 +14,7 @@ import { VoxelRegister } from '@/assets/js/blockly/custom/voxel'
 import { EventRegister } from '@/assets/js/blockly/custom/event'
 
 function AddBlocks(parameters) {
+  MetaRegister(parameters)
   TriggerRegister(parameters)
   EntityRegister(parameters)
   PolygenRegister(parameters)

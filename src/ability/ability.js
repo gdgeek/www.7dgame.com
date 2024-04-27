@@ -79,7 +79,7 @@ export function UpdateAbility($ability, roles, userId) {
       '/verse/rete-verse',
       '/verse/verse-script',
       '/meta/rete-meta',
-      '/meta/cyber'
+      '/meta/script'
     ])
     menu = menu.concat([
       '/site/logout',

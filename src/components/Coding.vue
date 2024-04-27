@@ -211,7 +211,7 @@ export default {
     handleClick(tab, event) {
       if (this.activeName === 'script') {
         this.script =
-          'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
+          'local meta = {}\nindex = \'\'\n' + Blockly.Lua.workspaceToCode(this.workspace)
       }
       console.log(tab, event)
     },
@@ -225,7 +225,7 @@ export default {
 
       try {
         const script =
-          'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
+           'local meta = {}\nindex = \'\'\n' + Blockly.Lua.workspaceToCode(this.workspace)
 
         const response = await putCyber(this.cyber.id, {
           data: JSON.stringify(data),

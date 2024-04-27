@@ -36,7 +36,7 @@ class Builder {
 			case 'polygen':
 				ret = this.node("Polygen", "Polygen");
 				break;
-			case 'sound':
+			case 'audio':
 				ret = this.node("Sound", "Sound");
 				break;
 			case 'video':
