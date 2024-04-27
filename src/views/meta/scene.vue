@@ -112,11 +112,11 @@ export default {
     },
     async handleMessage(e) {
       const self = this
-      console.error(e.data)
+      const data = e.data
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
           case 'save':
-            self.saveMeta(e.data.data)
+            self.saveMeta(data)
             break
           case 'load_resource':
             this.loadResource(e.data.data)
@@ -180,7 +180,7 @@ export default {
         ]
       })
     },
-    async saveMeta(meta) {
+    async saveMeta({ data, events }) {
       if (!this.saveable) {
         this.$message({
           type: 'info',
@@ -188,8 +188,7 @@ export default {
         })
         return
       }
-     // alert(123)
-      await putMeta(this.id, { data: meta })
+      await putMeta(this.id, { data, events })
       this.$message({
         type: 'success',
         message: '保存成功!'

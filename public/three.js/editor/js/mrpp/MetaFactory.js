@@ -281,6 +281,7 @@ class MetaFactory extends Factory {
 			}
 		})
 		node.components = data.children.components
+
 		node.userData = userData
 		for (let i = 0; i < data.children.entities.length; ++i) {
 			const child = await this.building(data.children.entities[i], resources)

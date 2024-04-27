@@ -39,14 +39,10 @@ function SidebarMeta(editor) {
 	const top = new UIRow();
 	container.add(top);
 
-	const componentsContainer = new UIRow();
-	container.add(componentsContainer);
 
 	function update() {
 		top.clear();
 		top.setDisplay('none');
-		componentsContainer.clear();
-		componentsContainer.setDisplay('none');
 		const object = editor.selected;
 
 		if (object === null) {
@@ -97,9 +93,6 @@ function SidebarMeta(editor) {
 
 	});
 
-	signals.componentAdded.add(update);
-	signals.componentRemoved.add(update);
-	signals.componentChanged.add(update);
 
 	return container;
 

@@ -7,7 +7,7 @@ function MetaLoader(editor) {
 		if (object.userData.type != undefined) {
 			return true;
 		}
-		return false;
+		return true;
 	}
 
 	const self = this
@@ -64,7 +64,8 @@ function MetaLoader(editor) {
 
 		const data = {
 			action: 'save',
-			data: JSON.stringify(meta)
+			data: JSON.stringify(meta),
+			events: JSON.stringify(editor.scene.events)
 		}
 
 		editor.signals.messageSend.dispatch(data)
@@ -155,6 +156,11 @@ function MetaLoader(editor) {
 			scene = new THREE.Scene();
 			scene.name = "Scene"
 			editor.setScene(scene)
+		}
+		if (meta.events == null) {
+			scene.events = {}
+		} else {
+			scene.events = JSON.parse(meta.events)
 		}
 
 		editor.signals.sceneGraphChanged.dispatch()
