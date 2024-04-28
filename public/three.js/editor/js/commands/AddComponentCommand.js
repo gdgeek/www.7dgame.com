@@ -46,7 +46,7 @@ class AddComponentCommand extends Command {
 
 		}
 
-		this.editor.signals.componentAdded.dispatch(this.component);
+		this.editor.signals.componentRemoved.dispatch(this.component);
 
 	}
 

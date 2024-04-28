@@ -116,7 +116,7 @@ export default {
           schema:JSON.parse(response.data.data) ,
           data: JSON.parse(data),
           callback: (setup) => {
-            alert('!!!')
+          //  alert('!!!')
             this.postMessage({
               action: 'setup-module',
               data: { uuid, setup }

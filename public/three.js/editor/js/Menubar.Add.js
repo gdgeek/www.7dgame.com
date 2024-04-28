@@ -40,7 +40,7 @@ function MenubarAdd(editor) {
 				resources.set(message.data.id, message.data)
 
 				const data = builder.resource(message.data)
-				alert(message.data)
+				//alert(message.data)
 				if (data != null) {
 					const node = await factory.building(data, resources);
 					if (node != null) {
@@ -127,7 +127,7 @@ function MenubarAdd(editor) {
 				const setup = message.data.setup;
 
 				console.error(data)
-				alert(data.resources)
+				//alert(data.resources)
 				if (data.resources) {
 					data.resources.forEach(resource => {
 						resources.set(resource.id, resource)

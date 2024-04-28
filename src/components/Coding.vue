@@ -104,12 +104,20 @@ export default {
         text: [],
         sound: [],
         entity: [],
-        input: [],
-        output: []
+        events: {
+          inputs: [],
+          outputs: [],
+        },
       }
-      if (meta.event_node) { 
-        ret.input = meta.event_node.inputs
-        ret.output = meta.event_node.outputs
+      ret.events = JSON.parse(meta.events)
+      if(!ret.events) {
+        ret.events = {}
+      }
+      if(!ret.events.inputs) {
+        ret.events.inputs = []
+      }
+      if(!ret.events.outputs) {
+        ret.events.outputs = []
       }
       this.addMetaData(data, ret)
       return ret

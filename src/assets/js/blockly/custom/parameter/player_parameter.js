@@ -1,9 +1,9 @@
 import Blockly from 'blockly'
 import EventType from './type'
-
 import Helper from '../helper'
+import Argument from '../argument'
 const data = {
-  name: 'output_event'
+  name: 'player_parameter'
 }
 const block = {
   title: data.name,
@@ -12,27 +12,31 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '输出事件 %1',
+      message0: '玩家 %1 ,参数 %2',
       args0: [
         {
           type: 'field_dropdown',
-          name: 'Output',
-          options: function () {
-            const output = resource.events.outputs
-            let opt = [['none', '']]
-            output.forEach(({ title, uuid }) => {
-              opt.push([title, uuid])
-            })
-            return opt
-          }
+          name: 'PlayerType',
+          options: [
+            ['索引', 'index'],
+            ['Id', 'id'],
+            ['服务器', 'server'],
+            ['随机客户', 'random_client']
+          ]
+        },
+        {
+          type: 'input_value',
+          name: 'Player',
+          check: 'Number'
         }
       ],
-      previousStatement: null,
-      nextStatement: null,
+      inputsInline: true,
+      output: 'Parameter',
       colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
     }
+
     return json
   },
   getBlock: function (parameters) {
@@ -44,15 +48,17 @@ const block = {
     }
     return data
   },
-  getLua({ index }) {
+  getLua() {
     const lua = function (block) {
-      var output_event = block.getFieldValue('Output')
+      var type = block.getFieldValue('PlayerType')
 
-      // TODO: Assemble Lua into code variable.
-      var code =
-        "_G.event.trigger(index,'" + output_event + "')\n"
+      var id = Blockly.Lua.valueToCode(
+        block,
+        'Player',
+        Blockly.Lua.ORDER_ATOMIC
+      )
 
-      return code
+      return [Argument.player(type, id), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

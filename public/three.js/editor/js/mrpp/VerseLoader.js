@@ -147,11 +147,6 @@ function VerseLoader(editor) {
 			}
 
 
-			//alert(JSON.stringify(userData))
-			//const entity = self.writeEntity(node);
-			//if (entity != null) {
-			//		entities.push(entity)
-			//	}
 		})
 		data.children = { modules }
 		console.error(data)

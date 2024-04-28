@@ -212,8 +212,11 @@ export default {
         this.sorted,
         this.searched,
         this.pagination.current,
-        'image,author'
+        'image,author',
+        0
       )
+      
+      console.error(response.data)
       this.items = response.data
     }
   },

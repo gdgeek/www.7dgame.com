@@ -1,8 +1,9 @@
 import Blockly from 'blockly'
 import EventType from './type'
+
 import Helper from '../helper'
 const data = {
-  name: 'sleep'
+  name: 'run_task'
 }
 const block = {
   title: data.name,
@@ -11,16 +12,17 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '休眠： %1 秒',
+      message0: '启动任务 %1',
       args0: [
         {
           type: 'input_value',
-          name: 'Time',
-          check: 'Number'
+          name: 'content',
+          check: 'Task'
         }
       ],
-      inputsInline: true,
-      output: 'Task',
+
+      previousStatement: null,
+      nextStatement: null,
       colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
@@ -36,14 +38,20 @@ const block = {
     }
     return data
   },
-  getLua() {
+  getLua({ index }) {
     const lua = function (block) {
-      var time = Blockly.Lua.valueToCode(block, 'Time', Blockly.Lua.ORDER_NONE)
+      var generator = Blockly.Lua
 
-      // TODO: Assemble Lua into code variable.
-      var code = null
-      code = '_G.task.sleep(' + time + ')'
-      return [code, Blockly.Lua.ORDER_NONE]
+      var statements_content = generator.valueToCode(
+        block,
+        'content',
+        Blockly.Lua.ORDER_NONE
+      )
+
+      // var dropdown_option = block.getFieldValue('Action')
+      var execute = '_G.task.execute(' + statements_content + ')\n'
+
+      return execute
     }
     return lua
   },

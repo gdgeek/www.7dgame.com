@@ -87,7 +87,7 @@ export default {
      
     },
     selectResources(data) {
-      alert(123)
+    //  alert(123)
       console.error(data)
       this.postMessage({
                 action: 'load_resource',

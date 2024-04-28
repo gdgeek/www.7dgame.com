@@ -3,7 +3,7 @@ import EventType from './type'
 
 import Helper from '../helper'
 const data = {
-  name: 'output_event'
+  name: 'event'
 }
 const block = {
   title: data.name,
@@ -12,16 +12,16 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '输出事件 %1',
+      message0: '调用消息 %1',
       args0: [
         {
           type: 'field_dropdown',
-          name: 'Output',
+          name: 'Event',
           options: function () {
-            const output = resource.events.outputs
+            const events = resource.events.inputs
             let opt = [['none', '']]
-            output.forEach(({ title, uuid }) => {
-              opt.push([title, uuid])
+            events.forEach(item => {
+              opt.push([item.title, item.uuid])
             })
             return opt
           }
@@ -46,11 +46,10 @@ const block = {
   },
   getLua({ index }) {
     const lua = function (block) {
-      var output_event = block.getFieldValue('Output')
+      var event = block.getFieldValue('Event')
 
       // TODO: Assemble Lua into code variable.
-      var code =
-        "_G.event.trigger(index,'" + output_event + "')\n"
+      var code = '_G.helper.exe_event(' + JSON.stringify(event) + ')\n'
 
       return code
     }

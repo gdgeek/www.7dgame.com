@@ -6,7 +6,6 @@ import { ActionComponent } from './components/ActionComponent.js'
 class ComponentContainer {
 
   static Create(type) {
-    alert(type)
     switch (type.toLowerCase()) {
       case 'rotate':
         return RotateComponent.Create();
@@ -24,7 +23,6 @@ class ComponentContainer {
         this.handler = new RotateComponent(editor, object, component)
         break;
       case 'action':
-        // alert("action")
         this.handler = new ActionComponent(editor, object, component)
         break;
       default:

@@ -118,7 +118,6 @@ export default {
           self.progress(1, 1)
 
           const response = await postFile(data)
-          //alert(data.filename)
           self.$emit('saveResource', data.filename, response.data.id, () => {
             self.progress(2, 1)
           })

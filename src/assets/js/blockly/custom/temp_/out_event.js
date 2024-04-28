@@ -1,9 +1,9 @@
 import Blockly from 'blockly'
+
 import EventType from './type'
 
-import Helper from '../helper'
 const data = {
-  name: 'event'
+  name: 'input_event'
 }
 const block = {
   title: data.name,
@@ -11,31 +11,36 @@ const block = {
   colour: EventType.colour,
   getBlockJson({ resource }) {
     const json = {
-      type: 'block_type',
-      message0: '调用 %1',
+      type: data.name,
+      message0: '输入事件 %1 %2 %3',
       args0: [
         {
           type: 'field_dropdown',
           name: 'Event',
           options: function () {
-            const events = []//resource.events
+            // const input = resource.input
             let opt = [['none', '']]
-            events.forEach(item => {
-              opt.push([item.title, item.uuid])
+            input.forEach(({ title, uuid }) => {
+              opt.push([title, uuid])
             })
             return opt
           }
+        },
+        {
+          type: 'input_dummy'
+        },
+        {
+          type: 'input_statement',
+          name: 'content'
         }
       ],
-      previousStatement: null,
-      nextStatement: null,
       colour: EventType.colour,
       tooltip: '',
       helpUrl: ''
     }
     return json
   },
-  getBlock: function (parameters) {
+  getBlock(parameters) {
     const data = {
       init: function () {
         const json = block.getBlockJson(parameters)
@@ -44,12 +49,22 @@ const block = {
     }
     return data
   },
-  getLua({ index }) {
+  getLua(parameters) {
     const lua = function (block) {
-      var event = block.getFieldValue('Event')
-
+      var dropdown_option = block.getFieldValue('Event')
+      var statements_content = Blockly.Lua.statementToCode(block, 'content')
       // TODO: Assemble Lua into code variable.
-      var code = '_G.helper.exe_event(' + JSON.stringify(event) + ')\n'
+      var code = '..'
+
+      var code =
+        "meta['#" + dropdown_option + "'] = function(parameter) \n\
+  is_playing = true\n\
+  print('" +
+        dropdown_option +
+        "')\n" +
+        statements_content +
+        '  is_playing = false\n\
+end\n'
 
       return code
     }
@@ -60,4 +75,5 @@ const block = {
     type: data.name
   }
 }
+
 export default block

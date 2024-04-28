@@ -83,6 +83,11 @@ function Editor() {
 		componentRemoved: new Signal(),
 
 
+		eventAdded: new Signal(),
+		eventChanged: new Signal(),
+		eventRemoved: new Signal(),
+
+
 		windowResize: new Signal(),
 
 		showGridChanged: new Signal(),

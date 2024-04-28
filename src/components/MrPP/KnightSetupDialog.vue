@@ -237,7 +237,7 @@ export default {
     doSelect(data) {
     
       if (data.custom === 1) {
-        alert(data)
+       // alert(data)
        this.$emit('selected', { data })
         this.dialogVisible = false
      } else {

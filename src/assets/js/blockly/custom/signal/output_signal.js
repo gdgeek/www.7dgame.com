@@ -3,7 +3,7 @@ import EventType from './type'
 
 import Helper from '../helper'
 const data = {
-  name: 'output_event'
+  name: 'output_signal'
 }
 const block = {
   title: data.name,
@@ -12,16 +12,16 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       type: 'block_type',
-      message0: '输出事件 %1',
+      message0: '触发信号 %1',
       args0: [
         {
           type: 'field_dropdown',
           name: 'Output',
           options: function () {
-            const output = resource.events.outputs
+            const output = resource.events.inputs
             let opt = [['none', '']]
-            output.forEach(({ title, uuid }) => {
-              opt.push([title, uuid])
+            output.forEach(({ title, index, uuid }) => {
+              opt.push([title, index + ':' + uuid])
             })
             return opt
           }
@@ -50,7 +50,7 @@ const block = {
 
       // TODO: Assemble Lua into code variable.
       var code =
-        "_G.event.trigger(index,'" + output_event + "')\n"
+        "_G.helper.trigger_signal('" + output_event + "')\n"
 
       return code
     }
@@ -61,4 +61,17 @@ const block = {
     type: data.name
   }
 }
+/*
+<value name="boom">
+<shadow  type="vector3_data">
+<value name="X">
+<shadow type="math_number">
+<field name="NUM">20</field>
+</shadow></value><value name="Y">
+<shadow type="math_number">
+<field name="NUM">0</field></shadow></value>
+<value name="Z"><shadow type="math_number">
+<field name="NUM">0</field></shadow></value>
+</shadow></value>
+ */
 export default block

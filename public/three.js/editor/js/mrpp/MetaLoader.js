@@ -158,7 +158,7 @@ function MetaLoader(editor) {
 			editor.setScene(scene)
 		}
 		if (meta.events == null) {
-			scene.events = {}
+			scene.events = { inputs: [], outputs: [] };
 		} else {
 			scene.events = JSON.parse(meta.events)
 		}

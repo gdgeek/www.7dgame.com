@@ -1,11 +1,13 @@
 import request from '@/utils/request'
 
+import { v4 as uuidv4 } from 'uuid'
 import environment from '@/environment.js'
 var qs = require('querystringify')
 var path = require('path')
 
 export function postVerse(data) {
   data.version = environment.version
+  data.uuid = data.uuid || uuidv4()
   return request({
     url: path.join('v1', 'verses'),
     method: 'post',

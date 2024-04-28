@@ -5,8 +5,10 @@ import Texts from '@/assets/js/blockly/texts'
 import List from '@/assets/js/blockly/list'
 import Colour from '@/assets/js/blockly/colour'
 
-import { VerseCategory } from '@/assets/js/blockly/custom/verse'
+import { TaskCategory } from '@/assets/js/blockly/custom/task/index'
+import { SignalCategory } from '@/assets/js/blockly/custom/signal'
 
+import { ParameterCategory } from '../custom/parameter'
 const sep = {
   kind: 'sep'
 }
@@ -34,11 +36,12 @@ export default {
     Colour,
 
     sep,
+    TaskCategory,
+    ParameterCategory,
     /* DataCategory,
     TriggerCategory,*/
-    VerseCategory,
+    SignalCategory,
     //ExecuteCategory,
-    sep,
     sep,
 
     Variable,

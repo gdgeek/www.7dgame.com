@@ -1,7 +1,11 @@
-import { VerseRegister } from '@/assets/js/blockly/custom/verse'
+import { SignalRegister } from '@/assets/js/blockly/custom/signal'
+import { TaskRegister } from '../custom/task'
+import { ParameterRegister } from '../custom/parameter'
 
 function AddBlocks(parameters) {
-  VerseRegister(parameters)
+  SignalRegister(parameters)
+  TaskRegister(parameters)
+  ParameterRegister(parameters)
   /*EntityRegister(parameters)
   PolygenRegister(parameters)
   DataRegister(parameters)
