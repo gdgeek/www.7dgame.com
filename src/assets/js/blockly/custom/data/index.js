@@ -12,7 +12,7 @@ const DataCategory = {
   contents: [
     Vector3Data.toolbox,
     TransformData.toolbox,
-    ModuleToTransformData.toolbox
+    //ModuleToTransformData.toolbox
   ]
 }
 
@@ -24,6 +24,6 @@ function RegisterData(data, parameters) {
 function DataRegister(parameters) {
   RegisterData(Vector3Data, parameters)
   RegisterData(TransformData, parameters)
-  RegisterData(ModuleToTransformData, parameters)
+  //RegisterData(ModuleToTransformData, parameters)
 }
 export { DataCategory, DataRegister }

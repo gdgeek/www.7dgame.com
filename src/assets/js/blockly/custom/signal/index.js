@@ -1,6 +1,7 @@
 import Type from './type'
 import Blockly from 'blockly'
 import OutputSignal from './output_signal'
+import OutputSignalWithParameter from './output_signal_with_parameter'
 import InputSignal from './input_signal'
 
 //import Event from './event.js'
@@ -29,6 +30,7 @@ const SignalCategory = {
   contents: [
     OutputSignal.toolbox,
     InputSignal.toolbox,
+    OutputSignalWithParameter.toolbox
     //UnloadLevel.toolbox,
     // Event.toolbox,
     //OutEvent.toolbox,
@@ -59,6 +61,8 @@ function RegisterData(data, parameters) {
 function SignalRegister(parameters) {
   RegisterData(OutputSignal, parameters)
   RegisterData(InputSignal, parameters)
+  RegisterData(OutputSignalWithParameter, parameters)
+
   //RegisterData(UnloadLevel, parameters)
   //RegisterData(Rectangle, parameters)
   //RegisterData(Task, parameters)

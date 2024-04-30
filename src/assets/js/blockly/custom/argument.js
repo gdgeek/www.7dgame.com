@@ -8,6 +8,11 @@ function string(value) {
   return '_G.argument.string(' + value + ')'
 }
 
+
+function point(value) {
+  return '_G.argument.point(' + value + ')'
+}
+
 function player(type, value) {
   switch (type) {
     case 'index':
@@ -34,5 +39,6 @@ module.exports = {
   boolean,
   range,
   anchor,
-  player
+  player,
+  point
 }
