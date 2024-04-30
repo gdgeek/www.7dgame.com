@@ -27,7 +27,7 @@
                 @click="save()"
               >
                 <font-awesome-icon icon="save" />
-                保存～
+                保存
               </el-button>
               <el-button v-else type="primary" size="mini" @click="arrange()">
                 <font-awesome-icon icon="project-diagram" />
