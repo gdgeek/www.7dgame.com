@@ -57,12 +57,12 @@ var VerseType = {
     }
   ]
 }
-
+/*
 if (env.canStory()) {
   VerseType.controls.push({
     type: 'story',
     key: 'story'
   })
 }
-
+*/
 export default VerseType
