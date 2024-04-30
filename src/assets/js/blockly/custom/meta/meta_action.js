@@ -56,8 +56,7 @@ const block = {
 
 
       var code =
-        "meta['@" + dropdown_option + "'] = function(idx) \n\
-  index = idx\n\
+        "meta['@" + dropdown_option + "'] = function(parameter) \n\
   is_playing = true\n\
   print('" + dropdown_option + "')\n\
 " + statements_content + '\n\

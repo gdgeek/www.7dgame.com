@@ -19,9 +19,10 @@ const block = {
           name: 'Output',
           options: function () {
             const output = resource.events.inputs
-            let opt = [['none', '']]
+            let opt = [['none', JSON.stringify({ index: "", uuid: "" })]]
             output.forEach(({ title, index, uuid }) => {
-              opt.push([title, index + ':' + uuid])
+              // alert(JSON.stringify({ index, uuid }))
+              opt.push([title, JSON.stringify({ index, uuid })])
             })
             return opt
           }
@@ -47,11 +48,9 @@ const block = {
   getLua({ index }) {
     const lua = function (block) {
       var output_event = block.getFieldValue('Output')
-
-      // TODO: Assemble Lua into code variable.
-      var code =
-        "_G.helper.trigger_signal('" + output_event + "')\n"
-
+      const data = JSON.parse(output_event)
+      //alert(JSON.stringify(data))
+      var code = "_G.event.signal('" + data.index + "', '" + data.uuid + "')\n"
       return code
     }
     return lua
@@ -61,17 +60,4 @@ const block = {
     type: data.name
   }
 }
-/*
-<value name="boom">
-<shadow  type="vector3_data">
-<value name="X">
-<shadow type="math_number">
-<field name="NUM">20</field>
-</shadow></value><value name="Y">
-<shadow type="math_number">
-<field name="NUM">0</field></shadow></value>
-<value name="Z"><shadow type="math_number">
-<field name="NUM">0</field></shadow></value>
-</shadow></value>
- */
 export default block
