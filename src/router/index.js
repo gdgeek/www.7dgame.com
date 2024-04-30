@@ -361,12 +361,18 @@ export const constantRoutes = [
             meta: { title: '【宇宙】' },
             component: () => import('@/views/verse/view')
           },
-
+          /*
+                    {
+                      path: 'verse-script',
+                      name: 'VerseScript',
+                      meta: { title: '脚本' },
+                      component: () => import('@/views/verse/verse-script')
+                    },*/
           {
-            path: 'verse-script',
-            name: 'VerseScript',
+            path: 'script',
+            name: 'Script',
             meta: { title: '脚本' },
-            component: () => import('@/views/verse/verse-script')
+            component: () => import('@/views/verse/script')
           },
           {
             path: 'rete-verse',

@@ -21,9 +21,31 @@ var VerseType = {
       ignore: true
     },
     {
-      type: 'space',
-      key: 'space'
-    }
+      type: 'button',
+      label: '场景',
+      title: '编辑器',
+      key: 'editor',
+      callback: function (root) {
+        root.$router.push({
+          path: '/verse/scene',
+          query: root.$route.query
+        })
+      },
+      ignore: true
+    },
+    {
+      type: 'button',
+      label: '脚本',
+      title: '编辑器',
+      key: 'blockly',
+      callback: function (root) {
+        root.$router.push({
+          path: '/verse/script',
+          query: root.$route.query
+        })
+      },
+      ignore: true
+    },
   ],
   inputs: [
 
@@ -35,6 +57,7 @@ var VerseType = {
     }
   ]
 }
+
 if (env.canStory()) {
   VerseType.controls.push({
     type: 'story',

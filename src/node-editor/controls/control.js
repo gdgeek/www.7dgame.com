@@ -17,6 +17,7 @@ import UUIDControl from './uuidControl.vue'
 import CodeControl from './codeControl.vue'
 import ButtonControl from './buttonControl.vue'
 import SpaceControl from './spaceControl.vue'
+//import ScriptControl from './scriptControl.vue'
 import StoryControl from './storyControl.vue'
 //import EventControl from './_eventControl.vue'
 
