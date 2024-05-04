@@ -97,6 +97,7 @@ export default {
 
       const ret = {
         action: [],
+        trigger: [],
         polygen: [],
         picture: [],
         video: [],

@@ -2,11 +2,7 @@ import { UIPanel, UIBreak, UIText, UIButton, UIRow, UISelect, UIInput, UIHorizon
 
 
 import { AddComponentCommand } from './commands/AddComponentCommand.js';
-import { AddScriptCommand } from './commands/AddScriptCommand.js';
-import { SetScriptValueCommand } from './commands/SetScriptValueCommand.js';
-import { RemoveScriptCommand } from './commands/RemoveScriptCommand.js';
 import { ComponentContainer } from './mrpp/ComponentContainer.js';
-//import { RemoveComponentCommand } from './commands/RemoveComponentCommand.js';
 
 function SidebarComponent(editor) {
 
@@ -67,6 +63,8 @@ function SidebarComponent(editor) {
 			select.setOptions({
 				'Rotate': '自旋转',
 				'Action': '点击触发',
+				'Moved': '可移动',
+				'Trigger': '碰撞触发',
 			});
 			select.setValue('Rotate');
 			select.onChange(function () { // 下拉框选项改变时触发的事件

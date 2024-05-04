@@ -15,6 +15,7 @@ class RotateComponent {
     const component = {
       type: 'Rotate',
       parameters: {
+        uuid: THREE.MathUtils.generateUUID(),
         speed: { x: 0, y: 0, z: 0 }
       }
     }

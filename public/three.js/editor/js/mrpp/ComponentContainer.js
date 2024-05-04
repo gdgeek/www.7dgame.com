@@ -3,6 +3,10 @@ import { RemoveComponentCommand } from '../commands/RemoveComponentCommand.js';
 
 import { RotateComponent } from './components/RotateComponent.js'
 import { ActionComponent } from './components/ActionComponent.js'
+import { MovedComponent } from './components/MovedComponent.js'
+import { TriggerComponent } from './components/TriggerComponent.js'
+
+
 class ComponentContainer {
 
   static Create(type) {
@@ -11,6 +15,10 @@ class ComponentContainer {
         return RotateComponent.Create();
       case 'action':
         return ActionComponent.Create();
+      case 'moved':
+        return MovedComponent.Create();
+      case 'trigger':
+        return TriggerComponent.Create();
     }
     // return {}
   }
@@ -24,6 +32,12 @@ class ComponentContainer {
         break;
       case 'action':
         this.handler = new ActionComponent(editor, object, component)
+        break;
+      case 'moved':
+        this.handler = new MovedComponent(editor, object, component)
+        break;
+      case 'trigger':
+        this.handler = new TriggerComponent(editor, object, component)
         break;
       default:
         console.error('ComponentContainer: Unknown component type.');

@@ -78,6 +78,7 @@ export function UpdateAbility($ability, roles, userId) {
     router = router.concat([
       '/verse/rete-verse',
       '/verse/verse-script',
+      '/verse/script',
       '/meta/rete-meta',
       '/meta/script'
     ])
