@@ -12,7 +12,7 @@
           @sort="sort"
         >
           <el-button-group :inline="true">
-            <el-button size="mini" type="primary" @click="addMeta()">
+            <el-button size="mini" type="primary" @click="addPrefab()">
               <font-awesome-icon icon="plus" />
               &nbsp;
               <span class="hidden-sm-and-down">创建【元数据】</span>
@@ -95,7 +95,7 @@
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 
 import { v4 as uuidv4 } from 'uuid'
-import { getMetas, postMeta, deleteMeta } from '@/api/v1/meta'
+import { getPrefabs, postPrefab, deletePrefab } from '@/api/v1/prefab'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
   name: 'KnightIndex',
@@ -140,7 +140,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         })
-        await deleteMeta(id)
+        await deletePrefab(id)
 
         await this.refresh()
         this.$message({
@@ -163,7 +163,7 @@ export default {
       this.searched = value
       this.refresh()
     },
-    async addMeta() {
+    async addPrefab() {
       try {
         const input = await this.$prompt('请输元数据名称', '提示(3-20个字符)', {
           confirmButtonText: '确定',
@@ -190,7 +190,7 @@ export default {
           custom: 1,
           uuid:uuidv4()
         }
-        const response = await postMeta(data)
+        const response = await postPrefab(data)
         await this.editKnight(response.data.id)
       } catch (e) {
         console.error()
@@ -208,12 +208,11 @@ export default {
       this.refresh()
     },
     async refresh() {
-      const response = await getMetas(
+      const response = await getPrefabs(
         this.sorted,
         this.searched,
         this.pagination.current,
-        'image,author',
-        0
+        'image,author'
       )
       
       console.error(response.data)
