@@ -115,13 +115,9 @@ import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
 import { v4 as uuidv4 } from 'uuid'
 
 import { getMetas, postMeta } from '@/api/v1/meta'
-import { getPrefabs } from '@/api/v1/meta'
+import { getPrefabs } from '@/api/v1/prefab'
 
-import {
-  getVerseKnights,
-  postVerseKnight,
-  deleteVerseKnight
-} from '@/api/v1/verse-knight'
+
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
   name: 'KnightDialog',
@@ -205,7 +201,6 @@ export default {
         this.prefab.pagination.current,
         'image'
       )
-
       this.prefab.items = response.data
     },
     async refreshCustom() {
