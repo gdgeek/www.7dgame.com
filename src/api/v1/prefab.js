@@ -2,6 +2,7 @@ import request from '@/utils/request'
 
 var qs = require('querystringify')
 var path = require('path')
+/*
 export function postMeta(data) {
 
   return request({
@@ -20,8 +21,8 @@ export function getMeta(id, expand = '') {
     ),
     method: 'get'
   })
-}
-export function getMetas(
+}*/
+export function getPrefabs(
   sort = '-created_at',
   search = '',
   page = 0,
@@ -44,11 +45,11 @@ export function getMetas(
   }
 
   return request({
-    url: path.join('v1', 'metas' + qs.stringify(query, true)),
+    url: path.join('v1', 'prefabs' + qs.stringify(query, true)),
     method: 'get'
   })
 }
-
+/*
 export function putMeta(id, data) {
   return request({
     url: path.join('v1', 'metas', id.toString()),
@@ -62,3 +63,4 @@ export function deleteMeta(id) {
     method: 'delete'
   })
 }
+*/

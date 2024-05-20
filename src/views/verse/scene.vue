@@ -12,7 +12,7 @@
       <el-main>
         <iframe
           id="editor"
-          :src="src"
+          :src="editor_url"
           class="content"
           height="100%"
           width="100%"
@@ -39,19 +39,23 @@ export default {
     KnightDataDialog
   },
   data() {
-    const src = path.join(
-      'three.js/editor',
-      'verse-editor.html' + qs.stringify({ id: this.$route.query.id }, true)
-    )
+   
 
     return {
-      isInit: false,
-      src
+      init: false,
+      saveable: null,
+     // src
     }
   },
   computed: {
     id() {
       return parseInt(this.$route.query.id)
+    },
+    editor_url() {
+      return path.join(
+        'three.js/editor',
+        'verse-editor.html' + qs.stringify({ id: this.id }, true)
+      )
     }
   },
   destroyed() {
@@ -91,7 +95,6 @@ export default {
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
     async selected({ data, setup }) {
-     
       this.postMessage({
         action: 'add-module',
         data: { data, setup }
@@ -104,19 +107,12 @@ export default {
       const iframe = document.getElementById('editor')
       iframe.contentWindow.postMessage(data, '*')
     },
-    saveable(verse) {
-      if (verse === null) {
-        return false
-      }
-      return this.$can('editable', new AbilityEditable(verse.editable))
-    },
     setupMeta({ meta_id, data, uuid }) {
       getMeta(meta_id).then(response => {
         this.$refs.knightData.open({
-          schema:JSON.parse(response.data.data) ,
+          schema:JSON.parse(response.data.data),
           data: JSON.parse(data),
           callback: (setup) => {
-          //  alert('!!!')
             this.postMessage({
               action: 'setup-module',
               data: { uuid, setup }
@@ -165,25 +161,30 @@ export default {
 
             break
           case 'ready':
-            if (self.isInit == false) {
-              self.isInit = true
-              const verse = await getVerse(this.id)
-             
+            if (this.init == false) {
+              this.init = true
+              const response = await getVerse(this.id)
+              const verse = response.data
+              if (verse) {
+                this.saveable = this.$can('editable', new AbilityEditable(verse.editable))
+              } else { 
+                this.saveable = false
+              }
+
               const data = {
                 action: 'load',
                 id: this.id,
-                data: verse.data,
-                saveable: this.saveable(verse.data)
+                data: verse,
+                saveable: this.saveable
               }
-              console.error(data)
-              self.postMessage(data)
+              this.postMessage(data)
             }
             break
         }
       }
     },
     async saveVerse(verse) {
-      if (!this.saveable(JSON.parse(verse))) {
+      if (!this.saveable) {
         this.$message({
           type: 'info',
           message: '没有保存权限!'

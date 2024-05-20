@@ -269,7 +269,7 @@ export default {
     },
     comeIn() {
       const self = this
-      self.$router.push({ path: '/verse/rete-verse', query: { id: self.id } })
+      self.$router.push({ path: '/verse/scene', query: { id: self.id } })
     }
   }
 }

@@ -115,6 +115,8 @@ import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
 import { v4 as uuidv4 } from 'uuid'
 
 import { getMetas, postMeta } from '@/api/v1/meta'
+import { getPrefabs } from '@/api/v1/meta'
+
 import {
   getVerseKnights,
   postVerseKnight,
@@ -197,12 +199,11 @@ export default {
       this.dialogVisible = true
     },
     async refreshPrefab() {
-      const response = await getMetas(
+      const response = await getPrefabs(
         this.prefab.sorted,
         this.prefab.searched,
         this.prefab.pagination.current,
-        'image',
-        0
+        'image'
       )
 
       this.prefab.items = response.data
@@ -212,8 +213,7 @@ export default {
         this.custom.sorted,
         this.custom.searched,
         this.custom.pagination.current,
-        'image',
-        1
+        'image'
       )
 
       this.prefab.items = response.data
