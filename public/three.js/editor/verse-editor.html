@@ -88,6 +88,7 @@
 		editor.signals.messageSend.add(function (data) {
 			data.from = 'mrpp-editor';
 			data.verify = 'mrpp.com';
+			alert(JSON.stringify(data))
 			window.parent.postMessage(data, '*')
 		});
 
@@ -234,6 +235,7 @@
 
 		const loader = new VerseLoader(editor)
 		editor.signals.messageReceive.add(async function (data) {
+
 			if (data.action == 'load') {
 				loader.load(data.data)
 			}

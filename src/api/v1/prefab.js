@@ -5,28 +5,28 @@ var path = require('path')
 
 export function deletePrefab(id) {
   return request({
-    url: path.join('v1', 'metas', id.toString()),
+    url: path.join('v1', 'prefabs', id.toString()),
     method: 'delete'
   })
 }
 export function postPrefab(data) {
   return request({
-    url: path.join('v1', 'metas'),
+    url: path.join('v1', 'prefabs'),
     method: 'post',
     data
   })
 }
-/*
-export function getMeta(id, expand = '') {
+
+export function getPrefab(id, expand = '') {
   return request({
     url: path.join(
       'v1',
-      'metas',
+      'prefabs',
       id.toString() + qs.stringify({ expand: expand }, true)
     ),
     method: 'get'
   })
-}*/
+}
 export function getPrefabs(
   sort = '-created_at',
   search = '',
@@ -54,13 +54,12 @@ export function getPrefabs(
     method: 'get'
   })
 }
-/*
-export function putMeta(id, data) {
+
+export function putPrefab(id, data) {
   return request({
-    url: path.join('v1', 'metas', id.toString()),
+    url: path.join('v1', 'prefabs', id.toString()),
     method: 'put',
     data
   })
 }
 
-*/

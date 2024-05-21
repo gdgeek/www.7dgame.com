@@ -36,12 +36,7 @@
           <el-form-item label="名称">
             <el-input v-model="item.title"></el-input>
           </el-form-item>
-          <el-form-item label="类型">
-            <el-checkbox-group v-model="custom">
-              <el-checkbox label="本地定制"></el-checkbox>
-            </el-checkbox-group>
-          
-          </el-form-item>
+        
         
           <el-form-item
             v-if="events && events.inputs && events.inputs.length > 0"
@@ -114,7 +109,7 @@
 <script>
 import ResourceDialog from '@/components/MrPP/ResourceDialog.vue'
 import EventDialog from '@/components/Rete/EventDialog.vue'
-import { getMeta, putMeta } from '@/api/v1/meta'
+import { getPrefab, putPrefab } from '@/api/v1/prefab'
 export default {
   data() {
     return {
@@ -190,7 +185,7 @@ export default {
       this.$refs.dialog.open()
     },
     async refresh() {
-      const response = await getMeta(this.id, {
+      const response = await getPrefab(this.id, {
         expand: 'image,author'
       })
       this.item = response.data
@@ -201,7 +196,7 @@ export default {
       } else {
         this.item.custom = 0
       }
-      await putMeta(this.id, this.item)
+      await putPrefab(this.id, this.item)
       this.$message({
         message: '保存成功',
         type: 'success'

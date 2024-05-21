@@ -30,7 +30,7 @@ import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
 import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import { putVerse } from '@/api/v1/verse'
-import { getMeta} from '@/api/v1/meta'
+import { getPrefab} from '@/api/v1/prefab'
 import { getVerse } from '@/api/e1/verse'
 export default {
   name: 'VerseScene',
@@ -108,7 +108,7 @@ export default {
       iframe.contentWindow.postMessage(data, '*')
     },
     setupMeta({ meta_id, data, uuid }) {
-      getMeta(meta_id).then(response => {
+      getPrefab(meta_id).then(response => {
         this.$refs.knightData.open({
           schema:JSON.parse(response.data.data),
           data: JSON.parse(data),
@@ -121,14 +121,7 @@ export default {
         })
       })
        
-     /* this.$refs.knightData.open({
-          schema: JSON.parse(data.data),
-          data: {},
-          callback: (setup) => {
-            //this.$emit('selected', {data, setup})
-            //this.dialogVisible = false
-          }
-        })*/
+     
     },
     addModule() { 
 
@@ -139,7 +132,7 @@ export default {
             })
     },
     async handleMessage(e) {
-   
+     
       const self = this
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
@@ -149,7 +142,9 @@ export default {
               query: { id: e.data.data.meta_id}
             })
             break
-          case 'setup-meta':
+          case 'setup':
+            
+            
             self.setupMeta(e.data.data)
             break;
           case 'add-module':
