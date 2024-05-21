@@ -12,9 +12,9 @@
           @sort="sort"
         >
           <el-button-group :inline="true">
-            <el-button size="mini" type="primary" @click="addPrefab()">
+            <el-button  v-if="$can('root')"  size="mini" type="primary" @click="addPrefab()">
               <font-awesome-icon icon="plus" />
-              &nbsp;
+           
               <span class="hidden-sm-and-down">创建【元数据】</span>
             </el-button>
           </el-button-group>
@@ -36,7 +36,7 @@
                       <span slot="header" class="mrpp-title">
                         <b class="card-title" nowrap>{{ item.title }}</b>
                       </span>
-                      <router-link :to="'/meta/prefab-edit?id=' + item.id">
+                      <router-link  :to="url(item.id)">
                         <img
                           v-if="item.image === null"
                           src="@/assets/image/none.png"
@@ -57,7 +57,7 @@
                     </el-card>
                   </div>
                   <div class="clearfix">
-                      <el-button-group style="float: right" :inline="true">
+                      <el-button-group  v-if="$can('root')" style="float: right" :inline="true">
                    
 
                         <el-button @click="editor(item.id)"  size="mini"> <i class="el-icon-edit" />编辑</el-button>
@@ -108,31 +108,16 @@ export default {
     this.refresh()
   },
   methods: {
+    url(id) {
+      if (this.$can('root')) { 
+        return '/meta/prefab-edit?id=' + id
+      }
+      return '#'
+    },
     editor: function (id) {
       this.$router.push({ path: '/meta/prefab-edit', query: { id } })
     },
-    /*
-     async del(id) {
-      try {
-        await this.$confirm('此操作将永久删除该脚本, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        })
-        const response = await delVerseScripts(id)
-
-        await this.refresh()
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-      } catch (e) {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      }
-    }, */
+    
     async del(id) {
       try {
         await this.$confirm('此操作将永久删除该【元数据】, 是否继续?', '提示', {
