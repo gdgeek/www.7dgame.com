@@ -1,6 +1,5 @@
 <template>
   <div>
-  
     <el-dialog
       :visible.sync="dialogVisible"
       width="95%"
@@ -15,10 +14,7 @@
           @search="search"
           @sort="sort"
         >
-          <el-tag>
-            <b>选择元数据</b>
-          </el-tag>
-            
+          <el-tag><b>选择元数据</b></el-tag>
         </mr-p-p-header>
         <el-divider content-position="left">
           <el-tag
@@ -50,18 +46,16 @@
                   :src="item.image.url"
                   lazy
                 />
-
                 <div style="width: 100%; text-align: center">
                   {{ item.created_at }}
                 </div>
               </el-card>
             </div>
             <div class="clearfix">
-              <el-button size="mini" @click="doSelect(item)">绑定并选择</el-button>
+              <el-button size="mini" @click="selected({ data:item })">绑定并选择</el-button>
             </div>
             <div class="bottom clearfix" />
           </el-card>
-
           <br />
         </waterfall-item>
       </waterfall>
@@ -186,29 +180,47 @@ export default {
       this.active.searched = ''
       this.refresh()
     },
-    doSelect(data) {
-    
-      this.$emit('selected', { data })
-      this.dialogVisible = false
-   
-    },
     doEmpty() {
-      this.$emit('selected', null)
+      this.selected(null)
       this.value = null
-      this.dialogVisible = false
     },
 
-    selected(data = null) {
-      this.$emit('selected', data)
+    async selected(data = null) {
+      if (data) {
+        const title = await this.input('请输入Model名称');
+        data.title = title;
+        this.$emit('selected', data)
+      } else {
+        this.$emit('selected', null)
+      }
       this.dialogVisible = false
     },
-    create() {
+    async input(text) {
+      return new Promise((resolve, reject) => {
+        this.$prompt(text, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({ value }) => {
+          resolve(value)
+        }).catch(() => {
+          reject()
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });       
+        });
+      })
+    },
+    async create() {
+      const name = await this.input('请输入元数据名称');
+
       postMeta({
-        title: '新建元数据',
+        title: name? name: '新建元数据',
         custom: 1,
         uuid: uuidv4()
-      }).then(response => {
-        this.selected({data: response.data })
+      }).then(async response =>{
+
+        this.selected({data: response.data})
         this.dialogVisible = false
       })
     },

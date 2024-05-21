@@ -125,9 +125,10 @@ function MenubarAdd(editor) {
 			if (message.action == 'add-module') {
 				const data = message.data.data;
 				const setup = message.data.setup;
+				const title = message.data.title;
 
 				console.error(data)
-				//alert(data.resources)
+
 				if (data.resources) {
 					data.resources.forEach(resource => {
 						resources.set(resource.id, resource)
@@ -135,8 +136,7 @@ function MenubarAdd(editor) {
 				}
 
 
-
-				const node = factory.addModule(builder.module(data.id))
+				const node = factory.addModule(builder.module(data.id, title))
 
 				node.userData.data = JSON.stringify(setup)
 				node.userData.custom = data.custom

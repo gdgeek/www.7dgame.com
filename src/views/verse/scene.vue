@@ -104,10 +104,10 @@ export default {
   },
   methods: {
     ...mapMutations('breadcrumb', ['setBreadcrumbs']),
-    async selected({ data, setup }) {
+    async selected({ data, setup, title }) {
       this.postMessage({
         action: 'add-module',
-        data: { data, setup }
+        data: { data, setup, title }
       })
     },
     cancel() { 

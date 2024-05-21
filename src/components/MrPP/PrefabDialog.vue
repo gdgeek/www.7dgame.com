@@ -10,14 +10,6 @@
       @close="cancel()"
     >
       <span slot="title" class="dialog-footer">
-        <el-tabs
-          v-model="activeName"
-          type="card"
-          class="demo-tabs"
-          @tab-click="handleClick"
-        >
-          <el-tab-pane label="系统预设" name="prefab"  />
-        </el-tabs>
         <mr-p-p-header
           :sorted="active.sorted"
           :searched="active.searched"
@@ -31,18 +23,18 @@
         </mr-p-p-header>
         <el-divider content-position="left">
           <el-tag
-            v-if="prefab.searched !== ''"
+            v-if="active.searched !== ''"
             size="mini"
             closable
             @close="clearSearched()"
           >
-            {{ prefab.searched }}
+            {{ active.searched }}
           </el-tag>
         </el-divider>
       </span>
-      <waterfall v-if="prefab !== null && prefab.items !== null" :options="{}">
+      <waterfall v-if="active !== null && active.items !== null" :options="{}">
         <waterfall-item
-          v-for="(item, index) in prefab.items"
+          v-for="(item, index) in active.items"
           :key="index"
           style="width: 230px"
         >
@@ -66,7 +58,7 @@
               </el-card>
             </div>
             <div class="clearfix">
-              <el-button size="mini" @click="doSelect(item)">选择</el-button>
+              <el-button size="mini" @click="setup({data: item})">选择</el-button>
             </div>
             <div class="bottom clearfix" />
           </el-card>
@@ -93,9 +85,8 @@
           </el-col>
           <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
             <el-button-group>
-              <el-button v-if="activeName == 'custom' " type="success" size="mini" @click="create">
-                新 建
-              </el-button>
+              
+              
               <el-button size="mini" @click="dialogVisible = false">
                 取 消
               </el-button>
@@ -110,10 +101,6 @@
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
-
-import { v4 as uuidv4 } from 'uuid'
-
-import { getMetas, postMeta } from '@/api/v1/meta'
 import { getPrefabs } from '@/api/v1/prefab'
 
 
@@ -128,17 +115,11 @@ export default {
   },
   data() {
     return {
-      activeName: 'prefab',
+      
       verse_id: -1,
       value: null,
 
-      prefab: {
-        items: null,
-        sorted: '-created_at',
-        searched: '',
-        pagination: { current: 1, count: 1, size: 20, total: 20 }
-      },
-      custom: {
+      active: {
         items: null,
         sorted: '-created_at',
         searched: '',
@@ -149,12 +130,7 @@ export default {
   },
   props: {},
   computed: {
-    active() {
-      if (this.activeName === 'prefab') {
-        return this.prefab
-      }
-      return this.custom
-    }
+    
   },
   methods: {
     knightDataSubmit(data) {
@@ -174,13 +150,7 @@ export default {
       return 'title'
     },
     async open(value, verse_id) {
-      this.prefab = {
-        items: null,
-        sorted: '-created_at',
-        searched: '',
-        pagination: { current: 1, count: 1, size: 20, total: 20 }
-      }
-      this.custom = {
+      this.active = {
         items: null,
         sorted: '-created_at',
         searched: '',
@@ -188,29 +158,17 @@ export default {
       }
       this.verse_id = verse_id
       this.value = value
-
       this.refresh()
-
       this.dialogVisible = true
     },
-    async refreshPrefab() {
+    async refresh() {
       const response = await getPrefabs(
-        this.prefab.sorted,
-        this.prefab.searched,
-        this.prefab.pagination.current,
+        this.active.sorted,
+        this.active.searched,
+        this.active.pagination.current,
         'image'
       )
-      this.prefab.items = response.data
-    },
-    async refreshCustom() {
-      const response = await getMetas(
-        this.custom.sorted,
-        this.custom.searched,
-        this.custom.pagination.current,
-        'image'
-      )
-
-      this.prefab.items = response.data
+      this.active.items = response.data
     },
     close() {
       this.dialogVisible = false
@@ -228,49 +186,50 @@ export default {
       this.active.searched = ''
       this.refresh()
     },
-    doSelect(data) {
-    
-      if (data.custom === 1) {
-       // alert(data)
-       this.$emit('selected', { data })
-        this.dialogVisible = false
-     } else {
-
+    setup({ data }) {
       if(data.data != null){
         this.$refs.knightData.open({
           schema: JSON.parse(data.data),
           data: {},
           callback: (setup) => {
-            this.$emit('selected', {data, setup})
+            this.selected({data, setup})
             this.dialogVisible = false
           }
         })
       }else{
-        this.$emit('selected', { data, setup: {} })
+        this.selected({ data, setup: {}})
         this.dialogVisible = false
       }
-    
-     }
-   
     },
     doEmpty() {
       this.$emit('selected', null)
       this.value = null
       this.dialogVisible = false
     },
-
-    selected(data = null) {
-      this.$emit('selected', data)
+    async selected(data = null) {
+      if (data) {
+        const title = await this.input('请输入Model名称');
+        data.title = title;
+        this.$emit('selected', data)
+      } else {
+        this.$emit('selected', null)
+      }
       this.dialogVisible = false
     },
-    create() {
-      postMeta({
-        title: '新建元数据',
-        custom: 1,
-        uuid: uuidv4()
-      }).then(response => {
-        this.selected({data: response.data })
-        this.dialogVisible = false
+    async input(text) {
+      return new Promise((resolve, reject) => {
+        this.$prompt(text, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({ value }) => {
+          resolve(value)
+        }).catch(() => {
+          reject()
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });       
+        });
       })
     },
     cancel() {
@@ -279,16 +238,8 @@ export default {
     handleCurrentChange: function (page) {
       this.active.pagination.current = page
       this.refresh()
-    },
-    async refresh() {
-      if (this.activeName === 'prefab') {
-        this.refreshPrefab()
-      } else {
-        this.refreshCustom()
-      }
-    
-      
     }
+    
   }
 }
 </script>
