@@ -3,10 +3,16 @@
   <div class="verse-scene">
 
     <knight-data-dialog ref="knightData"  />
-    <knight-setup-dialog
+    <meta-dialog
       @selected="selected"
       @cancel="cancel"
-      ref="knightSetup"
+      ref="metaDialog"
+    />
+
+    <prefab-dialog
+      @selected="selected"
+      @cancel="cancel"
+      ref="prefabDialog"
     />
     <el-container>
       <el-main>
@@ -25,18 +31,22 @@
 <script>
 var qs = require('querystringify')
 var path = require('path')
+import PrefabDialog from '@/components/MrPP/PrefabDialog.vue'
+import MetaDialog from '@/components/MrPP/MetaDialog.vue'
 import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
-import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
+
 import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import { putVerse } from '@/api/v1/verse'
-import { getPrefab} from '@/api/v1/prefab'
+import { getPrefab } from '@/api/v1/prefab'
+import { getMeta } from '@/api/v1/meta'
 import { getVerse } from '@/api/e1/verse'
 export default {
   name: 'VerseScene',
   components: {
-    KnightSetupDialog,
-    KnightDataDialog
+    KnightDataDialog,
+    PrefabDialog,
+    MetaDialog
   },
   data() {
    
@@ -123,9 +133,15 @@ export default {
        
      
     },
-    addModule() { 
-
-      this.$refs.knightSetup.open()
+    addPrefab() { 
+      this.$refs.prefabDialog.open()
+      this.$message({
+              type: 'info',
+              message: '添加预设'
+            })
+    },
+    addMeta() { 
+      this.$refs.metaDialog.open()
       this.$message({
               type: 'info',
               message: '添加模块'
@@ -143,17 +159,27 @@ export default {
             })
             break
           case 'setup-prefab':
-            
-            
             self.setupPrefab(e.data.data)
             break;
-          case 'add-module':
-            self.addModule();
+          case 'add-meta':
+            self.addMeta();
+           
+           break
+          case 'add-prefab':
+            self.addPrefab();
            
            break
           case 'save-verse':
             self.saveVerse(e.data.data)
 
+            break
+          case 'goto':
+            if (e.data.data == 'blockly.js') {
+              this.$router.push({
+                path: '/verse/script',
+                query: { id: this.id, title: this.title }
+              })
+            }
             break
           case 'ready':
             if (this.init == false) {

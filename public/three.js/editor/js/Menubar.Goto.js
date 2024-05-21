@@ -45,23 +45,11 @@ function MenubarGoto(editor) {
 
 	let option = new UIRow();
 	option.setClass('option');
-	option.setTextContent('blockly.js');
+	option.setTextContent('Script Edit');
 	option.onClick(function () {
 		editor.signals.messageSend.dispatch({ action: 'goto', data: 'blockly.js' });
 	});
 	options.add(option);
-
-	// Rate
-
-	option = new UIRow();
-	option.setClass('option');
-	option.setTextContent('rete.js');
-	option.onClick(function () {
-		editor.signals.messageSend.dispatch({ action: 'goto', data: 'rete.js' });
-	});
-	options.add(option);
-
-
 	return container;
 
 }

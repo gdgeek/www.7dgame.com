@@ -17,7 +17,6 @@
           @tab-click="handleClick"
         >
           <el-tab-pane label="系统预设" name="prefab"  />
-          <el-tab-pane label="本地数据" name="custom" />
         </el-tabs>
         <mr-p-p-header
           :sorted="active.sorted"
@@ -26,7 +25,7 @@
           @sort="sort"
         >
           <el-tag>
-            <b>选择元数据</b>
+            <b>选择预设数据</b>
           </el-tag>
             
         </mr-p-p-header>
@@ -120,7 +119,7 @@ import { getPrefabs } from '@/api/v1/prefab'
 
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
-  name: 'KnightDialog',
+  name: 'PrefabDialog',
   components: {
     Waterfall,
     WaterfallItem,

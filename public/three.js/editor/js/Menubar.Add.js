@@ -153,9 +153,17 @@ function MenubarAdd(editor) {
 
 		option = new UIRow();
 		option.setClass('option');
-		option.setTextContent("Module");
+		option.setTextContent("Meta");
 		option.onClick(async function () {
-			editor.signals.messageSend.dispatch({ action: 'add-module' });
+			editor.signals.messageSend.dispatch({ action: 'add-meta' });
+		});
+		options.add(option);
+
+		option = new UIRow();
+		option.setClass('option');
+		option.setTextContent("Prefab");
+		option.onClick(async function () {
+			editor.signals.messageSend.dispatch({ action: 'add-prefab' });
 		});
 		options.add(option);
 	}

@@ -269,7 +269,7 @@ export default {
         this.owner.sorted,
         this.owner.searched,
         this.owner.pagination.current,
-        'image,metaResources'
+        'image, metaResources'
       )
 
       this.owner.items = response.data

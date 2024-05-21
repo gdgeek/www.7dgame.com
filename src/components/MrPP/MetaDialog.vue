@@ -16,8 +16,7 @@
           class="demo-tabs"
           @tab-click="handleClick"
         >
-          <el-tab-pane label="系统预设" name="prefab"  />
-          <el-tab-pane label="本地数据" name="custom" />
+          <el-tab-pane label="元数据" name="custom" />
         </el-tabs>
         <mr-p-p-header
           :sorted="active.sorted"
@@ -129,7 +128,7 @@ export default {
   },
   data() {
     return {
-      activeName: 'prefab',
+      activeName: 'custom',
       verse_id: -1,
       value: null,
 

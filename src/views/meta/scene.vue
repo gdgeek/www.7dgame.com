@@ -123,6 +123,7 @@ export default {
             break
           case 'goto':
             if (e.data.data == 'blockly.js') { 
+              alert('js')
               this.$router.push({ path: '/meta/script', query: { id:this.id, title:this.title } })
 
             }else if (e.data.data == 'rete.js') {
