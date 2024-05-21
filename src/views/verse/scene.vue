@@ -107,7 +107,7 @@ export default {
       const iframe = document.getElementById('editor')
       iframe.contentWindow.postMessage(data, '*')
     },
-    setupMeta({ meta_id, data, uuid }) {
+    setupPrefab({ meta_id, data, uuid }) {
       getPrefab(meta_id).then(response => {
         this.$refs.knightData.open({
           schema:JSON.parse(response.data.data),
@@ -142,10 +142,10 @@ export default {
               query: { id: e.data.data.meta_id}
             })
             break
-          case 'setup':
+          case 'setup-prefab':
             
             
-            self.setupMeta(e.data.data)
+            self.setupPrefab(e.data.data)
             break;
           case 'add-module':
             self.addModule();

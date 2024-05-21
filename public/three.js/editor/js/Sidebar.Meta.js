@@ -69,7 +69,7 @@ function SidebarMeta(editor) {
 			top.add(new UIBreak());
 			const newComponent = new UIButton('setup');
 			newComponent.onClick(function () {
-				editor.signals.messageSend.dispatch({ action: 'setup', data: { meta_id: object.userData.meta_id, uuid: object.uuid, data: object.userData.data } });
+				editor.signals.messageSend.dispatch({ action: 'setup-prefab', data: { meta_id: object.userData.meta_id, uuid: object.uuid, data: object.userData.data } });
 			}.bind(this));
 			top.add(newComponent);
 		}
