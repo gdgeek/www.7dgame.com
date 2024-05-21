@@ -88,7 +88,6 @@
 		editor.signals.messageSend.add(function (data) {
 			data.from = 'mrpp-editor';
 			data.verify = 'mrpp.com';
-			alert(JSON.stringify(data))
 			window.parent.postMessage(data, '*')
 		});
 

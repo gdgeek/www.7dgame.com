@@ -4,7 +4,6 @@ var qs = require('querystringify')
 var path = require('path')
 
 export function postVerseScript(data) {
-  alert(JSON.stringify(data))
   const url = path.join('v1', 'verse-scripts')
   return request({
     url,
