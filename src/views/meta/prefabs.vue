@@ -6,7 +6,7 @@
         <mr-p-p-header
           :sorted="sorted"
           :searched="searched"
-          sortByTime="create_at"
+          sortByTime="created_at"
           sortByName="title"
           @search="search"
           @sort="sort"
@@ -36,7 +36,7 @@
                       <span slot="header" class="mrpp-title">
                         <b class="card-title" nowrap>{{ item.title }}</b>
                       </span>
-                      <router-link :to="'/knight/edit?id=' + item.id">
+                      <router-link :to="'/meta/prefab-edit?id=' + item.id">
                         <img
                           v-if="item.image === null"
                           src="@/assets/image/none.png"
@@ -98,7 +98,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { getPrefabs, postPrefab, deletePrefab } from '@/api/v1/prefab'
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
-  name: 'KnightIndex',
+  name: 'PrefabIndex',
   components: {
     Waterfall,
     WaterfallItem,
@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     editor: function (id) {
-      this.$router.push({ path: '/knight/edit', query: { id } })
+      this.$router.push({ path: '/meta/prefab-edit', query: { id } })
     },
     /*
      async del(id) {
@@ -191,7 +191,7 @@ export default {
           uuid:uuidv4()
         }
         const response = await postPrefab(data)
-        await this.editKnight(response.data.id)
+        await this.editPrefab(response.data.id)
       } catch (e) {
         console.error()
         this.$message({
@@ -200,8 +200,8 @@ export default {
         })
       }
     },
-    async editKnight(id) {
-      this.$router.push({ path: '/knight/edit', query: { id } })
+    async editPrefab(id) {
+      this.$router.push({ path: '/meta/prefab-edit', query: { id } })
     },
     handleCurrentChange: function (page) {
       this.pagination.current = page
@@ -223,7 +223,7 @@ export default {
   data() {
     return {
       items: null,
-      sorted: '-create_at',
+      sorted: '-created_at',
       searched: '',
       pagination: { current: 1, count: 1, size: 20, total: 20 }
     }

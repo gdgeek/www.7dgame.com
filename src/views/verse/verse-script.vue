@@ -115,7 +115,7 @@ export default {
         },
         {
           path: '/meta-verse/index',
-          meta: { title: '元&宇宙' }
+          meta: { title: '宇宙' }
         },
         {
           path: '.',
@@ -153,14 +153,14 @@ export default {
         },
         {
           path: '/meta-verse/index',
-          meta: { title: '元&宇宙' }
+          meta: { title: '宇宙' }
         },
         {
           path: '/verse/view?id=' + this.verse.id,
           meta: { title: '【' + this.verse.name + '】' }
         },
         {
-          path: '/verse/rete-verse?id=' + this.verse.id,
+          path: '/verse/scene?id=' + this.verse.id,
           meta: { title: '宇宙编辑' }
         },
         {

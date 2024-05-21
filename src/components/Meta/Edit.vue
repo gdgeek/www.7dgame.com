@@ -21,6 +21,7 @@
             <b id="title">【元数据】名称：</b>
             <span>{{ item.title }}</span>
           </div>
+          
 
           <div class="box-item" @click="selectImage">
             <el-image
@@ -31,9 +32,9 @@
           </div>
         </el-card>
         <br />
-        <el-form ref="item" v-if="item" :model="item" label-width="80px">
-         
-          <el-form-item label="名称">
+        <el-card class="box-card">
+        <el-form ref="item" :rules="rules" v-if="item" :model="item" label-width="80px">
+          <el-form-item label="名称" prop="title">
             <el-input v-model="item.title"></el-input>
           </el-form-item>
         
@@ -63,16 +64,25 @@
           <el-form-item v-if="!custom" label="数据">
             <el-input type="textarea" v-model="item.data"></el-input>
           </el-form-item>
-          <el-form-item v-else label="编辑">
-            <el-link type="primary" @click="editor()" target="_blank">进入编辑器</el-link>
-          </el-form-item>
-          <el-form-item label="信息">
+          <el-form-item v-if="false" label="信息">
             <el-input type="textarea" v-model="item.info"></el-input>
           </el-form-item>
         </el-form>
 
+      </el-card>
+        <br/>
         <el-card v-if="item !== null" class="box-card">
-          <el-button-group>
+          <el-button-group style="float: right; padding: 3px 0" >
+            <el-button @click="openDialog" icon="el-icon-magic-stick">
+              事件编辑
+            </el-button>
+            <el-button
+              @click="editor"
+              v-if="custom"
+              icon="el-icon-edit-outline"
+            >
+              内容编辑
+            </el-button>
             <el-button
               @click="onSubmit"
               icon="el-icon-circle-check"
@@ -80,12 +90,11 @@
             >
               信息保存
             </el-button>
-            <el-button @click="openDialog" type="primary" icon="el-icon-edit">
-              事件编辑
-            </el-button>
           </el-button-group>
+        <br/>
           <br />
         </el-card>
+        <br/>
       </el-col>
 
       <el-col :sm="8">
@@ -109,10 +118,15 @@
 <script>
 import ResourceDialog from '@/components/MrPP/ResourceDialog.vue'
 import EventDialog from '@/components/Rete/EventDialog.vue'
-import { getPrefab, putPrefab } from '@/api/v1/prefab'
 export default {
   data() {
     return {
+      rules: {
+        title: [
+          { required: true, message: '请输入名称', trigger: 'blur' },
+          { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+        ],
+      },
       item: null
     }
   },
@@ -161,7 +175,7 @@ export default {
     },
     async selectResources(data) {
       this.item.image_id = data.image_id
-      await putMeta(this.id, this.item)
+      await this.putItem(this.id, this.item)
 
       this.$message({
         message: '保存成功',
@@ -184,10 +198,33 @@ export default {
       this.$refs.dialog.open()
     },
     async refresh() {
-      const response = await getPrefab(this.id, {
+      const data = await this.getItem(this.id, {
         expand: 'image,author'
       })
-      this.item = response.data
+      this.item = data
+     
+    },
+     getItem(id, expand){
+       return new Promise((resolve, reject) => {
+         try {
+          this.$emit("getItem",id, expand, (data) => { 
+            resolve(data)
+          })
+        }catch(e){
+          reject(e)
+        }
+      })
+    },
+     putItem(id, data){
+      return new Promise((resolve, reject) => {
+        try {
+          this.$emit("putItem",id, data, (ret) => { 
+              resolve(ret)
+          })
+        }catch(e){
+          reject(e)
+        }
+      })
     },
     async onSubmit() {
       if (this.item.custom) {
@@ -195,7 +232,7 @@ export default {
       } else {
         this.item.custom = 0
       }
-      await putPrefab(this.id, this.item)
+      await this.putItem(this.id, this.item)
       this.$message({
         message: '保存成功',
         type: 'success'

@@ -124,7 +124,7 @@ export default {
       postVerse(data).then(response => {
         console.log(response.data.id)
         self.$router.push({
-          path: '/verse/rete-verse',
+          path: '/verse/scene',
           query: { id: response.data.id }
         })
       })

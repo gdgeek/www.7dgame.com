@@ -44,23 +44,54 @@ export const constantRoutes = [
 
     children: [
       {
-        path: 'knight',
-        name: 'Knight',
+        path: 'meta',
+        name: 'Meta',
         meta: { title: '元数据' },
-        redirect: '/knight/index',
+        redirect: '/meta/list',
         component: Empty,
         children: [
+
           {
-            path: 'index',
-            name: 'KnightIndex',
+            path: 'list',
+            name: 'MetaList',
             meta: { title: '元数据列表' },
-            component: () => import('@/views/knight/index')
+            component: () => import('@/views/meta/list')
           },
           {
-            path: 'edit',
-            name: 'KnightEdit',
+            path: 'prefabs',
+            name: 'MetaPrefabs',
+            meta: { title: '系统预设' },
+            component: () => import('@/views/meta/prefabs')
+          },
+          {
+            path: 'prefab-edit',
+            name: 'PrefabEdit',
             meta: { title: '编辑' },
-            component: () => import('@/views/knight/edit')
+            component: () => import('@/views/meta/prefab-edit')
+          },
+          {
+            path: 'meta-edit',
+            name: 'MetaEdit',
+            meta: { title: '编辑' },
+            component: () => import('@/views/meta/meta-edit')
+          },
+          {
+            path: 'rete-meta',
+            name: 'VerseMetaEditor',
+            meta: { title: '【元】' },
+            component: () => import('@/views/meta/rete-meta')
+          },
+          {
+            path: 'script',
+            name: 'MetaScript',
+            meta: { title: '脚本' },
+            component: () => import('@/views/meta/script')
+          },
+          {
+            path: 'scene',
+            name: 'MetaSceneEditor',
+            meta: { title: '内容编辑' },
+            component: () => import('@/views/meta/scene')
           }
         ]
       },
@@ -295,36 +326,9 @@ export const constantRoutes = [
         ]
       },
       {
-        path: 'meta',
-        name: 'Meta',
-        meta: { title: '元' },
-        redirect: '/meta/rete-meta',
-        component: Empty,
-        children: [
-          {
-            path: 'rete-meta',
-            name: 'VerseMetaEditor',
-            meta: { title: '【元】' },
-            component: () => import('@/views/meta/rete-meta')
-          },
-          {
-            path: 'script',
-            name: 'MetaScript',
-            meta: { title: '脚本' },
-            component: () => import('@/views/meta/script')
-          },
-          {
-            path: 'scene',
-            name: 'MetaSceneEditor',
-            meta: { title: '内容编辑' },
-            component: () => import('@/views/meta/scene')
-          }
-        ]
-      },
-      {
         path: 'meta-verse',
         name: 'MetaVerse',
-        meta: { title: '元&宇宙' },
+        meta: { title: '宇宙' },
         redirect: '/meta-verse/index',
         component: Empty,
         children: [

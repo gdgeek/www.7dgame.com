@@ -9,7 +9,7 @@
       <el-main>
         <el-card v-loading="loading" class="box-card">
           <div v-if="meta !== null" slot="header" class="clearfix">
-            <router-link :to="'/verse/rete-verse?id=' + meta.verse.id">
+            <router-link :to="'/verse/scene?id=' + meta.verse.id">
               <el-link :underline="false">
                 【宇宙】{{ meta.verse.name }}
               </el-link>
@@ -124,7 +124,7 @@ export default {
             },
             {
               path: '/meta-verse/index',
-              meta: { title: '元&宇宙' }
+              meta: { title: '宇宙' }
             }
           ]
         })
@@ -137,14 +137,14 @@ export default {
             },
             {
               path: '/meta-verse/index',
-              meta: { title: '元&宇宙' }
+              meta: { title: '宇宙' }
             },
             {
               path: '/verse/view?id=' + this.meta.verse.id,
               meta: { title: '【宇宙】' }
             },
             {
-              path: '/verse/rete-verse?id=' + this.meta.verse.id,
+              path: '/verse/scene?id=' + this.meta.verse.id,
               meta: { title: '宇宙编辑' }
             },
             {

@@ -191,7 +191,7 @@ export default {
 
         {
           path: '/meta-verse',
-          meta: { title: '元&宇宙' }
+          meta: { title: '宇宙' }
         },
         {
           path: '.',
@@ -216,7 +216,7 @@ export default {
         this.briefing = this.message
       } else {
         this.briefing = {
-          title: '【元&宇宙】名称：' + this.verse.name,
+          title: '【宇宙】名称：' + this.verse.name,
           body: this.info.description
         }
       }

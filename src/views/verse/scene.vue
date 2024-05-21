@@ -71,14 +71,14 @@ export default {
         },
         {
           path: '/meta-verse/index',
-          meta: { title: '元&宇宙' }
+          meta: { title: '宇宙' }
         },
         {
           path: '/verse/view?id=' + this.id,
           meta: { title: '【宇宙】' }
         },
         {
-          path: '/verse/rete-verse?id=' + this.id,
+          path: '/verse/scene?id=' + this.id,
           meta: { title: '宇宙编辑' }
         },
         {
