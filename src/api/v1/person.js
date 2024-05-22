@@ -9,7 +9,13 @@ export function postPerson(data) {
     data: data
   })
 }
-
+export function changeAuth(id, auth) {
+  return request({
+    url: 'v1/people/auth',
+    method: 'put',
+    data: { id: id, auth: auth }
+  })
+}
 export function deletePerson(id) {
   return request({
     url: 'v1/people/' + id,

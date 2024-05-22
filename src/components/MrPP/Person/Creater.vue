@@ -94,7 +94,7 @@ export default {
       rules: {
         username: [
           { required: true, message: '请输入用户名称', trigger: 'blur' },
-          { min: 5, message: '用户名称长度应该大于5', trigger: 'blur' },
+          { min: 4, message: '用户名称长度至少为4', trigger: 'blur' },
           {
             validator: checkUsername,
             message: '用户名请避免使用中文',

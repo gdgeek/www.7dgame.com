@@ -5,30 +5,10 @@
       <waterfall-item
         v-for="(item, index) in items"
         :key="index"
-        style="width: 160px"
+        style="width: 210px"
       >
-        <el-card style="width: 150px" :body-style="{ padding: '0px' }">
-          <img :src="getUrl(item)" class="image" />
-          <div style="padding: 14px">
-            <span>{{ item.username }}</span>
-            <div class="bottom clearfix">
-              <el-descriptions
-                class="margin-top"
-                :title="item.nickname"
-                :column="1"
-                size="mini"
-              >
-                <el-descriptions-item label="权限">
-                  {{ getAblity(item.roles) }}
-                </el-descriptions-item>
-              </el-descriptions>
-              <el-button type="text" class="button" @click="deleted(item)">
-                删除
-              </el-button>
-            </div>
-          </div>
-        </el-card>
-
+        
+        <people @deleted="deleted" :item="item" />
         <br />
 
         <br />
@@ -38,13 +18,34 @@
 </template>
 
 <script>
+
+import People from '@/components/MrPP/Person/People.vue'
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
 import { deletePerson } from '@/api/v1/person'
 export default {
   name: 'PersonList',
+  data() {
+      return {
+        options: [{
+          value: 'root',
+          label: '根用户'
+        }, {
+          value: 'admin',
+          label: '超级管理员'
+        }, {
+          value: 'manager',
+          label: '管理员'
+        }, {
+          value: 'user',
+          label: '用户'
+        }],
+        value: ''
+      }
+    },
   components: {
     Waterfall,
-    WaterfallItem
+    WaterfallItem,
+    People
   },
   props: {
     items: {
@@ -122,7 +123,7 @@ export default {
 }
 
 .image {
-  width: 100%;
+  width: 1200%;
   display: block;
 }
 
