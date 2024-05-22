@@ -24,7 +24,7 @@ class MetaFactory extends Factory {
 	}
 	convertToHttps(url) {
 
-		if (isHttps()) {
+		if (this.isHttps()) {
 			if ((url !== undefined || url !== null & url.startsWith('http://'))) {
 
 				// 替换'http://'为'https://'
