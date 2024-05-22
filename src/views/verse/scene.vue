@@ -40,7 +40,7 @@ import { mapMutations } from 'vuex'
 import { putVerse } from '@/api/v1/verse'
 import { getPrefab } from '@/api/v1/prefab'
 import { getMeta } from '@/api/v1/meta'
-import { getVerse } from '@/api/e1/verse'
+import { getVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseScene',
   components: {
@@ -184,10 +184,14 @@ export default {
           case 'ready':
             if (this.init == false) {
               this.init = true
-              const response = await getVerse(this.id)
+              const response = await getVerse(this.id, 'metas, resources')
               const verse = response.data
+              console.error(verse)
+              alert("!")
+              alert( verse.editable)
               if (verse) {
                 this.saveable = this.$can('editable', new AbilityEditable(verse.editable))
+                
               } else { 
                 this.saveable = false
               }
@@ -215,7 +219,7 @@ export default {
       await putVerse(this.id, { data: verse }).then(response => {
         this.$message({
           type: 'success',
-          message: '保存成功!!!'
+          message: '场景保存成功!!!'
         })
       })
       /*

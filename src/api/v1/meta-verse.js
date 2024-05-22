@@ -84,11 +84,10 @@ async function updateVerse(type, verse, meta) {
   const data = {
     type: 'Verse',
     parameters: {
-      uuid: uuidv4(),
-      space: { id: -1, occlusion: false }
+      uuid: uuidv4()
     },
     children: {
-      metas: [
+      modules: [
         {
           type: 'Meta',
           parameters: {

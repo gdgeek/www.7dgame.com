@@ -28,7 +28,7 @@ import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
 import env from '@/environment.js'
 import { putMeta } from '@/api/v1/meta'
-import { getMeta } from '@/api/e1/meta'
+import { getMeta } from '@/api/v1/meta'
 
 export default {
 
@@ -123,7 +123,7 @@ export default {
             break
           case 'goto':
             if (e.data.data == 'blockly.js') { 
-              alert('js')
+              
               this.$router.push({ path: '/meta/script', query: { id:this.id, title:this.title } })
 
             }else if (e.data.data == 'rete.js') {
@@ -135,7 +135,6 @@ export default {
               self.isInit = true
               const meta = await getMeta(this.id)
               self.breadcrumb(meta.data)
-           
               self.postMessage({
                 action: 'load',
                 data: meta.data,

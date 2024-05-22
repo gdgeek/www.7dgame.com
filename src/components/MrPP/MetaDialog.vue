@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <el-dialog
       :visible.sync="dialogVisible"
       width="95%"
@@ -52,7 +53,8 @@
               </el-card>
             </div>
             <div class="clearfix">
-              <el-button size="mini" @click="selected({ data:item })">绑定并选择</el-button>
+
+              <el-button size="mini" @click="selected({ data:item })">选择</el-button>
             </div>
             <div class="bottom clearfix" />
           </el-card>
@@ -98,8 +100,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { getMetas, postMeta } from '@/api/v1/meta'
 
-
-
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
   name: 'KnightDialog',
@@ -126,6 +126,14 @@ export default {
   props: {},
   computed: {},
   methods: {
+    isBinding(item) {
+      for (let i = 0; i < item.verseMetas.length; ++i) {
+        if (item.verseMetas[i].verse_id === this.verse_id) {
+          return true
+        }
+      }
+      return false
+    },
     knightDataSubmit(data) {
       console.error(data)
     },
@@ -159,7 +167,7 @@ export default {
         this.active.sorted,
         this.active.searched,
         this.active.pagination.current,
-        'image'
+        'image,verseMetas'
       )
 
       this.active.items = response.data
@@ -218,8 +226,7 @@ export default {
         title: name? name: '新建元数据',
         custom: 1,
         uuid: uuidv4()
-      }).then(async response =>{
-
+      }).then(async response => {
         this.selected({data: response.data})
         this.dialogVisible = false
       })

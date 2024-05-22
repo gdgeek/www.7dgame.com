@@ -19,7 +19,7 @@ var qs = require('querystringify')
 var path = require('path')
 import env from '@/environment.js'
 import { putVerse } from '@/api/v1/verse'
-import { getVerse } from '@/api/e1/verse'
+import { getVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseEditor',
   data() {
