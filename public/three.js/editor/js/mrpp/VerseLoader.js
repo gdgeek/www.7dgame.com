@@ -2,7 +2,7 @@ import * as THREE from 'three'
 //import { SceneBuilder } from './SceneBuilder.js'
 import { GLTFLoader } from '../../../examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from '../../../examples/jsm/loaders/DRACOLoader.js'
-import { VerseFactory } from './VerseFactory.js'
+
 import { MetaFactory } from './MetaFactory.js'
 function VerseLoader(editor) {
 

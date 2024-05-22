@@ -55,9 +55,6 @@ function convertToHttps(url) {
     }
   }
 
-  // 检查URL是否以http://开头
-
-
   return url;
 }
 export { isHttps, convertToHttps, printVector3, printVector2, cutString }

@@ -4,7 +4,6 @@ import { UIPanel, UIRow, UIHorizontalRule } from './libs/ui.js';
 
 import { AddObjectCommand } from './commands/AddObjectCommand.js';
 import { MetaFactory } from './mrpp/MetaFactory.js'
-import { VerseFactory } from './mrpp/VerseFactory.js'
 import { Builder } from './mrpp/Builder.js'
 
 function MenubarAdd(editor) {
@@ -119,7 +118,6 @@ function MenubarAdd(editor) {
 		options.add(option);
 
 	} else if (editor.type.toLowerCase() == 'verse') {
-		//const factory = new VerseFactory();
 		editor.signals.messageReceive.add(async function (message) {
 
 			if (message.action == 'add-module') {

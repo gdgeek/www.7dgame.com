@@ -9,6 +9,37 @@ class MetaFactory extends Factory {
 	constructor() {
 		super()
 	}
+
+	isHttps() {
+		// 获取当前页面的协议
+		const protocol = window.location.protocol;
+		// 检查协议是否是HTTPS
+		if (protocol === 'https:') {
+			console.log("这个网页是使用HTTPS");
+			return true;
+		} else {
+			console.log("这个网页不是使用HTTPS");
+			return false;
+		}
+	}
+	convertToHttps(url) {
+
+		if (isHttps()) {
+			if ((url !== undefined || url !== null & url.startsWith('http://'))) {
+
+				// 替换'http://'为'https://'
+				return url.replace('http://', 'https://');
+			}
+		} else {
+			if ((url !== undefined || url !== null & url.startsWith('https://'))) {
+
+				// 替换'http://'为'https://'
+				return url.replace('https://', 'http://');
+			}
+		}
+
+		return url;
+	}
 	async addGizmo(node) {
 
 		return new Promise(resolve => {
@@ -74,6 +105,7 @@ class MetaFactory extends Factory {
 
 
 	async loadVoxel(url) {
+		url = this.convertToHttps(url)
 		return new Promise((resolve, reject) => {
 			const loader = new VOXLoader()
 			loader.load(
@@ -97,7 +129,7 @@ class MetaFactory extends Factory {
 	}
 
 	async loadPolygen(url) {
-
+		url = this.convertToHttps(url)
 		const self = this
 		return new Promise((resolve, reject) => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
@@ -132,6 +164,7 @@ class MetaFactory extends Factory {
 
 		})
 	}
+
 	async getPolygen(data, resources) {
 		if (resources.has(data.parameters.resource)) {
 			const resource = resources.get(data.parameters.resource)
@@ -143,9 +176,12 @@ class MetaFactory extends Factory {
 	}
 
 	async getPlane(url, width, height) {
+		url = this.convertToHttps(url)
 		return new Promise(resolve => {
 			const geometry = new THREE.PlaneGeometry(width, height)
 			const loader = new THREE.TextureLoader()
+
+
 			loader.load(url, texture => {
 				const material = new THREE.MeshBasicMaterial({
 					color: 0xffffff,
