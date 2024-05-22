@@ -16,10 +16,14 @@
       <el-col :sm="16">
         <el-card v-if="item" class="box-card">
           <div slot="header">
-            <i class="el-icon-edit"></i>
-
-            <b id="title">【元数据】名称：</b>
-            <span>{{ item.title }}</span>
+            <el-form ref="item" :rules="rules" v-if="item" :model="item" label-width="80px">
+            <el-form-item label="名称" prop="title">
+              <el-input v-model="item.title" @change="submit"></el-input>
+            </el-form-item>
+          
+          
+           
+          </el-form>
           </div>
           
 
@@ -30,47 +34,32 @@
               :src="image"
             />
           </div>
+
+       
+            
+            <div v-if="events && events.outputs && events.outputs.length > 0" >
+            <el-divider content-position="left">输出事件</el-divider>
+              <span v-for="(item, index) in events.outputs" :key="index">
+                <el-tag size="mini">
+                  {{ item.title }}
+                </el-tag>
+                &nbsp;
+              </span>
+            </div>
+            <div
+              v-if="events && events.inputs && events.inputs.length > 0"
+              label="输入事件"
+            >
+              <el-divider content-position="left">输入事件</el-divider>
+              <span v-for="(item, index) in events.inputs" :key="index">
+                <el-tag size="mini">
+                  {{ item.title }}
+                </el-tag>
+                &nbsp;
+              </span>
+            </div>
         </el-card>
         <br />
-        <el-card class="box-card">
-        <el-form ref="item" :rules="rules" v-if="item" :model="item" label-width="80px">
-          <el-form-item label="名称" prop="title">
-            <el-input v-model="item.title"></el-input>
-          </el-form-item>
-        
-        
-          <el-form-item
-            v-if="events && events.inputs && events.inputs.length > 0"
-            label="输入事件"
-          >
-            <span v-for="(item, index) in events.inputs" :key="index">
-              <el-tag size="mini">
-                {{ item.title }}
-              </el-tag>
-              &nbsp;
-            </span>
-          </el-form-item>
-          <el-form-item
-            v-if="events && events.outputs && events.outputs.length > 0"
-            label="输出事件"
-          >
-            <span v-for="(item, index) in events.outputs" :key="index">
-              <el-tag size="mini">
-                {{ item.title }}
-              </el-tag>
-              &nbsp;
-            </span>
-          </el-form-item>
-          <el-form-item v-if="!custom" label="数据">
-            <el-input type="textarea" v-model="item.data"></el-input>
-          </el-form-item>
-          <el-form-item v-if="false" label="信息">
-            <el-input type="textarea" v-model="item.info"></el-input>
-          </el-form-item>
-        </el-form>
-
-      </el-card>
-        <br/>
         <el-card v-if="item !== null" class="box-card">
           <el-button-group style="float: right; padding: 3px 0" >
             <el-button @click="openDialog" icon="el-icon-magic-stick">
@@ -79,17 +68,12 @@
             <el-button
               @click="editor"
               v-if="custom"
+              type="primary"
               icon="el-icon-edit-outline"
             >
               内容编辑
             </el-button>
-            <el-button
-              @click="onSubmit"
-              icon="el-icon-circle-check"
-              type="primary"
-            >
-              信息保存
-            </el-button>
+           
           </el-button-group>
         <br/>
           <br />
@@ -124,7 +108,7 @@ export default {
       rules: {
         title: [
           { required: true, message: '请输入名称', trigger: 'blur' },
-          { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
         ],
       },
       item: null
@@ -193,6 +177,7 @@ export default {
       }
 
       this.$refs.dialog.close()
+      this.submit()
     },
     async openDialog() {
       this.$refs.dialog.open()
@@ -226,18 +211,29 @@ export default {
         }
       })
     },
-    async onSubmit() {
-      if (this.item.custom) {
-        this.item.custom = 1
-      } else {
-        this.item.custom = 0
-      }
-      await this.putItem(this.id, this.item)
-      this.$message({
-        message: '保存成功',
-        type: 'success'
-      })
-      await this.refresh()
+    async submit() {
+
+      this.$refs['item'].validate(async (valid) => {
+        if (!valid) {
+          console.log('error submit!!');
+          return
+         }else{
+          if (this.item.custom) {
+            this.item.custom = 1
+          } else {
+            this.item.custom = 0
+          }
+          await this.putItem(this.id, this.item)
+          this.$message({
+            message: '保存成功',
+            type: 'success'
+          })
+          await this.refresh()
+
+         }
+      });
+       
+      
     }
   }
 }

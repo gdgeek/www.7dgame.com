@@ -60,7 +60,7 @@
                       <el-button-group style="float: right" :inline="true">
                    
 
-                        <el-button @click="editor(item.id)"  size="mini"> <i class="el-icon-edit" />编辑</el-button>
+                        <el-button @click="editor(item.id)"  size="mini"> <i class="el-icon-edit" />进入</el-button>
                      
                         <el-button @click="del(item.id)" size="mini"> <i class="el-icon-delete" />删除</el-button>
                       </el-button-group>
@@ -111,28 +111,7 @@ export default {
     editor: function (id) {
       this.$router.push({ path: '/meta/meta-edit', query: { id } })
     },
-    /*
-     async del(id) {
-      try {
-        await this.$confirm('此操作将永久删除该脚本, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        })
-        const response = await delVerseScripts(id)
-
-        await this.refresh()
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
-      } catch (e) {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      }
-    }, */
+    
     async del(id) {
       try {
         await this.$confirm('此操作将永久删除该【元数据】, 是否继续?', '提示', {
