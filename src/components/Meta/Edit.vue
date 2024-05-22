@@ -63,7 +63,7 @@
         <el-card v-if="item !== null" class="box-card">
           <el-button-group style="float: right; padding: 3px 0" >
             <el-button @click="openDialog" icon="el-icon-magic-stick">
-              事件编辑
+              事件设置
             </el-button>
             <el-button
               @click="editor"
@@ -71,7 +71,7 @@
               type="primary"
               icon="el-icon-edit-outline"
             >
-              内容编辑
+              编辑器
             </el-button>
            
           </el-button-group>
