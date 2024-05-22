@@ -427,6 +427,21 @@ export const constantRoutes = [
         ]
       },
       {
+        path: 'game',
+        name: 'Game',
+        meta: { title: '游戏' },
+        redirect: '/game/index',
+        component: Empty,
+        children: [
+          {
+            path: 'index',
+            name: 'GameIndex',
+            meta: { title: '游戏配置' },
+            component: () => import('@/views/game/index')
+          }
+        ]
+      },
+      {
         path: 'community',
         name: 'Community',
         meta: { title: '交流' },

@@ -179,7 +179,11 @@ const state = {
         }
       ]
     },
-
+    {
+      label: '游戏配置',
+      url: '/game/index',
+      icon: 'gamepad'
+    },
     {
       label: '交流',
       url: '/community/index',
