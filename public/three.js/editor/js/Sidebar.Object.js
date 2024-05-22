@@ -507,7 +507,7 @@ function SidebarObject(editor) {
 		new UIText(strings.getKey('sidebar/object/userdata')).setWidth('90px')
 	)
 	objectUserDataRow.add(objectUserData)
-
+	objectUserDataRow.readOnly = true
 	container.add(objectUserDataRow)
 
 	//

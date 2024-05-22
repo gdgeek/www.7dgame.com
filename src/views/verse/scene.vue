@@ -187,8 +187,8 @@ export default {
               const response = await getVerse(this.id, 'metas, resources')
               const verse = response.data
               console.error(verse)
-              alert("!")
-              alert( verse.editable)
+             // alert("!")
+             // alert( verse.editable)
               if (verse) {
                 this.saveable = this.$can('editable', new AbilityEditable(verse.editable))
                 
