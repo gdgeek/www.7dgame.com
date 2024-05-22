@@ -116,7 +116,15 @@ export function UpdateAbility($ability, roles, userId) {
       menu = menu.concat([/^\/manager[\/]/])
       if (roles.find(role => role === 'root')) {
         can(['root'])
-        // menu = menu.concat([/^\/knight[\/]/])
+      }
+      if (roles.find(role => role === 'admin')) {
+        can(['admin'])
+      }
+      if (roles.find(role => role === 'manager')) {
+        can(['manager'])
+      }
+      if (roles.find(role => role === 'user')) {
+        can(['user'])
       }
     }
   }

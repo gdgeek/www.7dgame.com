@@ -12,7 +12,7 @@
           size="mini"
         >
           <el-descriptions-item  label="权限">
-            <el-select  v-if="$can('root')&& !item.roles.includes('root')" size="mini" v-model="value" placeholder="请选择">
+            <el-select v-if="isSelect" size="mini" v-model="value" placeholder="请选择">
               <el-option 
                 v-for="item in options"
                 :key="item.value"
@@ -25,7 +25,7 @@
             </div>
           </el-descriptions-item>
         </el-descriptions>
-        <el-button v-if="!item.roles.includes('root')" type="text" class="button" @click="deleted(item)">
+        <el-button v-if="isSelect" type="text" class="button" @click="deleted(item)">
           删除
         </el-button>
       </div>
@@ -40,7 +40,7 @@ export default {
   name: 'People',
   data() {
       return {
-        options: [ {
+        _options: [ {
           value: 'admin',
           label: '超级管理员'
         }, {
@@ -54,6 +54,43 @@ export default {
       }
   },
   computed: {
+    options: function () {
+      if (this.$can('root')) {
+        return  [ {
+          value: 'admin',
+          label: '超级管理员'
+        },  {
+          value: 'manager',
+          label: '管理员'
+        }, {
+          value: 'user',
+          label: '用户'
+        }]
+      }
+      if (this.$can('admin')) {
+
+        return [ {
+          value: 'manager',
+          label: '管理员'
+        }, {
+          value: 'user',
+          label: '用户'
+        }]
+      }
+      return []
+    },
+    isSelect: function () {
+      if (this.item.roles.includes('root')) { 
+        return false;
+      }
+      if (this.$can('root')) { 
+        return true;
+      }
+      if(this.$can('admin') && !this.item.roles.includes('admin')) {
+        return true;
+      }
+      return false
+    },
     value: {
       get:function(){ 
         return this.getValue(this.item.roles)
