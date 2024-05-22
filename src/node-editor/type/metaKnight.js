@@ -1,7 +1,7 @@
 import { MetaKnightSocket } from '@/node-editor/sockets/sockets'
 
 var MetaKnightType = {
-  title: 'MetaKnight',
+  title: 'Module',
   controls: [
     {
       type: 'uuid',
@@ -10,7 +10,7 @@ var MetaKnightType = {
     {
       type: 'num',
       key: 'id',
-      hidden: false,
+      hidden: true,
       readonly: true
     },
     {
@@ -19,12 +19,18 @@ var MetaKnightType = {
       title: '标题',
       readonly: false
     },
-
     {
-      type: 'knight',
-      title: '骑士',
-      key: 'knight',
+      type: 'module',
+      title: '元数据',
+      key: 'meta_id',
       hidden: false,
+      readonly: true
+    },
+    {
+      type: 'string',
+      title: '数据',
+      key: 'data',
+      hidden: true,
       readonly: true
     },
     {
@@ -37,7 +43,7 @@ var MetaKnightType = {
   outputs: [
     {
       key: 'out',
-      title: 'MetaKnight',
+      title: 'Module',
       socket: MetaKnightSocket,
       multiConns: false
     }

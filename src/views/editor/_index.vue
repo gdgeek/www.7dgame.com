@@ -19,7 +19,7 @@ var qs = require('querystringify')
 var path = require('path')
 import env from '@/environment.js'
 import { putVerse } from '@/api/v1/verse'
-import { getVerse } from '@/api/e1/verse'
+import { getVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseEditor',
   data() {
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     async saveVerse(verse) {
-      await putVerse(this.id, { data: verse }).then(response => {
+      await putVerse(this.id, {type:'custom', data: verse }).then(response => {
         this.$message({
           type: 'success',
           message: '保存成功!!'

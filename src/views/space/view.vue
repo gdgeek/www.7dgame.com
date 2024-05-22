@@ -55,7 +55,7 @@
 </template>
 <script>
 import { getSpace, putSpace, deleteSpace } from '@/api/v1/space'
-//import { createVerseFromPolygen } from '@/api/v1/meta-verse'
+//import { createVerseFromResource } from '@/api/v1/meta-verse'
 
 import { postFile } from '@/api/v1/files'
 import { mapState } from 'vuex'
@@ -262,7 +262,7 @@ export default {
             blob.extension = '.jpg'
             const file = blob
             const md5 = await store.fileMD5(file)
-            const handler = await store.storeHandler()
+            const handler = await store.publicHandler()
             const has = await store.fileHas(
               md5,
               file.extension,

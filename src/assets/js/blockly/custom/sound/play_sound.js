@@ -11,22 +11,12 @@ const block = {
   getBlockJson(parameters) {
     const json = {
       type: 'block_type',
-      message0: '播放音频 %1  同步 %2 独占 %3',
+      message0: '播放音频 %1',
       args0: [
         {
           type: 'input_value',
           name: 'sound',
           check: 'Sound'
-        },
-        {
-          type: 'field_checkbox',
-          name: 'sync',
-          checked: true
-        },
-        {
-          type: 'field_checkbox',
-          name: 'occupy',
-          checked: true
         }
       ],
       previousStatement: null,
@@ -54,16 +44,9 @@ const block = {
         Blockly.Lua.ORDER_NONE
       )
 
-      var occupy = block.getFieldValue('occupy') === 'TRUE'
-      var sync = block.getFieldValue('sync') === 'TRUE'
 
-      var parameter = sound + ', ' + JSON.stringify(occupy)
+      return '_G.sound.play(' + sound + ')\n'
 
-      if (sync) {
-        return '_G.sound.sync_play(' + parameter + ')\n'
-      } else {
-        return '_G.sound.play(' + parameter + ')\n'
-      }
     }
     return lua
   },

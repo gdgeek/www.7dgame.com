@@ -18,7 +18,7 @@ const block = {
           type: 'field_dropdown',
           name: 'Output',
           options: function () {
-            const output = resource.output
+            const output = resource.events.outputs
             let opt = [['none', '']]
             output.forEach(({ title, uuid }) => {
               opt.push([title, uuid])
@@ -50,9 +50,7 @@ const block = {
 
       // TODO: Assemble Lua into code variable.
       var code =
-        '_G.helper.trigger_event(' +
-        Helper.output_event(index, output_event) +
-        ')\n'
+        "_G.event.trigger(index,'" + output_event + "')\n"
 
       return code
     }
@@ -63,17 +61,4 @@ const block = {
     type: data.name
   }
 }
-/*
-<value name="boom">
-<shadow  type="vector3_data">
-<value name="X">
-<shadow type="math_number">
-<field name="NUM">20</field>
-</shadow></value><value name="Y">
-<shadow type="math_number">
-<field name="NUM">0</field></shadow></value>
-<value name="Z"><shadow type="math_number">
-<field name="NUM">0</field></shadow></value>
-</shadow></value>
- */
 export default block

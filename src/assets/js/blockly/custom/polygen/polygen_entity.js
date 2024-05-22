@@ -20,7 +20,6 @@ const block = {
             const polygen = resource.polygen
             let opt = [['none', '']]
             polygen.forEach(poly => {
-              // alert(poly.name)
               opt.push([poly.name, poly.uuid])
             })
             return opt
@@ -46,7 +45,7 @@ const block = {
   getLua({ index }) {
     const lua = function (block) {
       var dropdown_polygen = block.getFieldValue('Polygen')
-      return [Helper.handler(index, dropdown_polygen), Blockly.Lua.ORDER_NONE]
+      return [Helper.handler(dropdown_polygen), Blockly.Lua.ORDER_NONE]
     }
     return lua
   },

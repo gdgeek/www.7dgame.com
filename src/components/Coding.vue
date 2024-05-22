@@ -97,18 +97,29 @@ export default {
 
       const ret = {
         action: [],
+        trigger: [],
         polygen: [],
         picture: [],
         video: [],
+        voxel: [],
         text: [],
         sound: [],
         entity: [],
-        input: [],
-        output: []
+        events: {
+          inputs: [],
+          outputs: [],
+        },
       }
-      ret.input = meta.event_node.inputs
-      ret.output = meta.event_node.outputs
-
+      ret.events = JSON.parse(meta.events)
+      if(!ret.events) {
+        ret.events = {}
+      }
+      if(!ret.events.inputs) {
+        ret.events.inputs = []
+      }
+      if(!ret.events.outputs) {
+        ret.events.outputs = []
+      }
       this.addMetaData(data, ret)
       return ret
     },
@@ -122,9 +133,11 @@ export default {
       const entity = self.testPoint(data, [
         'polygen',
         'entity',
+        'voxel',
         'video',
         'picture',
-        'text'
+        'text',
+        'voxel',
       ])
 
       if (entity) {
@@ -158,6 +171,11 @@ export default {
 
       if (text) {
         ret.text.push(text)
+      }
+      const voxel = self.testPoint(data, ['voxel'])
+    
+      if (voxel) {
+        ret.voxel.push(voxel)
       }
 
       if (typeof data.children !== 'undefined') {
@@ -202,7 +220,7 @@ export default {
     handleClick(tab, event) {
       if (this.activeName === 'script') {
         this.script =
-          'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
+          'local meta = {}\nindex = \'\'\n' + Blockly.Lua.workspaceToCode(this.workspace)
       }
       console.log(tab, event)
     },
@@ -216,7 +234,7 @@ export default {
 
       try {
         const script =
-          'local meta = {}\n\n' + Blockly.Lua.workspaceToCode(this.workspace)
+           'local meta = {}\nindex = \'\'\n' + Blockly.Lua.workspaceToCode(this.workspace)
 
         const response = await putCyber(this.cyber.id, {
           data: JSON.stringify(data),

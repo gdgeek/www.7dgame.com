@@ -56,6 +56,8 @@
 </template>
 
 <script>
+
+import { v4 as uuidv4 } from 'uuid'
 import 'element-ui/lib/theme-chalk/index.css'
 import { postVerse, putVerse } from '@/api/v1/verse'
 import VerseList from '@/components/MrPP/MrPPVerseList'
@@ -114,7 +116,7 @@ export default {
     submitCreate(form, imageId) {
       const self = this
 
-      const data = { name: form.name, info: JSON.stringify(form) }
+      const data = { name: form.name, info: JSON.stringify(form), uuid:uuidv4() }
       if (imageId !== null) {
         data.image_id = imageId
       }
@@ -122,7 +124,7 @@ export default {
       postVerse(data).then(response => {
         console.log(response.data.id)
         self.$router.push({
-          path: '/verse/rete-verse',
+          path: '/verse/scene',
           query: { id: response.data.id }
         })
       })

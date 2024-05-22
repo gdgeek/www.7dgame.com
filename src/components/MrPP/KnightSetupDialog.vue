@@ -1,5 +1,7 @@
 <template>
   <div>
+    <knight-data-dialog ref="knightData" @submit="knightDataSubmit" />
+  
     <el-dialog
       :visible.sync="dialogVisible"
       width="95%"
@@ -8,30 +10,40 @@
       @close="cancel()"
     >
       <span slot="title" class="dialog-footer">
+        <el-tabs
+          v-model="activeName"
+          type="card"
+          class="demo-tabs"
+          @tab-click="handleClick"
+        >
+          <el-tab-pane label="系统预设" name="prefab"  />
+          <el-tab-pane label="本地数据" name="custom" />
+        </el-tabs>
         <mr-p-p-header
-          :sorted="owner.sorted"
-          :searched="owner.searched"
+          :sorted="active.sorted"
+          :searched="active.searched"
           @search="search"
           @sort="sort"
         >
           <el-tag>
-            <b>选择资源</b>
+            <b>选择元数据</b>
           </el-tag>
+            
         </mr-p-p-header>
         <el-divider content-position="left">
           <el-tag
-            v-if="owner.searched !== ''"
+            v-if="prefab.searched !== ''"
             size="mini"
             closable
             @close="clearSearched()"
           >
-            {{ owner.searched }}
+            {{ prefab.searched }}
           </el-tag>
         </el-divider>
       </span>
-      <waterfall v-if="owner !== null && owner.items !== null" :options="{}">
+      <waterfall v-if="prefab !== null && prefab.items !== null" :options="{}">
         <waterfall-item
-          v-for="(item, index) in owner.items"
+          v-for="(item, index) in prefab.items"
           :key="index"
           style="width: 230px"
         >
@@ -71,10 +83,10 @@
         <el-row :gutter="0">
           <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16">
             <el-pagination
-              :current-page="owner.pagination.current"
-              :page-count="owner.pagination.count"
-              :page-size="owner.pagination.size"
-              :total="owner.pagination.total"
+              :current-page="active.pagination.current"
+              :page-count="active.pagination.count"
+              :page-size="active.pagination.size"
+              :total="active.pagination.total"
               layout="prev, pager, next, jumper"
               background
               @current-change="handleCurrentChange"
@@ -82,6 +94,9 @@
           </el-col>
           <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
             <el-button-group>
+              <el-button v-if="activeName == 'custom' " type="success" size="mini" @click="create">
+                新 建
+              </el-button>
               <el-button size="mini" @click="dialogVisible = false">
                 取 消
               </el-button>
@@ -95,27 +110,36 @@
 
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
+import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
 
-import { getKnights } from '@/api/v1/knight'
-import {
-  getVerseKnights,
-  postVerseKnight,
-  deleteVerseKnight
-} from '@/api/v1/verse-knight'
+import { v4 as uuidv4 } from 'uuid'
+
+import { getMetas, postMeta } from '@/api/v1/meta'
+import { getPrefabs } from '@/api/v1/prefab'
+
+
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
 export default {
   name: 'KnightDialog',
   components: {
     Waterfall,
     WaterfallItem,
-    MrPPHeader
+    MrPPHeader,
+    KnightDataDialog
   },
   data() {
     return {
+      activeName: 'prefab',
       verse_id: -1,
       value: null,
 
-      owner: {
+      prefab: {
+        items: null,
+        sorted: '-created_at',
+        searched: '',
+        pagination: { current: 1, count: 1, size: 20, total: 20 }
+      },
+      custom: {
         items: null,
         sorted: '-created_at',
         searched: '',
@@ -125,8 +149,18 @@ export default {
     }
   },
   props: {},
-  computed: {},
+  computed: {
+    active() {
+      if (this.activeName === 'prefab') {
+        return this.prefab
+      }
+      return this.custom
+    }
+  },
   methods: {
+    knightDataSubmit(data) {
+      console.error(data)
+    },
     handleClick(tab, event) {
       this.refresh()
     },
@@ -141,48 +175,84 @@ export default {
       return 'title'
     },
     async open(value, verse_id) {
-      this.owner = {
+      this.prefab = {
         items: null,
         sorted: '-created_at',
         searched: '',
         pagination: { current: 1, count: 1, size: 20, total: 20 }
       }
-
+      this.custom = {
+        items: null,
+        sorted: '-created_at',
+        searched: '',
+        pagination: { current: 1, count: 1, size: 20, total: 20 }
+      }
       this.verse_id = verse_id
       this.value = value
 
-      this.refreshOwner()
+      this.refresh()
 
       this.dialogVisible = true
     },
-    async refreshOwner() {
-      const response = await getKnights(
-        this.owner.sorted,
-        this.owner.searched,
-        this.owner.pagination.current,
-        'image,verseKnights'
+    async refreshPrefab() {
+      const response = await getPrefabs(
+        this.prefab.sorted,
+        this.prefab.searched,
+        this.prefab.pagination.current,
+        'image'
+      )
+      this.prefab.items = response.data
+    },
+    async refreshCustom() {
+      const response = await getMetas(
+        this.custom.sorted,
+        this.custom.searched,
+        this.custom.pagination.current,
+        'image'
       )
 
-      this.owner.items = response.data
+      this.prefab.items = response.data
     },
     close() {
       this.dialogVisible = false
     },
     sort: function (value) {
-      this.owner.sorted = value
+      
+      this.active.sorted = value
       this.refresh()
     },
     search: function (value) {
-      this.owner.searched = value
+      this.active.searched = value
       this.refresh()
     },
     clearSearched() {
-      this.owner.searched = ''
+      this.active.searched = ''
       this.refresh()
     },
     doSelect(data) {
-      this.$emit('selected', data)
-      this.dialogVisible = false
+    
+      if (data.custom === 1) {
+       // alert(data)
+       this.$emit('selected', { data })
+        this.dialogVisible = false
+     } else {
+
+      if(data.data != null){
+        this.$refs.knightData.open({
+          schema: JSON.parse(data.data),
+          data: {},
+          callback: (setup) => {
+            this.$emit('selected', {data, setup})
+            this.dialogVisible = false
+          }
+        })
+      }else{
+        this.$emit('selected', { data, setup: {} })
+        this.dialogVisible = false
+      }
+    
+     }
+   
     },
     doEmpty() {
       this.$emit('selected', null)
@@ -194,15 +264,31 @@ export default {
       this.$emit('selected', data)
       this.dialogVisible = false
     },
+    create() {
+      postMeta({
+        title: '新建元数据',
+        custom: 1,
+        uuid: uuidv4()
+      }).then(response => {
+        this.selected({data: response.data })
+        this.dialogVisible = false
+      })
+    },
     cancel() {
       this.$emit('cancel')
     },
     handleCurrentChange: function (page) {
-      this.owner.pagination.current = page
+      this.active.pagination.current = page
       this.refresh()
     },
     async refresh() {
-      await this.refreshOwner()
+      if (this.activeName === 'prefab') {
+        this.refreshPrefab()
+      } else {
+        this.refreshCustom()
+      }
+    
+      
     }
   }
 }

@@ -14,8 +14,9 @@
           class="demo-tabs"
           @tab-click="handleClick"
         >
-          <el-tab-pane label="绑定资源" name="binding" />
+          <el-tab-pane label="绑定资源" name="binding" v-if="meta_id != null" />
           <el-tab-pane label="我的资源" name="owner" />
+
         </el-tabs>
         <mr-p-p-header
           :sorted="active.sorted"
@@ -67,7 +68,7 @@
                 </div>
               </el-card>
             </div>
-            <div class="clearfix">
+            <div class="clearfix" v-if="meta_id != null">
               <el-button-group v-if="item.id === value">
                 <el-button type="warning" size="mini" @click="doEmpty()">
                   取消选择
@@ -83,6 +84,11 @@
               </el-button-group>
               <el-button v-else size="mini" @click="doBinding(item)">
                 绑定
+              </el-button>
+            </div>
+            <div class="clearfix" v-else>
+              <el-button type="primary" size="mini" @click="doSelect(item)">
+                选择
               </el-button>
             </div>
             <div class="bottom clearfix" />
@@ -123,7 +129,6 @@
             </div>
             <div class="bottom clearfix" />
           </el-card>
-
           <br />
         </waterfall-item>
       </waterfall>
@@ -179,7 +184,7 @@ export default {
     return {
       activeName: 'binding',
       type: 'polygen',
-      meta_id: -1,
+      meta_id: null,
       value: null,
       binding: {
         items: null,
@@ -211,7 +216,6 @@ export default {
           return true
         }
       }
-
       return false
     },
     handleClick(tab, event) {
@@ -227,7 +231,11 @@ export default {
       }
       return 'title'
     },
-    async open(value, meta_id, type) {
+    async openIt({ selected = null, binding = null, type }) {
+      await this.open(selected, binding, type)
+    },
+    async open(value, meta_id = null, type = null) {
+     
       this.binding = {
         items: null,
         sorted: '-created_at',
@@ -261,7 +269,7 @@ export default {
         this.owner.sorted,
         this.owner.searched,
         this.owner.pagination.current,
-        'image,metaResources'
+        'image, metaResources'
       )
 
       this.owner.items = response.data
@@ -384,24 +392,6 @@ export default {
       } else {
         await this.refreshOwner()
       }
-      /*
-      const response = await getResources(
-        this.type,
-        this.sorted,
-        this.searched,
-        this.pagination.current,
-        'image,metaResources'
-      )
-      this.pagination = {
-        current: parseInt(response.headers['x-pagination-current-page']),
-        count: parseInt(response.headers['x-pagination-page-count']),
-        size: parseInt(response.headers['x-pagination-per-page']),
-        total: parseInt(response.headers['x-pagination-total-count'])
-      }
-      if (response.data) {
-        //   alert(JSON.stringify(response.data))
-        this.items = response.data
-      }*/
     }
   }
 }

@@ -8,7 +8,7 @@ const block = {
   title: data.name,
   type: DataType.name,
   colour: DataType.colour,
-  getBlockJson({}) {
+  getBlockJson({ }) {
     const json = {
       type: data.name,
       message0: '实体 %1 经过 %2 秒移动到 %3 %4 同步 %5 独占 %6',
@@ -62,7 +62,7 @@ const block = {
     }
     return data
   },
-  getLua({}) {
+  getLua({ }) {
     const lua = function (block) {
       var entity = Blockly.Lua.valueToCode(
         block,

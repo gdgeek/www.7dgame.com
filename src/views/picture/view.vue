@@ -14,8 +14,8 @@
               element-loading-text="正在预处理"
               element-loading-background="rgba(255,255, 255, 0.3)"
               style="height: 300px; width: 100%"
-              :src="file"
-              :fit="'contain'"
+              :src="picture"
+              fit="contain"
               @load="dealWith()"
             />
           </div>
@@ -57,6 +57,7 @@
 <script>
 import { getPicture, putPicture, deletePicture } from '@/api/resources'
 
+import { isHttps,  convertToHttps} from '@/assets/js/helper'
 import { postFile } from '@/api/v1/files'
 import { printVector2 } from '@/assets/js/helper'
 
@@ -102,7 +103,9 @@ export default {
         return []
       }
     },
-
+    picture() { 
+      return convertToHttps(this.file)
+    },
     id() {
       return this.$route.query.id
     },
@@ -189,7 +192,7 @@ export default {
       const file = blob
 
       const md5 = await store.fileMD5(file)
-      const handler = await store.storeHandler()
+      const handler = await store.publicHandler()
       const has = await store.fileHas(
         md5,
         file.extension,

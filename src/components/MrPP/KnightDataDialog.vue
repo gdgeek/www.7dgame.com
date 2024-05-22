@@ -17,7 +17,6 @@
             @on-cancel="handlerCancel"
             @on-change="handlerChange"
           ></vue-form>
-          123
         </template>
       </span>
     </el-dialog>
@@ -33,20 +32,22 @@ export default {
       formData: {},
       schema: {},
       id: null,
-      dialogVisible: false
+      dialogVisible: false,
+      callback:null
     }
   },
   props: {},
   methods: {
     async handlerSubmit() {
-      this.$emit('submit', this.formData)
-
-      //alert(this.id)
-      // alert(JSON.stringify(this.formData))
-      const response = await putMetaKnight(this.id, {
+      //this.$emit('submit', this.formData)
+      //alert(JSON.stringify(this.formData))
+      if(this.callback != null){
+        this.callback(this.formData)
+      }
+     /* const response = await putMetaKnight(this.id, {
         info: JSON.stringify(this.formData)
       })
-
+*/
       this.dialogVisible = false
     },
     handlerCancel() {
@@ -63,14 +64,13 @@ export default {
         message: vNode
       })*/
     },
-    async open(id, schema) {
-      this.id = id
+    async open({ schema, callback, data}) {
+   
       this.schema = schema
-      const response = await getMetaKnight(id)
-
-      if (response.data.info) {
-        this.formData = JSON.parse(response.data.info)
-      }
+      this.callback = callback
+  
+      this.formData = data
+     
 
       this.dialogVisible = true
     },

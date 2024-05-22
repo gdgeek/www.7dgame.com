@@ -11,12 +11,8 @@
       @cancel="clearSpace()"
       ref="spaceDialog"
     />
-    <event-dialog
-      :node="event.node"
-      :uuid="event.uuid"
-      @postEvent="postEvent"
-      ref="dialog"
-    ></event-dialog>
+   
+    
     <el-container>
       <el-main>
         <el-card v-loading="loading" class="box-card">
@@ -48,7 +44,6 @@
 
 <script>
 import editor from '@/node-editor/verse'
-import manager from '@/assets/js/event-manager'
 import { putVerse } from '@/api/v1/verse'
 
 import { mapMutations } from 'vuex'
@@ -61,8 +56,6 @@ import KnightSetupDialog from '@/components/MrPP/KnightSetupDialog.vue'
 
 import { AbilityEditable } from '@/ability/ability'
 
-import EventDialog from '@/components/Rete/EventDialog.vue'
-import { getKnight } from '@/api/v1/knight'
 async function sleep(time) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -72,7 +65,6 @@ async function sleep(time) {
 }
 export default {
   components: {
-    EventDialog,
     KnightSetupDialog,
     SpaceDialog,
     KnightDataDialog
@@ -86,11 +78,6 @@ export default {
       space: { callback: null },
       id: parseInt(this.$route.query.id),
       verse: null,
-      event: {
-        node: null,
-        meta_id: -1,
-        uuid: null
-      }
     }
   },
 
@@ -101,7 +88,7 @@ export default {
       root: this
     })
 
-    const response = await getVerse(this.id, 'metas, metaKnights,share')
+    const response = await getVerse(this.id, 'metaKnights,share')
 
     this.verse = response.data
     if (this.verse.data == null) {
@@ -121,56 +108,12 @@ export default {
     }
 
     const data = JSON.parse(this.verse.data)
-    console.error(data)
-    if (!data.children.metas) {
-      data.children.metas = []
+   
+    if (!data.children.modules) {
+      data.children.modules = []
     }
-    data.children.metas = this.supplyMetas(
-      data.children.metas,
-      this.verse.metas,
-      item => {
-        return {
-          type: 'Meta',
-          parameters: {
-            uuid: item.uuid,
-            id: item.id,
-            title: randomWords(),
-            transform: {
-              position: { x: 0, y: 0, z: 0 },
-              rotate: { x: 0, y: 0, z: 0 },
-              scale: { x: 1, y: 1, z: 1 }
-            }
-          }
-        }
-      }
-      // this.verse.metaKnights
-    )
-    if (!data.children.metaKnights) {
-      data.children.metaKnights = []
-    }
-    data.children.metaKnights = this.supplyMetas(
-      data.children.metaKnights,
-      this.verse.metaKnights,
-      item => {
-        return {
-          type: 'MetaKnight',
-          parameters: {
-            uuid: item.uuid,
-            id: item.id,
-            knight: item.knight_id,
-            title: randomWords(),
-            transform: {
-              position: { x: 0, y: 0, z: 0 },
-              rotate: { x: 0, y: 0, z: 0 },
-              scale: { x: 1, y: 1, z: 1 }
-            }
-          }
-        }
-      }
-    )
     //初始化数据
     await editor.setup(data)
-    await this.slots(data)
     await this.arrange()
 
     if (!this.saveable) {
@@ -187,7 +130,7 @@ export default {
         },
         {
           path: '/meta-verse/index',
-          meta: { title: '元&宇宙' }
+          meta: { title: '宇宙' }
         },
         {
           path: '/verse/view?id=' + this.id,
@@ -218,45 +161,12 @@ export default {
     knightDataSubmit(data) {
       console.error(data)
     },
-    knightForm({ id, schema }) {
-      console.error(id)
-
-      this.$refs.knightData.open(id, JSON.parse(schema))
+    metaForm(params) {
+    
+      this.$refs.knightData.open(params)
     },
     createMetaKnight() {
       this.$refs.knightSetup.open()
-    },
-    supplyMetas(children, nodes, creater) {
-      const ret = children.filter(function (item) {
-        if (item) {
-          if (
-            nodes.find(m => {
-              return m.id === item.parameters.id
-            })
-          ) {
-            return true
-          }
-        }
-
-        return false
-      })
-
-      const supply = nodes.filter(function (item) {
-        if (
-          item &&
-          children.find(m => {
-            return m && m.parameters.id == item.id
-          })
-        ) {
-          return false
-        }
-        return true
-      })
-      supply.forEach(item => {
-        ret.push(creater(item))
-      })
-
-      return ret
     },
     clearSpace() {
       this.space.callback = null
@@ -280,35 +190,15 @@ export default {
       }
     },
 
-    _updateKnightMetaEvent(data, knight_id) {
-      getKnight(knight_id).then(async response => {
-        const info = JSON.parse(response.data.info)
-        if (info.events) {
-          info.events.inputs.forEach(item => {
-            item.uuid = uuidv4()
-          })
-          info.events.outputs.forEach(item => {
-            item.uuid = uuidv4()
-          })
-          await editor.loadEvent(data.uuid, data.event_node, {
-            inputs: info.events.inputs,
-            outputs: info.events.outputs
-          })
-
-          data.event_node = await manager.rebuild(
-            data.event_node,
-            info.events.inputs,
-            info.events.outputs
-          )
-        }
-      })
-    },
+   
     clearKnight() {
       this.knight.callback = null
     },
-    async knightSelect(data) {
-      const node = await editor.addMetaKnight({
-        knight: data.id
+    async knightSelect({ data,setup }) {
+   
+       await editor.addModule({
+        meta_id : data.id,
+        data : JSON.stringify(setup)
       })
     },
     _setVerseName(name) {
@@ -328,97 +218,34 @@ export default {
         this.verse.metas.splice(index, 1)
       }
     },
-    async _doMetaEvent(id) {
-      if (this.saveable) {
-        const meta = this.verse.metas.find(item => {
-          if (item.id === id) {
-            return true
-          }
-          return false
-        })
-
-        if (meta) {
-          this.event.node = meta.event_node
-          this.event.uuid = meta.uuid
-          this.$refs.dialog.open()
-        }
-      }
-    },
-
-    async postEvent({ uuid, node, inputs, outputs }) {
-      if (this.saveable) {
-        await editor.loadEvent(uuid, node, {
-          inputs,
-          outputs
-        })
-        this.node = await manager.rebuild(node, inputs, outputs)
-      }
-      this.$refs.dialog.close()
-    },
+   
 
     async save() {
+     
       const self = this
       const verse_id = this.id
 
       if (self.saveable) {
-        const list = await editor.saveEvent()
-
-        const response = await getVerse(this.id, 'metas, metaKnights,share')
-
-        this.verse = response.data
-        await manager.saveLinked(this.verse, list)
-
-        await editor.removeLinked()
+      
         const data = await editor.save()
+      
         await putVerse(verse_id, {
           data
+        })
+
+        this.$message({
+          message: '保存成功',
+          type: 'success'
         })
         await this.arrange()
       }
     },
 
     async arrange() {
-      await editor.removeLinked()
       await editor.arrange()
       await sleep(300)
-      const data = await manager.loadLinked(this.verse)
-
-      for (let i = 0; i < data.length; ++i) {
-        const item = data[i]
-        await editor.addLinked(item)
-      }
-    },
-
-    async slots(data) {
-      for (let i = 0; i < data.children.metas.length; ++i) {
-        const node = data.children.metas[i]
-
-        const meta = this.verse.metas.find(item => {
-          if (item.id === node.parameters.id) {
-            return true
-          }
-          return false
-        })
-
-        if (meta) {
-          await editor.addEventNode(meta.event_node, node.parameters.uuid)
-        }
-      }
-
-      for (let i = 0; i < data.children.metaKnights.length; ++i) {
-        const node = data.children.metaKnights[i]
-
-        const metaKnight = this.verse.metaKnights.find(item => {
-          if (item.id === node.parameters.id) {
-            return true
-          }
-          return false
-        })
-
-        if (metaKnight) {
-          await editor.addEventNode(metaKnight.event_node, node.parameters.uuid)
-        }
-      }
+  
+      await editor.arrange()
     }
   },
 

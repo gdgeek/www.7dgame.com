@@ -3,7 +3,7 @@ import Rete from 'rete'
 import ActionControl from './actionControl.vue'
 import VueNumControl from './numControl.vue'
 import MetaControl from './metaControl.vue'
-import KnightControl from './knightControl.vue'
+import ModuleControl from './moduleControl.vue'
 import TransformControl from './transformControl.vue'
 import StringControl from './stringControl.vue'
 import SelectControl from './selectControl.vue'
@@ -17,8 +17,9 @@ import UUIDControl from './uuidControl.vue'
 import CodeControl from './codeControl.vue'
 import ButtonControl from './buttonControl.vue'
 import SpaceControl from './spaceControl.vue'
+//import ScriptControl from './scriptControl.vue'
 import StoryControl from './storyControl.vue'
-import EventControl from './eventControl.vue'
+//import EventControl from './_eventControl.vue'
 
 export class Control extends Rete.Control {
   constructor(emitter, { data, root, node }) {
@@ -29,9 +30,9 @@ export class Control extends Rete.Control {
       case 'select':
         this.component = SelectControl
         break
-      case 'event':
-        this.component = EventControl
-        break
+      //case 'event':
+      //  this.component = EventControl
+      //  break
       case 'meta':
         this.component = MetaControl
         break
@@ -50,8 +51,8 @@ export class Control extends Rete.Control {
       case 'string':
         this.component = StringControl
         break
-      case 'knight':
-        this.component = KnightControl
+      case 'module':
+        this.component = ModuleControl
         break
       case 'polygen-reset':
         this.component = PolygenResetControl

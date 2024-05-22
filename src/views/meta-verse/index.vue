@@ -6,12 +6,15 @@
 
 <script>
 import Page from '@/components/MrPP/MrPPVersePage.vue'
-
+import axios from 'axios'
 import { getVerses } from '@/api/v1/verse'
 export default {
   name: 'VerseIndex',
   components: {
     Page
+  },
+  mounted() {
+    const data = { id: 1 }
   },
 
   methods: {

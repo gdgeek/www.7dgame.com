@@ -188,16 +188,30 @@ export default {
       })
     },
     async upload(md5, file, handler) {
+
+      console.error(1)
+      console.error(this.store)
+      
+      console.error(2)
+     // const pubHandler = await store.publicHandler()
+      const priHandler = handler
+
+      console.error(3)
       const self = this
+      console.error(2)
       return new Promise(async function (resolve, reject) {
         try {
+
+          console.error(3)
           const store = self.store
           const has = await store.fileHas(
             md5,
             file.extension,
-            handler,
+            priHandler,
             'upload'
           )
+
+          console.error(4)
           if (!has) {
             await store.fileUpload(
               md5,
@@ -206,10 +220,12 @@ export default {
               function (p) {
                 self.progress(p, 1)
               },
-              handler,
+              priHandler,
               'upload'
             )
           }
+
+          console.error(4)
           self.progress(1, 1)
           const data = await store.fileProcess(
             'info',
@@ -217,11 +233,12 @@ export default {
             function (p) {
               self.progress(p, 2)
             },
-            handler,
+            priHandler,
             path.join('release', md5),
             60000
           )
 
+          console.error(5)
           if (data === null) {
             throw 'No Info File'
           }
@@ -244,11 +261,12 @@ export default {
             self.progress(p, 0)
           })
 
-          const handler = await store.rawHandler()
+          const priHandler = await store.privateHandler()
+         
           const has = await store.fileHas(
             'info',
             '.json',
-            handler,
+            priHandler,
             path.join('release', md5)
           )
           let data = null
@@ -258,13 +276,13 @@ export default {
               'info',
               '.json',
               function (p) {},
-              handler,
+              priHandler,
               path.join('release', md5)
             )
             self.progress(1, 1)
             self.progress(1, 2)
           } else {
-            data = await self.upload(md5, file, handler)
+            data = await self.upload(md5, file, priHandler)
           }
           data = self.filterInfo(data)
           if (data.status !== 'success') {
@@ -275,7 +293,7 @@ export default {
             function (p) {
               self.progress(p, 3)
             },
-            handler
+            priHandler
           )
 
           self.progress(1, 3)

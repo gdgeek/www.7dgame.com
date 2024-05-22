@@ -60,38 +60,40 @@ export default {
     },
     resource() {
       const inputs = []
-      const nodes = []
-      this.verse.metas.forEach(meta => {
-        if (!meta.event_node) {
-          return
+      const outputs = []
+      this.verse.metas.forEach(meta => { 
+        let events = JSON.parse(meta.events);
+        if (!events) {
+          events = {inputs: [], outputs: []}
         }
-        nodes.push(meta.event_node)
-        meta.event_node.inputs.forEach(input => {
+        events.inputs.forEach(input => {
+          const data = this.map.get(meta.id);
           inputs.push({
-            title: this.titles.get(meta.uuid) + ':' + input.title,
-            index: meta.uuid,
+            title: data.title + ':' + input.title,
+            index: data.uuid,
             uuid: input.uuid
           })
         })
-      })
-      this.verse.metaKnights.forEach(metaKnight => {
-        if (!metaKnight.event_node) {
-          return
-        }
-        nodes.push(metaKnight.event_node)
-        metaKnight.event_node.inputs.forEach(input => {
-          inputs.push({
-            title: this.titles.get(metaKnight.uuid) + ':' + input.title,
-            index: metaKnight.uuid,
+
+        events.outputs.forEach(input => {
+          const data = this.map.get(meta.id);
+          outputs.push({
+            title: data.title + ':' + input.title,
+            index: data.uuid,
             uuid: input.uuid
           })
         })
+
       })
-      const anchors = JSON.parse(this.verse.data).children.anchors
+
+   
       return {
-        events: inputs,
-        anchors
+        events: { 
+          inputs,
+          outputs,
+        }
       }
+     
     },
     saveable() {
       if (this.script === null) {
@@ -113,7 +115,7 @@ export default {
         },
         {
           path: '/meta-verse/index',
-          meta: { title: '元&宇宙' }
+          meta: { title: '宇宙' }
         },
         {
           path: '.',
@@ -128,18 +130,19 @@ export default {
 
     const verseResponse = await getVerse(
       this.script.verse_id,
-      'metas, metaKnights,share'
+      'metas, module,share'
     )
 
     this.verse = verseResponse.data
     console.log(this.verse.data)
     const data = JSON.parse(this.verse.data)
-    data.children.metas.forEach(meta => {
+    /*data.children.metas.forEach(meta => {
       this.titles.set(meta.parameters.uuid, meta.parameters.title)
-    })
+    })*/
 
-    data.children.metaKnights.forEach(metaKnight => {
-      this.titles.set(metaKnight.parameters.uuid, metaKnight.parameters.title)
+    this.map = new Map()
+    data.children.modules.forEach(module => {
+      this.map.set(module.parameters.meta_id, {uuid:module.parameters.uuid, title: module.parameters.title} )
     })
 
     this.setBreadcrumbs({
@@ -150,14 +153,14 @@ export default {
         },
         {
           path: '/meta-verse/index',
-          meta: { title: '元&宇宙' }
+          meta: { title: '宇宙' }
         },
         {
           path: '/verse/view?id=' + this.verse.id,
           meta: { title: '【' + this.verse.name + '】' }
         },
         {
-          path: '/verse/rete-verse?id=' + this.verse.id,
+          path: '/verse/scene?id=' + this.verse.id,
           meta: { title: '宇宙编辑' }
         },
         {

@@ -27,10 +27,10 @@ function fileHas(name, extension, handler = null, dir = '') {
       })
   })
 }
-async function storeHandler() {
+async function publicHandler() {
   return await fileHandler('store')
 }
-async function rawHandler() {
+async function privateHandler() {
   return await fileHandler('raw')
 }
 function fileHandler(bucket) {
@@ -160,7 +160,7 @@ export default {
   fileUpload,
   fileProcess,
   fileDownload,
-  storeHandler,
-  rawHandler,
+  publicHandler,
+  privateHandler,
   getUrl
 }

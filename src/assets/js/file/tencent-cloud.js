@@ -1,16 +1,24 @@
 import COS from 'cos-js-sdk-v5'
-import { token, store } from '@/api/v1/tencent-cloud'
+import { token, store, cloud } from '@/api/v1/tencent-cloud'
 import { fileMD5, fileOpen, sleep } from './base.js'
 import path from 'path'
-
+/*
 async function storeHandler() {
-  const response = await store()
-  return await fileHandler(
-    response.data.store.bucket,
-    response.data.store.region
-  )
-}
 
+  //const response = await store()
+  return await publicHandler()
+}*/
+async function publicHandler() { 
+  const response = await cloud()
+  return await fileHandler(response.data.public.bucket, response.data.public.region)
+}
+async function privateHandler() { 
+
+  const response = await cloud()
+  const handler = await fileHandler(response.data.private.bucket, response.data.private.region)
+
+  return handler
+}
 async function rawHandler() {
   const response = await store()
   return await fileHandler(response.data.raw.bucket, response.data.raw.region)
@@ -118,7 +126,7 @@ async function fileDownload(name, extension, progress, handler, dir = '') {
 }
 async function fileUpload(md5, extension, file, progress, handler, dir = '') {
   const filename = path.join(dir, md5 + extension)
-
+  console.error(filename)
   return new Promise(async (resolve, reject) => {
     try {
       // 分片上传文件
@@ -196,7 +204,9 @@ export default {
   fileUpload,
   fileProcess,
   fileDownload,
-  storeHandler,
-  rawHandler,
+  //storeHandler,
+  //rawHandler,
+  publicHandler,
+  privateHandler,
   getUrl
 }

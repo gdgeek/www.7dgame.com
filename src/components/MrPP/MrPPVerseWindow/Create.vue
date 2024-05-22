@@ -112,7 +112,6 @@ export default {
         setTimeout(() => {
           self.$refs['image'].setImageUrl(this.item.image.url)
         }, 0)
-        // alert(this.item.image.url)
         this.info.name = this.item.name
         const info = JSON.parse(this.item.info)
 

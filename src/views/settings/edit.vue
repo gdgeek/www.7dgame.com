@@ -525,7 +525,7 @@ export default {
         const file = blob
 
         const md5 = await store.fileMD5(file)
-        const handler = await store.storeHandler()
+        const handler = await store.publicHandler()
 
         const has = await store.fileHas(md5, file.extension, handler, 'backup')
 

@@ -41,7 +41,7 @@ export default {
     }
   },
   created() {
-    // alert(data)
+    console.error(data)
   }
 }
 </script>

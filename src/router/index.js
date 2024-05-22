@@ -44,23 +44,54 @@ export const constantRoutes = [
 
     children: [
       {
-        path: 'knight',
-        name: 'Knight',
-        meta: { title: '骑士' },
-        redirect: '/knight/index',
+        path: 'meta',
+        name: 'Meta',
+        meta: { title: '元数据' },
+        redirect: '/meta/list',
         component: Empty,
         children: [
+
           {
-            path: 'index',
-            name: 'KnightIndex',
-            meta: { title: '骑士列表' },
-            component: () => import('@/views/knight/index')
+            path: 'list',
+            name: 'MetaList',
+            meta: { title: '元数据列表' },
+            component: () => import('@/views/meta/list')
           },
           {
-            path: 'edit',
-            name: 'KnightEdit',
-            meta: { title: '骑士编辑' },
-            component: () => import('@/views/knight/edit')
+            path: 'prefabs',
+            name: 'MetaPrefabs',
+            meta: { title: '系统预设' },
+            component: () => import('@/views/meta/prefabs')
+          },
+          {
+            path: 'prefab-edit',
+            name: 'PrefabEdit',
+            meta: { title: '编辑' },
+            component: () => import('@/views/meta/prefab-edit')
+          },
+          {
+            path: 'meta-edit',
+            name: 'MetaEdit',
+            meta: { title: '编辑' },
+            component: () => import('@/views/meta/meta-edit')
+          },
+          {
+            path: 'rete-meta',
+            name: 'VerseMetaEditor',
+            meta: { title: '【元】' },
+            component: () => import('@/views/meta/rete-meta')
+          },
+          {
+            path: 'script',
+            name: 'MetaScript',
+            meta: { title: '脚本' },
+            component: () => import('@/views/meta/script')
+          },
+          {
+            path: 'scene',
+            name: 'MetaSceneEditor',
+            meta: { title: '内容编辑' },
+            component: () => import('@/views/meta/scene')
           }
         ]
       },
@@ -187,6 +218,33 @@ export const constantRoutes = [
         ]
       },
       {
+        path: 'voxel',
+        name: 'Voxel',
+        meta: { title: '体素资源' },
+        redirect: '/voxel/index',
+        component: Empty,
+        children: [
+          {
+            meta: { title: '列表' },
+            path: 'index',
+            name: 'VoxelIndex',
+            component: () => import('@/views/voxel/index')
+          },
+          {
+            path: 'upload',
+            name: 'VoxelUpload',
+            meta: { title: '体素上传' },
+            component: () => import('@/views/voxel/upload')
+          },
+          {
+            path: 'view',
+            name: 'VoxelView',
+            meta: { title: '体素处理' },
+            component: () => import('@/views/voxel/view')
+          }
+        ]
+      },
+      {
         path: 'picture',
         name: 'Picture',
         meta: { title: '图片资源' },
@@ -268,36 +326,9 @@ export const constantRoutes = [
         ]
       },
       {
-        path: 'meta',
-        name: 'Meta',
-        meta: { title: '元' },
-        redirect: '/meta/rete-meta',
-        component: Empty,
-        children: [
-          {
-            path: 'rete-meta',
-            name: 'VerseMetaEditor',
-            meta: { title: '【元】' },
-            component: () => import('@/views/meta/rete-meta')
-          },
-          {
-            path: 'cyber',
-            name: 'MetaCyber',
-            meta: { title: '元逻辑' },
-            component: () => import('@/views/meta/cyber')
-          },
-          {
-            path: 'scene',
-            name: 'MetaSceneEditor',
-            meta: { title: '内容编辑' },
-            component: () => import('@/views/meta/scene')
-          }
-        ]
-      },
-      {
         path: 'meta-verse',
         name: 'MetaVerse',
-        meta: { title: '元&宇宙' },
+        meta: { title: '宇宙' },
         redirect: '/meta-verse/index',
         component: Empty,
         children: [
@@ -334,12 +365,18 @@ export const constantRoutes = [
             meta: { title: '【宇宙】' },
             component: () => import('@/views/verse/view')
           },
-
+          /*
+                    {
+                      path: 'verse-script',
+                      name: 'VerseScript',
+                      meta: { title: '脚本' },
+                      component: () => import('@/views/verse/verse-script')
+                    },*/
           {
-            path: 'verse-script',
-            name: 'VerseScript',
+            path: 'script',
+            name: 'Script',
             meta: { title: '脚本' },
-            component: () => import('@/views/verse/verse-script')
+            component: () => import('@/views/verse/script')
           },
           {
             path: 'rete-verse',

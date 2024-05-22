@@ -15,7 +15,7 @@ export class Component extends Rete.Component {
     ) {
       this.type_.controls.forEach(ctrl => {
         node.addControl(
-          new Control(this.editor, { data: ctrl, root: this.root_, node: self })
+          new Control(this.editor, { data: ctrl, root: this.root_, node: node })
         )
       })
     }
@@ -36,7 +36,7 @@ export class Component extends Rete.Component {
             new Control(this.editor, {
               data: input.control,
               root: this.root_,
-              node: self
+              node: node
             })
           )
         }

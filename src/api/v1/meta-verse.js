@@ -3,7 +3,7 @@ import { postVerse, putVerse } from './verse.js'
 import { postMetaResource } from './meta-resource'
 import { v4 as uuidv4 } from 'uuid'
 
-async function initVerse(name, resource) {
+async function initVerse(type, name, resource) {
   const json = {
     name,
     description: '通过模型[' + resource.name + ']创建的简单场景。',
@@ -14,21 +14,22 @@ async function initVerse(name, resource) {
     name,
     info: JSON.stringify(json),
     image_id: resource.image_id,
+    uuid: uuidv4(),
     version: 3
   }
   const response = await postVerse(data)
   return response.data
 }
-async function initMeta(verse, resource) {
+async function initMeta(type, verse, resource) {
   const data = {
-    name: 'Polygen:' + resource.name,
+    name: type + ':' + resource.name,
     verse_id: verse.id,
     image_id: resource.image_id
   }
   const response = await postMeta(data)
   return response.data
 }
-async function updateMeta(meta, resource) {
+async function updateMeta(type, meta, resource) {
   const info = JSON.parse(resource.info)
   const r = 0.5 / info.size.y
   const scale = { x: r, y: r, z: r }
@@ -45,7 +46,7 @@ async function updateMeta(meta, resource) {
     children: {
       entities: [
         {
-          type: 'Polygen',
+          type: type,
           parameters: {
             uuid: uuidv4(),
             name: 'expression',
@@ -55,7 +56,7 @@ async function updateMeta(meta, resource) {
               scale
             },
             active: true,
-            polygen: resource.id
+            resource: resource.id
           },
           children: {
             entities: [],
@@ -79,21 +80,20 @@ async function updateMeta(meta, resource) {
   const response = await putMeta(meta.id, { data: JSON.stringify(data) })
   return response.data
 }
-async function updateVerse(verse, meta) {
+async function updateVerse(type, verse, meta) {
   const data = {
     type: 'Verse',
     parameters: {
-      uuid: uuidv4(),
-      space: { id: -1, occlusion: false }
+      uuid: uuidv4()
     },
     children: {
-      metas: [
+      modules: [
         {
           type: 'Meta',
           parameters: {
             uuid: uuidv4(),
             id: meta.id,
-            title: 'polygen',
+            title: type,
             transform: {
               position: { x: 0, y: 0, z: 2 },
               rotate: { x: 0, y: 0, z: 0 },
@@ -108,18 +108,18 @@ async function updateVerse(verse, meta) {
   const response = await putVerse(verse.id, { data: JSON.stringify(data) })
   return response.data
 }
-export function createVerseFromPolygen(name, resource) {
+export function createVerseFromResource(type, name, resource) {
   return new Promise(async (resolve, reject) => {
     try {
-      const verse = await initVerse(name, resource)
-      const meta = await initMeta(verse, resource)
+      const verse = await initVerse(type, name, resource)
+      const meta = await initMeta(type, verse, resource)
       const meta_resource = await postMetaResource({
         meta_id: meta.id,
         resource_id: resource.id
       })
 
-      const verse2 = await updateVerse(verse, meta)
-      const meta2 = await updateMeta(meta, resource)
+      const verse2 = await updateVerse(type, verse, meta)
+      const meta2 = await updateMeta(type, meta, resource)
       resolve({ verse: verse2, meta: meta2 })
     } catch (e) {
       reject(e)

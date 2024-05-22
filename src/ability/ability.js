@@ -78,13 +78,15 @@ export function UpdateAbility($ability, roles, userId) {
     router = router.concat([
       '/verse/rete-verse',
       '/verse/verse-script',
+      '/verse/script',
       '/meta/rete-meta',
-      '/meta/cyber'
+      '/meta/script'
     ])
     menu = menu.concat([
       '/site/logout',
       '/resource/',
       /^\/polygen[\/]/,
+      /^\/voxel[\/]/,
       /^\/space[\/]/,
       /^\/picture[\/]/,
       /^\/video[\/]/,
@@ -114,7 +116,7 @@ export function UpdateAbility($ability, roles, userId) {
       menu = menu.concat([/^\/manager[\/]/])
       if (roles.find(role => role === 'root')) {
         can(['root'])
-        menu = menu.concat([/^\/knight[\/]/])
+        // menu = menu.concat([/^\/knight[\/]/])
       }
     }
   }

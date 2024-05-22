@@ -130,18 +130,24 @@ function getLinked(data, linked, map) {
   return data
 }
 function getNodes(verse) {
+
+  //console.error(verse)
+  //console.error(verse.metas)
   const nodes = []
 
-  verse.metas.forEach(meta => {
-    let node = { uuid: meta.uuid }
-    Object.assign(node, meta.event_node)
-    nodes.push(node)
-  })
+  /*if (verse.metas != undefined) {
+    verse.metas.forEach(meta => {
+      let node = { uuid: meta.uuid }
+      Object.assign(node, meta.event_node)
+      nodes.push(node)
+    })
+  }
+
   verse.metaKnights.forEach(metaKnight => {
     let node = { uuid: metaKnight.uuid }
     Object.assign(node, metaKnight.event_node)
     nodes.push(node)
-  })
+  })*/
   return nodes
 }
 async function loadLinked(verse) {
