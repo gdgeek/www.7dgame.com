@@ -57,6 +57,7 @@
             v-model="input"
             size="mini"
             placeholder="搜索名称"
+            v-if="hasSearch"
             class="input-with-select"
             @keyup.enter.native="keyDown"
           >
@@ -84,7 +85,7 @@ export default {
     },
     searched: {
       type: String,
-      required: true
+      default: ''
     },
     sortByName: {
       type: String,
@@ -93,6 +94,10 @@ export default {
     sortByTime: {
       type: String,
       default: 'created_at'
+    },
+    hasSearch: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

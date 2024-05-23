@@ -5,13 +5,12 @@
     <el-container>
       <el-header>
         <mr-p-p-header
-          :sorted="sorted"
-          :searched="searched"
+          sorted=""
           sortByTime="created_at"
           sortByName="title"
-          @search="search"
-          @sort="sort"
+          :hasSearch="false"
         >
+        
           <el-button-group :inline="true">
             <el-button size="mini" type="primary" @click="addGuide()">
               <font-awesome-icon icon="plus" />
@@ -24,25 +23,36 @@
       <el-main>
         <el-card>
     <el-table
-      :data="tableData"
+      :data="items"
       style="width: 100%">
       <el-table-column
-        prop="date"
-        label="游戏id"
+        prop="level_id"
+        label="宇宙id"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="name"
-        label="顺序"
+        prop="level.name"
+        label="宇宙名"
         width="180">
+      </el-table-column>
+      <el-table-column
+        prop="order"
+        label="顺序"
+        width="180">  
+        <template slot-scope="scope">
+          <el-input type="number" @change="(value) => onchange(scope.row.id, value)" size="mini" v-model="scope.row.order" placeholder="请输入排序"></el-input>
+        </template>
+        
       </el-table-column>
       <el-table-column
         label="操作">
-        <el-button-group>
-  <el-button type="primary" icon="el-icon-arrow-left">上一页</el-button>
-  <el-button type="primary">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-</el-button-group> 
-      </el-table-column>
+        <template slot-scope="scope">
+         <el-button
+          size="mini"
+          type="danger"
+          @click="del(scope.row.id)">删除</el-button>
+      </template>
+    </el-table-column>
     </el-table>
   </el-card>
       </el-main>
@@ -67,7 +77,7 @@
 
 <script>
 import MrPPHeader from '@/components/MrPP/MrPPHeader'
-import { getVpGuides } from '@/api/v1/vp-guide.js'
+import { putVpGuide, getVpGuides, postVpGuide, deleteVpGuide } from '@/api/v1/vp-guide.js'
 import VerseDialog from '@/components/MrPP/VerseDialog.vue'
 export default {
   name: 'GameIndex',
@@ -76,92 +86,89 @@ export default {
     VerseDialog,
     MrPPHeader,
   },
+  mounted() {
+   this.refresh()
+  },
   methods: {
+    
+    async onchange(id, val) {
+      try {
+        await this.$confirm('修改排序?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        await putVpGuide(id, {order:val})
+        await this.refresh()
+        this.$message({
+          type: 'success',
+          message: '修改成功!'
+        })
+      } catch (e) {
+        console.error(e)
+        this.$message({
+          type: 'info',
+          message: '已取消修改'
+        })
+      }
+    },
     selected(item) { 
-      alert(item.id)
-      //alert(JSON.stringify(item))
-    },
-    cancel() {
-     // this.$refs.verseDialog.close()
-    },
-    refresh() {
-      //this.getMetas()
+      postVpGuide({level_id:item.data.id}).then(res => {
+        this.$message({
+          type: 'success',
+          message: '添加成功!'
+        })
+        this.refresh()
+      })
     },
     addGuide() {
-      alert(this.$refs.dialog)
       this.$refs.dialog.open()
-      //this.$router.push({ name: 'MetaAdd' })
     },
-    editor(id) {
-      //this.$router.push({ name: 'MetaEdit', params: { id } })
-    },
-    del(id) {
-      this.$confirm('此操作将永久删除该关卡, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        deleteGuide(id).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          })
-          this.refresh()
+    async del(id) {
+     
+      try {
+        await this.$confirm('此操作将永久删除该【关卡】, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
-      }).catch(() => {
+        await deleteVpGuide(id)
+        await this.refresh()
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      } catch (e) {
+        console.error(e)
         this.$message({
           type: 'info',
           message: '已取消删除'
         })
-      })
+      }
+     
     },
-    refresh() {
-      getVpGuides().then(res => {
-        this.items = res.data
-      })
+   async refresh() {
+     const response = await getVpGuides(this.pagination.current)
+     this.items = response.data
+     this.pagination = {
+        current: parseInt(response.headers['x-pagination-current-page']),
+        count: parseInt(response.headers['x-pagination-page-count']),
+        size: parseInt(response.headers['x-pagination-per-page']),
+        total: parseInt(response.headers['x-pagination-total-count'])
+      }
+    
     },
     handleCurrentChange(val) {
       this.pagination.current = val
       this.refresh()
     },
-    search(searched) {
-      this.searched = searched
-      this.refresh()
-    },
-    sort(sorted) {
-      this.sorted = sorted
-      this.refresh()
-    }
   },
-  mounted() {
-    getVpGuides().then(res => {
-      //this.tableData = res.data
-    })
-  }, 
   
   data() {
     return {
       items: null,
-      sorted: '-created_at',
-      searched: '',
       pagination: { current: 1, count: 1, size: 20, total: 20 },
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      
     }
   }
 }

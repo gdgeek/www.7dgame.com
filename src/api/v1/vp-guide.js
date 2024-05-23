@@ -1,4 +1,7 @@
 import request from '@/utils/request'
+
+var qs = require('querystringify')
+var path = require('path')
 export function postVpGuide(data) {
   return request({
     url: 'v1/vp-guides',
@@ -15,11 +18,20 @@ export function getVpGuide(id) {
   })
 
 }
-export function getVpGuides() {
+export function getVpGuides(page = 0) {
+
+  let query = []
+
+  query['sort'] = 'order'
+  if (page > 1) {
+    query['page'] = page
+  }
+
   return request({
-    url: 'v1/vp-guides',
+    url: path.join('v1', 'vp-guides' + qs.stringify(query, true)),
     method: 'get'
   })
+
 }
 
 export function putVpGuide(id, data) {
