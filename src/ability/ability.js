@@ -113,14 +113,16 @@ export function UpdateAbility($ability, roles, userId) {
       can(['delete'], AbilityMessage.name, { managed: 0 })
       can(['update'], AbilityMessage.name)
       menu = menu.concat(['/verse-share/open', /^\/trades[\/]/])
-      menu = menu.concat([/^\/manager[\/]/])
+
       if (roles.find(role => role === 'root')) {
         can(['root'])
         menu = menu.concat([/^\/game[\/]/])
+        menu = menu.concat([/^\/manager[\/]/])
       }
       if (roles.find(role => role === 'admin')) {
         can(['admin'])
         menu = menu.concat([/^\/game[\/]/])
+        menu = menu.concat([/^\/manager[\/]/])
       }
       if (roles.find(role => role === 'manager')) {
         can(['manager'])
