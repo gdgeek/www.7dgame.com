@@ -26,6 +26,15 @@
       :data="items"
       style="width: 100%">
       <el-table-column
+        prop="order"
+        label="顺序"
+        width="180">  
+        <template slot-scope="scope">
+          <el-input type="number" @change="(value) => onchange(scope.row.id, value)" size="mini" v-model="scope.row.order" placeholder="请输入排序"></el-input>
+        </template>
+        
+      </el-table-column>
+      <el-table-column
         prop="level_id"
         label="宇宙id"
         width="180">
@@ -35,15 +44,7 @@
         label="宇宙名"
         width="180">
       </el-table-column>
-      <el-table-column
-        prop="order"
-        label="顺序"
-        width="180">  
-        <template slot-scope="scope">
-          <el-input type="number" @change="(value) => onchange(scope.row.id, value)" size="mini" v-model="scope.row.order" placeholder="请输入排序"></el-input>
-        </template>
-        
-      </el-table-column>
+    
       <el-table-column
         label="操作">
         <template slot-scope="scope">

@@ -11,7 +11,7 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       "type": "block_type",
-      "message0": "物体 %1 移动到 %2 用时 %3 %4 差值方式 %5",
+      "message0": "物体 %1 移动目标到 %2 用时 %3 %4 差值方式 %5",
       "args0": [
         {
           "type": "input_value",
@@ -101,7 +101,7 @@ const block = {
         Blockly.Lua.ORDER_ATOMIC
       )
       // TODO: Assemble Lua into code variable.
-      var code = '_G.task.tween(' + from + ', ' + to + ', ' + time + ', "' + easy + '")'
+      var code = '_G.tween.to_object(' + from + ', ' + to + ', ' + time + ', "' + easy + '")'
       return [code, Blockly.Lua.ORDER_NONE]
 
     }
