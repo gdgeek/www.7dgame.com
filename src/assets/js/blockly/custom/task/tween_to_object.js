@@ -11,7 +11,7 @@ const block = {
   getBlockJson({ resource }) {
     const json = {
       "type": "block_type",
-      "message0": "物体 %1 移动目标到 %2 用时 %3 %4 差值方式 %5",
+      "message0": "物体 %1 移动到目标 %2 用时 %3 %4 差值方式 %5",
       "args0": [
         {
           "type": "input_value",
