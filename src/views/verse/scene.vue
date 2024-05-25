@@ -37,10 +37,8 @@ import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
 
 import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
-import { putVerse } from '@/api/v1/verse'
+import { putVerse,getVerse } from '@/api/v1/verse'
 import { getPrefab } from '@/api/v1/prefab'
-import { getMeta } from '@/api/v1/meta'
-import { getVerse } from '@/api/v1/verse'
 export default {
   name: 'VerseScene',
   components: {
@@ -49,17 +47,50 @@ export default {
     MetaDialog
   },
   data() {
-   
-
     return {
       init: false,
       saveable: null,
-     // src
+      data:null
     }
   },
   computed: {
     id() {
       return parseInt(this.$route.query.id)
+    },
+    verse: {
+      get: function () {
+				return this.data
+      },
+      set: function (value) { 
+        this.data = value
+
+        this.setBreadcrumbs({
+          list: [
+            {
+              path: '/',
+              meta: { title: '元宇宙实景编程平台' }
+            },
+            {
+              path: '/meta-verse/index',
+              meta: { title: '列表' }
+            },
+            {
+              path: '/verse/view?id=' + this.id,
+              meta: { title: '宇宙【'+ this.title +'】'}
+            },
+            {
+              path: '.',
+              meta: { title: '场景编辑' }
+            }
+          ]
+        })
+      }
+    },
+    title() { 
+      if (this.data) { 
+        return this.data.name
+      }
+      return ''
     },
     editor_url() {
       return path.join(
@@ -73,30 +104,8 @@ export default {
   },
   created() {
     window.addEventListener('message', this.handleMessage)
-    this.setBreadcrumbs({
-      list: [
-        {
-          path: '/',
-          meta: { title: '元宇宙实景编程平台' }
-        },
-        {
-          path: '/meta-verse/index',
-          meta: { title: '宇宙' }
-        },
-        {
-          path: '/verse/view?id=' + this.id,
-          meta: { title: '【宇宙】' }
-        },
-        {
-          path: '/verse/scene?id=' + this.id,
-          meta: { title: '宇宙编辑' }
-        },
-        {
-          path: '.',
-          meta: { title: '场景编辑' }
-        }
-      ]
-    })
+    
+   
   },
 
   beforeDestroy() {
@@ -185,12 +194,11 @@ export default {
             if (this.init == false) {
               this.init = true
               const response = await getVerse(this.id, 'metas, resources')
-              const verse = response.data
-              console.error(verse)
-             // alert("!")
-             // alert( verse.editable)
-              if (verse) {
-                this.saveable = this.$can('editable', new AbilityEditable(verse.editable))
+             this.verse = response.data
+            
+             
+              if (this.verse) {
+                this.saveable = this.$can('editable', new AbilityEditable(this.verse.editable))
                 
               } else { 
                 this.saveable = false
@@ -199,7 +207,7 @@ export default {
               const data = {
                 action: 'load',
                 id: this.id,
-                data: verse,
+                data:this.verse,
                 saveable: this.saveable
               }
               this.postMessage(data)

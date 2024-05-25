@@ -26,7 +26,6 @@ var path = require('path')
 import ResourceDialog from '@/components/MrPP/ResourceDialog.vue'
 import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
-import env from '@/environment.js'
 import { putMeta } from '@/api/v1/meta'
 import { getMeta } from '@/api/v1/meta'
 
@@ -41,7 +40,7 @@ export default {
 
     return {
       isInit: false,
-    //  meta: null,
+      meta: null,
       src
     }
   },
@@ -68,13 +67,13 @@ export default {
           meta: { title: '元宇宙实景编程平台' }
         },
         {
-          path: '/meta-verse/index',
-          meta: { title: '宇宙' }
+          path: '/meta/list',
+          meta: { title: '列表' }
         },
 
         {
           path: '.',
-          meta: { title: '场景编辑' }
+          meta: { title: '元数据编辑器' }
         }
       ]
     })
@@ -110,6 +109,7 @@ export default {
       const iframe = document.getElementById('editor')
       iframe.contentWindow.postMessage(data, '*')
     },
+    
     async handleMessage(e) {
       const self = this
       const data = e.data
@@ -133,12 +133,13 @@ export default {
           case 'ready':
             if (self.isInit == false) {
               self.isInit = true
-              const meta = await getMeta(this.id)
-              self.breadcrumb(meta.data)
+              const response = await getMeta(this.id)
+              this.meta = response.data; 
+              self.breadcrumb(this.meta)
               self.postMessage({
                 action: 'load',
-                data: meta.data,
-                saveable: this.saveable(meta.data)
+                data: this.meta,
+                saveable: this.saveable(this.meta)
               })
             }
             break
@@ -154,28 +155,16 @@ export default {
             meta: { title: '元宇宙实景编程平台' }
           },
           {
-            path: '/meta-verse/index',
-            meta: { title: '宇宙' }
+            path: '/meta/index',
+            meta: { title: '元数据【'+meta.title+'】'}
           },
           {
-            path: '/verse/view?id=' + meta.verse_id,
-            meta: { title: '【宇宙】' }
-          },
-          {
-            path: '/verse/scene?id=' + meta.verse_id,
-            meta: { title: '宇宙编辑' }
-          },
-          {
-            path:
-              '/meta/rete-meta?id=' +
-              meta.id +
-              '&title=' +
-              encodeURIComponent(this.title),
-            meta: { title: '元编辑' }
+            path: '/meta/script?id=' + meta.id,
+            meta: { title: '脚本编辑器' }
           },
           {
             path: '.',
-            meta: { title: '内容编辑' }
+            meta: { title: '场景编辑器' }
           }
         ]
       })

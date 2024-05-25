@@ -4,20 +4,8 @@
       <el-main>
         <el-card v-loading="loading" class="box-card">
           <div slot="header" class="clearfix">
-            <router-link
-              v-if="meta"
-              :to="
-                '/meta/rete-meta?id=' +
-                meta.id +
-                '&title=' +
-                encodeURIComponent(title)
-              "
-            >
-              <el-link v-if="meta" :underline="false">
-                【元：{{ title }}】
-              </el-link>
-            </router-link>
-            / 【script】
+            
+            
 
             <el-button-group style="float: right">
               <el-button
@@ -94,12 +82,12 @@ export default {
           meta: { title: '元宇宙实景编程平台' }
         },
         {
-          path: '/meta-verse/index',
-          meta: { title: '宇宙' }
+          path: '/meta/index',
+          meta: { title: '元数据' }
         },
         {
           path: '.',
-          meta: { title: '赛博编辑' }
+          meta: { title: '脚本编辑' }
         }
       ]
     })
@@ -113,28 +101,20 @@ export default {
           meta: { title: '元宇宙实景编程平台' }
         },
         {
-          path: '/meta-verse/index',
-          meta: { title: '宇宙' }
-        },
-        {
-          path: '/verse/view?id=' + self.meta.verse_id,
-          meta: { title: '【宇宙】' }
-        },
-        {
-          path: '/verse/scene?id=' + self.meta.verse_id,
-          meta: { title: '宇宙编辑' }
+          path: '/meta/index',
+          meta: { title: '元数据【'+this.meta.title+'】' }
         },
         {
           path:
-            '/meta/rete-meta?id=' +
-            self.meta.id +
+            '/meta/scene?id=' +
+            this.meta.id +
             '&title=' +
-            encodeURIComponent(self.title),
-          meta: { title: '元编辑' }
+            encodeURIComponent(this.meta.title),
+          meta: { title: '场景编辑器' }
         },
         {
           path: '.',
-          meta: { title: '赛博' }
+          meta: { title: '脚本编辑器' }
         }
       ]
     })
