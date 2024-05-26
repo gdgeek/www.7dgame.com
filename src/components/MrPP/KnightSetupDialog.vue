@@ -1,6 +1,6 @@
 <template>
   <div>
-    <knight-data-dialog ref="knightData" @submit="knightDataSubmit" />
+    <meta-data-dialog ref="metaData" @submit="metaDataSubmit" />
   
     <el-dialog
       :visible.sync="dialogVisible"
@@ -110,7 +110,7 @@
 
 <script>
 import { Waterfall, WaterfallItem } from 'vue2-waterfall'
-import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
+import MetaDataDialog from '@/components/MrPP/MetaDataDialog.vue'
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -125,7 +125,7 @@ export default {
     Waterfall,
     WaterfallItem,
     MrPPHeader,
-    KnightDataDialog
+    MetaDataDialog
   },
   data() {
     return {
@@ -158,7 +158,7 @@ export default {
     }
   },
   methods: {
-    knightDataSubmit(data) {
+    metaDataSubmit(data) {
       console.error(data)
     },
     handleClick(tab, event) {
@@ -238,8 +238,8 @@ export default {
      } else {
 
       if(data.data != null){
-        this.$refs.knightData.open({
-          schema: JSON.parse(data.data),
+        this.$refs.metaData.open({
+          schema: JSON.parse(data.info),
           data: {},
           callback: (setup) => {
             this.$emit('selected', {data, setup})

@@ -2,7 +2,7 @@
 
   <div class="verse-scene">
 
-    <knight-data-dialog ref="knightData"  />
+    <meta-data-dialog ref="metaData"  />
     <meta-dialog
       @selected="selected"
       @cancel="cancel"
@@ -33,7 +33,7 @@ var qs = require('querystringify')
 var path = require('path')
 import PrefabDialog from '@/components/MrPP/PrefabDialog.vue'
 import MetaDialog from '@/components/MrPP/MetaDialog.vue'
-import KnightDataDialog from '@/components/MrPP/KnightDataDialog.vue'
+import MetaDataDialog from '@/components/MrPP/MetaDataDialog.vue'
 
 import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
@@ -42,7 +42,7 @@ import { getPrefab } from '@/api/v1/prefab'
 export default {
   name: 'VerseScene',
   components: {
-    KnightDataDialog,
+    MetaDataDialog,
     PrefabDialog,
     MetaDialog
   },
@@ -128,8 +128,8 @@ export default {
     },
     setupPrefab({ meta_id, data, uuid }) {
       getPrefab(meta_id).then(response => {
-        this.$refs.knightData.open({
-          schema:JSON.parse(response.data.data),
+        this.$refs.metaData.open({
+          schema:JSON.parse(response.data.info),
           data: JSON.parse(data),
           callback: (setup) => {
             this.postMessage({
