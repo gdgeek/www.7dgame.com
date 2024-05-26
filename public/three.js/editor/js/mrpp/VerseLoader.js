@@ -168,10 +168,10 @@ function VerseLoader(editor) {
 
 				const node = factory.addModule(item)
 
-				node.userData.custom = meta.custom
+				node.userData.prefab = meta.prefab
 				root.add(node)
 				editor.signals.sceneGraphChanged.dispatch()
-				if (meta && meta.data && meta.custom != 0) {
+				if (meta && meta.data) {
 					await factory.readMeta(node, JSON.parse(meta.data), resources)
 					editor.signals.sceneGraphChanged.dispatch()
 

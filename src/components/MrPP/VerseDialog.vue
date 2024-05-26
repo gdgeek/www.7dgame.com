@@ -203,7 +203,7 @@ export default {
 
       postMeta({
         title: name? name: '新建元数据',
-        custom: 1,
+        prefab: 0,
         uuid: uuidv4()
       }).then(async response => {
         this.selected({data: response.data})

@@ -13,9 +13,8 @@
         >
           <el-button-group :inline="true">
             <el-button  v-if="$can('root')"  size="mini" type="primary" @click="addPrefab()">
-              <font-awesome-icon icon="plus" />
-           
-              <span class="hidden-sm-and-down">创建【元数据】</span>
+              <font-awesome-icon icon="plus"
+              <span class="hidden-sm-and-down">创建【预制体】</span>
             </el-button>
           </el-button-group>
         </mr-p-p-header>
@@ -120,7 +119,7 @@ export default {
     
     async del(id) {
       try {
-        await this.$confirm('此操作将永久删除该【元数据】, 是否继续?', '提示', {
+        await this.$confirm('此操作将永久删除该【预制元数据】, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -150,7 +149,7 @@ export default {
     },
     async addPrefab() {
       try {
-        const input = await this.$prompt('请输元数据名称', '提示(3-20个字符)', {
+        const input = await this.$prompt('请输预制元数据名称', '提示(3-20个字符)', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           inputValidator: value => {
@@ -172,7 +171,7 @@ export default {
 
         const data = {
           title: input.value,
-          custom: 1,
+          prefab: 1,
           uuid:uuidv4()
         }
         const response = await postPrefab(data)

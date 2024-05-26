@@ -26,8 +26,8 @@ var path = require('path')
 import ResourceDialog from '@/components/MrPP/ResourceDialog.vue'
 import { AbilityEditable } from '@/ability/ability'
 import { mapMutations } from 'vuex'
-import { putMeta } from '@/api/v1/meta'
-import { getMeta } from '@/api/v1/meta'
+import { putMeta, getMeta } from '@/api/v1/meta'
+import { putPrefab, getPrefab } from '@/api/v1/prefab'
 
 export default {
 
@@ -48,7 +48,9 @@ export default {
     id() {
       return parseInt(this.$route.query.id)
     },
-
+    prefab() {
+      return this.$route.query.prefab
+    },
     title() {
       return this.$route.query.title
     },
@@ -82,11 +84,24 @@ export default {
     window.removeEventListener('message', this.handleMessage)
   },
   methods: {
+    putData(id, data) {
+      if (this.prefab) {
+        return putPrefab(id, data)
+      } else {
+        return putMeta(id, data)
+      }
+    },
+    getData(id) {
+      if (this.prefab) {
+        return getPrefab(id)
+      } else {
+        return getMeta(id)
+      }
+    },
     cancel() {
      
     },
     selectResources(data) {
-    //  alert(123)
       console.error(data)
       this.postMessage({
                 action: 'load_resource',
@@ -115,8 +130,9 @@ export default {
       const data = e.data
       if (e.data.from === 'mrpp-editor') {
         switch (e.data.action) {
-          case 'save':
-            self.saveMeta(data)
+          case 'save-meta':
+            alert(JSON.stringify(data.data))
+            self.saveMeta(data.data)
             break
           case 'load_resource':
             this.loadResource(e.data.data)
@@ -133,8 +149,10 @@ export default {
           case 'ready':
             if (self.isInit == false) {
               self.isInit = true
-              const response = await getMeta(this.id)
+              const response = await this.getData(this.id)
               this.meta = response.data; 
+
+            
               self.breadcrumb(this.meta)
               self.postMessage({
                 action: 'load',
@@ -177,7 +195,7 @@ export default {
         })
         return
       }
-      await putMeta(this.id, { data, events })
+      await this.putData(this.id, { data, events })
       this.$message({
         type: 'success',
         message: '保存成功!'

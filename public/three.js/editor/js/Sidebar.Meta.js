@@ -51,7 +51,7 @@ function SidebarMeta(editor) {
 		top.setDisplay('block');
 
 
-		if (object.userData.custom != 0) {
+		if (object.userData.perfab == 0) {
 			top.add(new UIText("Meta(custom)").setTextTransform('uppercase'));
 			top.add(new UIBreak());
 

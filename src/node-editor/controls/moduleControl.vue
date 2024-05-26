@@ -16,7 +16,7 @@
           
           <el-tag @click="setup()"  slot="reference">【{{ title }}】</el-tag>
         </el-popover>
-          <el-button size="small" @click="edit()" v-if="custom">
+          <el-button size="small" @click="edit()" v-if="!perfab">
             编辑
           </el-button>
           <el-button size="small" @click="input()" v-else>
@@ -42,8 +42,8 @@ export default {
     }
   },
   computed: {
-    custom() { 
-      return this.item.custom != 0 
+    perfab() { 
+      return this.item.perfab == 0 
     },
     hidden() {
       if (typeof this.data.hidden !== 'undefined' && this.data.hidden) {

@@ -231,7 +231,7 @@ export default {
     },
     doSelect(data) {
     
-      if (data.custom === 1) {
+     if (data.perfab == 0) {
        // alert(data)
        this.$emit('selected', { data })
         this.dialogVisible = false
@@ -267,7 +267,7 @@ export default {
     create() {
       postMeta({
         title: '新建元数据',
-        custom: 1,
+        perfab: 0,
         uuid: uuidv4()
       }).then(response => {
         this.selected({data: response.data })

@@ -29,13 +29,10 @@
                 />
               </div>
             </el-form-item>
-            <el-form-item v-if="!custom" label="Info" prop="title">
+            <el-form-item v-if="perfab" label="Info" prop="title">
               <el-input v-model="item.info" @change="submit"></el-input>
             </el-form-item>
 
-            <el-form-item  v-if="!custom"  label="Data" prop="title">
-              <el-input v-model="item.data" @change="submit"></el-input>
-            </el-form-item>
            
           </el-form>
           </div>
@@ -75,11 +72,10 @@
             </el-button>
             <el-button
               @click="editor"
-              v-if="custom"
               type="primary"
               icon="el-icon-edit-outline"
             >
-              编辑器
+              场景编辑器
             </el-button>
            
           </el-button-group>
@@ -127,12 +123,12 @@ export default {
     ResourceDialog
   },
   computed: {
-    custom: {
+    prefab: {
       get() {
-        return this.item.custom != 0
+        return this.item.prefab != 0
       },
       set(value) {
-        this.item.custom = value?1:0
+        this.item.prefab = value?1:0
       }
     },
     
@@ -157,7 +153,7 @@ export default {
     editor() { 
       this.$router.push({
         path: '/meta/scene',
-        query: { id: this.id, title: this.item.title }
+        query: { id: this.id, prefab: this.prefab }
       })
     },
     openResources(
@@ -225,20 +221,15 @@ export default {
         if (!valid) {
           console.log('error submit!!');
           return
-         }else{
-          if (this.item.custom) {
-            this.item.custom = 1
-          } else {
-            this.item.custom = 0
-          }
+         }
+          this.item.prefab = this.item.prefab ? 1:0;
+          
           await this.putItem(this.id, this.item)
           this.$message({
             message: '保存成功',
             type: 'success'
           })
           await this.refresh()
-
-         }
       });
        
       

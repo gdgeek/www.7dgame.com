@@ -63,9 +63,13 @@ function MetaLoader(editor) {
 		const meta = await self.write(editor.scene)
 
 		const data = {
-			action: 'save',
-			data: JSON.stringify(meta),
-			events: JSON.stringify(editor.scene.events)
+			action: 'save-meta',
+			data: {
+				data: JSON.stringify(meta),
+				events: JSON.stringify(editor.scene.events),
+				prefab: editor.scene.userData.prefab
+			},
+
 		}
 
 		editor.signals.messageSend.dispatch(data)
@@ -151,6 +155,7 @@ function MetaLoader(editor) {
 
 	this.load = async function (meta) {
 
+
 		let scene = editor.scene;
 		if (scene == null) {
 			scene = new THREE.Scene();
@@ -162,6 +167,7 @@ function MetaLoader(editor) {
 		} else {
 			scene.events = JSON.parse(meta.events)
 		}
+		scene.userData = { prefab: meta.prefab }
 
 		editor.signals.sceneGraphChanged.dispatch()
 		let lights = editor.scene.getObjectByName("$lights")
