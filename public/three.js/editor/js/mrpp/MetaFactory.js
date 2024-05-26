@@ -44,7 +44,7 @@ class MetaFactory extends Factory {
 
 		return new Promise(resolve => {
 			const loader = new GLTFLoader(THREE.DefaultLoadingManager)
-			loader.load('/three.js/mesh/unreal-gizmo.glb', gltf => {
+			loader.load('/three.js/mesh/star.glb', gltf => {
 				const mesh = gltf.scene;//.children[0]
 				mesh.scale.set(0.1, 0.1, 0.1)
 				mesh.rotation.set(Math.PI / 2, Math.PI / 2, 0)

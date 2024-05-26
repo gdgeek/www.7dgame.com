@@ -20,20 +20,28 @@
             <el-form-item label="名称" prop="title">
               <el-input v-model="item.title" @change="submit"></el-input>
             </el-form-item>
-          
-          
+            <el-form-item label="图片" prop="title">
+              <div class="box-item" @click="selectImage">
+                <el-image
+                  fit="contain"
+                  style="width: 100%; height: 300px"
+                  :src="image"
+                />
+              </div>
+            </el-form-item>
+            <el-form-item v-if="!custom" label="Info" prop="title">
+              <el-input v-model="item.info" @change="submit"></el-input>
+            </el-form-item>
+
+            <el-form-item  v-if="!custom"  label="Data" prop="title">
+              <el-input v-model="item.data" @change="submit"></el-input>
+            </el-form-item>
            
           </el-form>
           </div>
           
 
-          <div class="box-item" @click="selectImage">
-            <el-image
-              fit="contain"
-              style="width: 100%; height: 300px"
-              :src="image"
-            />
-          </div>
+       
 
        
             

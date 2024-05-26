@@ -4,7 +4,7 @@
       <el-main>
         <el-card v-loading="loading" class="box-card">
           <div v-if="script && verse" slot="header" class="clearfix">
-            {{ verse.name }} / {{ script.title }} / 【脚本】
+          
 
             <el-button-group style="float: right">
               <el-button
@@ -171,20 +171,16 @@ export default {
           meta: { title: '元宇宙实景编程平台' }
         },
         {
-          path: '/meta-verse/index',
-          meta: { title: '宇宙' }
-        },
-        {
           path: '/verse/view?id=' + this.verse.id,
-          meta: { title: '【' + this.verse.name + '】' }
+          meta: { title: '宇宙【' + this.verse.name + '】' }
         },
         {
           path: '/verse/scene?id=' + this.verse.id,
-          meta: { title: '宇宙编辑' }
+          meta: { title: '场景编辑' }
         },
         {
           path: '.',
-          meta: { title: '【' + this.script.title + '】' + '脚本编辑' }
+          meta: { title:   '脚本编辑' }
         }
       ]
     })

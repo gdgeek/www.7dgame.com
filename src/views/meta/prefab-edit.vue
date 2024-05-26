@@ -1,5 +1,5 @@
 <template>
-  <div class="meta-edit">
+  <div class="prefab-edit">
     <edit  @getItem="getPrefab" @putItem="putPrefab"/>
   </div>
 </template>
@@ -19,7 +19,6 @@ export default {
      
     },
     async putPrefab(id, data, callback) { 
-
       const response = await putPrefab(id, data);
       callback(response.data)
      

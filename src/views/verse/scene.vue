@@ -71,12 +71,12 @@ export default {
               meta: { title: '元宇宙实景编程平台' }
             },
             {
-              path: '/meta-verse/index',
-              meta: { title: '列表' }
-            },
-            {
               path: '/verse/view?id=' + this.id,
               meta: { title: '宇宙【'+ this.title +'】'}
+            },
+            {
+              path: '/verse/script?id=' + this.id,
+              meta: { title: '脚本编辑'}
             },
             {
               path: '.',
