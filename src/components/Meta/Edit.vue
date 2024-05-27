@@ -32,37 +32,29 @@
             <el-form-item v-if="prefab" label="Info" prop="title">
               <el-input v-model="item.info" @change="submit"></el-input>
             </el-form-item>
-
-           
           </el-form>
           </div>
-          
-
-       
-
-       
-            
-            <div v-if="events && events.outputs && events.outputs.length > 0" >
+          <div v-if="events && events.outputs && events.outputs.length > 0" >
             <el-divider content-position="left">输出事件</el-divider>
-              <span v-for="(item, index) in events.outputs" :key="index">
-                <el-tag size="mini">
-                  {{ item.title }}
-                </el-tag>
-                &nbsp;
-              </span>
-            </div>
-            <div
-              v-if="events && events.inputs && events.inputs.length > 0"
-              label="输入事件"
-            >
-              <el-divider content-position="left">输入事件</el-divider>
-              <span v-for="(item, index) in events.inputs" :key="index">
-                <el-tag size="mini">
-                  {{ item.title }}
-                </el-tag>
-                &nbsp;
-              </span>
-            </div>
+            <span v-for="(item, index) in events.outputs" :key="index">
+              <el-tag size="mini">
+                {{ item.title }}
+              </el-tag>
+              &nbsp;
+            </span>
+          </div>
+          <div
+            v-if="events && events.inputs && events.inputs.length > 0"
+            label="输入事件"
+          >
+            <el-divider content-position="left">输入事件</el-divider>
+            <span v-for="(item, index) in events.inputs" :key="index">
+              <el-tag size="mini">
+                {{ item.title }}
+              </el-tag>
+              &nbsp;
+            </span>
+          </div>
         </el-card>
         <br />
         <el-card v-if="item !== null" class="box-card">
@@ -77,7 +69,6 @@
             >
               场景编辑器
             </el-button>
-           
           </el-button-group>
         <br/>
           <br />
@@ -91,12 +82,9 @@
             <b>【元数据】信息</b>
           </div>
           <div class="box-item">{{ item }}</div>
-
           <br />
         </el-card>
-
         <br />
-
         <br />
       </el-col>
     </el-row>
