@@ -137,7 +137,7 @@ function MenubarAdd(editor) {
 				const node = factory.addModule(builder.module(data.id, title))
 
 				node.userData.data = JSON.stringify(setup)
-				node.userData.perfab = data.perfab
+				node.userData.prefab = data.prefab
 				if (data && data.data) {
 					await factory.readMeta(node, JSON.parse(data.data), resources, editor)
 				}
