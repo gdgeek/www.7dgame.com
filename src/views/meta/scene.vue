@@ -127,22 +127,21 @@ export default {
     
     async handleMessage(e) {
       const self = this
-      const data = e.data
-      if (e.data.from === 'mrpp-editor') {
-        switch (e.data.action) {
+      const receive = e.data
+      if (receive.from === 'mrpp-editor') {
+        switch (receive.action) {
           case 'save-meta':
-            alert(JSON.stringify(data.data))
-            self.saveMeta(data.data)
+            self.saveMeta(receive.data)
             break
           case 'load_resource':
-            this.loadResource(e.data.data)
+            this.loadResource(receive.data)
             break
           case 'goto':
-            if (e.data.data == 'blockly.js') { 
+            if (receive.data == 'blockly.js') { 
               
               this.$router.push({ path: '/meta/script', query: { id:this.id, title:this.title } })
 
-            }else if (e.data.data == 'rete.js') {
+            }else if (receive.data == 'rete.js') {
               this.$router.push({ path: '/meta/rete-meta', query: { id:this.id, title:this.title } })
             }
             break;

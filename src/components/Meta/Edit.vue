@@ -29,7 +29,7 @@
                 />
               </div>
             </el-form-item>
-            <el-form-item v-if="perfab" label="Info" prop="title">
+            <el-form-item v-if="prefab" label="Info" prop="title">
               <el-input v-model="item.info" @change="submit"></el-input>
             </el-form-item>
 
@@ -125,7 +125,7 @@ export default {
   computed: {
     prefab: {
       get() {
-        return this.item.prefab != 0
+        return this.item.prefab == 1
       },
       set(value) {
         this.item.prefab = value?1:0
