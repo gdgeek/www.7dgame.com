@@ -8,8 +8,6 @@
 import { AbilityRouter, UpdateAbility } from '@/ability/ability'
 import { getToken, setToken } from '@/utils/auth'
 import { token } from '@/api/servers'
-import { information } from '@/api/v1/local'
-import environment from '@/environment.js'
 
 import { mapMutations } from 'vuex'
 // import resource from './store/modules/resource'

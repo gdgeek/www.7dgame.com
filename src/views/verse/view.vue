@@ -1,5 +1,6 @@
 <template>
   <div class="verse-view">
+   
     <el-dialog :title="'修改信息'" :visible.sync="dialog" width="70%">
       <mr-p-p-message-from ref="editor" :data="briefing" @post="postMessage" />
     </el-dialog>
@@ -9,8 +10,9 @@
           <div slot="header">
             <i class="el-icon-edit" v-if="saveable"></i>
             <i class="el-icon-view" v-else></i>
-            <b id="title">【宇宙】名称：</b>
+            <b id="title">【宇宙】名称!!：</b>
             <span>{{ verse.name }}</span>
+           
           </div>
 
           <div class="box-item">
@@ -29,6 +31,13 @@
         </el-card>
         <br />
 
+        <el-card class="box-card">
+          <language v-if="verse" :verse_id="verse.id" :languages="verse.languages" />
+        
+
+        </el-card>
+
+        <br />
         <el-card v-if="verse !== null" class="box-card">
           <el-button
             style="width: 100%"
@@ -115,7 +124,7 @@ import Reply from '@/components/Reply'
 import InfoContent from '@/components/InfoContent.vue'
 import Message from '@/components/Message.vue'
 import Share from '@/components/Share.vue'
-
+import Language from '@/components/Language.vue'
 import { AbilityWorks } from '@/ability/ability'
 import VerseToolbar from '@/components/VerseToolbar.vue'
 import { postMessage } from '@/api/v1/message'
@@ -126,7 +135,7 @@ export default {
     return {
       verse: null,
       dialog: false,
-      briefing: { title: 'sdfsdf', body: 'eee' }
+      briefing: { title: '', body: '' }
     }
   },
 
@@ -169,7 +178,8 @@ export default {
     VerseToolbar,
     InfoContent,
     Reply,
-    Share
+    Share,
+    Language
   },
 
   destroyed() {
@@ -209,7 +219,7 @@ export default {
       const self = this
       const res = await getVerse(
         self.id,
-        'image,verseOpen,verseShare,author, message'
+        'image, verseOpen, verseShare, author, message, languages'
       )
       this.verse = res.data
       if (this.message !== null) {
