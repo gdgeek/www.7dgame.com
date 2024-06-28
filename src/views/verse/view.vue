@@ -31,10 +31,8 @@
         </el-card>
         <br />
 
-        <el-card class="box-card">
+        <el-card v-if="saveable" class="box-card">
           <language v-if="verse" :verse_id="verse.id" :languages="verse.languages" />
-        
-
         </el-card>
 
         <br />
